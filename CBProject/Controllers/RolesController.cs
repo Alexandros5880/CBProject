@@ -114,7 +114,7 @@ namespace CBProject.Controllers
                 var role = await _rolesRepo.GetAsync(model.Id);
                 if (role == null)
                     return HttpNotFound();
-                await _rolesRepo.DeleteAsync(role.Id);
+                await _rolesRepo.DeleteAsync(role.Name);
                 return RedirectToAction("Index");
             }
             catch
