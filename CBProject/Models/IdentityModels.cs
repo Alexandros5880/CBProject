@@ -55,13 +55,13 @@ namespace CBProject.Models
         
         public string CVPath { get; set; }
 
-        //public HttpPostedFileBase CVFile { get; set; }
-
         public int ContentCategoryId { get; set; }
         
         public int ContentId { get; set; }
 
         public bool NewsletterAcception { get; set; }
+
+        public bool IsInactive { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

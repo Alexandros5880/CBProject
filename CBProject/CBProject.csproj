@@ -215,33 +215,9 @@
     <Compile Include="HelperClasses\DataManagers.cs" />
     <Compile Include="HelperClasses\Interfaces\IDataManagers.cs" />
     <Compile Include="HelperClasses\StaticImfo.cs" />
-    <Compile Include="Migrations\202111071305366_Initial.cs" />
-    <Compile Include="Migrations\202111071305366_Initial.designer.cs">
-      <DependentUpon>202111071305366_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202111071803556_ChangeFieldFromNumberToStreetNumber.cs" />
-    <Compile Include="Migrations\202111071803556_ChangeFieldFromNumberToStreetNumber.designer.cs">
-      <DependentUpon>202111071803556_ChangeFieldFromNumberToStreetNumber.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202111071816364_AddCvField.cs" />
-    <Compile Include="Migrations\202111071816364_AddCvField.designer.cs">
-      <DependentUpon>202111071816364_AddCvField.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202111071856101_AddPhoneField.cs" />
-    <Compile Include="Migrations\202111071856101_AddPhoneField.designer.cs">
-      <DependentUpon>202111071856101_AddPhoneField.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202111071903091_AddFirstAndLastName.cs" />
-    <Compile Include="Migrations\202111071903091_AddFirstAndLastName.designer.cs">
-      <DependentUpon>202111071903091_AddFirstAndLastName.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202111101522415_ApplicationUserContentTypeNoRequared.cs" />
-    <Compile Include="Migrations\202111101522415_ApplicationUserContentTypeNoRequared.Designer.cs">
-      <DependentUpon>202111101522415_ApplicationUserContentTypeNoRequared.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202111101552291_ApplicationUserChangedPhoneToPhoneNumber.cs" />
-    <Compile Include="Migrations\202111101552291_ApplicationUserChangedPhoneToPhoneNumber.Designer.cs">
-      <DependentUpon>202111101552291_ApplicationUserChangedPhoneToPhoneNumber.cs</DependentUpon>
+    <Compile Include="Migrations\202111111232270_First.cs" />
+    <Compile Include="Migrations\202111111232270_First.Designer.cs">
+      <DependentUpon>202111111232270_First.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -343,26 +319,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202111071305366_Initial.resx">
-      <DependentUpon>202111071305366_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202111071803556_ChangeFieldFromNumberToStreetNumber.resx">
-      <DependentUpon>202111071803556_ChangeFieldFromNumberToStreetNumber.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202111071816364_AddCvField.resx">
-      <DependentUpon>202111071816364_AddCvField.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202111071856101_AddPhoneField.resx">
-      <DependentUpon>202111071856101_AddPhoneField.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202111071903091_AddFirstAndLastName.resx">
-      <DependentUpon>202111071903091_AddFirstAndLastName.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202111101522415_ApplicationUserContentTypeNoRequared.resx">
-      <DependentUpon>202111101522415_ApplicationUserContentTypeNoRequared.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202111101552291_ApplicationUserChangedPhoneToPhoneNumber.resx">
-      <DependentUpon>202111101552291_ApplicationUserChangedPhoneToPhoneNumber.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202111111232270_First.resx">
+      <DependentUpon>202111111232270_First.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

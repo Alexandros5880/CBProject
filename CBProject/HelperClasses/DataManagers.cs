@@ -11,17 +11,20 @@ namespace CBProject.HelperClasses
     {
         private bool disposedValue;
 
-        public readonly UserManager<ApplicationUser> UserManager;
-        public readonly RoleManager<IdentityRole> RoleManager;
         public readonly ApplicationDbContext Context;
+        public readonly RoleStore<IdentityRole> RoleStore;
+        public readonly RoleManager<IdentityRole> RoleManager;
+        public readonly UserStore<ApplicationUser> UserStore;
+        public readonly UserManager<ApplicationUser> UserManager;
+        
 
-        public DataManagers(IUserStore<ApplicationUser> userManager, 
-            IRoleStore<IdentityRole, string> roleManager, IContext context)
+        public DataManagers(IContext context)
         {
             this.Context = (ApplicationDbContext)context;
-            //this.UserManager = new UserManager<ApplicationUser>(userManager);
-            this.UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(this.Context));
-            this.RoleManager = new RoleManager<IdentityRole>(roleManager);
+            this.RoleStore = new RoleStore<IdentityRole>(this.Context);
+            this.UserStore = new UserStore<ApplicationUser>(this.Context);
+            this.RoleManager = new RoleManager<IdentityRole>(this.RoleStore);
+            this.UserManager = new UserManager<ApplicationUser>(this.UserStore);
         }
 
         protected virtual void Dispose(bool disposing)

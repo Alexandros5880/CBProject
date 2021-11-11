@@ -9,8 +9,8 @@ namespace CBProject.Models.ViewModels
     {
         public string Id { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:dd MMM yyyy}")]
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime BirthDate { get; set; }
 
         [Required]
@@ -75,5 +75,7 @@ namespace CBProject.Models.ViewModels
         public HttpPostedFileBase CVFile { get; set; }
 
         public bool NewsletterAcception { get; set; }
+
+        public bool IsInactive { get; set; }
     }
 }

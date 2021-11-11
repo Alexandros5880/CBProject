@@ -23,10 +23,12 @@ namespace CBProject.Repositories.IdentityRepos.Interfaces
         void Add(ApplicationUser obj);
         Task<IdentityResult> AddAsync(ApplicationUser obj);
         void Delete(string id);
-        Task<IdentityResult> DeleteAsync(string id);
+        Task<int> DeleteAsync(string id);
+        void FinalDelete(string id);
+        Task<IdentityResult> FinalDeleteAsync(string id);
         void RemoveRole(ApplicationUser user, IdentityRole role);
         void AddRole(ApplicationUser user, IdentityRole role);
         void Update(ApplicationUser obj);
-        Task<IdentityResult> UpdateAsync(ApplicationUser obj);
+        Task<int> UpdateAsync(ApplicationUser obj);
     }
 }

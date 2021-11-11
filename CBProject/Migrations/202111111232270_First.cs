@@ -1,9 +1,9 @@
-﻿namespace CBProject.Migrations
+namespace CBProject.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Initial : DbMigration
+    public partial class First : DbMigration
     {
         public override void Up()
         {
@@ -36,21 +36,24 @@
                     {
                         Id = c.String(nullable: false, maxLength: 128),
                         BirthDate = c.DateTime(nullable: false),
-                        Email = c.String(nullable: false, maxLength: 256),
+                        FirstName = c.String(nullable: false),
+                        LastName = c.String(nullable: false),
                         Password = c.String(nullable: false),
                         Country = c.String(nullable: false),
                         State = c.String(nullable: false),
                         City = c.String(nullable: false),
                         PostalCode = c.String(nullable: false),
                         Street = c.String(nullable: false),
-                        Number = c.String(nullable: false),
+                        StreetNumber = c.String(nullable: false),
                         CreditCardNum = c.String(),
                         SubscriptionId = c.Int(nullable: false),
-                        ContentAccess = c.String(nullable: false),
-                        CV = c.String(),
+                        ContentAccess = c.String(),
+                        CVPath = c.String(),
                         ContentCategoryId = c.Int(nullable: false),
                         ContentId = c.Int(nullable: false),
                         NewsletterAcception = c.Boolean(nullable: false),
+                        IsInactive = c.Boolean(nullable: false),
+                        Email = c.String(maxLength: 256),
                         EmailConfirmed = c.Boolean(nullable: false),
                         PasswordHash = c.String(),
                         SecurityStamp = c.String(),

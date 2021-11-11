@@ -104,23 +104,23 @@ namespace CBProject.Models
         public string PhoneNumber { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "Ener your Country.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "Ener your Country.", MinimumLength = 3)]
         public string Country { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "Ener your State.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "Ener your State.", MinimumLength = 3)]
         public string State { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "Ener your City.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "Ener your City.", MinimumLength = 3)]
         public string City { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "Ener your PostalCode.", MinimumLength = 5)]
+        [StringLength(100, ErrorMessage = "Ener your PostalCode.", MinimumLength = 3)]
         public string PostalCode { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "Ener your Street.", MinimumLength = 5)]
+        [StringLength(100, ErrorMessage = "Ener your Street.", MinimumLength = 3)]
         public string Street { get; set; }
 
         [DisplayName("Street Number")]
@@ -133,6 +133,8 @@ namespace CBProject.Models
         public HttpPostedFileBase CVFile { get; set; }
 
         public bool NewsletterAcception { get; set; }
+
+        public bool IsInactive { get; set; }
     }
 
     public class ResetPasswordViewModel

@@ -41,15 +41,68 @@ namespace CBProject.Repositories.IdentityRepos
             if (id.Length == 0)
                 throw new Exception("In Users repo delete method id is empty.");
             var user = this.Get(id);
-            this._manager.UserManager.Delete(user);
+            user.IsInactive = true;
+            this.Update(user);
+            //this._manager.UserManager.Delete(user);
         }
 
-        public async Task<IdentityResult> DeleteAsync(string id)
+        public async Task<int> DeleteAsync(string id)
         {
             if (id.Length == 0)
                 throw new Exception("In Users repo delete method id is empty.");
             var user = this.Get(id);
-            return await this._manager.UserManager.DeleteAsync(user);
+            user.IsInactive = true;
+            return await this.UpdateAsync(user);
+            //return await this._manager.UserManager.DeleteAsync(user);
+        }
+
+        public void FinalDelete(string id)
+        {
+            var user = this.Get(id);
+            var logins = user.Logins;
+            IdentityResult result;
+            var rolesForUser = this._manager.UserManager.GetRoles(user.Id);
+            using (var transaction = this._manager.Context.Database.BeginTransaction())
+            {
+                foreach (var login in logins.ToList())
+                {
+                    this._manager.UserManager.RemoveLogin(login.UserId, new UserLoginInfo(login.LoginProvider, login.ProviderKey));
+                }
+                if (rolesForUser.Count() > 0)
+                {
+                    foreach (var item in rolesForUser.ToList())
+                    {
+                        this._manager.UserManager.RemoveFromRole(user.Id, item);
+                    }
+                }
+                result = this._manager.UserManager.Delete(user);
+                transaction.Commit();
+            }
+        }
+
+        public async Task<IdentityResult> FinalDeleteAsync(string id)
+        {
+            var user = await this.GetAsync(id);
+            var logins = user.Logins;
+            IdentityResult result;
+            var rolesForUser = await this._manager.UserManager.GetRolesAsync(user.Id);
+            using (var transaction = this._manager.Context.Database.BeginTransaction())
+            {
+                foreach (var login in logins.ToList())
+                {
+                    await this._manager.UserManager.RemoveLoginAsync(login.UserId, new UserLoginInfo(login.LoginProvider, login.ProviderKey));
+                }
+                if (rolesForUser.Count() > 0)
+                {
+                    foreach (var item in rolesForUser.ToList())
+                    {
+                        await this._manager.UserManager.RemoveFromRoleAsync(user.Id, item);
+                    }
+                }
+                result = await this._manager.UserManager.DeleteAsync(user);
+                transaction.Commit();
+            }
+            return result;
         }
 
         public ApplicationUser Get(string id)
@@ -144,14 +197,59 @@ namespace CBProject.Repositories.IdentityRepos
         {
             if (obj == null)
                 throw new NullReferenceException("In Users repository Update method parametrer is null.");
+
+            var user = this.Get(obj.Id);
+            user.BirthDate = obj.BirthDate;
+            user.FirstName = obj.FirstName;
+            user.LastName = obj.LastName;
+            user.Email = obj.Email;
+            user.Password = obj.Password;
+            user.PhoneNumber = obj.PhoneNumber;
+            user.Country = obj.Country;
+            user.State = obj.State;
+            user.City = obj.City;
+            user.PostalCode = obj.PostalCode;
+            user.Street = obj.Street;
+            user.StreetNumber = obj.StreetNumber;
+            user.NewsletterAcception = obj.NewsletterAcception;
+            user.IsInactive = obj.IsInactive;
+            user.CreditCardNum = obj.CreditCardNum;
+            user.SubscriptionId = obj.SubscriptionId;
+            user.ContentAccess = obj.ContentAccess;
+            user.ContentCategoryId = obj.ContentCategoryId;
+            user.ContentId = obj.ContentId;
+
             this._manager.UserManager.Update(obj);
+            this._manager.Context.SaveChanges();
         }
 
-        public async Task<IdentityResult> UpdateAsync(ApplicationUser obj)
+        public async Task<int> UpdateAsync(ApplicationUser obj)
         {
             if (obj == null)
                 throw new NullReferenceException("In Users repository Update method parametrer is null.");
-            return await this._manager.UserManager.UpdateAsync(obj);
+
+            var user = await this.GetAsync(obj.Id);
+            user.BirthDate = obj.BirthDate;
+            user.FirstName = obj.FirstName;
+            user.LastName = obj.LastName;
+            user.Email = obj.Email;
+            user.Password = obj.Password;
+            user.PhoneNumber = obj.PhoneNumber;
+            user.Country = obj.Country;
+            user.State = obj.State;
+            user.City = obj.City;
+            user.PostalCode = obj.PostalCode;
+            user.Street = obj.Street;
+            user.StreetNumber = obj.StreetNumber;
+            user.NewsletterAcception = obj.NewsletterAcception;
+            user.IsInactive = obj.IsInactive;
+            user.CreditCardNum = obj.CreditCardNum;
+            user.SubscriptionId = obj.SubscriptionId;
+            user.ContentAccess = obj.ContentAccess;
+            user.ContentCategoryId = obj.ContentCategoryId;
+            user.ContentId = obj.ContentId;
+            await this._manager.UserManager.UpdateAsync(obj);
+            return await this._manager.Context.SaveChangesAsync();
         }
 
         protected virtual void Dispose(bool disposing)

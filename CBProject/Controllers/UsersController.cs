@@ -5,7 +5,9 @@ using CBProject.Models.ViewModels;
 using CBProject.Repositories.IdentityRepos;
 using CBProject.Repositories.IdentityRepos.Interfaces;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web;
@@ -26,9 +28,10 @@ namespace CBProject.Controllers
         public async Task<ActionResult> Index()
         {
             var users = await _usersRepo.GetAllAsync();
+            List<ApplicationUser> activeUsers = users.Where(u => u.IsInactive == false).ToList();
             //ICollection<ApplicationUserViewModel> viewModels =
             //    Mapper.Map<ICollection<ApplicationUser>, ICollection<ApplicationUserViewModel>>(users);
-            return View(users);
+            return View(activeUsers);
         }
 
         public async Task<ActionResult> Details(string id)
@@ -49,14 +52,12 @@ namespace CBProject.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(ApplicationUserViewModel model, HttpPostedFileBase CVFile)
+        public async Task<ActionResult> Create(RegisterViewModel model, HttpPostedFileBase CVFile)
         {
             try
             {
                 if (model == null)
-                {
                     return HttpNotFound();
-                }
                 // Get CV file
                 if (CVFile != null)
                 {
@@ -67,7 +68,7 @@ namespace CBProject.Controllers
                     model.CVPath = Server.MapPath(StaticImfo.CVPath + FileName);
                     model.CVFile.SaveAs(model.CVPath);
                 }
-                var user = Mapper.Map<ApplicationUserViewModel, ApplicationUser>(model);
+                var user = Mapper.Map<RegisterViewModel, ApplicationUser>(model);
                 await _usersRepo.AddAsync(user);
                 return RedirectToAction("Index");
             }
@@ -94,6 +95,8 @@ namespace CBProject.Controllers
         {
             try
             {
+                if (model == null)
+                    return HttpNotFound();
                 // Get CV file
                 if (CVFile != null)
                 {
@@ -104,10 +107,8 @@ namespace CBProject.Controllers
                     model.CVPath = Server.MapPath(StaticImfo.CVPath + FileName);
                     model.CVFile.SaveAs(model.CVPath);
                 }
-                var user = await _usersRepo.GetAsync(model.Id);
-                if (user == null)
-                    return HttpNotFound();
-                await _usersRepo.UpdateAsync(user);
+                var user = Mapper.Map<ApplicationUserViewModel, ApplicationUser>(model);
+                int result = await _usersRepo.UpdateAsync(user);
                 return RedirectToAction("Index");
             }
             catch
@@ -138,7 +139,9 @@ namespace CBProject.Controllers
                 var user = await _usersRepo.GetAsync(model.Id);
                 if (user == null)
                     return HttpNotFound();
-                await _usersRepo.DeleteAsync(user.Id);
+                //await _usersRepo.DeleteAsync(user.Id);
+                user.IsInactive = true;
+                await _usersRepo.UpdateAsync(user);
                 return RedirectToAction("Index");
             }
             catch

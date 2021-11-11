@@ -14,97 +14,97 @@ namespace CBProject.Repositories.IdentityRepos
     public class RolesRepo : IRolesRepo,  IDisposable
     {
         private bool disposedValue;
-        private RoleManager<IdentityRole> _roleManager;
+        private DataManagers _manager;
 
         public RolesRepo(IDataManagers manager)
         {
-            this._roleManager = ((DataManagers)manager).RoleManager;
+            this._manager = ((DataManagers)manager);
         }
 
         public IdentityRole Get(string id)
         {
-            return this._roleManager.FindById(id);
+            return this._manager.RoleManager.FindById(id);
         }
 
         public IdentityRole GetByName(string name)
         {
-            return this._roleManager.FindByName(name);
+            return this._manager.RoleManager.FindByName(name);
         }
         public ICollection<IdentityRole> GetAll()
         {
-            return this._roleManager.Roles.ToList();
+            return this._manager.RoleManager.Roles.ToList();
         }
 
         public async Task<IdentityRole> GetAsync(string id)
         {
-            return await this._roleManager.FindByIdAsync(id);
+            return await this._manager.RoleManager.FindByIdAsync(id);
         }
 
         public async Task<IdentityRole> GetByNameAsync(string name)
         {
-            return await this._roleManager.FindByNameAsync(name);
+            return await this._manager.RoleManager.FindByNameAsync(name);
         }
 
         public async Task<ICollection<IdentityRole>> GetAllAsync()
         {
-            return await this._roleManager.Roles.ToListAsync();
+            return await this._manager.RoleManager.Roles.ToListAsync();
         }
 
         public void Add(string name)
         {
-            if(!this._roleManager.RoleExists(name))
+            if(!this._manager.RoleManager.RoleExists(name))
             {
                 IdentityRole role = new IdentityRole()
                 {
                     Name = name
                 };
-                this._roleManager.Create(role);
+                this._manager.RoleManager.Create(role);
             }
         }
 
         public void Add(IdentityRole role)
         {
-            if (!this._roleManager.RoleExists(role.Name))
+            if (!this._manager.RoleManager.RoleExists(role.Name))
             {
-                this._roleManager.Create(role);
+                this._manager.RoleManager.Create(role);
             }
         }
 
         public async Task<IdentityResult> AddAsync(string name)
         {
-            if (!this._roleManager.RoleExists(name))
+            if (!this._manager.RoleManager.RoleExists(name))
             {
                 IdentityRole role = new IdentityRole()
                 {
                     Name = name
                 };
-                return await this._roleManager.CreateAsync(role);
+                return await this._manager.RoleManager.CreateAsync(role);
             }
             return null;
         }
 
         public async Task<IdentityResult> AddAsync(IdentityRole role)
         {
-            if (!this._roleManager.RoleExists(role.Name))
+            if (!this._manager.RoleManager.RoleExists(role.Name))
             {
-                return await this._roleManager.CreateAsync(role);
+                return await this._manager.RoleManager.CreateAsync(role);
             }
             return null;
         }
 
         public void Delete(string name)
         {
-            if (this._roleManager.RoleExists(name))
+            if (this._manager.RoleManager.RoleExists(name))
             {
-                this._roleManager.Delete(this.GetByName(name));
+                this._manager.RoleManager.Delete(this.GetByName(name));
             }
         }
 
         public async Task<IdentityResult> DeleteAsync(string name)
         {
-            if (this._roleManager.RoleExists(name))
+            if (this._manager.RoleManager.RoleExists(name))
             {
-                return await this._roleManager.DeleteAsync(this.GetByName(name));
+                return await this._manager.RoleManager.DeleteAsync(this.GetByName(name));
             }
             return null;
         }
@@ -113,24 +113,24 @@ namespace CBProject.Repositories.IdentityRepos
         {
             IdentityRole role = this.GetByName(oldName);
             role.Name = newName;
-            this._roleManager.Update(role);
+            this._manager.RoleManager.Update(role);
         }
 
         public void Update(IdentityRole role)
         {
-            this._roleManager.Update(role);
+            this._manager.RoleManager.Update(role);
         }
 
         public async Task<IdentityResult> UpdateAsync(string oldName, string newName)
         {
             IdentityRole role = await this.GetByNameAsync(oldName);
             role.Name = newName;
-            return await this._roleManager.UpdateAsync(role);
+            return await this._manager.RoleManager.UpdateAsync(role);
         }
 
         public async Task<IdentityResult> UpdateAsync(IdentityRole role)
         {
-            return await this._roleManager.UpdateAsync(role);
+            return await this._manager.RoleManager.UpdateAsync(role);
         }
 
         protected virtual void Dispose(bool disposing)
@@ -139,7 +139,7 @@ namespace CBProject.Repositories.IdentityRepos
             {
                 if (disposing)
                 {
-                    this._roleManager.Dispose();
+                    this._manager.RoleManager.Dispose();
                 }
                 disposedValue = true;
             }
