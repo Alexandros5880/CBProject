@@ -218,8 +218,8 @@ namespace CBProject.Repositories.IdentityRepos
             user.ContentAccess = obj.ContentAccess;
             user.ContentCategoryId = obj.ContentCategoryId;
             user.ContentId = obj.ContentId;
-
-            this._manager.UserManager.Update(obj);
+            user.CVPath = obj.CVPath;
+            this._manager.UserManager.Update(user);
             this._manager.Context.SaveChanges();
         }
 
@@ -248,7 +248,8 @@ namespace CBProject.Repositories.IdentityRepos
             user.ContentAccess = obj.ContentAccess;
             user.ContentCategoryId = obj.ContentCategoryId;
             user.ContentId = obj.ContentId;
-            await this._manager.UserManager.UpdateAsync(obj);
+            user.CVPath = obj.CVPath;
+            await this._manager.UserManager.UpdateAsync(user);
             return await this._manager.Context.SaveChangesAsync();
         }
 

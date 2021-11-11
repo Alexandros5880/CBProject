@@ -65,7 +65,7 @@ namespace CBProject.Controllers
                     string FileName = Path.GetFileNameWithoutExtension(model.CVFile.FileName);
                     string FileExtension = Path.GetExtension(model.CVFile.FileName);
                     FileName = DateTime.Now.ToString("yyyyMMdd") + "-" + FileName.Trim() + FileExtension;
-                    model.CVPath = Server.MapPath(StaticImfo.CVPath + FileName);
+                    model.CVPath = Server.MapPath(StaticImfo.CVPath + model.FirstName + " " + model.LastName + FileName);
                     model.CVFile.SaveAs(model.CVPath);
                 }
                 var user = Mapper.Map<RegisterViewModel, ApplicationUser>(model);
@@ -104,7 +104,7 @@ namespace CBProject.Controllers
                     string FileName = Path.GetFileNameWithoutExtension(model.CVFile.FileName);
                     string FileExtension = Path.GetExtension(model.CVFile.FileName);
                     FileName = DateTime.Now.ToString("yyyyMMdd") + "-" + FileName.Trim() + FileExtension;
-                    model.CVPath = Server.MapPath(StaticImfo.CVPath + FileName);
+                    model.CVPath = Server.MapPath(StaticImfo.CVPath + model.FirstName + " " + model.LastName + FileName);
                     model.CVFile.SaveAs(model.CVPath);
                 }
                 var user = Mapper.Map<ApplicationUserViewModel, ApplicationUser>(model);

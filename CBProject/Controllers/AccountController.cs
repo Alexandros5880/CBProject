@@ -150,21 +150,19 @@ namespace CBProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model, HttpPostedFileBase CVFile)
         {
-            // Get CV file
-            if (CVFile != null)
-            {
-                model.CVFile = CVFile;
-                string FileName = Path.GetFileNameWithoutExtension(model.CVFile.FileName);
-                string FileExtension = Path.GetExtension(model.CVFile.FileName);
-                FileName = DateTime.Now.ToString("yyyyMMdd") + "-" + FileName.Trim() + FileExtension;
-                model.CVPath = Server.MapPath(StaticImfo.CVPath + FileName);
-                model.CVFile.SaveAs(model.CVPath);
-            }
-
             if (ModelState.IsValid)
             {
-                ApplicationUser user = Mapper.Map<RegisterViewModel, ApplicationUser>(model);
-
+                // Get CV file
+                if (CVFile != null)
+                {
+                    model.CVFile = CVFile;
+                    string FileName = Path.GetFileNameWithoutExtension(model.CVFile.FileName);
+                    string FileExtension = Path.GetExtension(model.CVFile.FileName);
+                    FileName = DateTime.Now.ToString("yyyyMMdd") + "-" + FileName.Trim() + FileExtension;
+                    model.CVPath = Server.MapPath(StaticImfo.CVPath + model.FirstName + " " + model.LastName + FileName);
+                    model.CVFile.SaveAs(model.CVPath);
+                }
+                var user = Mapper.Map<RegisterViewModel, ApplicationUser>(model);
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
