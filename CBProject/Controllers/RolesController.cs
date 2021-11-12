@@ -83,6 +83,7 @@ namespace CBProject.Controllers
                 IdentityRole role = await _rolesRepo.GetAsync(model.Id);
                 if (role == null)
                     return HttpNotFound();
+                role.Name = model.Name;
                 await _rolesRepo.UpdateAsync(role);
                 return RedirectToAction("Index");
             }
@@ -122,6 +123,5 @@ namespace CBProject.Controllers
                 return View();
             }
         }
-
     }
 }

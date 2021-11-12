@@ -69,6 +69,7 @@ namespace CBProject.Controllers
                     model.CVFile.SaveAs(model.CVPath);
                 }
                 var user = Mapper.Map<RegisterViewModel, ApplicationUser>(model);
+                user.UserName = user.Email;
                 await _usersRepo.AddAsync(user);
                 return RedirectToAction("Index");
             }
@@ -108,6 +109,7 @@ namespace CBProject.Controllers
                     model.CVFile.SaveAs(model.CVPath);
                 }
                 var user = Mapper.Map<ApplicationUserViewModel, ApplicationUser>(model);
+                user.UserName = user.Email;
                 int result = await _usersRepo.UpdateAsync(user);
                 return RedirectToAction("Index");
             }

@@ -33,7 +33,19 @@ namespace CBProject.Repositories.IdentityRepos
         {
             if (obj == null)
                 throw new NullReferenceException("In user repo add method user object is null.");
-            return await this._manager.UserManager.CreateAsync(obj, obj.Password);
+            //this._manager.UserManager.UserValidator = new UserValidator<ApplicationUser>(this._manager.UserManager)
+            //{
+            //    AllowOnlyAlphanumericUserNames = false,
+            //    RequireUniqueEmail = true
+            //};
+
+            var result = await this._manager.UserManager.CreateAsync(obj, obj.Password);
+            if ( result.Succeeded )
+            {
+                return result;
+                //await SignInManager.SignInAsync(obj, isPersistent: false, rememberBrowser: false);
+            }
+            return null;
         }
 
         public void Delete(string id)
@@ -117,6 +129,20 @@ namespace CBProject.Repositories.IdentityRepos
             if (id.Length == 0)
                 throw new Exception("In Users repo Get method id is empty.");
             return await this._manager.UserManager.FindByIdAsync(id);
+        }
+
+        public ApplicationUser GetByEmail(string email)
+        {
+            if (email.Length == 0)
+                throw new Exception("In Users repo Get method id is empty.");
+            return this._manager.UserManager.FindByEmail(email);
+        }
+
+        public async Task<ApplicationUser> GetByEmailAsync(string email)
+        {
+            if (email.Length == 0)
+                throw new Exception("In Users repo Get method id is empty.");
+            return await this._manager.UserManager.FindByEmailAsync(email);
         }
 
         public ICollection<string> GetRoles(ApplicationUser user)
@@ -203,6 +229,7 @@ namespace CBProject.Repositories.IdentityRepos
             user.FirstName = obj.FirstName;
             user.LastName = obj.LastName;
             user.Email = obj.Email;
+            user.UserName = obj.Email;
             user.Password = obj.Password;
             user.PhoneNumber = obj.PhoneNumber;
             user.Country = obj.Country;
@@ -233,6 +260,7 @@ namespace CBProject.Repositories.IdentityRepos
             user.FirstName = obj.FirstName;
             user.LastName = obj.LastName;
             user.Email = obj.Email;
+            user.UserName = obj.Email;
             user.Password = obj.Password;
             user.PhoneNumber = obj.PhoneNumber;
             user.Country = obj.Country;
