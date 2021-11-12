@@ -114,10 +114,13 @@ namespace CBProject.Repositories.IdentityRepos
             IdentityRole role = this.GetByName(oldName);
             role.Name = newName;
             this._manager.RoleManager.Update(role);
+            this._manager.Context.SaveChanges();
         }
 
         public void Update(IdentityRole role)
         {
+            //this._manager.RoleManager.Update(role);
+            //this._manager.Context.SaveChanges();
             this._manager.RoleManager.Update(role);
         }
 
@@ -125,11 +128,15 @@ namespace CBProject.Repositories.IdentityRepos
         {
             IdentityRole role = await this.GetByNameAsync(oldName);
             role.Name = newName;
+            //await this._manager.RoleManager.UpdateAsync(role);
+            //return await this._manager.Context.SaveChangesAsync();
             return await this._manager.RoleManager.UpdateAsync(role);
         }
 
         public async Task<IdentityResult> UpdateAsync(IdentityRole role)
         {
+            //await this._manager.RoleManager.UpdateAsync(role);
+            //return await this._manager.Context.SaveChangesAsync();
             return await this._manager.RoleManager.UpdateAsync(role);
         }
 

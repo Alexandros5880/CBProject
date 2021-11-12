@@ -16,6 +16,7 @@ namespace CBProject.HelperClasses
         public readonly RoleManager<IdentityRole> RoleManager;
         public readonly UserStore<ApplicationUser> UserStore;
         public readonly UserManager<ApplicationUser> UserManager;
+        //public readonly SignInManager<ApplicationUser, string> SignInManager;
         
 
         public DataManagers(IContext context)

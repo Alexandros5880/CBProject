@@ -10,6 +10,8 @@ namespace CBProject.Repositories.IdentityRepos.Interfaces
     {
         ApplicationUser Get(string id);
         Task<ApplicationUser> GetAsync(string id);
+        ApplicationUser GetByEmail(string email);
+        Task<ApplicationUser> GetByEmailAsync(string email);
         ICollection<string> GetRoles(ApplicationUser user);
         Task<ICollection<string>> GetRolesAsync(ApplicationUser user);
         ICollection<ApplicationUser> GetAll();
