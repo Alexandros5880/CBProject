@@ -30,8 +30,6 @@ namespace CBProject.Controllers
         {
             var users = await _usersRepo.GetAllAsync();
             List<ApplicationUser> activeUsers = users.Where(u => u.IsInactive == false).ToList();
-            //ICollection<ApplicationUserViewModel> viewModels =
-            //    Mapper.Map<ICollection<ApplicationUser>, ICollection<ApplicationUserViewModel>>(users);
             return View(activeUsers);
         }
 
