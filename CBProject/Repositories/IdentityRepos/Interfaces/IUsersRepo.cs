@@ -18,8 +18,8 @@ namespace CBProject.Repositories.IdentityRepos.Interfaces
         ICollection<ApplicationUser> GetAll(List<string> usernames);
         Task<ICollection<ApplicationUser>> GetAllAsync();
         Task<ICollection<ApplicationUser>> GetAllAsync(List<string> usernames);
-        List<string> GetRolesForUser(ApplicationUser user);
-        Task<List<string>> GetRolesForUserAsync(ApplicationUser user);
+        List<IdentityRole> GetRolesForUser(ApplicationUser user);
+        Task<List<IdentityRole>> GetRolesForUserAsync(ApplicationUser user);
         ICollection<ApplicationUser> GetUsersFromRole(string name);
         Task<ICollection<ApplicationUser>> GetUsersFromRoleAsync(string name);
         void Add(ApplicationUser obj);
@@ -29,6 +29,7 @@ namespace CBProject.Repositories.IdentityRepos.Interfaces
         void FinalDelete(string id);
         Task<IdentityResult> FinalDeleteAsync(string id);
         void RemoveRole(ApplicationUser user, IdentityRole role);
+        void RemoveRoles(ApplicationUser user);
         void AddRole(ApplicationUser user, IdentityRole role);
         void Update(ApplicationUser obj);
         Task<int> UpdateAsync(ApplicationUser obj);

@@ -4,6 +4,7 @@ using CBProject.Models;
 using CBProject.Models.ViewModels;
 using CBProject.Repositories.IdentityRepos;
 using CBProject.Repositories.IdentityRepos.Interfaces;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -43,7 +44,7 @@ namespace CBProject.Controllers
                 return HttpNotFound();
             var viewModel = Mapper.Map<ApplicationUser, ApplicationUserViewModel>(user);
             ICollection<string> roles = await _usersRepo.GetRolesAsync(user);
-            viewModel.SelectedRoles = await _rolesRepo.GetAllByNamesAsync(roles);
+            viewModel.MyRoles = await _rolesRepo.GetAllByNamesAsync(roles);
             return View(viewModel);
         }
 
@@ -89,6 +90,9 @@ namespace CBProject.Controllers
             if (user == null)
                 return HttpNotFound();
             var viewModel = Mapper.Map<ApplicationUser, ApplicationUserViewModel>(user);
+            viewModel.OtherRoles = await _usersRepo.GetRolesForUserAsync(user);
+            ICollection<string> roles = await _usersRepo.GetRolesAsync(user);
+            viewModel.MyRoles = await _rolesRepo.GetAllByNamesAsync(roles);
             return View(viewModel);
         }
 
@@ -110,8 +114,37 @@ namespace CBProject.Controllers
                     model.CVPath = Server.MapPath(StaticImfo.CVPath + model.FirstName + " " + model.LastName + FileName);
                     model.CVFile.SaveAs(model.CVPath);
                 }
+
+                var userDB = await _usersRepo.GetAsync(model.Id);
                 var user = Mapper.Map<ApplicationUserViewModel, ApplicationUser>(model);
                 user.UserName = user.Email;
+                if (user.Password.Length == 0)
+                    user.Password = userDB.Password;
+
+                if (model.RemoveRoles != null)
+                {
+                    if (model.RemoveRoles.Count > 0)
+                    {
+                        foreach (var roleId in model.RemoveRoles)
+                        {
+                            IdentityRole r = _rolesRepo.Get(roleId);
+                            _usersRepo.RemoveRole(user, r);
+                        }
+                    }
+                }
+                
+                if (model.AddRoles != null)
+                {
+                    if (model.AddRoles.Count > 0)
+                    {
+                        foreach (var roleId in model.AddRoles)
+                        {
+                            IdentityRole r = _rolesRepo.Get(roleId);
+                            _usersRepo.AddRole(user, r);
+                        }
+                    }
+                }
+
                 int result = await _usersRepo.UpdateAsync(user);
                 return RedirectToAction("Index");
             }

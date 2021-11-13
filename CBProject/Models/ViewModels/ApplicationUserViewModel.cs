@@ -81,6 +81,8 @@ namespace CBProject.Models.ViewModels
         public bool IsInactive { get; set; }
 
         public ICollection<IdentityRole> OtherRoles { get; set; }
-        public ICollection<IdentityRole> SelectedRoles { get; set; }
+        public ICollection<IdentityRole> MyRoles { get; set; }
+        public ICollection<string> AddRoles { get; set; }
+        public ICollection<string> RemoveRoles { get; set; }
     }
 }

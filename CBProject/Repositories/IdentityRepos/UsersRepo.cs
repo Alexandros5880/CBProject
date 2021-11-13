@@ -16,19 +16,16 @@ namespace CBProject.Repositories.IdentityRepos
     {
         private bool disposedValue;
         private DataManagers _manager;
-
         public UsersRepo(IDataManagers manager)
         {
             this._manager = (DataManagers) manager;
         }
-
         public void Add(ApplicationUser obj)
         {
             if (obj == null)
                 throw new NullReferenceException("In user repo add method user object is null.");
             this._manager.UserManager.Create(obj, obj.Password);
         }
-
         public async Task<IdentityResult> AddAsync(ApplicationUser obj)
         {
             if (obj == null)
@@ -47,7 +44,6 @@ namespace CBProject.Repositories.IdentityRepos
             }
             return null;
         }
-
         public void Delete(string id)
         {
             if (id.Length == 0)
@@ -57,7 +53,6 @@ namespace CBProject.Repositories.IdentityRepos
             this.Update(user);
             //this._manager.UserManager.Delete(user);
         }
-
         public async Task<int> DeleteAsync(string id)
         {
             if (id.Length == 0)
@@ -67,7 +62,6 @@ namespace CBProject.Repositories.IdentityRepos
             return await this.UpdateAsync(user);
             //return await this._manager.UserManager.DeleteAsync(user);
         }
-
         public void FinalDelete(string id)
         {
             var user = this.Get(id);
@@ -91,7 +85,6 @@ namespace CBProject.Repositories.IdentityRepos
                 transaction.Commit();
             }
         }
-
         public async Task<IdentityResult> FinalDeleteAsync(string id)
         {
             var user = await this.GetAsync(id);
@@ -116,109 +109,105 @@ namespace CBProject.Repositories.IdentityRepos
             }
             return result;
         }
-
         public ApplicationUser Get(string id)
         {
             if (id.Length == 0)
                 throw new Exception("In Users repo Get method id is empty.");
             return this._manager.UserManager.FindById(id);
         }
-
         public async Task<ApplicationUser> GetAsync(string id)
         {
             if (id.Length == 0)
                 throw new Exception("In Users repo Get method id is empty.");
             return await this._manager.UserManager.FindByIdAsync(id);
         }
-
         public ApplicationUser GetByEmail(string email)
         {
             if (email.Length == 0)
                 throw new Exception("In Users repo Get method id is empty.");
             return this._manager.UserManager.FindByEmail(email);
         }
-
         public async Task<ApplicationUser> GetByEmailAsync(string email)
         {
             if (email.Length == 0)
                 throw new Exception("In Users repo Get method id is empty.");
             return await this._manager.UserManager.FindByEmailAsync(email);
         }
-
         public ICollection<string> GetRoles(ApplicationUser user)
         {
             return (ICollection<string>)this._manager.UserManager.GetRoles(user.Id);
         }
-
         public async Task<ICollection<string>> GetRolesAsync(ApplicationUser user)
         {
             return await this._manager.UserManager.GetRolesAsync(user.Id);
         }
-
         public ICollection<ApplicationUser> GetAll()
         {
             return this._manager.UserManager.Users.ToList();
         }
-
         public ICollection<ApplicationUser> GetAll(List<string> usernames)
         {
             return this._manager.UserManager.Users
                 .Where(u => usernames.Contains(u.UserName))
                 .ToList();
         }
-
         public async Task<ICollection<ApplicationUser>> GetAllAsync()
         {
             return await this._manager.UserManager.Users.ToListAsync<ApplicationUser>();
         }
-
         public async Task<ICollection<ApplicationUser>> GetAllAsync(List<string> usernames)
         {
             return await this._manager.UserManager.Users
                 .Where(u => usernames.Contains(u.UserName))
                 .ToListAsync();
         }
-
-        public List<string> GetRolesForUser(ApplicationUser user)
+        public List<IdentityRole> GetRolesForUser(ApplicationUser user)
         {
-            return this._manager.UserManager.GetRoles(user.Id).ToList();
+            var userRoles = _manager.UserManager.GetRoles(user.Id);
+            var roles = _manager.RoleManager.Roles.Where(r => !userRoles.Contains(r.Name)).ToList();
+            return roles;
         }
-
-        public async Task<List<string>> GetRolesForUserAsync(ApplicationUser user)
+        public async Task<List<IdentityRole>> GetRolesForUserAsync(ApplicationUser user)
         {
-            return (List<string>) await this._manager.UserManager.GetRolesAsync(user.Id);
+            var userRoles = await _manager.UserManager.GetRolesAsync(user.Id);
+            var roles = await _manager.RoleManager.Roles.Where(r => !userRoles.Contains(r.Name)).ToListAsync();
+            return roles;
         }
-
         public ICollection<ApplicationUser> GetUsersFromRole(string name)
         {
             var role = this._manager.RoleManager.FindByName(name);
             var usersIds = role.Users.Select(u => u.UserId);
             return this._manager.UserManager.Users.Where(u => usersIds.Contains(u.Id)).ToList();
         }
-
         public async Task<ICollection<ApplicationUser>> GetUsersFromRoleAsync(string name)
         {
             var role = await this._manager.RoleManager.FindByNameAsync(name);
             var usersIds = role.Users.Select(u => u.UserId).ToList();
             return await this._manager.UserManager.Users.Where(u => usersIds.Contains(u.Id)).ToListAsync();
         }
-
         public void RemoveRole(ApplicationUser user, IdentityRole role)
         {
-            IdentityUserRole userRole = user.Roles.FirstOrDefault(ur => ur.RoleId.Equals(role.Id));
-            user.Roles.Remove(userRole);
+            _manager.UserManager.RemoveFromRole(user.Id, role.Name);
         }
-
+        public void RemoveRoles(ApplicationUser user)
+        {
+            var rolesId = user.Roles.Select(r => r.RoleId).ToList();
+            var roleRepo = new RolesRepo(_manager);
+            var rolesNames = roleRepo.GetAll()
+                .Where(r => rolesId.Contains(r.Id))
+                .Select(r => r.Name)
+                .ToArray();
+            _manager.UserManager.RemoveFromRoles(user.Id, rolesNames);
+        }
         public void AddRole(ApplicationUser user, IdentityRole role)
         {
-            IdentityUserRole userRole = new IdentityUserRole()
-            {
-                UserId = user.Id,
-                RoleId = role.Id
-            };
-            user.Roles.Add(userRole);
+            if (user == null)
+                throw new Exception("User == Null.");
+            if (role == null)
+                throw new Exception("Role == Null.");
+            if (!_manager.UserManager.IsInRole(user.Id, role.Name))
+                _manager.UserManager.AddToRole(user.Id, role.Name);
         }
-
         public void Update(ApplicationUser obj)
         {
             if (obj == null)
@@ -249,7 +238,6 @@ namespace CBProject.Repositories.IdentityRepos
             this._manager.UserManager.Update(user);
             this._manager.Context.SaveChanges();
         }
-
         public async Task<int> UpdateAsync(ApplicationUser obj)
         {
             if (obj == null)
@@ -280,7 +268,6 @@ namespace CBProject.Repositories.IdentityRepos
             await this._manager.UserManager.UpdateAsync(user);
             return await this._manager.Context.SaveChangesAsync();
         }
-
         protected virtual void Dispose(bool disposing)
         {
             if (!disposedValue)
@@ -292,7 +279,6 @@ namespace CBProject.Repositories.IdentityRepos
                 disposedValue = true;
             }
         }
-
         public void Dispose()
         {
             Dispose(disposing: true);
