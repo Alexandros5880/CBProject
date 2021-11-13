@@ -219,8 +219,15 @@
     <Compile Include="Migrations\202111111232270_First.Designer.cs">
       <DependentUpon>202111111232270_First.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202111131452051_addSubcriptionPackagesAndContentTypes.cs" />
+    <Compile Include="Migrations\202111131452051_addSubcriptionPackagesAndContentTypes.Designer.cs">
+      <DependentUpon>202111131452051_addSubcriptionPackagesAndContentTypes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\EntityModels\Category.cs" />
+    <Compile Include="Models\EntityModels\ContentType.cs" />
+    <Compile Include="Models\EntityModels\SubcriptionPackage.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Interfaces\IContext.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -321,6 +328,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202111111232270_First.resx">
       <DependentUpon>202111111232270_First.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111131452051_addSubcriptionPackagesAndContentTypes.resx">
+      <DependentUpon>202111131452051_addSubcriptionPackagesAndContentTypes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

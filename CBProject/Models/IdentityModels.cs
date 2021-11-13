@@ -1,4 +1,5 @@
-﻿using CBProject.Models.Interfaces;
+﻿using CBProject.Models.EntityModels;
+using CBProject.Models.Interfaces;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
@@ -78,6 +79,10 @@ namespace CBProject.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IContext
     {
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<SubcriptionPackage> SubcriptionPackages { get; set; }
+        public DbSet<ContentType> ContentTypes { get; set; }
+
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
