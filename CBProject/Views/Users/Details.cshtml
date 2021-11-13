@@ -130,6 +130,21 @@
             @Html.DisplayFor(model => model.NewsletterAcception)
         </dd>
 
+        <dt>
+            @Html.DisplayName("Roles:")
+        </dt>
+
+        <dd>
+            <ul>
+                @foreach(var role in Model.SelectedRoles)
+            {
+                <li>
+                    @Html.DisplayFor(model => role.Name)
+                </li>
+            }
+            </ul>
+        </dd>
+
     </dl>
 </div>
 <p>

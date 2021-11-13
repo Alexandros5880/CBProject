@@ -42,6 +42,8 @@ namespace CBProject.Controllers
             if (user == null)
                 return HttpNotFound();
             var viewModel = Mapper.Map<ApplicationUser, ApplicationUserViewModel>(user);
+            ICollection<string> roles = await _usersRepo.GetRolesAsync(user);
+            viewModel.SelectedRoles = await _rolesRepo.GetAllByNamesAsync(roles);
             return View(viewModel);
         }
 

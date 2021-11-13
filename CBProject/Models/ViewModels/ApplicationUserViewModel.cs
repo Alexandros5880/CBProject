@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Web;
@@ -77,5 +79,8 @@ namespace CBProject.Models.ViewModels
         public bool NewsletterAcception { get; set; }
 
         public bool IsInactive { get; set; }
+
+        public ICollection<IdentityRole> OtherRoles { get; set; }
+        public ICollection<IdentityRole> SelectedRoles { get; set; }
     }
 }

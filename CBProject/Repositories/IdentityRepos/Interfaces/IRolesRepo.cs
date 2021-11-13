@@ -10,9 +10,11 @@ namespace CBProject.Repositories.IdentityRepos.Interfaces
         IdentityRole Get(string id);
         IdentityRole GetByName(string name);
         ICollection<IdentityRole> GetAll();
+        ICollection<IdentityRole> GetAllByNames(ICollection<string> names);
         Task<IdentityRole> GetAsync(string id);
         Task<IdentityRole> GetByNameAsync(string name);
         Task<ICollection<IdentityRole>> GetAllAsync();
+        Task<ICollection<IdentityRole>> GetAllByNamesAsync(ICollection<string> names);
         void Add(string name);
         void Add(IdentityRole role);
         Task<IdentityResult> AddAsync(string name);
