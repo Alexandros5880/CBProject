@@ -10,5 +10,9 @@ namespace CBProject.Models
         public int Id { get; set; }
 
         public string Name { get; set; }
+
+        ICollection<Video> Videos { get; set; }
+
+        ICollection<Ebook> Ebooks { get; set; }
     }
 }
