@@ -246,6 +246,8 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Configurations\ContentTypeConfiguration.cs" />
+    <Compile Include="Models\ContentType.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Interfaces\IContext.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
