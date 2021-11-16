@@ -17,9 +17,7 @@ namespace CBProject.Models
 
         public DateTime UploadDate { get; set; }
 
-        public ApplicationUser ContentCreator { get; set; }
-
-        public ContentType ContentType { get; set; }
+        public ApplicationUser ContentCreator { get; set; }        
 
         public Category Category { get; set; }
 
