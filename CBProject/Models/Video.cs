@@ -9,24 +9,32 @@ namespace CBProject.Models
 
         public string Title { get; set; }
 
-        public int MyProperty { get; set; }
-
         public string Thumbnail { get; set; }
 
         public string Description { get; set; }
 
         public DateTime UploadDate { get; set; }
 
-        public ApplicationUser ContentCreator { get; set; }        
+        public ApplicationUser ContentCreator { get; set; }
+
+        public string CreatorId { get; set; }
 
         public Category Category { get; set; }
+
+        public int CategoryId { get; set; }
 
         public string Url { get; set; }
 
         public ICollection<Tag> Tags { get; set; }
 
+        //public int TagId { get; set; }
+
         public ICollection<Review> Reviews { get; set; }
 
+       // public int ReviewId { get; set; }
+
         public ICollection<Rating> Ratings { get; set; }
+
+       // public int RatingId { get; set; }
     }
 }

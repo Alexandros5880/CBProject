@@ -244,10 +244,18 @@
     <Compile Include="Migrations\202111101552291_ApplicationUserChangedPhoneToPhoneNumber.Designer.cs">
       <DependentUpon>202111101552291_ApplicationUserChangedPhoneToPhoneNumber.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202111172126400_MyTablesInital.cs" />
+    <Compile Include="Migrations\202111172126400_MyTablesInital.Designer.cs">
+      <DependentUpon>202111172126400_MyTablesInital.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\Configurations\ContentTypeConfiguration.cs" />
-    <Compile Include="Models\Ebook.cs" />
+    <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\Configurations\CategoryConfig.cs" />
+    <Compile Include="Models\Configurations\RatingConfig.cs" />
+    <Compile Include="Models\Configurations\ReviewConfig.cs" />
+    <Compile Include="Models\Configurations\TagConfig.cs" />
+    <Compile Include="Models\Configurations\VideoConfig.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Interfaces\IContext.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -374,6 +382,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202111101552291_ApplicationUserChangedPhoneToPhoneNumber.resx">
       <DependentUpon>202111101552291_ApplicationUserChangedPhoneToPhoneNumber.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111172126400_MyTablesInital.resx">
+      <DependentUpon>202111172126400_MyTablesInital.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

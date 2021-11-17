@@ -2,14 +2,11 @@
 
 namespace CBProject.Models
 {
-    public class Tag
+    public class Category
     {
         public int Id { get; set; }
 
         public string Title { get; set; }
-
         public ICollection<Video> Videos { get; set; }
-
-        public int VideoId { get; set; }
     }
 }
