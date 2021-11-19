@@ -31,6 +31,8 @@ namespace CBProject.Repositories.IdentityRepos.Interfaces
         void RemoveRole(ApplicationUser user, IdentityRole role);
         void RemoveRoles(ApplicationUser user);
         void AddRole(ApplicationUser user, IdentityRole role);
+        void ChangePassword(string userId, string newPassword);
+        Task<Task> ChangePasswordAsync(string userId, string newPassword);
         void Update(ApplicationUser obj);
         Task<int> UpdateAsync(ApplicationUser obj);
     }

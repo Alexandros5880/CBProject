@@ -268,6 +268,19 @@ namespace CBProject.Repositories.IdentityRepos
             await this._manager.UserManager.UpdateAsync(user);
             return await this._manager.Context.SaveChangesAsync();
         }
+        public void ChangePassword(string userId, string newPassword)
+        {
+            var user = _manager.UserManager.FindById(userId);
+            user.Password = newPassword;
+            user.PasswordHash = _manager.UserManager.PasswordHasher.HashPassword(newPassword);
+        }
+        public async Task<Task> ChangePasswordAsync(string userId, string newPassword)
+        {
+            var user = await _manager.UserManager.FindByIdAsync(userId);
+            user.Password = newPassword;
+            user.PasswordHash = _manager.UserManager.PasswordHasher.HashPassword(newPassword);
+            return Task.CompletedTask;
+        }
         protected virtual void Dispose(bool disposing)
         {
             if (!disposedValue)

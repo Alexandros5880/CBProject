@@ -116,8 +116,17 @@ namespace CBProject.Controllers
                 var userDB = await _usersRepo.GetAsync(model.Id);
                 var user = Mapper.Map<ApplicationUserViewModel, ApplicationUser>(model);
                 user.UserName = user.Email;
-                if (user.Password.Length == 0)
+                if (user.Password == null || user.Password.Length == 0)
+                {
                     user.Password = userDB.Password;
+                } 
+                else
+                {
+                    if (model.Password == model.ConfirmPassword)
+                    {
+                        _usersRepo.ChangePassword(user.Id, user.Password);
+                    }
+                }
 
                 if (model.RemoveRoles != null)
                 {
@@ -148,7 +157,14 @@ namespace CBProject.Controllers
             }
             catch
             {
-                return View();
+                var user = await _usersRepo.GetAsync(model.Id);
+                if (user == null)
+                    return HttpNotFound();
+                var viewModel = Mapper.Map<ApplicationUser, ApplicationUserViewModel>(user);
+                viewModel.OtherRoles = await _usersRepo.GetRolesForUserAsync(user);
+                ICollection<string> roles = await _usersRepo.GetRolesAsync(user);
+                viewModel.MyRoles = await _rolesRepo.GetAllByNamesAsync(roles);
+                return View(viewModel);
             }
         }
 
