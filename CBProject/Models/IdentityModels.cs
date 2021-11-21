@@ -1,4 +1,5 @@
-﻿using CBProject.Models.EntityModels;
+﻿using CBProject.Models.Configurations;
+using CBProject.Models.EntityModels;
 using CBProject.Models.Interfaces;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -84,6 +85,14 @@ namespace CBProject.Models
         public DbSet<SubcriptionPackage> SubcriptionPackages { get; set; }
         public DbSet<ContentType> ContentTypes { get; set; }
 
+        public DbSet<Video> Videos { get; set; }
+
+        public DbSet<Rating> Ratings { get; set; }
+
+        public DbSet<Review> Reviews { get; set; }
+
+        public DbSet<Tag> Tags { get; set; }
+
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
@@ -96,7 +105,7 @@ namespace CBProject.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Configurations.Add(new CategoryConfig());
+           // modelBuilder.Configurations.Add(new CategoryConfig());
             modelBuilder.Configurations.Add(new RatingConfig());
             modelBuilder.Configurations.Add(new ReviewConfig());
             modelBuilder.Configurations.Add(new TagConfig());

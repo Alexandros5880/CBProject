@@ -1,23 +1,24 @@
-﻿using System.Data.Entity.ModelConfiguration;
+﻿using CBProject.Models.EntityModels;
+using System.Data.Entity.ModelConfiguration;
 
 namespace CBProject.Models.Configurations
 {
     public class CategoryConfig : EntityTypeConfiguration<Category>
     {
-        public CategoryConfig()
+        public CategoryConfig() //TODO: Category Config
         {
-            Property(c => c.Id).IsRequired();
+            //Property(c => c.Id).IsRequired();
 
-            Property(c => c.Title)
-                .HasMaxLength(200)
-                .IsRequired();
+            //Property(c => c.Title)
+            //    .HasMaxLength(200)
+            //    .IsRequired();
 
-            //Relationships
+            ////Relationships
 
-            HasMany(c => c.Videos)
-                .WithRequired(v => v.Category)
-                .HasForeignKey(v => v.CategoryId)
-                .WillCascadeOnDelete(false);
+            //HasMany(c => c.Videos)
+            //    .WithRequired(v => v.Category)
+            //    .HasForeignKey(v => v.CategoryId)
+            //    .WillCascadeOnDelete(false);
         }
     }
 }

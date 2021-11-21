@@ -27,8 +27,11 @@ namespace CBProject.Repositories
             _context.Reviews.Add(review);
         }        
 
-        public void Delete(int id)
+        public void Delete(int? id)
         {
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
+            
             var review = Get(id);
 
             if (review == null)
@@ -37,24 +40,37 @@ namespace CBProject.Repositories
             _context.Reviews.Remove(review);
         }        
 
-        public Review Get(int id)
+        public Review Get(int? id)
         {
+            if (id == null)
+                throw new ArgumentNullException(nameof(id)); 
+
             return _context.Reviews.Find(id);
         }
 
         public ICollection<Review> GetAll()
         {
-            return _context.Reviews.ToList();
+            return _context.Reviews
+                .Include(r=>r.Video)
+                .Include(r=>r.Reviewer)
+                .ToList();
         }        
 
         public ICollection<Review> GetAllEmpty()
         {
-            throw new NotImplementedException();
+
+            return _context.Reviews.ToList();
         }        
 
-        public Review GetEmpty(int id)
+        public Review GetEmpty(int? id)
         {
-            throw new NotImplementedException();
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
+
+            return _context.Reviews
+                .Include(r => r.Video)
+                .Include(r => r.Reviewer)
+                .SingleOrDefault(r=>r.Id == id);
         }        
 
         public void Save()
@@ -79,11 +95,11 @@ namespace CBProject.Repositories
         {
             throw new NotImplementedException();
         }
-        public Task<Review> GetEmptyAsync(int id)
+        public Task<Review> GetEmptyAsync(int? id)
         {
             throw new NotImplementedException();
         }
-        public Task<Review> GetAsync(int id)
+        public Task<Review> GetAsync(int? id)
         {
             throw new NotImplementedException();
         }

@@ -28,9 +28,13 @@ namespace CBProject.Repositories
 
         
 
-        public void Delete(int id)
+        public void Delete(int? id)
         {
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
+            
             var video = Get(id);
+
 
             if (video == null)
                 throw new ArgumentNullException(nameof(video));
@@ -40,29 +44,40 @@ namespace CBProject.Repositories
 
        
 
-        public Video Get(int id)
+        public Video Get(int? id)
         {
-            return _context.Videos.Find(id);
+            return _context.Videos
+                .Include(v=>v.Reviews)
+                .Include(v => v.Ratings)
+                .Include(v => v.Tags)
+                .SingleOrDefault(v=>v.Id == id);
         }
 
         public ICollection<Video> GetAll()
         {
-            return _context.Videos.ToList();
+            return _context.Videos
+                .Include(v => v.Reviews)
+                .Include(v => v.Ratings)
+                .Include(v => v.Tags)
+                .ToList();
         }
 
         
 
         public ICollection<Video> GetAllEmpty()
         {
-            throw new NotImplementedException();
+            return _context.Videos.ToList();
         }
 
 
         
 
-        public Video GetEmpty(int id)
+        public Video GetEmpty(int? id)
         {
-            throw new NotImplementedException();
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
+
+            return _context.Videos.Find(id);
         }
 
        
@@ -90,11 +105,11 @@ namespace CBProject.Repositories
         {
             throw new NotImplementedException();
         }
-        public Task<Video> GetEmptyAsync(int id)
+        public Task<Video> GetEmptyAsync(int? id)
         {
             throw new NotImplementedException();
         }
-        public Task<Video> GetAsync(int id)
+        public Task<Video> GetAsync(int? id)
         {
             throw new NotImplementedException();
         }
@@ -107,7 +122,7 @@ namespace CBProject.Repositories
         {
             throw new NotImplementedException();
         }
-        public Task<int> DeleteAsync(int id)
+        public Task<int> DeleteAsync(int? id)
         {
             throw new NotImplementedException();
         }

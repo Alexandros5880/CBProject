@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CBProject.Models.EntityModels;
+using System;
 using System.Collections.Generic;
 
 namespace CBProject.Models
@@ -19,7 +20,7 @@ namespace CBProject.Models
 
         public string CreatorId { get; set; }
 
-        public Category Category { get; set; }
+        public Category Category { get; set; }  //TODO: Categories should have collection of videos
 
         public int CategoryId { get; set; }
 

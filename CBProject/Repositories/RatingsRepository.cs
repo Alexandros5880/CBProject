@@ -116,5 +116,30 @@ namespace CBProject.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public void Delete(int? id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Rating Get(int? id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Rating> GetAsync(int? id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Rating GetEmpty(int? id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Rating> GetEmptyAsync(int? id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

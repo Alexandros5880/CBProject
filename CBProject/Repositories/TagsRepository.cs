@@ -28,8 +28,12 @@ namespace CBProject.Repositories
 
         
 
-        public void Delete(int id)
+        public void Delete(int? id)
         {
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
+
+
             var tag = Get(id);
 
             if (tag == null)
@@ -39,24 +43,34 @@ namespace CBProject.Repositories
         }
         
 
-        public Tag Get(int id)
+        public Tag Get(int? id)
         {
-            return _context.Tags.Find(id);
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
+
+            return _context.Tags
+                .Include(t=>t.Videos)
+                .SingleOrDefault(t=>t.Id == id);
         }
 
         public ICollection<Tag> GetAll()
         {
-            return _context.Tags.ToList();
+            return _context.Tags
+                .Include(t=>t.Videos)
+                .ToList();
         }       
 
         public ICollection<Tag> GetAllEmpty()
         {
-            throw new NotImplementedException();
+            return _context.Tags.ToList();
         }      
 
-        public Tag GetEmpty(int id)
+        public Tag GetEmpty(int? id)
         {
-            throw new NotImplementedException();
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
+
+            return _context.Tags.Find(id);
         }        
 
         public void Save()
@@ -89,12 +103,12 @@ namespace CBProject.Repositories
         {
             throw new NotImplementedException();
         }
-        public Task<Tag> GetEmptyAsync(int id)
+        public Task<Tag> GetEmptyAsync(int? id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Tag> GetAsync(int id)
+        public Task<Tag> GetAsync(int? id)
         {
             throw new NotImplementedException();
         }
@@ -109,7 +123,7 @@ namespace CBProject.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<int> DeleteAsync(int id)
+        public Task<int> DeleteAsync(int? id)
         {
             throw new NotImplementedException();
         }
