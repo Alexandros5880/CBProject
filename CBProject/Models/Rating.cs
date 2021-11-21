@@ -6,7 +6,7 @@
 
         public decimal Rate { get; set; }
 
-        public ApplicationUser Rater { get; set; }
+        public ApplicationUser Rater { get; set; } // TODO: Application user should have this Icollection<Rating>
 
         public string RaterId { get; set; }
 
