@@ -1,8 +1,10 @@
-﻿using CBProject.Models.EntityModels;
+﻿using CBProject.Models.Configurations;
+using CBProject.Models.EntityModels;
 using CBProject.Models.Interfaces;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
@@ -26,43 +28,45 @@ namespace CBProject.Models
 
         [NotMapped]
         public string FullName { get { return this.FirstName + " " + this.LastName; } }
-        
+
         [Required]
         public string Password { get; set; }
 
         [Required]
         public string Country { get; set; }
-        
+
         [Required]
         public string State { get; set; }
-        
+
         [Required]
         public string City { get; set; }
-        
+
         [Required]
         public string PostalCode { get; set; }
-        
+
         [Required]
         public string Street { get; set; }
-        
+
         [Required]
         public string StreetNumber { get; set; }
-        
+
         public string CreditCardNum { get; set; }
 
         public int SubscriptionId { get; set; }
-        
+
         public string ContentAccess { get; set; }
-        
+
         public string CVPath { get; set; }
 
         public int ContentCategoryId { get; set; }
-        
+
         public int ContentId { get; set; }
 
         public bool NewsletterAcception { get; set; }
 
         public bool IsInactive { get; set; }
+
+        public ICollection<Video> Videos { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
@@ -83,6 +87,14 @@ namespace CBProject.Models
         public DbSet<SubcriptionPackage> SubcriptionPackages { get; set; }
         public DbSet<ContentType> ContentTypes { get; set; }
 
+        public DbSet<Video> Videos { get; set; }
+
+        public DbSet<Rating> Ratings { get; set; }
+
+        public DbSet<Review> Reviews { get; set; }
+
+        public DbSet<Tag> Tags { get; set; }
+
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
@@ -95,12 +107,15 @@ namespace CBProject.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+           // modelBuilder.Configurations.Add(new CategoryConfig());
+            modelBuilder.Configurations.Add(new RatingConfig());
+            modelBuilder.Configurations.Add(new ReviewConfig());
+            modelBuilder.Configurations.Add(new TagConfig());
+            modelBuilder.Configurations.Add(new VideoConfig());
+
             base.OnModelCreating(modelBuilder);
 
-            //modelBuilder
-            //    .Entity<ApplicationUser>()
-            //    .Property(u => u.City)
-            //    .IsRequired();
+            
         }
     }
 

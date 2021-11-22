@@ -110,6 +110,7 @@ namespace CBProject.Migrations
 
             var store = new UserStore<ApplicationUser>(context);
             var manager = new UserManager<ApplicationUser>(store);
+
             manager.Create(user_1, user_1.Password);
             manager.Create(user_2, user_2.Password);
             manager.Create(user_3, user_3.Password);

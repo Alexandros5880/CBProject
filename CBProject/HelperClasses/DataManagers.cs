@@ -1,6 +1,8 @@
 ﻿using CBProject.HelperClasses.Interfaces;
 using CBProject.Models;
 using CBProject.Models.Interfaces;
+using CBProject.Repositories;
+using CBProject.Repositories.Interfaces;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
@@ -11,13 +13,14 @@ namespace CBProject.HelperClasses
     {
         private bool disposedValue;
 
-        public readonly ApplicationDbContext Context;
-        public readonly RoleStore<IdentityRole> RoleStore;
-        public readonly RoleManager<IdentityRole> RoleManager;
-        public readonly UserStore<ApplicationUser> UserStore;
-        public readonly UserManager<ApplicationUser> UserManager;
-        //public readonly SignInManager<ApplicationUser, string> SignInManager;
-        
+        public ApplicationDbContext Context { get; protected set; }
+        public RoleStore<IdentityRole> RoleStore { get; protected set; }
+        public RoleManager<IdentityRole> RoleManager { get; protected set; }
+        public UserStore<ApplicationUser> UserStore { get; protected set; }
+        public UserManager<ApplicationUser> UserManager { get; protected set; }
+        public IRepository<Video> Videos { get; protected set; }
+        public IRepository<Rating> Ratings { get; protected set; }
+
 
         public DataManagers(IContext context)
         {
@@ -26,6 +29,7 @@ namespace CBProject.HelperClasses
             this.UserStore = new UserStore<ApplicationUser>(this.Context);
             this.RoleManager = new RoleManager<IdentityRole>(this.RoleStore);
             this.UserManager = new UserManager<ApplicationUser>(this.UserStore);
+            this.Videos = new VideosRepository(this.Context);
         }
 
         protected virtual void Dispose(bool disposing)
