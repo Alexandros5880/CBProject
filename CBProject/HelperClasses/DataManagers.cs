@@ -30,6 +30,7 @@ namespace CBProject.HelperClasses
             this.RoleManager = new RoleManager<IdentityRole>(this.RoleStore);
             this.UserManager = new UserManager<ApplicationUser>(this.UserStore);
             this.Videos = new VideosRepository(this.Context);
+            this.Ratings = new RatingsRepository(this.Context);
         }
 
         protected virtual void Dispose(bool disposing)
