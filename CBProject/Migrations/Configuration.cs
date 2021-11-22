@@ -132,7 +132,6 @@ namespace CBProject.Migrations
             {
                 manager.AddToRole(user_4.Id, "Student");
             }
-
         }
     }
 }
