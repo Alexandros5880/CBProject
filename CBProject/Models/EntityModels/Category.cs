@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace CBProject.Models.EntityModels
 {
@@ -14,5 +11,6 @@ namespace CBProject.Models.EntityModels
         public string Name { get; set; }
         public ICollection<Category> Categories { get; set; }
         public bool Master { get; set; }
+        public ICollection<Video> Videos { get; internal set; }
     }
 }
