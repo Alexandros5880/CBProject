@@ -228,6 +228,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\EntityModels\Category.cs" />
     <Compile Include="Models\EntityModels\ContentType.cs" />
+    <Compile Include="Models\EntityModels\Ebook.cs" />
     <Compile Include="Models\EntityModels\SubcriptionPackage.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Interfaces\IContext.cs" />
@@ -236,6 +237,7 @@
     <Compile Include="Models\ViewModels\IdentityRoleViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\CategoryRepo.cs" />
+    <Compile Include="Repositories\EbooksRepository.cs" />
     <Compile Include="Repositories\Interfaces\IRepository.cs" />
     <Compile Include="Repositories\IdentityRepos\Interfaces\IRolesRepo.cs" />
     <Compile Include="Repositories\IdentityRepos\Interfaces\IUsersRepo.cs" />

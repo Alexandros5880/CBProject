@@ -83,6 +83,8 @@ namespace CBProject.Models
         public DbSet<SubcriptionPackage> SubcriptionPackages { get; set; }
         public DbSet<ContentType> ContentTypes { get; set; }
 
+        public DbSet<Ebook> Ebooks { get; set; }
+
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
