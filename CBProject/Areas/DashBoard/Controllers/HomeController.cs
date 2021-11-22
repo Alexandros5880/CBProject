@@ -10,11 +10,11 @@ namespace CBProject.Areas.DashBoard.Controllers
     [Authorize(Roles ="")]
     public class HomeController : Controller
     {
-        private readonly IDataManagers _dataManager;
+        private readonly IUnitOfWork _dataManager;
 
         private readonly string userID;
 
-        public HomeController(IDataManagers dataManager)
+        public HomeController(IUnitOfWork dataManager)
         {
             _dataManager = dataManager;
             userID = User.Identity.GetUserId();

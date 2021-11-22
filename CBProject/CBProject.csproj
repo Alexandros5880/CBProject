@@ -218,8 +218,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="HelperClasses\DataManagers.cs" />
-    <Compile Include="HelperClasses\Interfaces\IDataManagers.cs" />
+    <Compile Include="HelperClasses\UnitOfWork.cs" />
+    <Compile Include="HelperClasses\Interfaces\IUnitOfWork.cs" />
     <Compile Include="HelperClasses\StaticImfo.cs" />
     <Compile Include="Migrations\202111221438399_Start.cs" />
     <Compile Include="Migrations\202111221438399_Start.designer.cs">

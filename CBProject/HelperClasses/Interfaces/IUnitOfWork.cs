@@ -5,7 +5,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace CBProject.HelperClasses.Interfaces
 {
-    public interface IDataManagers
+    public interface IUnitOfWork
     {
         ApplicationDbContext Context { get; }
         RoleStore<IdentityRole> RoleStore { get; }

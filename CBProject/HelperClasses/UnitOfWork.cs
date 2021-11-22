@@ -9,7 +9,7 @@ using System;
 
 namespace CBProject.HelperClasses
 {
-    public class DataManagers : IDataManagers, IDisposable
+    public class UnitOfWork : IUnitOfWork, IDisposable
     {
         private bool disposedValue;
 
@@ -21,7 +21,7 @@ namespace CBProject.HelperClasses
         public IRepository<Video> Videos { get; protected set; }
         public IRepository<Rating> Ratings { get; protected set; }
 
-        public DataManagers(IContext context)
+        public UnitOfWork(IContext context)
         {
             this.Context = (ApplicationDbContext)context;
             this.RoleStore = new RoleStore<IdentityRole>(this.Context);

@@ -15,10 +15,10 @@ namespace CBProject.Repositories.IdentityRepos
     public class UsersRepo : IUsersRepo, IDisposable
     {
         private bool disposedValue;
-        private DataManagers _manager;
-        public UsersRepo(IDataManagers manager)
+        private UnitOfWork _manager;
+        public UsersRepo(IUnitOfWork manager)
         {
-            this._manager = (DataManagers) manager;
+            this._manager = (UnitOfWork) manager;
         }
         public void Add(ApplicationUser obj)
         {

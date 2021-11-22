@@ -14,10 +14,10 @@ namespace CBProject.Repositories.IdentityRepos
     public class RolesRepo : IRolesRepo,  IDisposable
     {
         private bool disposedValue;
-        private DataManagers _manager;
-        public RolesRepo(IDataManagers manager)
+        private UnitOfWork _manager;
+        public RolesRepo(IUnitOfWork manager)
         {
-            this._manager = ((DataManagers)manager);
+            this._manager = ((UnitOfWork)manager);
         }
         public IdentityRole Get(string id)
         {
