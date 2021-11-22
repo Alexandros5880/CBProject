@@ -20,6 +20,10 @@ namespace CBProject.HelperClasses
         public UserManager<ApplicationUser> UserManager { get; protected set; }
         public IRepository<Video> Videos { get; protected set; }
         public IRepository<Rating> Ratings { get; protected set; }
+        public IRepository<Review> Reviews { get; protected set; }
+
+        public IRepository<Tag> Tags { get; protected set; }
+
 
         public UnitOfWork(IContext context)
         {
@@ -30,6 +34,9 @@ namespace CBProject.HelperClasses
             this.UserManager = new UserManager<ApplicationUser>(this.UserStore);
             this.Videos = new VideosRepository(this.Context);
             this.Ratings = new RatingsRepository(this.Context);
+            Reviews = new ReviewsRepository(Context);
+            Tags = new TagsRepository(Context);
+
         }
 
         protected virtual void Dispose(bool disposing)
