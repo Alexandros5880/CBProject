@@ -62,6 +62,22 @@ namespace CBProject.Repositories.IdentityRepos
             return await this.UpdateAsync(user);
             //return await this._manager.UserManager.DeleteAsync(user);
         }
+        public void DeleteReal(string id)
+        {
+            if (id.Length == 0)
+                throw new Exception("In Users repo delete method id is empty.");
+            var user = this.Get(id);
+            this.RemoveRoles(user);
+            this._manager.UserManager.Delete(user);
+        }
+        public async Task<IdentityResult> DeleteRealAsync(string id)
+        {
+            if (id.Length == 0)
+                throw new Exception("In Users repo delete method id is empty.");
+            var user = this.Get(id);
+            this.RemoveRoles(user);
+            return await this._manager.UserManager.DeleteAsync(user);
+        }
         public void FinalDelete(string id)
         {
             var user = this.Get(id);

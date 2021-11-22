@@ -33,6 +33,13 @@ namespace CBProject.Controllers
             return View(activeUsers);
         }
 
+        public async Task<ActionResult> Deleted()
+        {
+            var users = await _usersRepo.GetAllAsync();
+            List<ApplicationUser> deactiveUsers = users.Where(u => u.IsInactive == true).ToList();
+            return View(deactiveUsers);
+        }
+
         public async Task<ActionResult> Details(string id)
         {
             if (id == null)
@@ -49,6 +56,20 @@ namespace CBProject.Controllers
         public ActionResult Create()
         {
             return View();
+        }
+
+        public async Task<ActionResult> Activate(string id)
+        {
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var user = await _usersRepo.GetAsync(id);
+            if (user == null)
+                return HttpNotFound();
+            user.IsInactive = false;
+            await _usersRepo.UpdateAsync(user);
+            var users = await _usersRepo.GetAllAsync();
+            List<ApplicationUser> activeUsers = users.Where(u => u.IsInactive == false).ToList();
+            return View("Index", activeUsers);
         }
 
         [HttpPost]
@@ -177,6 +198,19 @@ namespace CBProject.Controllers
                 return HttpNotFound();
             var viewModel = Mapper.Map<ApplicationUser, ApplicationUserViewModel>(user);
             return View(viewModel);
+        }
+
+        public async Task<ActionResult> DeleteForEver(string id)
+        {
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var user = await _usersRepo.GetAsync(id);
+            if (user == null)
+                return HttpNotFound();
+            await this._usersRepo.DeleteRealAsync(user.Id);
+            var users = await _usersRepo.GetAllAsync();
+            List<ApplicationUser> activeUsers = users.Where(u => u.IsInactive == false).ToList();
+            return View("Index", activeUsers);
         }
 
         [HttpPost]
