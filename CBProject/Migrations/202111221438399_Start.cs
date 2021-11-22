@@ -168,6 +168,26 @@
                 .PrimaryKey(t => t.ID);
             
             CreateTable(
+                "dbo.Ebooks",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        Title = c.String(),
+                        Description = c.String(),
+                        Thumbnail = c.String(),
+                        Url = c.String(),
+                        UploadDate = c.DateTime(nullable: false),
+                        CreatorId = c.String(),
+                        CategoryId = c.Int(nullable: false),
+                        ContentCreator_Id = c.String(maxLength: 128),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.Categories", t => t.CategoryId, cascadeDelete: true)
+                .ForeignKey("dbo.AspNetUsers", t => t.ContentCreator_Id)
+                .Index(t => t.CategoryId)
+                .Index(t => t.ContentCreator_Id);
+            
+            CreateTable(
                 "dbo.AspNetRoles",
                 c => new
                     {
@@ -211,6 +231,8 @@
             DropForeignKey("dbo.AspNetUsers", "SubcriptionPackage_ID", "dbo.SubcriptionPackages");
             DropForeignKey("dbo.SubcriptionPackages", "ContentType_ID", "dbo.ContentTypes");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
+            DropForeignKey("dbo.Ebooks", "ContentCreator_Id", "dbo.AspNetUsers");
+            DropForeignKey("dbo.Ebooks", "CategoryId", "dbo.Categories");
             DropForeignKey("dbo.VideoTags", "TagId", "dbo.Videos");
             DropForeignKey("dbo.VideoTags", "VideoId", "dbo.Tags");
             DropForeignKey("dbo.Reviews", "VideoId", "dbo.Videos");
@@ -227,6 +249,8 @@
             DropIndex("dbo.VideoTags", new[] { "VideoId" });
             DropIndex("dbo.SubcriptionPackages", new[] { "ContentType_ID" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
+            DropIndex("dbo.Ebooks", new[] { "ContentCreator_Id" });
+            DropIndex("dbo.Ebooks", new[] { "CategoryId" });
             DropIndex("dbo.Reviews", new[] { "VideoId" });
             DropIndex("dbo.Reviews", new[] { "ReviewerId" });
             DropIndex("dbo.Ratings", new[] { "VideoId" });
@@ -243,6 +267,7 @@
             DropTable("dbo.VideoTags");
             DropTable("dbo.SubcriptionPackages");
             DropTable("dbo.AspNetRoles");
+            DropTable("dbo.Ebooks");
             DropTable("dbo.ContentTypes");
             DropTable("dbo.Tags");
             DropTable("dbo.Reviews");

@@ -21,7 +21,6 @@ namespace CBProject.HelperClasses
         public IRepository<Video> Videos { get; protected set; }
         public IRepository<Rating> Ratings { get; protected set; }
 
-
         public DataManagers(IContext context)
         {
             this.Context = (ApplicationDbContext)context;
