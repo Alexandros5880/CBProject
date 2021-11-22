@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace CBProject.Repositories
 {
@@ -25,9 +24,6 @@ namespace CBProject.Repositories
 
             _context.Videos.Add(video);
         }
-
-        
-
         public void Delete(int? id)
         {
             if (id == null)
@@ -41,9 +37,6 @@ namespace CBProject.Repositories
 
             _context.Videos.Remove(video);
         }
-
-       
-
         public Video Get(int? id)
         {
             return _context.Videos
@@ -52,7 +45,6 @@ namespace CBProject.Repositories
                 .Include(v => v.Tags)
                 .SingleOrDefault(v=>v.Id == id);
         }
-
         public ICollection<Video> GetAll()
         {
             return _context.Videos
@@ -61,17 +53,10 @@ namespace CBProject.Repositories
                 .Include(v => v.Tags)
                 .ToList();
         }
-
-        
-
         public ICollection<Video> GetAllEmpty()
         {
             return _context.Videos.ToList();
         }
-
-
-        
-
         public Video GetEmpty(int? id)
         {
             if (id == null)
@@ -79,16 +64,10 @@ namespace CBProject.Repositories
 
             return _context.Videos.Find(id);
         }
-
-       
-
         public void Save()
         {
             _context.SaveChanges();
         }
-
-        
-
         public void Update(Video video)
         {
             if (video == null)
@@ -113,7 +92,6 @@ namespace CBProject.Repositories
         {
             throw new NotImplementedException();
         }
-
         public Task<ICollection<Video>> GetAllEmptyAsync()
         {
             throw new NotImplementedException();

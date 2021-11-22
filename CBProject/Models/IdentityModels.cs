@@ -66,6 +66,8 @@ namespace CBProject.Models
 
         public bool IsInactive { get; set; }
 
+        public ICollection<Video> Videos { get; set; }
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType

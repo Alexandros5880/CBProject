@@ -17,8 +17,7 @@ namespace CBProject.Areas.DashBoard
             context.MapRoute(
                 "DashBoard_default",
                 "DashBoard/{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
-                new { action = "Index", id = UrlParameter.Optional },
+                new { controller = "Home", action = "Index", id = UrlParameter.Optional },
                 new[] { "CBProject.Areas.DashBoard.Controllers" }
             );
         }

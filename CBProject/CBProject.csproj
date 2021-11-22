@@ -81,7 +81,9 @@
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.ComponentModel.DataAnnotations">
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.ComponentModel.DataAnnotations.dll</HintPath>
+    </Reference>
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Xml.Linq" />
@@ -219,17 +221,9 @@
     <Compile Include="HelperClasses\DataManagers.cs" />
     <Compile Include="HelperClasses\Interfaces\IDataManagers.cs" />
     <Compile Include="HelperClasses\StaticImfo.cs" />
-    <Compile Include="Migrations\202111111232270_First.cs" />
-    <Compile Include="Migrations\202111111232270_First.Designer.cs">
-      <DependentUpon>202111111232270_First.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202111131452051_addSubcriptionPackagesAndContentTypes.cs" />
-    <Compile Include="Migrations\202111131452051_addSubcriptionPackagesAndContentTypes.Designer.cs">
-      <DependentUpon>202111131452051_addSubcriptionPackagesAndContentTypes.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202111172126400_MyTablesInital.cs" />
-    <Compile Include="Migrations\202111172126400_MyTablesInital.Designer.cs">
-      <DependentUpon>202111172126400_MyTablesInital.cs</DependentUpon>
+    <Compile Include="Migrations\202111221213251_Start.cs" />
+    <Compile Include="Migrations\202111221213251_Start.designer.cs">
+      <DependentUpon>202111221213251_Start.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -355,14 +349,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202111111232270_First.resx">
-      <DependentUpon>202111111232270_First.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202111131452051_addSubcriptionPackagesAndContentTypes.resx">
-      <DependentUpon>202111131452051_addSubcriptionPackagesAndContentTypes.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202111172126400_MyTablesInital.resx">
-      <DependentUpon>202111172126400_MyTablesInital.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202111221213251_Start.resx">
+      <DependentUpon>202111221213251_Start.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

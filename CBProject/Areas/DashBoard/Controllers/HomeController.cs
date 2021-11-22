@@ -1,25 +1,22 @@
-﻿using CBProject.Models;
+﻿using CBProject.HelperClasses.Interfaces;
+using CBProject.Models;
 using CBProject.Models.ViewModels;
 using Microsoft.AspNet.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 
 namespace CBProject.Areas.DashBoard.Controllers
-{  
+{
     [Authorize(Roles ="")]
     public class HomeController : Controller
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IDataManagers _dataManager;
 
         private readonly string userID;
 
-        public HomeController(IUnitOfWork unitOfWork)
+        public HomeController(IDataManagers dataManager)
         {
-            _unitOfWork = unitOfWork;
+            _dataManager = dataManager;
             userID = User.Identity.GetUserId();
         }
 
@@ -59,7 +56,7 @@ namespace CBProject.Areas.DashBoard.Controllers
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            var video = _unitOfWork.Videos.Get(id);
+            var video = _dataManager.Videos.Get(id);
 
             if (video == null)
                 return HttpNotFound();
@@ -67,7 +64,7 @@ namespace CBProject.Areas.DashBoard.Controllers
             var viewModel = new VideoViewModel()
             {
                 Video = video,
-                Ratings = _unitOfWork.Ratings.GetAll()
+                Ratings = _dataManager.Ratings.GetAll()
             };
             return View(viewModel);
         }
