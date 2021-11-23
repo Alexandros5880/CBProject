@@ -55,6 +55,7 @@ namespace CBProject.Repositories
         }
         public ICollection<Video> GetAllEmpty()
         {
+            
             return _context.Videos.ToList();
         }
         public Video GetEmpty(int? id)
@@ -75,6 +76,10 @@ namespace CBProject.Repositories
 
             _context.Entry(video).State = EntityState.Modified;
         }
+
+     
+
+
         //------------------------------ASYNC----------------------------------------------
         public Task<int> UpdateAsync(Video obj)
         {

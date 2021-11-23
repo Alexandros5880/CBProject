@@ -22,7 +22,7 @@ namespace CBProject.App_Start
 
             builder.RegisterType<RolesRepo>().As<IRolesRepo>();
             builder.RegisterType<UsersRepo>().As<IUsersRepo>();
-            builder.RegisterType<DataManagers>().As<IDataManagers>();
+            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
             builder.RegisterType<UserStore<ApplicationUser>>().As<IUserStore<ApplicationUser>>();
             builder.RegisterType<RoleStore<IdentityRole>>().As<IRoleStore<IdentityRole, string>>();
             builder.RegisterType<ApplicationDbContext>().As<IContext>();
@@ -37,7 +37,7 @@ namespace CBProject.App_Start
 
             builder.RegisterType<RolesRepo>().As<IRolesRepo>();
             builder.RegisterType<UsersRepo>().As<IUsersRepo>();
-            builder.RegisterType<DataManagers>().As<IDataManagers>();
+            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
             builder.RegisterType<UserStore<ApplicationUser>>().As<IUserStore<ApplicationUser>>();
             builder.RegisterType<RoleStore<IdentityRole>>().As<IRoleStore<IdentityRole, string>>();
             builder.RegisterType<ApplicationDbContext>().As<IContext>();
@@ -54,7 +54,7 @@ namespace CBProject.App_Start
 
             builder.RegisterType<RolesRepo>().As<IRolesRepo>();
             builder.RegisterType<UsersRepo>().As<IUsersRepo>();
-            builder.RegisterType<DataManagers>().As<IDataManagers>();
+            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
             builder.RegisterType<UserStore<ApplicationUser>>().As<IUserStore<ApplicationUser>>();
             builder.RegisterType<RoleStore<IdentityRole>>().As<IRoleStore<IdentityRole, string>>();
             builder.RegisterType<ApplicationDbContext>().As<IContext>();

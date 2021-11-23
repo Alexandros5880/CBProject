@@ -15,10 +15,10 @@ namespace CBProject.Repositories.IdentityRepos
     public class UsersRepo : IUsersRepo, IDisposable
     {
         private bool disposedValue;
-        private DataManagers _manager;
-        public UsersRepo(IDataManagers manager)
+        private UnitOfWork _manager;
+        public UsersRepo(IUnitOfWork manager)
         {
-            this._manager = (DataManagers) manager;
+            this._manager = (UnitOfWork) manager;
         }
         public void Add(ApplicationUser obj)
         {
@@ -61,6 +61,22 @@ namespace CBProject.Repositories.IdentityRepos
             user.IsInactive = true;
             return await this.UpdateAsync(user);
             //return await this._manager.UserManager.DeleteAsync(user);
+        }
+        public void DeleteReal(string id)
+        {
+            if (id.Length == 0)
+                throw new Exception("In Users repo delete method id is empty.");
+            var user = this.Get(id);
+            this.RemoveRoles(user);
+            this._manager.UserManager.Delete(user);
+        }
+        public async Task<IdentityResult> DeleteRealAsync(string id)
+        {
+            if (id.Length == 0)
+                throw new Exception("In Users repo delete method id is empty.");
+            var user = this.Get(id);
+            this.RemoveRoles(user);
+            return await this._manager.UserManager.DeleteAsync(user);
         }
         public void FinalDelete(string id)
         {

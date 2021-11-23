@@ -26,6 +26,8 @@ namespace CBProject.Repositories.IdentityRepos.Interfaces
         Task<IdentityResult> AddAsync(ApplicationUser obj);
         void Delete(string id);
         Task<int> DeleteAsync(string id);
+        void DeleteReal(string id);
+        Task<IdentityResult> DeleteRealAsync(string id);
         void FinalDelete(string id);
         Task<IdentityResult> FinalDeleteAsync(string id);
         void RemoveRole(ApplicationUser user, IdentityRole role);

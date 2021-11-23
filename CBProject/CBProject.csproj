@@ -218,12 +218,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="HelperClasses\DataManagers.cs" />
-    <Compile Include="HelperClasses\Interfaces\IDataManagers.cs" />
+    <Compile Include="HelperClasses\UnitOfWork.cs" />
+    <Compile Include="HelperClasses\Interfaces\IUnitOfWork.cs" />
     <Compile Include="HelperClasses\StaticImfo.cs" />
-    <Compile Include="Migrations\202111221213251_Start.cs" />
-    <Compile Include="Migrations\202111221213251_Start.designer.cs">
-      <DependentUpon>202111221213251_Start.cs</DependentUpon>
+    <Compile Include="Migrations\202111221438399_Start.cs" />
+    <Compile Include="Migrations\202111221438399_Start.designer.cs">
+      <DependentUpon>202111221438399_Start.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\202111221431467_AddEbookEntity.cs" />
     <Compile Include="Migrations\202111221431467_AddEbookEntity.designer.cs">
@@ -251,6 +251,8 @@
     <Compile Include="Models\ViewModels\IdentityRoleViewModel.cs" />
     <Compile Include="Models\ViewModels\VideoViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\CategoryRepository.cs" />
+    <Compile Include="Repositories\ContentTypeRepository.cs" />
     <Compile Include="Repositories\EbooksRepository.cs" />
     <Compile Include="Repositories\Interfaces\IRepository.cs" />
     <Compile Include="Repositories\IdentityRepos\Interfaces\IRolesRepo.cs" />
@@ -333,6 +335,7 @@
     <Content Include="Views\Users\Create.cshtml" />
     <Content Include="Views\Users\Edit.cshtml" />
     <Content Include="Views\Users\Delete.cshtml" />
+    <Content Include="Views\Users\Deleted.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -355,8 +358,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202111221213251_Start.resx">
-      <DependentUpon>202111221213251_Start.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202111221438399_Start.resx">
+      <DependentUpon>202111221438399_Start.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202111221431467_AddEbookEntity.resx">
       <DependentUpon>202111221431467_AddEbookEntity.cs</DependentUpon>

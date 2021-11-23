@@ -3,18 +3,15 @@ using CBProject.Models.EntityModels;
 using CBProject.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
-using System.Data.Entity;
 
 namespace CBProject.Repositories
 {
     public class EbooksRepository : IRepository<Ebook>
     {
-
         private readonly ApplicationDbContext _context;
-
         public EbooksRepository(ApplicationDbContext context)
         {
             _context = context;
@@ -25,7 +22,6 @@ namespace CBProject.Repositories
                 throw new ArgumentNullException(nameof(ebook));
             _context.Ebooks.Add(ebook);
         }
-
         public void Update(Ebook ebook)
         {
            if(ebook == null)
@@ -52,23 +48,18 @@ namespace CBProject.Repositories
                 throw new ArgumentNullException(nameof(id));
             _context.Ebooks.Remove(ebook);
         }
-
-
         public async Task<ICollection<Ebook>> GetAllAsync()
         {
             return await _context.Ebooks.ToListAsync();
         }
-
         public ICollection<Ebook> GetAllEmpty()
         {
             throw new NotImplementedException();
         }
-
         public Task<ICollection<Ebook>> GetAllEmptyAsync()
         {
             throw new NotImplementedException();
         }
-
         public async Task<Ebook> GetAsync(int? id)
         {
             if (id == null)
@@ -80,25 +71,18 @@ namespace CBProject.Repositories
 
 
         }
-
         public Ebook GetEmpty(int? id)
         {
             throw new NotImplementedException();
         }
-
         public Task<Ebook> GetEmptyAsync(int? id)
         {
             throw new NotImplementedException();
         }
-
-    
         public Task<int> SaveAsync()
         {
             throw new NotImplementedException();
         }
-
-    
-
         public void Save()
         {
             _context.SaveChanges();

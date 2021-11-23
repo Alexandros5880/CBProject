@@ -10,11 +10,13 @@ namespace CBProject.Areas.DashBoard.Controllers
     [Authorize(Roles ="")]
     public class HomeController : Controller
     {
-        private readonly IDataManagers _dataManager;
+        private readonly IUnitOfWork _dataManager;
+
+        
 
         private readonly string userID;
 
-        public HomeController(IDataManagers dataManager)
+        public HomeController(IUnitOfWork dataManager)
         {
             _dataManager = dataManager;
             userID = User.Identity.GetUserId();
@@ -46,7 +48,7 @@ namespace CBProject.Areas.DashBoard.Controllers
         [Authorize(Roles ="ContentCreator")]
         public ActionResult MyVideosCC() // Content Creator -> Add Video, Edit Video, Delete Video
         {
-
+            
             return View();
         }
 
@@ -64,7 +66,9 @@ namespace CBProject.Areas.DashBoard.Controllers
             var viewModel = new VideoViewModel()
             {
                 Video = video,
-                Ratings = _dataManager.Ratings.GetAll()
+                Ratings = _dataManager.Ratings.GetAll(),
+                Reviews = _dataManager.Reviews.GetAll(),
+                Tags = _dataManager.Tags.GetAll()
             };
             return View(viewModel);
         }

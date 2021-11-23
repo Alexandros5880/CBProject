@@ -5,7 +5,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace CBProject.HelperClasses.Interfaces
 {
-    public interface IDataManagers
+    public interface IUnitOfWork
     {
         ApplicationDbContext Context { get; }
         RoleStore<IdentityRole> RoleStore { get; }
@@ -14,5 +14,11 @@ namespace CBProject.HelperClasses.Interfaces
         UserManager<ApplicationUser> UserManager { get; }
         IRepository<Video> Videos { get; }
         IRepository<Rating> Ratings { get; }
+
+        IRepository<Tag> Tags { get; }
+
+        IRepository<Review> Reviews { get; }
+
+
     }
 }

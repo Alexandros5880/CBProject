@@ -9,7 +9,7 @@ using System;
 
 namespace CBProject.HelperClasses
 {
-    public class DataManagers : IDataManagers, IDisposable
+    public class UnitOfWork : IUnitOfWork, IDisposable
     {
         private bool disposedValue;
 
@@ -20,9 +20,12 @@ namespace CBProject.HelperClasses
         public UserManager<ApplicationUser> UserManager { get; protected set; }
         public IRepository<Video> Videos { get; protected set; }
         public IRepository<Rating> Ratings { get; protected set; }
+        public IRepository<Review> Reviews { get; protected set; }
+
+        public IRepository<Tag> Tags { get; protected set; }
 
 
-        public DataManagers(IContext context)
+        public UnitOfWork(IContext context)
         {
             this.Context = (ApplicationDbContext)context;
             this.RoleStore = new RoleStore<IdentityRole>(this.Context);
@@ -31,6 +34,9 @@ namespace CBProject.HelperClasses
             this.UserManager = new UserManager<ApplicationUser>(this.UserStore);
             this.Videos = new VideosRepository(this.Context);
             this.Ratings = new RatingsRepository(this.Context);
+            Reviews = new ReviewsRepository(Context);
+            Tags = new TagsRepository(Context);
+
         }
 
         protected virtual void Dispose(bool disposing)

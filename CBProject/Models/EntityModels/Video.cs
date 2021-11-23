@@ -20,7 +20,7 @@ namespace CBProject.Models
 
         public string CreatorId { get; set; }
 
-        public Category Category { get; set; }  //TODO: Categories should have collection of videos
+        public Category Category { get; set; } 
 
         public int CategoryId { get; set; }
 
