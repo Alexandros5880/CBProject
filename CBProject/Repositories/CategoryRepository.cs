@@ -39,6 +39,7 @@ namespace CBProject.Repositories
                 throw new ArgumentNullException(nameof(id));
             return _context.Categories
                  .Include(c => c.Categories)
+                 .Include(v => v.Videos)
                  .FirstOrDefault(c => c.ID == id);
         }
 
@@ -46,6 +47,7 @@ namespace CBProject.Repositories
         {
             return _context.Categories
                 .Include(c => c.Categories)
+                .Include(v => v.Videos)
                 .ToList();
         }
 
@@ -53,6 +55,7 @@ namespace CBProject.Repositories
         {
             return await _context.Categories
                 .Include(c => c.Categories)
+                .Include(v => v.Videos)
                 .ToListAsync();
         }
 
@@ -72,6 +75,7 @@ namespace CBProject.Repositories
                 throw new ArgumentNullException(nameof(id));
             return await _context.Categories
                 .Include(c => c.Categories)
+                .Include(v => v.Videos)
                 .FirstAsync(c => c.ID == id);
         }
 

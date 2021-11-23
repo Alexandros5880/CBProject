@@ -230,12 +230,12 @@
     <Compile Include="Models\EntityModels\Category.cs" />
     <Compile Include="Models\EntityModels\ContentType.cs" />
     <Compile Include="Models\EntityModels\Ebook.cs" />
-    <Compile Include="Models\EntityModels\SubcriptionPackage.cs" />
     <Compile Include="Models\Configurations\CategoryConfig.cs" />
     <Compile Include="Models\Configurations\RatingConfig.cs" />
     <Compile Include="Models\Configurations\ReviewConfig.cs" />
     <Compile Include="Models\Configurations\TagConfig.cs" />
     <Compile Include="Models\Configurations\VideoConfig.cs" />
+    <Compile Include="Models\EntityModels\SubscriptionPackage.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Interfaces\IContext.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -257,6 +257,7 @@
     <Compile Include="Repositories\IdentityRepos\UsersRepo.cs" />
     <Compile Include="Repositories\RatingsRepository.cs" />
     <Compile Include="Repositories\ReviewsRepository.cs" />
+    <Compile Include="Repositories\SubscriptionPackageRepository.cs" />
     <Compile Include="Repositories\TagsRepository.cs" />
     <Compile Include="Repositories\VideosRepository.cs" />
     <Compile Include="Startup.cs" />
