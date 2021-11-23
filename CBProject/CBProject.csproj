@@ -225,6 +225,10 @@
     <Compile Include="Migrations\202111221438399_Start.designer.cs">
       <DependentUpon>202111221438399_Start.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202111231855342_AddEbooks.cs" />
+    <Compile Include="Migrations\202111231855342_AddEbooks.designer.cs">
+      <DependentUpon>202111231855342_AddEbooks.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\EntityModels\Category.cs" />
@@ -357,6 +361,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202111221438399_Start.resx">
       <DependentUpon>202111221438399_Start.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111231855342_AddEbooks.resx">
+      <DependentUpon>202111231855342_AddEbooks.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
