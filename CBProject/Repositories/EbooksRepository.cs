@@ -32,11 +32,17 @@ namespace CBProject.Repositories
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
-            return _context.Ebooks.FirstOrDefault(e=>e.ID == id);
+            return _context.Ebooks
+                .Include(c => c.Category)
+                .Include(c => c.Tags).Include(c => c.Reviews)
+                .Include(c => c.Ratings)
+                .FirstOrDefault(e=>e.ID == id);
         }
         public ICollection<Ebook> GetAll()
         {
-            return _context.Ebooks.ToList();
+            return _context.Ebooks.Include(c => c.Category)
+                .Include(c => c.Tags).Include(c => c.Reviews)
+                .Include(c => c.Ratings).ToList();
         }
         public void Delete(int? id)
         {
@@ -50,7 +56,9 @@ namespace CBProject.Repositories
         }
         public async Task<ICollection<Ebook>> GetAllAsync()
         {
-            return await _context.Ebooks.ToListAsync();
+            return await _context.Ebooks.Include(c => c.Category)
+                .Include(c => c.Tags).Include(c => c.Reviews)
+                .Include(c => c.Ratings).ToListAsync();
         }
         public ICollection<Ebook> GetAllEmpty()
         {
@@ -64,7 +72,9 @@ namespace CBProject.Repositories
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
-           var ebook = await _context.Ebooks.FindAsync(id);
+            var ebook = await _context.Ebooks.Include(c => c.Category)
+                 .Include(c => c.Tags).Include(c => c.Reviews)
+                 .Include(c => c.Ratings).FirstAsync(c=>c.ID == id);
             if(ebook == null)
                 throw new ArgumentNullException(nameof(ebook));
             return ebook;

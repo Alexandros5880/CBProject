@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CBProject.Models;
+using CBProject.Models.EntityModels;
 using CBProject.Models.ViewModels;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Collections.Generic;
@@ -27,6 +28,9 @@ namespace CBProject.App_Start
 
             Mapper.CreateMap<ICollection<ApplicationUser>, ICollection<ApplicationUserViewModel>>();
             Mapper.CreateMap<ICollection<ApplicationUserViewModel>, ICollection<ApplicationUser>>();
+
+            Mapper.CreateMap<Ebook, EbookViewModel>();
+            Mapper.CreateMap<EbookViewModel, Ebook>();
 
         }
     }

@@ -1,5 +1,6 @@
 ﻿using CBProject.HelperClasses.Interfaces;
 using CBProject.Models;
+using CBProject.Models.EntityModels;
 using CBProject.Models.Interfaces;
 using CBProject.Repositories;
 using CBProject.Repositories.Interfaces;
@@ -24,6 +25,8 @@ namespace CBProject.HelperClasses
 
         public IRepository<Tag> Tags { get; protected set; }
 
+        public IRepository<Ebook> Ebooks { get; protected set; }
+        public IRepository<Category> Categories { get; protected set; }
 
         public UnitOfWork(IContext context)
         {
@@ -34,6 +37,7 @@ namespace CBProject.HelperClasses
             this.UserManager = new UserManager<ApplicationUser>(this.UserStore);
             this.Videos = new VideosRepository(this.Context);
             this.Ratings = new RatingsRepository(this.Context);
+            this.Ebooks = new EbooksRepository(this.Context);
             Reviews = new ReviewsRepository(Context);
             Tags = new TagsRepository(Context);
 
