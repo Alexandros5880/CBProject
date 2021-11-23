@@ -54,11 +54,11 @@ namespace CBProject.Repositories
         }
         public ICollection<Ebook> GetAllEmpty()
         {
-            throw new NotImplementedException();
+            return _context.Ebooks.ToList();
         }
-        public Task<ICollection<Ebook>> GetAllEmptyAsync()
+        public async Task<ICollection<Ebook>> GetAllEmptyAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Ebooks.ToListAsync();
         }
         public async Task<Ebook> GetAsync(int? id)
         {
@@ -69,19 +69,26 @@ namespace CBProject.Repositories
                 throw new ArgumentNullException(nameof(ebook));
             return ebook;
 
-
         }
         public Ebook GetEmpty(int? id)
         {
-            throw new NotImplementedException();
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
+            return _context.Ebooks.FirstOrDefault(e => e.ID == id);
         }
-        public Task<Ebook> GetEmptyAsync(int? id)
+        public async Task<Ebook> GetEmptyAsync(int? id)
         {
-            throw new NotImplementedException();
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
+            var ebook = await _context.Ebooks.FindAsync(id);
+            if (ebook == null)
+                throw new ArgumentNullException(nameof(ebook));
+            return ebook;
+
         }
-        public Task<int> SaveAsync()
+        public async Task<int> SaveAsync()
         {
-            throw new NotImplementedException();
+            return await _context.SaveChangesAsync();
         }
         public void Save()
         {
