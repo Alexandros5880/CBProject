@@ -61,6 +61,19 @@ namespace CBProject.Repositories
             _context.Entry(rating).State = EntityState.Modified;
 
         }
+        public void Delete(int? id)
+        {
+            throw new NotImplementedException();
+        }
+        public Rating Get(int? id)
+        {
+            throw new NotImplementedException();
+        }
+        public Rating GetEmpty(int? id)
+        {
+            throw new NotImplementedException();
+        }
+        // TODO: RatingsRepository Async
         public Task<int> UpdateAsync(Rating obj)
         {
             throw new NotImplementedException();
@@ -93,19 +106,7 @@ namespace CBProject.Repositories
         {
             throw new NotImplementedException();
         }
-        public void Delete(int? id)
-        {
-            throw new NotImplementedException();
-        }
-        public Rating Get(int? id)
-        {
-            throw new NotImplementedException();
-        }
         public Task<Rating> GetAsync(int? id)
-        {
-            throw new NotImplementedException();
-        }
-        public Rating GetEmpty(int? id)
         {
             throw new NotImplementedException();
         }

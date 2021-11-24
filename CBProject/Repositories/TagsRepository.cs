@@ -74,6 +74,7 @@ namespace CBProject.Repositories
 
             _context.Entry(tag).State = EntityState.Modified;
         }
+        // TODO: TagsRepository Async
         public Task<int> UpdateAsync(Tag obj)
         {
             throw new NotImplementedException();
