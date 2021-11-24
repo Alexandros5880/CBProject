@@ -22,6 +22,7 @@ namespace CBProject.Models
 
         public Category Category { get; set; } 
 
+
         public int CategoryId { get; set; }
 
         public string Url { get; set; }
