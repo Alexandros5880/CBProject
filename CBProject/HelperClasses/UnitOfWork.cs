@@ -16,6 +16,7 @@ namespace CBProject.HelperClasses
         public RoleManager<IdentityRole> RoleManager { get; protected set; }
         public UserStore<ApplicationUser> UserStore { get; protected set; }
         public UserManager<ApplicationUser> UserManager { get; protected set; }
+        public CategoriesRepository Categories { get; protected set; }
         public VideosRepository Videos { get; protected set; }
         public RatingsRepository Ratings { get; protected set; }
         public ReviewsRepository Reviews { get; protected set; }
@@ -29,6 +30,7 @@ namespace CBProject.HelperClasses
             this.UserStore = new UserStore<ApplicationUser>(this.Context);
             this.RoleManager = new RoleManager<IdentityRole>(this.RoleStore);
             this.UserManager = new UserManager<ApplicationUser>(this.UserStore);
+            this.Categories = new CategoriesRepository(this);
             this.Videos = new VideosRepository(this);
             this.Ratings = new RatingsRepository(this);
             this.Reviews = new ReviewsRepository(this);

@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace CBProject.Repositories
 {
-    public class CategoryRepository : IRepository<Category>, IDisposable
+    public class CategoriesRepository : IRepository<Category>, IDisposable
     {
         private bool disposedValue;
         private ApplicationDbContext _context { get; set; }
-        public CategoryRepository(IUnitOfWork unitOfWork)
+        public CategoriesRepository(IUnitOfWork unitOfWork)
         {
             _context = unitOfWork.Context;
         }
