@@ -2,6 +2,6 @@
 {
     public class Paynment
     {
-        // TODO: Create Paynment Entity , Repository, Controller , Views
+        // TODO: Add Paynment 
     }
 }
