@@ -34,7 +34,10 @@ namespace CBProject.Repositories
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
-            return _context.Ebooks.FirstOrDefault(e=>e.ID == id);
+            return _context.Ebooks
+                .Include(e => e.Category)
+                .Include(e => e.ContentCreator)
+                .FirstOrDefault(e=>e.ID == id);
         }
         public ICollection<Ebook> GetAll()
         {
@@ -52,21 +55,28 @@ namespace CBProject.Repositories
         }
         public async Task<ICollection<Ebook>> GetAllAsync()
         {
-            return await _context.Ebooks.ToListAsync();
+            return await _context.Ebooks
+                .Include(e => e.Category)
+                .Include(e => e.ContentCreator)
+                .ToListAsync();
         }
         public ICollection<Ebook> GetAllEmpty()
         {
-            throw new NotImplementedException();
+            return this._context.Ebooks.ToList();
         }
-        public Task<ICollection<Ebook>> GetAllEmptyAsync()
+        public async Task<ICollection<Ebook>> GetAllEmptyAsync()
         {
-            throw new NotImplementedException();
+            return await this._context.Ebooks
+                .ToListAsync();
         }
         public async Task<Ebook> GetAsync(int? id)
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
-           var ebook = await _context.Ebooks.FindAsync(id);
+            var ebook = await _context.Ebooks
+                 .Include(e => e.Category)
+                 .Include(e => e.ContentCreator)
+                 .FirstAsync(e => e.ID == id);
             if(ebook == null)
                 throw new ArgumentNullException(nameof(ebook));
             return ebook;
@@ -75,15 +85,17 @@ namespace CBProject.Repositories
         }
         public Ebook GetEmpty(int? id)
         {
-            throw new NotImplementedException();
+            return this._context.Ebooks
+                .FirstOrDefault(e => e.ID == id);
         }
-        public Task<Ebook> GetEmptyAsync(int? id)
+        public async Task<Ebook> GetEmptyAsync(int? id)
         {
-            throw new NotImplementedException();
+            return await this._context.Ebooks
+                .FirstOrDefaultAsync(e => e.ID == id);
         }
-        public Task<int> SaveAsync()
+        public async Task<int> SaveAsync()
         {
-            throw new NotImplementedException();
+            return await this._context.SaveChangesAsync();
         }
         public void Save()
         {
