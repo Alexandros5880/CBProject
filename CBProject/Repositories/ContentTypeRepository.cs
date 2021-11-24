@@ -7,16 +7,16 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace CBProject.Repositories
 {
-    public class ContentTypeRepository : IRepository<ContentType>
+    public class ContentTypeRepository : IRepository<ContentType>, IDisposable
     {
         private ApplicationDbContext _context;
-        public ContentTypeRepository(IUnitOfWork manager)
+        private bool disposedValue;
+        public ContentTypeRepository(IUnitOfWork unitOfWork)
         {
-            this._context = manager.Context;
+            this._context = unitOfWork.Context;
         }
         public void Add(ContentType obj)
         {
@@ -24,14 +24,12 @@ namespace CBProject.Repositories
                 throw new ArgumentNullException(nameof(obj));
             this._context.ContentTypes.Add(obj); 
         }
-
         public void Update(ContentType obj)
         {
             if (obj == null)
                 throw new ArgumentNullException(nameof(obj));
             this._context.Entry(obj).State = EntityState.Modified;
         }
-
         public void Delete(int? id)
         {
             if (id == null)
@@ -41,7 +39,6 @@ namespace CBProject.Repositories
                 throw new ArgumentNullException(nameof(contentType));
             this._context.ContentTypes.Remove(contentType);
         }
-
         public ContentType Get(int? id)
         {
             if (id == null)
@@ -51,7 +48,6 @@ namespace CBProject.Repositories
                 throw new ArgumentNullException(nameof(contentType));
             return contentType;
         }
-
         public async Task<ContentType> GetAsync(int? id)
         {
             if (id == null)
@@ -61,7 +57,6 @@ namespace CBProject.Repositories
                 throw new ArgumentNullException(nameof(contentType));
             return contentType;
         }
-
         public ContentType GetEmpty(int? id)
         {
             if (id == null)
@@ -71,7 +66,6 @@ namespace CBProject.Repositories
                 throw new ArgumentNullException(nameof(contentType));
             return contentType;
         }
-
         public async Task<ContentType> GetEmptyAsync(int? id)
         {
             if (id == null)
@@ -81,36 +75,45 @@ namespace CBProject.Repositories
                 throw new ArgumentNullException(nameof(contentType));
             return contentType;
         }
-
         public ICollection<ContentType> GetAll()
         {
             return this._context.ContentTypes.ToList();
         }
-
         public async Task<ICollection<ContentType>> GetAllAsync()
         {
             return await this._context.ContentTypes.ToListAsync();
         }
-
         public ICollection<ContentType> GetAllEmpty()
         {
             return this._context.ContentTypes.ToList();
         }
-
         public async Task<ICollection<ContentType>> GetAllEmptyAsync()
         {
             return await this._context.ContentTypes.ToListAsync();
         }
-
         public void Save()
         {
             this._context.SaveChanges();
         }
-
         public async Task<int> SaveAsync()
         {
            return await this._context.SaveChangesAsync();
         }
-
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    this._context.Dispose();
+                }
+                disposedValue = true;
+            }
+        }
+        public void Dispose()
+        {
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
+        }
     }
 }

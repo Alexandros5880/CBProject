@@ -22,11 +22,13 @@ namespace CBProject.Models
 
         public Category Category { get; set; } 
 
+
         public int CategoryId { get; set; }
 
         public string Url { get; set; }
 
         public ICollection<Tag> Tags { get; set; }
+
 
         //public int TagId { get; set; }
 

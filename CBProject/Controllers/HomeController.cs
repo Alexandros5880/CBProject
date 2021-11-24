@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿using AutoMapper;
 using CBProject.HelperClasses.Interfaces;
 using CBProject.Models;
@@ -10,6 +11,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+=======
+﻿using System.Web.Mvc;
+>>>>>>> 24bfad01bd476523b662bbd8f380dd607b7c08ea
 
 namespace CBProject.Controllers
 {

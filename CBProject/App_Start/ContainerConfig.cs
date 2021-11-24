@@ -4,7 +4,6 @@ using Autofac.Integration.WebApi;
 using CBProject.HelperClasses;
 using CBProject.HelperClasses.Interfaces;
 using CBProject.Models;
-using CBProject.Models.Interfaces;
 using CBProject.Repositories.IdentityRepos;
 using CBProject.Repositories.IdentityRepos.Interfaces;
 using Microsoft.AspNet.Identity;
@@ -25,7 +24,7 @@ namespace CBProject.App_Start
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
             builder.RegisterType<UserStore<ApplicationUser>>().As<IUserStore<ApplicationUser>>();
             builder.RegisterType<RoleStore<IdentityRole>>().As<IRoleStore<IdentityRole, string>>();
-            builder.RegisterType<ApplicationDbContext>().As<IContext>();
+            builder.RegisterType<ApplicationDbContext>().As<IApplicationDbContext>();
 
             var container = builder.Build(); // Container with all my Objects for dependency Injection
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
@@ -40,7 +39,7 @@ namespace CBProject.App_Start
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
             builder.RegisterType<UserStore<ApplicationUser>>().As<IUserStore<ApplicationUser>>();
             builder.RegisterType<RoleStore<IdentityRole>>().As<IRoleStore<IdentityRole, string>>();
-            builder.RegisterType<ApplicationDbContext>().As<IContext>();
+            builder.RegisterType<ApplicationDbContext>().As<IApplicationDbContext>();
 
 
             var container = builder.Build();
@@ -57,7 +56,7 @@ namespace CBProject.App_Start
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
             builder.RegisterType<UserStore<ApplicationUser>>().As<IUserStore<ApplicationUser>>();
             builder.RegisterType<RoleStore<IdentityRole>>().As<IRoleStore<IdentityRole, string>>();
-            builder.RegisterType<ApplicationDbContext>().As<IContext>();
+            builder.RegisterType<ApplicationDbContext>().As<IApplicationDbContext>();
 
             var container = builder.Build();
             config.DependencyResolver = new AutofacWebApiDependencyResolver(container);

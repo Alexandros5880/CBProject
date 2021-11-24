@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace CBProject.Repositories.Interfaces
 {
-    public interface IRepository<T> // TODO: Implement this interface to every repository
+    public interface IRepository<T>
     {
         void Add(T obj);
         void Update(T obj);

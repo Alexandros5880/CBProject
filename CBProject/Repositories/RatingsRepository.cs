@@ -1,23 +1,22 @@
-﻿using CBProject.Models;
+﻿using CBProject.HelperClasses.Interfaces;
+using CBProject.Models;
 using CBProject.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace CBProject.Repositories
 {
-    public class RatingsRepository : IRepository<Rating>
+    public class RatingsRepository : IRepository<Rating>, IDisposable
     {
         private readonly ApplicationDbContext _context;
-
-        public RatingsRepository(ApplicationDbContext context)
+        private bool disposedValue;
+        public RatingsRepository(IUnitOfWork unitOfWork)
         {
-            _context = context;
+            _context = unitOfWork.Context;
         }
-
         public void Add(Rating rating)
         {
             if (rating == null)
@@ -25,9 +24,6 @@ namespace CBProject.Repositories
 
             _context.Ratings.Add(rating);
         }
-
-        
-
         public void Delete(int id)
         {
             var rating = Get(id);
@@ -37,44 +33,26 @@ namespace CBProject.Repositories
             
             _context.Ratings.Remove(rating);
         }
-
-
-
         public Rating Get(int id)
         {
             return _context.Ratings.Find(id);
         }
-
         public ICollection<Rating> GetAll()
         {
             return _context.Ratings.ToList();
         }
-
-        
-
         public ICollection<Rating> GetAllEmpty()
         {
             throw new NotImplementedException();
         }
-
-       
-
-        
-
         public Rating GetEmpty(int id)
         {
             throw new NotImplementedException();
         }
-
-       
-
         public void Save()
         {
             _context.SaveChanges();
         }
-
-        
-
         public void Update(Rating rating)
         {
             if (rating == null)
@@ -83,7 +61,19 @@ namespace CBProject.Repositories
             _context.Entry(rating).State = EntityState.Modified;
 
         }
-        //----------------------------ASYNC-------------------------------------------
+        public void Delete(int? id)
+        {
+            throw new NotImplementedException();
+        }
+        public Rating Get(int? id)
+        {
+            throw new NotImplementedException();
+        }
+        public Rating GetEmpty(int? id)
+        {
+            throw new NotImplementedException();
+        }
+        // TODO: RatingsRepository Async
         public Task<int> UpdateAsync(Rating obj)
         {
             throw new NotImplementedException();
@@ -116,30 +106,29 @@ namespace CBProject.Repositories
         {
             throw new NotImplementedException();
         }
-
-        public void Delete(int? id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Rating Get(int? id)
-        {
-            throw new NotImplementedException();
-        }
-
         public Task<Rating> GetAsync(int? id)
         {
             throw new NotImplementedException();
         }
-
-        public Rating GetEmpty(int? id)
-        {
-            throw new NotImplementedException();
-        }
-
         public Task<Rating> GetEmptyAsync(int? id)
         {
             throw new NotImplementedException();
+        }
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    this._context.Dispose();
+                }
+                disposedValue = true;
+            }
+        }
+        public void Dispose()
+        {
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }

@@ -129,7 +129,8 @@ namespace CBProject.Repositories.IdentityRepos
         {
             if (id.Length == 0)
                 throw new Exception("In Users repo Get method id is empty.");
-            return this._manager.UserManager.FindById(id);
+            return this._manager.UserManager
+                .FindById(id);
         }
         public async Task<ApplicationUser> GetAsync(string id)
         {
