@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 
 namespace CBProject.Models.EntityModels
 {
@@ -13,5 +10,7 @@ namespace CBProject.Models.EntityModels
         public float Duration { get; set; }
         public ICollection<ApplicationUser> Users { get; set; }
         public ContentType ContentType { get; set; }
+        // TODO: Create Module SubscriptionActivite
+        // TODO: Filed of SubscriptionActivite field
     }
 }
