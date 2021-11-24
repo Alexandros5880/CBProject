@@ -9,22 +9,22 @@ using System.Web;
 using System.Web.Mvc;
 using CBProject.Models;
 using CBProject.Models.EntityModels;
-using CBProject.HelperClasses.Interfaces;
 using CBProject.Repositories;
+using CBProject.HelperClasses.Interfaces;
 
 namespace CBProject.Controllers
 {
-    public class CategoriesController : Controller
+    public class ContentTypesController : Controller
     {
-        private CategoriesRepository _categories;
-        public CategoriesController(IUnitOfWork unitOfWork)
+        private ContentTypeRepository _contentType;
+        public ContentTypesController(IUnitOfWork unitOfWork)
         {
-            this._categories = unitOfWork.Categories;
+            this._contentType = unitOfWork.ContentTypes;
         }
 
         public async Task<ActionResult> Index()
         {
-            return View(await _categories.GetAllAsync());
+            return View(await _contentType.GetAllAsync());
         }
 
         public async Task<ActionResult> Details(int? id)
@@ -33,12 +33,12 @@ namespace CBProject.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = await this._categories.GetAsync(id);
-            if (category == null)
+            ContentType contentType = await this._contentType.GetAsync(id);
+            if (contentType == null)
             {
                 return HttpNotFound();
             }
-            return View(category);
+            return View(contentType);
         }
 
         public ActionResult Create()
@@ -46,48 +46,48 @@ namespace CBProject.Controllers
             return View();
         }
 
-        // TODO: View Model(Related records: categories, videos)
+        // TODO: Create View Model
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "ID,Name,Master")] Category category)
+        public async Task<ActionResult> Create([Bind(Include = "ID,Name")] ContentType contentType)
         {
             if (ModelState.IsValid)
             {
-                this._categories.Add(category);
-                await this._categories.SaveAsync();
+                this._contentType.Add(contentType);
+                await this._contentType.SaveAsync();
                 return RedirectToAction("Index");
             }
 
-            return View(category);
+            return View(contentType);
         }
 
-        // TODO: View Model(Related records: categories, videos)
+        // TODO: Create View Model
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = await this._categories.GetAsync(id);
-            if (category == null)
+            ContentType contentType = await this._contentType.GetAsync(id);
+            if (contentType == null)
             {
                 return HttpNotFound();
             }
-            return View(category);
+            return View(contentType);
         }
 
-        // TODO: View Model(Related records: categories, videos)
+        // TODO: Create View Model
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "ID,Name,Master")] Category category)
+        public async Task<ActionResult> Edit([Bind(Include = "ID,Name")] ContentType contentType)
         {
             if (ModelState.IsValid)
             {
-                this._categories.Update(category);
-                await this._categories.SaveAsync();
+                this._contentType.Update(contentType);
+                await this._contentType.SaveAsync();
                 return RedirectToAction("Index");
             }
-            return View(category);
+            return View(contentType);
         }
 
         public async Task<ActionResult> Delete(int? id)
@@ -96,20 +96,20 @@ namespace CBProject.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = await this._categories.GetAsync(id);
-            if (category == null)
+            ContentType contentType = await this._contentType.GetAsync(id);
+            if (contentType == null)
             {
                 return HttpNotFound();
             }
-            return View(category);
+            return View(contentType);
         }
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            this._categories.Delete(id);
-            await this._categories.SaveAsync();
+            this._contentType.Delete(id);
+            await this._contentType.SaveAsync();
             return RedirectToAction("Index");
         }
 
@@ -117,7 +117,7 @@ namespace CBProject.Controllers
         {
             if (disposing)
             {
-                this._categories.Dispose();
+                this._contentType.Dispose();
             }
             base.Dispose(disposing);
         }
