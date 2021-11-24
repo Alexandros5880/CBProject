@@ -244,8 +244,8 @@
     <Compile Include="Models\Configurations\TagConfig.cs" />
     <Compile Include="Models\Configurations\VideoConfig.cs" />
     <Compile Include="Models\EntityModels\SubscriptionPackage.cs" />
+    <Compile Include="Models\Interfaces\IApplicationDbContext.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\Interfaces\IContext.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\EntityModels\Rating.cs" />
     <Compile Include="Models\EntityModels\Review.cs" />

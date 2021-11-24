@@ -1,6 +1,5 @@
 ﻿using CBProject.Models.Configurations;
 using CBProject.Models.EntityModels;
-using CBProject.Models.Interfaces;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
@@ -81,43 +80,33 @@ namespace CBProject.Models
 
 
 
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplicationDbContext
     {
         public DbSet<Category> Categories { get; set; }
         public DbSet<SubscriptionPackage> SubcriptionPackages { get; set; }
         public DbSet<ContentType> ContentTypes { get; set; }
-
         public DbSet<Video> Videos { get; set; }
-
         public DbSet<Rating> Ratings { get; set; }
-
         public DbSet<Review> Reviews { get; set; }
-
         public DbSet<Tag> Tags { get; set; }
-
         public DbSet<Ebook> Ebooks { get; set; }
-
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
-
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
         }
-
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-           // modelBuilder.Configurations.Add(new CategoryConfig());
+            // modelBuilder.Configurations.Add(new CategoryConfig());
             modelBuilder.Configurations.Add(new RatingConfig());
             modelBuilder.Configurations.Add(new ReviewConfig());
             modelBuilder.Configurations.Add(new TagConfig());
             modelBuilder.Configurations.Add(new VideoConfig());
-
             base.OnModelCreating(modelBuilder);
 
-            
         }
     }
 

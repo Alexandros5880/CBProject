@@ -12,9 +12,9 @@ namespace CBProject.Repositories
     public class EbooksRepository : IRepository<Ebook>
     {
         private readonly ApplicationDbContext _context;
-        public EbooksRepository(ApplicationDbContext context)
+        public EbooksRepository(IApplicationDbContext context)
         {
-            _context = context;
+            _context = (ApplicationDbContext)context;
         }
         public void Add(Ebook ebook)
         {

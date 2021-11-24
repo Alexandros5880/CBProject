@@ -1,20 +1,18 @@
 ﻿using CBProject.Models;
 using CBProject.Models.EntityModels;
-using CBProject.Models.Interfaces;
 using CBProject.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace CBProject.Repositories
 {
-    public class CategoryRepo : IRepository<Category>
+    public class CategoryRepository : IRepository<Category>
     {
         private ApplicationDbContext _context { get; set; }
-        public CategoryRepo(IContext context)
+        public CategoryRepository(IApplicationDbContext context)
         {
             _context = (ApplicationDbContext)context;
         }
@@ -42,7 +40,6 @@ namespace CBProject.Repositories
                  .Include(v => v.Videos)
                  .FirstOrDefault(c => c.ID == id);
         }
-
         public ICollection<Category> GetAll()
         {
             return _context.Categories
@@ -50,7 +47,6 @@ namespace CBProject.Repositories
                 .Include(v => v.Videos)
                 .ToList();
         }
-
         public async Task<ICollection<Category>> GetAllAsync()
         {
             return await _context.Categories
@@ -58,17 +54,14 @@ namespace CBProject.Repositories
                 .Include(v => v.Videos)
                 .ToListAsync();
         }
-
         public ICollection<Category> GetAllEmpty()
         {
             return _context.Categories.ToList();
         }
-
         public async Task<ICollection<Category>> GetAllEmptyAsync()
         {
             return await _context.Categories.ToListAsync();
         }
-
         public async Task<Category> GetAsync(int? id)
         {
             if (id == null)
@@ -78,7 +71,6 @@ namespace CBProject.Repositories
                 .Include(v => v.Videos)
                 .FirstAsync(c => c.ID == id);
         }
-
         public Category GetEmpty(int? id)
         {
             if (id == null)
@@ -86,7 +78,6 @@ namespace CBProject.Repositories
             return _context.Categories
                  .FirstOrDefault(c => c.ID == id);
         }
-
         public async Task<Category> GetEmptyAsync(int? id)
         {
             if (id == null)
@@ -94,17 +85,14 @@ namespace CBProject.Repositories
             return await _context.Categories
                 .FirstAsync(c => c.ID == id);
         }
-
         public void Save()
         {
             _context.SaveChanges();
         }
-
         public async Task<int> SaveAsync()
         {
             return await _context.SaveChangesAsync();
         }
-
         public void Update(Category obj)
         {
             if (obj == null)

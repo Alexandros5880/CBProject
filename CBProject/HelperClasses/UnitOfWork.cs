@@ -1,6 +1,5 @@
 ﻿using CBProject.HelperClasses.Interfaces;
 using CBProject.Models;
-using CBProject.Models.Interfaces;
 using CBProject.Repositories;
 using CBProject.Repositories.Interfaces;
 using Microsoft.AspNet.Identity;
@@ -21,11 +20,10 @@ namespace CBProject.HelperClasses
         public IRepository<Video> Videos { get; protected set; }
         public IRepository<Rating> Ratings { get; protected set; }
         public IRepository<Review> Reviews { get; protected set; }
-
         public IRepository<Tag> Tags { get; protected set; }
 
 
-        public UnitOfWork(IContext context)
+        public UnitOfWork(IApplicationDbContext context)
         {
             this.Context = (ApplicationDbContext)context;
             this.RoleStore = new RoleStore<IdentityRole>(this.Context);
