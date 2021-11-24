@@ -29,6 +29,7 @@ namespace CBProject.Models
 
         public ICollection<Tag> Tags { get; set; }
 
+
         //public int TagId { get; set; }
 
         public ICollection<Review> Reviews { get; set; }
