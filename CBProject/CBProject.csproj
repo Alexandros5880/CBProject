@@ -208,6 +208,10 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\DashBoard\Controllers\HomeController.cs" />
+    <Compile Include="Areas\DashBoard\Controllers\RatingsController.cs" />
+    <Compile Include="Areas\DashBoard\Controllers\ReviewsController.cs" />
+    <Compile Include="Areas\DashBoard\Controllers\TagsController.cs" />
+    <Compile Include="Areas\DashBoard\Controllers\VideoController.cs" />
     <Compile Include="Areas\DashBoard\DashBoardAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DataManager.cs" />
@@ -343,6 +347,10 @@
     <Folder Include="Areas\DashBoard\Data\" />
     <Folder Include="Areas\DashBoard\Views\DashBoard\" />
     <Folder Include="Areas\DashBoard\Views\Home\" />
+    <Folder Include="Areas\DashBoard\Views\Ratings\" />
+    <Folder Include="Areas\DashBoard\Views\Reviews\" />
+    <Folder Include="Areas\DashBoard\Views\Tags\" />
+    <Folder Include="Areas\DashBoard\Views\Video\" />
     <Folder Include="CV\" />
   </ItemGroup>
   <ItemGroup>
