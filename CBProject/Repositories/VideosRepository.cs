@@ -1,4 +1,5 @@
-﻿using CBProject.Models;
+﻿using CBProject.HelperClasses.Interfaces;
+using CBProject.Models;
 using CBProject.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -8,15 +9,14 @@ using System.Threading.Tasks;
 
 namespace CBProject.Repositories
 {
-    public class VideosRepository : IRepository<Video>
+    public class VideosRepository : IRepository<Video>, IDisposable
     {
         private readonly ApplicationDbContext _context;
-
-        public VideosRepository(ApplicationDbContext context)
+        private bool disposedValue;
+        public VideosRepository(IUnitOfWork unitOfWork)
         {
-            _context = context;
+            _context = unitOfWork.Context;
         }
-
         public void Add(Video video)
         {
             if(video == null)
@@ -76,11 +76,6 @@ namespace CBProject.Repositories
 
             _context.Entry(video).State = EntityState.Modified;
         }
-
-     
-
-
-        //------------------------------ASYNC----------------------------------------------
         public Task<int> UpdateAsync(Video obj)
         {
             throw new NotImplementedException();
@@ -112,6 +107,22 @@ namespace CBProject.Repositories
         public Task<int> AddAsync(Video obj)
         {
             throw new NotImplementedException();
+        }
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    this._context.Dispose();
+                }
+                disposedValue = true;
+            }
+        }
+        public void Dispose()
+        {
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }

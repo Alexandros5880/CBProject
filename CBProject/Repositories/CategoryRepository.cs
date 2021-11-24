@@ -1,4 +1,5 @@
-﻿using CBProject.Models;
+﻿using CBProject.HelperClasses.Interfaces;
+using CBProject.Models;
 using CBProject.Models.EntityModels;
 using CBProject.Repositories.Interfaces;
 using System;
@@ -9,12 +10,13 @@ using System.Threading.Tasks;
 
 namespace CBProject.Repositories
 {
-    public class CategoryRepository : IRepository<Category>
+    public class CategoryRepository : IRepository<Category>, IDisposable
     {
+        private bool disposedValue;
         private ApplicationDbContext _context { get; set; }
-        public CategoryRepository(IApplicationDbContext context)
+        public CategoryRepository(IUnitOfWork unitOfWork)
         {
-            _context = (ApplicationDbContext)context;
+            _context = unitOfWork.Context;
         }
         public void Add(Category obj)
         {
@@ -98,6 +100,22 @@ namespace CBProject.Repositories
             if (obj == null)
                 throw new ArgumentNullException(nameof(obj));
             _context.Entry(obj).State = EntityState.Modified;
+        }
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    this._context.Dispose();
+                }
+                disposedValue = true;
+            }
+        }
+        public void Dispose()
+        {
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }

@@ -13,5 +13,6 @@ namespace CBProject.Models
         DbSet<SubscriptionPackage> SubcriptionPackages { get; set; }
         DbSet<Tag> Tags { get; set; }
         DbSet<Video> Videos { get; set; }
+
     }
 }

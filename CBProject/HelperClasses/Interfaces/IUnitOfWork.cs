@@ -1,5 +1,5 @@
 ﻿using CBProject.Models;
-using CBProject.Repositories.Interfaces;
+using CBProject.Repositories;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -12,13 +12,10 @@ namespace CBProject.HelperClasses.Interfaces
         RoleManager<IdentityRole> RoleManager { get; }
         UserStore<ApplicationUser> UserStore { get; }
         UserManager<ApplicationUser> UserManager { get; }
-        IRepository<Video> Videos { get; }
-        IRepository<Rating> Ratings { get; }
-
-        IRepository<Tag> Tags { get; }
-
-        IRepository<Review> Reviews { get; }
-
-
+        VideosRepository Videos { get; }
+        RatingsRepository Ratings { get; }
+        TagsRepository Tags { get; }
+        ReviewsRepository Reviews { get; }
+        EbooksRepository Ebooks { get; }
     }
 }

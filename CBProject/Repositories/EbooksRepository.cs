@@ -1,4 +1,5 @@
-﻿using CBProject.Models;
+﻿using CBProject.HelperClasses.Interfaces;
+using CBProject.Models;
 using CBProject.Models.EntityModels;
 using CBProject.Repositories.Interfaces;
 using System;
@@ -9,12 +10,13 @@ using System.Threading.Tasks;
 
 namespace CBProject.Repositories
 {
-    public class EbooksRepository : IRepository<Ebook>
+    public class EbooksRepository : IRepository<Ebook>, IDisposable
     {
         private readonly ApplicationDbContext _context;
-        public EbooksRepository(IApplicationDbContext context)
+        private bool disposedValue;
+        public EbooksRepository(IUnitOfWork unitOfWork)
         {
-            _context = (ApplicationDbContext)context;
+            _context = unitOfWork.Context;
         }
         public void Add(Ebook ebook)
         {
@@ -86,6 +88,22 @@ namespace CBProject.Repositories
         public void Save()
         {
             _context.SaveChanges();
+        }
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    this._context.Dispose();
+                }
+                disposedValue = true;
+            }
+        }
+        public void Dispose()
+        {
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }

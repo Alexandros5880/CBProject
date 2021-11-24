@@ -1,23 +1,22 @@
-﻿using CBProject.Models;
+﻿using CBProject.HelperClasses.Interfaces;
+using CBProject.Models;
 using CBProject.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace CBProject.Repositories
 {
-    public class TagsRepository : IRepository<Tag>
+    public class TagsRepository : IRepository<Tag>, IDisposable
     {
         private readonly ApplicationDbContext _context;
-
-        public TagsRepository(ApplicationDbContext context)
+        private bool disposedValue;
+        public TagsRepository(IUnitOfWork unitOfWork)
         {
-            _context = context;
+            _context = unitOfWork.Context;
         }
-
         public void Add(Tag tag)
         {
             if (tag == null)
@@ -25,9 +24,6 @@ namespace CBProject.Repositories
 
             _context.Tags.Add(tag);
         }
-
-        
-
         public void Delete(int? id)
         {
             if (id == null)
@@ -41,8 +37,6 @@ namespace CBProject.Repositories
 
             _context.Tags.Remove(tag);
         }
-        
-
         public Tag Get(int? id)
         {
             if (id == null)
@@ -52,19 +46,16 @@ namespace CBProject.Repositories
                 .Include(t=>t.Videos)
                 .SingleOrDefault(t=>t.Id == id);
         }
-
         public ICollection<Tag> GetAll()
         {
             return _context.Tags
                 .Include(t=>t.Videos)
                 .ToList();
         }       
-
         public ICollection<Tag> GetAllEmpty()
         {
             return _context.Tags.ToList();
         }      
-
         public Tag GetEmpty(int? id)
         {
             if (id == null)
@@ -72,12 +63,10 @@ namespace CBProject.Repositories
 
             return _context.Tags.Find(id);
         }        
-
         public void Save()
         {
             _context.SaveChanges();
         }       
-
         public void Update(Tag tag)
         {
             if (tag == null)
@@ -85,20 +74,14 @@ namespace CBProject.Repositories
 
             _context.Entry(tag).State = EntityState.Modified;
         }
-
-        //-----------------------ASYNC---------------------------------------
-
         public Task<int> UpdateAsync(Tag obj)
         {
             throw new NotImplementedException();
         }
-
-
         public Task<int> AddAsync(Tag obj)
         {
             throw new NotImplementedException();
         }
-
         public Task<int> SaveAsync()
         {
             throw new NotImplementedException();
@@ -107,25 +90,37 @@ namespace CBProject.Repositories
         {
             throw new NotImplementedException();
         }
-
         public Task<Tag> GetAsync(int? id)
         {
             throw new NotImplementedException();
         }
-
         public Task<ICollection<Tag>> GetAllEmptyAsync()
         {
             throw new NotImplementedException();
         }
-
         public Task<ICollection<Tag>> GetAllAsync()
         {
             throw new NotImplementedException();
         }
-
         public Task<int> DeleteAsync(int? id)
         {
             throw new NotImplementedException();
+        }
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    this._context.Dispose();
+                }
+                disposedValue = true;
+            }
+        }
+        public void Dispose()
+        {
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }
