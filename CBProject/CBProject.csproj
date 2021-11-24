@@ -221,13 +221,9 @@
     <Compile Include="HelperClasses\UnitOfWork.cs" />
     <Compile Include="HelperClasses\Interfaces\IUnitOfWork.cs" />
     <Compile Include="HelperClasses\StaticImfo.cs" />
-    <Compile Include="Migrations\202111221438399_Start.cs" />
-    <Compile Include="Migrations\202111221438399_Start.designer.cs">
-      <DependentUpon>202111221438399_Start.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202111221431467_AddEbookEntity.cs" />
-    <Compile Include="Migrations\202111221431467_AddEbookEntity.designer.cs">
-      <DependentUpon>202111221431467_AddEbookEntity.cs</DependentUpon>
+    <Compile Include="Migrations\202111241043041_Start.cs" />
+    <Compile Include="Migrations\202111241043041_Start.Designer.cs">
+      <DependentUpon>202111241043041_Start.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -248,6 +244,8 @@
     <Compile Include="Models\EntityModels\Tag.cs" />
     <Compile Include="Models\EntityModels\Video.cs" />
     <Compile Include="Models\ViewModels\ApplicationUserViewModel.cs" />
+    <Compile Include="Models\ViewModels\EbookViewModel.cs" />
+    <Compile Include="Models\ViewModels\HomeViewModel.cs" />
     <Compile Include="Models\ViewModels\IdentityRoleViewModel.cs" />
     <Compile Include="Models\ViewModels\VideoViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -363,11 +361,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202111221438399_Start.resx">
-      <DependentUpon>202111221438399_Start.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202111221431467_AddEbookEntity.resx">
-      <DependentUpon>202111221431467_AddEbookEntity.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202111241043041_Start.resx">
+      <DependentUpon>202111241043041_Start.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

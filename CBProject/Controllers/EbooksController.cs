@@ -13,6 +13,7 @@ using CBProject.HelperClasses.Interfaces;
 using CBProject.Repositories;
 using CBProject.Repositories.Interfaces;
 using CBProject.Models.ViewModels;
+using AutoMapper;
 
 namespace CBProject.Controllers
 {
@@ -20,11 +21,13 @@ namespace CBProject.Controllers
     {
         private IRepository<Ebook> _ebooksRepository;
         private IRepository<Category> _categoriesRepository;
+        private ApplicationDbContext _context;
 
         public EbooksController(IUnitOfWork unitOfWork)
         {
             this._ebooksRepository = unitOfWork.Ebooks;
             this._categoriesRepository = unitOfWork.Categories;
+            this._context = unitOfWork.Context;
 
         }
 
@@ -49,7 +52,7 @@ namespace CBProject.Controllers
             }
             return View(ebook);
         }
-
+        //[Role("")]
         // GET: Ebooks/Create
         public async Task<ActionResult> Create()
         {
@@ -57,6 +60,7 @@ namespace CBProject.Controllers
 
             EbookViewModel viewModel = new EbookViewModel();
             var categories = await this._categoriesRepository.GetAllAsync();
+           
             viewModel.Categories = new SelectList(categories, "ID", "Name");
             return View(viewModel);
         }
@@ -66,16 +70,17 @@ namespace CBProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "ID,Title,Description,Thumbnail,Url,UploadDate,CreatorId,CategoryId")] Ebook ebook)
-        {
+        public async Task<ActionResult> Create(EbookViewModel ebook)
+        {  
             if (ModelState.IsValid)
+
             {
-                db.Ebooks.Add(ebook);
-                await db.SaveChangesAsync();
+                var ebookDB = Mapper.Map<EbookViewModel, Ebook>(ebook);
+                this._ebooksRepository.Add(ebookDB);
+                await this._ebooksRepository.SaveAsync();
                 return RedirectToAction("Index");
             }
-
-            ViewBag.CategoryId = new SelectList(db.Categories, "ID", "Name", ebook.CategoryId);
+        
             return View(ebook);
         }
 
@@ -86,13 +91,16 @@ namespace CBProject.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Ebook ebook = await db.Ebooks.FindAsync(id);
+            Ebook ebook = await _ebooksRepository.GetAsync(id);
             if (ebook == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.CategoryId = new SelectList(db.Categories, "ID", "Name", ebook.CategoryId);
-            return View(ebook);
+            EbookViewModel viewModel = Mapper.Map<Ebook, EbookViewModel>(ebook);
+            var categories = await this._categoriesRepository.GetAllAsync();
+            viewModel.Categories = new SelectList(categories, "ID", "Name");
+            return View(viewModel);
+         
         }
 
         // POST: Ebooks/Edit/5
@@ -100,15 +108,16 @@ namespace CBProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "ID,Title,Description,Thumbnail,Url,UploadDate,CreatorId,CategoryId")] Ebook ebook)
+        public async Task<ActionResult> Edit(EbookViewModel ebook)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(ebook).State = EntityState.Modified;
-                await db.SaveChangesAsync();
+                var ebookDB = Mapper.Map<EbookViewModel, Ebook>(ebook);
+               _context.Entry(ebookDB).State = EntityState.Modified;
+                await _ebooksRepository.SaveAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.CategoryId = new SelectList(db.Categories, "ID", "Name", ebook.CategoryId);
+            
             return View(ebook);
         }
 
@@ -119,7 +128,7 @@ namespace CBProject.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Ebook ebook = await db.Ebooks.FindAsync(id);
+            Ebook ebook = await _ebooksRepository.GetAsync(id);
             if (ebook == null)
             {
                 return HttpNotFound();
@@ -132,9 +141,8 @@ namespace CBProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Ebook ebook = await db.Ebooks.FindAsync(id);
-            db.Ebooks.Remove(ebook);
-            await db.SaveChangesAsync();
+            _ebooksRepository.Delete(id);
+            await _ebooksRepository.SaveAsync();
             return RedirectToAction("Index");
         }
 
@@ -142,7 +150,7 @@ namespace CBProject.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                //db.Dispose();
             }
             base.Dispose(disposing);
         }

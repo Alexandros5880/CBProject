@@ -1,4 +1,4 @@
-﻿namespace CBProject.Migrations
+namespace CBProject.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
@@ -126,12 +126,15 @@
                         Rate = c.Decimal(nullable: false, precision: 5, scale: 2),
                         RaterId = c.String(nullable: false, maxLength: 128),
                         VideoId = c.Int(nullable: false),
+                        Ebook_ID = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.AspNetUsers", t => t.RaterId, cascadeDelete: true)
                 .ForeignKey("dbo.Videos", t => t.VideoId)
+                .ForeignKey("dbo.Ebooks", t => t.Ebook_ID)
                 .Index(t => t.RaterId)
-                .Index(t => t.VideoId);
+                .Index(t => t.VideoId)
+                .Index(t => t.Ebook_ID);
             
             CreateTable(
                 "dbo.Reviews",
@@ -141,12 +144,15 @@
                         ReviewerId = c.String(nullable: false, maxLength: 128),
                         Comment = c.String(nullable: false),
                         VideoId = c.Int(nullable: false),
+                        Ebook_ID = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.AspNetUsers", t => t.ReviewerId, cascadeDelete: true)
                 .ForeignKey("dbo.Videos", t => t.VideoId)
+                .ForeignKey("dbo.Ebooks", t => t.Ebook_ID)
                 .Index(t => t.ReviewerId)
-                .Index(t => t.VideoId);
+                .Index(t => t.VideoId)
+                .Index(t => t.Ebook_ID);
             
             CreateTable(
                 "dbo.Tags",
@@ -155,8 +161,11 @@
                         Id = c.Int(nullable: false, identity: true),
                         Title = c.String(nullable: false, maxLength: 100),
                         VideoId = c.Int(nullable: false),
+                        Ebook_ID = c.Int(),
                     })
-                .PrimaryKey(t => t.Id);
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Ebooks", t => t.Ebook_ID)
+                .Index(t => t.Ebook_ID);
             
             CreateTable(
                 "dbo.ContentTypes",
@@ -179,6 +188,9 @@
                         UploadDate = c.DateTime(nullable: false),
                         CreatorId = c.String(),
                         CategoryId = c.Int(nullable: false),
+                        TagId = c.Int(nullable: false),
+                        ReviewId = c.Int(nullable: false),
+                        RatingId = c.Int(nullable: false),
                         ContentCreator_Id = c.String(maxLength: 128),
                     })
                 .PrimaryKey(t => t.ID)
@@ -231,6 +243,9 @@
             DropForeignKey("dbo.AspNetUsers", "SubcriptionPackage_ID", "dbo.SubcriptionPackages");
             DropForeignKey("dbo.SubcriptionPackages", "ContentType_ID", "dbo.ContentTypes");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
+            DropForeignKey("dbo.Tags", "Ebook_ID", "dbo.Ebooks");
+            DropForeignKey("dbo.Reviews", "Ebook_ID", "dbo.Ebooks");
+            DropForeignKey("dbo.Ratings", "Ebook_ID", "dbo.Ebooks");
             DropForeignKey("dbo.Ebooks", "ContentCreator_Id", "dbo.AspNetUsers");
             DropForeignKey("dbo.Ebooks", "CategoryId", "dbo.Categories");
             DropForeignKey("dbo.VideoTags", "TagId", "dbo.Videos");
@@ -251,8 +266,11 @@
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropIndex("dbo.Ebooks", new[] { "ContentCreator_Id" });
             DropIndex("dbo.Ebooks", new[] { "CategoryId" });
+            DropIndex("dbo.Tags", new[] { "Ebook_ID" });
+            DropIndex("dbo.Reviews", new[] { "Ebook_ID" });
             DropIndex("dbo.Reviews", new[] { "VideoId" });
             DropIndex("dbo.Reviews", new[] { "ReviewerId" });
+            DropIndex("dbo.Ratings", new[] { "Ebook_ID" });
             DropIndex("dbo.Ratings", new[] { "VideoId" });
             DropIndex("dbo.Ratings", new[] { "RaterId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });

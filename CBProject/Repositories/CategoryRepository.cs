@@ -14,7 +14,7 @@ namespace CBProject.Repositories
     public class CategoryRepo : IRepository<Category>
     {
         private ApplicationDbContext _context { get; set; }
-        public CategoryRepo(IContext context)
+        public CategoryRepo(ApplicationDbContext context)
         {
             _context = (ApplicationDbContext)context;
         }

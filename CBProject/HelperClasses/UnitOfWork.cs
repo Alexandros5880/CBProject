@@ -38,6 +38,7 @@ namespace CBProject.HelperClasses
             this.Videos = new VideosRepository(this.Context);
             this.Ratings = new RatingsRepository(this.Context);
             this.Ebooks = new EbooksRepository(this.Context);
+            this.Categories = new CategoryRepo(this.Context);
             Reviews = new ReviewsRepository(Context);
             Tags = new TagsRepository(Context);
 
