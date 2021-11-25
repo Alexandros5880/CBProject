@@ -2,6 +2,6 @@
 {
     public class Paynment
     {
-        // TODO: Add Paynment 
+        // TODO: Add Paynme
     }
 }
