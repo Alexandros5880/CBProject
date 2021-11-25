@@ -213,7 +213,6 @@
     <Compile Include="Areas\DashBoard\Controllers\VideoController.cs" />
     <Compile Include="Areas\DashBoard\DashBoardAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\DataManager.cs" />
     <Compile Include="Controllers\EbooksController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\ContentTypesController.cs" />
@@ -227,13 +226,9 @@
     <Compile Include="HelperClasses\UnitOfWork.cs" />
     <Compile Include="HelperClasses\Interfaces\IUnitOfWork.cs" />
     <Compile Include="HelperClasses\StaticImfo.cs" />
-    <Compile Include="Migrations\202111241043041_Start.cs" />
-    <Compile Include="Migrations\202111241043041_Start.Designer.cs">
-      <DependentUpon>202111241043041_Start.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202111231855342_AddEbooks.cs" />
-    <Compile Include="Migrations\202111231855342_AddEbooks.designer.cs">
-      <DependentUpon>202111231855342_AddEbooks.cs</DependentUpon>
+    <Compile Include="Migrations\202111251142531_Start.cs" />
+    <Compile Include="Migrations\202111251142531_Start.Designer.cs">
+      <DependentUpon>202111251142531_Start.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -360,7 +355,6 @@
     <Content Include="Views\ContentTypes\Details.cshtml" />
     <Content Include="Views\ContentTypes\Edit.cshtml" />
     <Content Include="Views\ContentTypes\Index.cshtml" />
-
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -387,11 +381,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202111241043041_Start.resx">
-      <DependentUpon>202111241043041_Start.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202111231855342_AddEbooks.resx">
-      <DependentUpon>202111231855342_AddEbooks.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202111251142531_Start.resx">
+      <DependentUpon>202111251142531_Start.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

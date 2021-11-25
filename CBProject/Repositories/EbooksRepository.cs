@@ -35,14 +35,11 @@ namespace CBProject.Repositories
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
             return _context.Ebooks
-<<<<<<< HEAD
                 .Include(c => c.Category)
                 .Include(c => c.Tags).Include(c => c.Reviews)
                 .Include(c => c.Ratings)
-=======
                 .Include(e => e.Category)
                 .Include(e => e.ContentCreator)
->>>>>>> 24bfad01bd476523b662bbd8f380dd607b7c08ea
                 .FirstOrDefault(e=>e.ID == id);
         }
         public ICollection<Ebook> GetAll()
@@ -63,7 +60,7 @@ namespace CBProject.Repositories
         }
         public async Task<ICollection<Ebook>> GetAllAsync()
         {
-<<<<<<< HEAD
+
             return await _context.Ebooks.Include(c => c.Category)
                 .Include(c => c.Tags).Include(c => c.Reviews)
                 .Include(c => c.Ratings).ToListAsync();
@@ -74,37 +71,20 @@ namespace CBProject.Repositories
         }
         public async Task<ICollection<Ebook>> GetAllEmptyAsync()
         {
-            return await _context.Ebooks.ToListAsync();
-=======
-            return await _context.Ebooks
-                .Include(e => e.Category)
-                .Include(e => e.ContentCreator)
-                .ToListAsync();
-        }
-        public ICollection<Ebook> GetAllEmpty()
-        {
-            return this._context.Ebooks.ToList();
-        }
-        public async Task<ICollection<Ebook>> GetAllEmptyAsync()
-        {
             return await this._context.Ebooks
                 .ToListAsync();
->>>>>>> 24bfad01bd476523b662bbd8f380dd607b7c08ea
+
         }
         public async Task<Ebook> GetAsync(int? id)
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
-<<<<<<< HEAD
             var ebook = await _context.Ebooks.Include(c => c.Category)
                  .Include(c => c.Tags).Include(c => c.Reviews)
-                 .Include(c => c.Ratings).FirstAsync(c=>c.ID == id);
-=======
-            var ebook = await _context.Ebooks
+                 .Include(c => c.Ratings)
                  .Include(e => e.Category)
                  .Include(e => e.ContentCreator)
                  .FirstAsync(e => e.ID == id);
->>>>>>> 24bfad01bd476523b662bbd8f380dd607b7c08ea
             if(ebook == null)
                 throw new ArgumentNullException(nameof(ebook));
             return ebook;
@@ -112,7 +92,6 @@ namespace CBProject.Repositories
         }
         public Ebook GetEmpty(int? id)
         {
-<<<<<<< HEAD
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
             return _context.Ebooks.FirstOrDefault(e => e.ID == id);
@@ -130,19 +109,6 @@ namespace CBProject.Repositories
         public async Task<int> SaveAsync()
         {
             return await _context.SaveChangesAsync();
-=======
-            return this._context.Ebooks
-                .FirstOrDefault(e => e.ID == id);
-        }
-        public async Task<Ebook> GetEmptyAsync(int? id)
-        {
-            return await this._context.Ebooks
-                .FirstOrDefaultAsync(e => e.ID == id);
-        }
-        public async Task<int> SaveAsync()
-        {
-            return await this._context.SaveChangesAsync();
->>>>>>> 24bfad01bd476523b662bbd8f380dd607b7c08ea
         }
         public void Save()
         {

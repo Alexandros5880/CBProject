@@ -85,19 +85,12 @@ namespace CBProject.Models
         public DbSet<Category> Categories { get; set; }
         public DbSet<SubscriptionPackage> SubcriptionPackages { get; set; }
         public DbSet<ContentType> ContentTypes { get; set; }
-<<<<<<< HEAD
         public DbSet<Ebook> Ebooks { get; set; }
-=======
->>>>>>> 24bfad01bd476523b662bbd8f380dd607b7c08ea
         public DbSet<Video> Videos { get; set; }
         public DbSet<Rating> Ratings { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Tag> Tags { get; set; }
-<<<<<<< HEAD
 
-=======
-        public DbSet<Ebook> Ebooks { get; set; }
->>>>>>> 24bfad01bd476523b662bbd8f380dd607b7c08ea
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
