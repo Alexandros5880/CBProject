@@ -283,7 +283,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Img\test.jpg" />
+    <Content Include="img\codeme_bigImg2_index.jpg" />
+    <Content Include="img\test.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\DashBoard\Views\web.config" />

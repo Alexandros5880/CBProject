@@ -1,12 +1,13 @@
 ﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+padding-top: 50px;
+ /*   padding-bottom: 20px;*/
+    font-family:'Century Gothic','Arial';
 }
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+/*    padding-left: 15px;
+    padding-right: 15px;*/
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
@@ -22,17 +23,21 @@ select,
 textarea {
     max-width: 280px;
 }
+.container-fluid {
+    padding-right: 0 !important; 
+    padding-left: 0 !important;
 
+}
 /*NavBar Login Register button*/
 
-#registerLink {
+    #registerLink {
     color: #5B65E8; /*purple*/
     font-weight: bold;
  
 }
 
 #loginLink {
-    color: #78DACF;  /*green*/
+    color: #78DACF;  /* light green*/
     font-weight: bold;
 }
 
@@ -43,18 +48,18 @@ textarea {
     display: inline-block;
 }
 
-    .bigImage img {
-        width: 100%;
-        height: auto;
-    }
+.bigImage img {
+    width: 100%;
+    height: auto;
+}
 
-    .bigImage .text {
-        position: absolute;
-        z-index: 999;
-        left: 10%;
-        top: 20%; /* Adjust this value to move the positioned div up and down */
-        width: 40%; /* Set the width of the positioned div */
-    }
+.bigImage .text {
+     position: absolute;
+     z-index: 999;
+     left: 10%;
+     top: 20%; /* Adjust this value to move the positioned div up and down */
+     width: 40%; /* Set the width of the positioned div */
+}
 
 .text h1 {
     font-weight: bold;
@@ -66,16 +71,16 @@ textarea {
     margin-left:10px;
 }
 
-.video-row {
+.grey-row {
     background-color: #F0F0F0; /*light-grey*/
 }
 .tabs-index li a{
     color:black;
 }
-    .tabs-index li a:hover {
-        color: #2FB8A9;
-        background-color: #b9e1dc85;
-    }
+.tabs-index li a:hover {
+    color: #2FB8A9;
+    background-color: #b9e1dc85;
+}
 
 .img-icon-index{
     width:22px;
@@ -91,15 +96,90 @@ textarea {
     padding: 15px 10px 15px 10px;
     
 }
-    .card-body a {
-        color: #5B65E8;
-        font-weight: bold;
-    }
+.card-body a {
+  
+     font-weight: bold;
+}
 .btn-card {
     background-color: white;
+    color: #5B65E8;
     border: 2px solid #5B65E8;
 }
-    .btn-card:hover {
-        background-color: #5B65E8;
-        color:white;
+.btn-card:hover {
+     background-color: #5B65E8;
+     color:white;
+}
+
+#quote{
+    margin-top:15%;
+    font-size:45px;
+    font-weight:bold;
+}
+
+.card-title {
+    color: #5B65E8;
+    font-size: 22px;
+    font-weight: bold;
+}
+.price {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.img-icon-tik{
+    width:20px;
+}
+
+.btn-card-plan {
+    background-color: #5B65E8;
+    color: white;
+}
+.btn-card-plan:hover {
+     background-color: #2FB8A9;
+     color: white;
+}
+
+.card-plan:hover {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 15px 40px 0 rgba(0, 0, 0, 0.19);
+}
+
+footer {
+    background-color: #383838;
+    color:white;
+}
+.footer-row{
+    margin:40px 0 40px 0;
+   
+}
+
+
+@media screen and (max-width: 1246px) and (min-width: 600px) {
+    .bigImage .text {
+        top:5%;
     }
+
+    #quote {
+        margin-top: 25%;
+        font-size: 35px;
+    }
+   
+}
+
+@media screen and (max-width: 990px){
+    .bigImage .text {
+        top: 0%;
+    }
+
+    #quote {
+        margin-top: 25%;
+        font-size: 35px;
+    }
+    .card{
+        width:70%;
+        margin-left:15%;
+        margin-bottom:10px;
+    }
+    ..bigImage .text {
+        font-size:20px;
+    }
+}
