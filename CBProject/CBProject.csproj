@@ -235,6 +235,10 @@
     <Compile Include="Migrations\202111251142531_Start.Designer.cs">
       <DependentUpon>202111251142531_Start.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202111251656244_AddVideoFileToVideo.cs" />
+    <Compile Include="Migrations\202111251656244_AddVideoFileToVideo.designer.cs">
+      <DependentUpon>202111251656244_AddVideoFileToVideo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\EntityModels\Category.cs" />
@@ -373,6 +377,8 @@
     <Folder Include="Areas\DashBoard\Views\Tags\" />
     <Folder Include="Areas\DashBoard\Views\Video\" />
     <Folder Include="CV\" />
+    <Folder Include="VideoFiles\" />
+    <Folder Include="VideoImages\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -390,6 +396,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202111251142531_Start.resx">
       <DependentUpon>202111251142531_Start.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111251656244_AddVideoFileToVideo.resx">
+      <DependentUpon>202111251656244_AddVideoFileToVideo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
