@@ -6,10 +6,11 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace CBProject.Repositories
 {
-    public class VideosRepository : IRepository<Video>, IDisposable
+    public class VideosRepository :  IDisposable
     {
         private readonly ApplicationDbContext _context;
         private bool disposedValue;
@@ -17,6 +18,12 @@ namespace CBProject.Repositories
         {
             _context = unitOfWork.Context;
         }
+
+        public IEnumerable<Video> GetVideosCC(string userId)
+        {
+            return GetAll().Where(v => v.CreatorId == userId);
+        }
+
         public void Add(Video video)
         {
             if(video == null)
@@ -45,15 +52,14 @@ namespace CBProject.Repositories
                 .Include(v => v.Tags)
                 .SingleOrDefault(v=>v.Id == id);
         }
-        public ICollection<Video> GetAll()
+        public IEnumerable<Video> GetAll()
         {
             return _context.Videos
                 .Include(v => v.Reviews)
                 .Include(v => v.Ratings)
-                .Include(v => v.Tags)
-                .ToList();
+                .Include(v => v.Tags);
         }
-        public ICollection<Video> GetAllEmpty()
+        public IEnumerable<Video> GetAllEmpty()
         {
             
             return _context.Videos.ToList();

@@ -15,12 +15,12 @@ namespace CBProject.Controllers
     public class VideoController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly string _userID;
+        private readonly string _userId;
 
         public VideoController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            _userID = User.Identity.GetUserId();
+            _userId = User.Identity.GetUserId();
         }
 
 
@@ -51,14 +51,14 @@ namespace CBProject.Controllers
         [Authorize(Roles = "ContentCreator")]
         public ActionResult MyVideosCC() // Content Creator -> Add Video, Edit Video, Delete Video
         {
-
-            return View();
+            var video = _unitOfWork.Videos.GetVideosCC(_userId);
+            return View(video);
         }
 
         [Authorize(Roles = "ContentCreator")]
         public ActionResult EditVideo(int? id)
         {
-if (id == null)
+            if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             var video = _unitOfWork.Videos.Get(id);
@@ -67,10 +67,7 @@ if (id == null)
                 return HttpNotFound();
             var viewModel = new VideoViewModel()
             {
-                Video = video,
-                Ratings = _unitOfWork.Ratings.GetAll(),
-                Reviews = _unitOfWork.Reviews.GetAll(),
-                Tags = _unitOfWork.Tags.GetAll()
+                Video = video
             };
             return View(viewModel);
         }
@@ -85,6 +82,7 @@ if (id == null)
         [Authorize(Roles = "ContentCreator")]
         public ActionResult DeleteVideo(int? id)
         {
+
             return RedirectToAction("Index");
         }
 
