@@ -35,3 +35,71 @@ textarea {
     color: #78DACF;  /*green*/
     font-weight: bold;
 }
+
+
+/*-------Index---------*/
+.bigImage {
+    position: relative;
+    display: inline-block;
+}
+
+    .bigImage img {
+        width: 100%;
+        height: auto;
+    }
+
+    .bigImage .text {
+        position: absolute;
+        z-index: 999;
+        left: 10%;
+        top: 20%; /* Adjust this value to move the positioned div up and down */
+        width: 40%; /* Set the width of the positioned div */
+    }
+
+.text h1 {
+    font-weight: bold;
+}
+
+.btn-search {
+    color: white;
+    background-color: #5B65E8;
+    margin-left:10px;
+}
+
+.video-row {
+    background-color: #F0F0F0; /*light-grey*/
+}
+.tabs-index li a{
+    color:black;
+}
+    .tabs-index li a:hover {
+        color: #2FB8A9;
+        background-color: #b9e1dc85;
+    }
+
+.img-icon-index{
+    width:22px;
+  
+}
+
+.card {
+    border: 1px solid #cfcfcf;
+    background-color:white;
+}
+
+.card-body {
+    padding: 15px 10px 15px 10px;
+    
+}
+    .card-body a {
+        color: #5B65E8;
+        font-weight: bold;
+    }
+.btn-card {
+    background-color: white;
+    border: 2px solid #5B65E8;
+}
+    .btn-card:hover {
+        background-color: #5B65E8;
+        color:white;
+    }
