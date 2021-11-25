@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using CBProject.Models.EntityModel;
+using System;
+using System.Collections.Generic;
 
 namespace CBProject.Models.EntityModels
 {
@@ -10,7 +12,9 @@ namespace CBProject.Models.EntityModels
         public float Duration { get; set; }
         public ICollection<ApplicationUser> Users { get; set; }
         public ContentType ContentType { get; set; }
-        // TODO: Create Module SubscriptionActivite
-        // TODO: Filed of SubscriptionActivite field
+        public bool AutoSubscription { get; set; }
+        public DateTime StartDate { get; set; }
+        public Payment Payment { get; set; }
+
     }
 }

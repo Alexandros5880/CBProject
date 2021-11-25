@@ -1,6 +1,7 @@
 ﻿using CBProject.HelperClasses.Interfaces;
 using CBProject.Models;
 using CBProject.Repositories;
+using CBProject.Repositories.IdentityRepos;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
@@ -23,6 +24,8 @@ namespace CBProject.HelperClasses
         public ReviewsRepository Reviews { get; protected set; }
         public TagsRepository Tags { get; protected set; }
         public EbooksRepository Ebooks { get; protected set; }
+        public SubscriptionPackageRepository SubscriptionPackages { get; protected set; }
+        public PaymentsRepository Payments { get; protected set; }
 
 
         public UnitOfWork(IApplicationDbContext context)
@@ -39,6 +42,8 @@ namespace CBProject.HelperClasses
             this.Reviews = new ReviewsRepository(this);
             this.Tags = new TagsRepository(this);
             this.Ebooks = new EbooksRepository(this);
+            this.SubscriptionPackages = new SubscriptionPackageRepository(this);
+            this.Payments = new PaymentsRepository(this);
         }
 
         protected virtual void Dispose(bool disposing)

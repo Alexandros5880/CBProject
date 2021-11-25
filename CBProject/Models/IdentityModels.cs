@@ -1,4 +1,5 @@
 ﻿using CBProject.Models.Configurations;
+using CBProject.Models.EntityModel;
 using CBProject.Models.EntityModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -66,6 +67,7 @@ namespace CBProject.Models
         public bool IsInactive { get; set; }
 
         public ICollection<Video> Videos { get; set; }
+        public ICollection<Payment> Payments { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
@@ -90,6 +92,7 @@ namespace CBProject.Models
         public DbSet<Rating> Ratings { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Tag> Tags { get; set; }
+        public DbSet<Payment> Payments { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)

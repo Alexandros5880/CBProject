@@ -1,5 +1,6 @@
 ﻿using CBProject.Models;
 using CBProject.Repositories;
+using CBProject.Repositories.IdentityRepos;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -20,5 +21,7 @@ namespace CBProject.HelperClasses.Interfaces
         TagsRepository Tags { get; }
         ReviewsRepository Reviews { get; }
         EbooksRepository Ebooks { get; }
+        SubscriptionPackageRepository SubscriptionPackages { get; }
+        PaymentsRepository Payments { get; }
     }
 }

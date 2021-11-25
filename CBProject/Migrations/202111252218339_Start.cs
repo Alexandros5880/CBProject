@@ -1,4 +1,4 @@
-namespace CBProject.Migrations
+﻿namespace CBProject.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
@@ -27,6 +27,7 @@ namespace CBProject.Migrations
                         Id = c.Int(nullable: false, identity: true),
                         Title = c.String(nullable: false, maxLength: 150),
                         Thumbnail = c.String(),
+                        VideoPath = c.String(nullable: false),
                         Description = c.String(nullable: false),
                         UploadDate = c.DateTime(),
                         CreatorId = c.String(nullable: false, maxLength: 128),
@@ -104,6 +105,21 @@ namespace CBProject.Migrations
                 .PrimaryKey(t => new { t.LoginProvider, t.ProviderKey, t.UserId })
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
                 .Index(t => t.UserId);
+            
+            CreateTable(
+                "dbo.Payments",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        PaymentMethods = c.Int(nullable: false),
+                        Price = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        Tax = c.Double(nullable: false),
+                        Discount = c.Double(nullable: false),
+                        User_Id = c.String(maxLength: 128),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.AspNetUsers", t => t.User_Id)
+                .Index(t => t.User_Id);
             
             CreateTable(
                 "dbo.AspNetUserRoles",
@@ -217,11 +233,16 @@ namespace CBProject.Migrations
                         Name = c.String(),
                         Price = c.Decimal(nullable: false, precision: 18, scale: 2),
                         Duration = c.Single(nullable: false),
+                        AutoSubscription = c.Boolean(nullable: false),
+                        StartDate = c.DateTime(nullable: false),
                         ContentType_ID = c.Int(),
+                        Payment_ID = c.Int(),
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.ContentTypes", t => t.ContentType_ID)
-                .Index(t => t.ContentType_ID);
+                .ForeignKey("dbo.Payments", t => t.Payment_ID)
+                .Index(t => t.ContentType_ID)
+                .Index(t => t.Payment_ID);
             
             CreateTable(
                 "dbo.VideoTags",
@@ -241,6 +262,7 @@ namespace CBProject.Migrations
         public override void Down()
         {
             DropForeignKey("dbo.AspNetUsers", "SubscriptionPackage_ID", "dbo.SubscriptionPackages");
+            DropForeignKey("dbo.SubscriptionPackages", "Payment_ID", "dbo.Payments");
             DropForeignKey("dbo.SubscriptionPackages", "ContentType_ID", "dbo.ContentTypes");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
             DropForeignKey("dbo.Tags", "Ebook_ID", "dbo.Ebooks");
@@ -256,12 +278,14 @@ namespace CBProject.Migrations
             DropForeignKey("dbo.Ratings", "RaterId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Videos", "CreatorId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.Payments", "User_Id", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Videos", "CategoryId", "dbo.Categories");
             DropForeignKey("dbo.Categories", "Category_ID", "dbo.Categories");
             DropIndex("dbo.VideoTags", new[] { "TagId" });
             DropIndex("dbo.VideoTags", new[] { "VideoId" });
+            DropIndex("dbo.SubscriptionPackages", new[] { "Payment_ID" });
             DropIndex("dbo.SubscriptionPackages", new[] { "ContentType_ID" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropIndex("dbo.Ebooks", new[] { "ContentCreator_Id" });
@@ -275,6 +299,7 @@ namespace CBProject.Migrations
             DropIndex("dbo.Ratings", new[] { "RaterId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
+            DropIndex("dbo.Payments", new[] { "User_Id" });
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", new[] { "SubscriptionPackage_ID" });
@@ -291,6 +316,7 @@ namespace CBProject.Migrations
             DropTable("dbo.Reviews");
             DropTable("dbo.Ratings");
             DropTable("dbo.AspNetUserRoles");
+            DropTable("dbo.Payments");
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");

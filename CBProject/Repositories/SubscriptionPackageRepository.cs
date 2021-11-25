@@ -1,4 +1,5 @@
-﻿using CBProject.Models;
+﻿using CBProject.HelperClasses.Interfaces;
+using CBProject.Models;
 using CBProject.Models.EntityModels;
 using CBProject.Repositories.Interfaces;
 using System;
@@ -12,9 +13,9 @@ namespace CBProject.Repositories
     public class SubscriptionPackageRepository : IRepository<SubscriptionPackage>
     {
         private ApplicationDbContext _context;
-        public SubscriptionPackageRepository(IApplicationDbContext context)
+        public SubscriptionPackageRepository(IUnitOfWork unitOfWork)
         {
-            this._context = (ApplicationDbContext)context;
+            this._context = unitOfWork.Context;
         }
         public void Add(SubscriptionPackage obj)
         {
