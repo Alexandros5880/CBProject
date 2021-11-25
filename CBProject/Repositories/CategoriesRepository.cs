@@ -14,11 +14,7 @@ namespace CBProject.Repositories
     {
         private bool disposedValue;
         private ApplicationDbContext _context { get; set; }
-<<<<<<< HEAD:CBProject/Repositories/CategoryRepository.cs
-        public CategoryRepo(ApplicationDbContext context)
-=======
         public CategoriesRepository(IUnitOfWork unitOfWork)
->>>>>>> 24bfad01bd476523b662bbd8f380dd607b7c08ea:CBProject/Repositories/CategoriesRepository.cs
         {
             _context = unitOfWork.Context;
         }

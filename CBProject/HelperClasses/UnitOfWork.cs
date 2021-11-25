@@ -1,10 +1,5 @@
 ﻿using CBProject.HelperClasses.Interfaces;
 using CBProject.Models;
-<<<<<<< HEAD
-using CBProject.Models.EntityModels;
-using CBProject.Models.Interfaces;
-=======
->>>>>>> 24bfad01bd476523b662bbd8f380dd607b7c08ea
 using CBProject.Repositories;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -29,31 +24,14 @@ namespace CBProject.HelperClasses
         public TagsRepository Tags { get; protected set; }
         public EbooksRepository Ebooks { get; protected set; }
 
-<<<<<<< HEAD
-        public IRepository<Tag> Tags { get; protected set; }
 
-        public IRepository<Ebook> Ebooks { get; protected set; }
-        public IRepository<Category> Categories { get; protected set; }
-
-        public UnitOfWork(IContext context)
-=======
         public UnitOfWork(IApplicationDbContext context)
->>>>>>> 24bfad01bd476523b662bbd8f380dd607b7c08ea
         {
             this.Context = (ApplicationDbContext)context;
             this.RoleStore = new RoleStore<IdentityRole>(this.Context);
             this.UserStore = new UserStore<ApplicationUser>(this.Context);
             this.RoleManager = new RoleManager<IdentityRole>(this.RoleStore);
             this.UserManager = new UserManager<ApplicationUser>(this.UserStore);
-<<<<<<< HEAD
-            this.Videos = new VideosRepository(this.Context);
-            this.Ratings = new RatingsRepository(this.Context);
-            this.Ebooks = new EbooksRepository(this.Context);
-            this.Categories = new CategoryRepo(this.Context);
-            Reviews = new ReviewsRepository(Context);
-            Tags = new TagsRepository(Context);
-
-=======
             this.Categories = new CategoriesRepository(this);
             this.ContentTypes = new ContentTypeRepository(this);
             this.Videos = new VideosRepository(this);
@@ -61,7 +39,6 @@ namespace CBProject.HelperClasses
             this.Reviews = new ReviewsRepository(this);
             this.Tags = new TagsRepository(this);
             this.Ebooks = new EbooksRepository(this);
->>>>>>> 24bfad01bd476523b662bbd8f380dd607b7c08ea
         }
 
         protected virtual void Dispose(bool disposing)

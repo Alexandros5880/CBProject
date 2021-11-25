@@ -1,19 +1,9 @@
-<<<<<<< HEAD
-﻿using AutoMapper;
 using CBProject.HelperClasses.Interfaces;
-using CBProject.Models;
 using CBProject.Models.EntityModels;
 using CBProject.Models.ViewModels;
 using CBProject.Repositories.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
-=======
-﻿using System.Web.Mvc;
->>>>>>> 24bfad01bd476523b662bbd8f380dd607b7c08ea
 
 namespace CBProject.Controllers
 {
@@ -35,7 +25,7 @@ namespace CBProject.Controllers
 
             HomeViewModel viewModel = new HomeViewModel()
             {
-                Ebooks = await this._ebooksRepository.GetAllAsync()
+                //Ebooks = await this._ebooksRepository.GetAllAsync()
             };
 
             return View(viewModel);
