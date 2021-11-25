@@ -23,6 +23,8 @@ namespace CBProject.Models.Configurations
 
             Property(v => v.Url).IsOptional();
 
+            Property(v=>v.VideoPath).IsRequired();
+
 
             //Relationships
             HasRequired(v => v.ContentCreator)

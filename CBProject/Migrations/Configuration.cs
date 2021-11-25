@@ -15,6 +15,8 @@ namespace CBProject.Migrations
             AutomaticMigrationsEnabled = false;
         }
 
+        //TODO Alex vale addorupdate sti seed giati prepei na ksilonoume tin vasi kathe fora
+        //TODO Oi roloi na ginoun "LoggedInUser" , "ContentCreator"
         protected override void Seed(CBProject.Models.ApplicationDbContext context)
         {
             if (!context.Roles.Any(r => r.Name == "Admin"))
