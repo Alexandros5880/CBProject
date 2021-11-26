@@ -11,9 +11,11 @@ using System.Data.Entity;
 
 namespace CBProject.Repositories.IdentityRepos
 {
-    public class PaymentsRepository : IRepository<Payment>
+    public class PaymentsRepository : IRepository<Payment>, IDisposable
     {
         private readonly ApplicationDbContext _context;
+        private bool disposedValue;
+
         public PaymentsRepository(IUnitOfWork unitOfWork)
         {
             this._context = unitOfWork.Context;
@@ -110,6 +112,23 @@ namespace CBProject.Repositories.IdentityRepos
             if (obj == null)
                 throw new ArgumentNullException(nameof(obj));
             this._context.Entry(obj).State = EntityState.Modified;
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    this._context.Dispose();
+                }
+                disposedValue = true;
+            }
+        }
+        public void Dispose()
+        {
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }

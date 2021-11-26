@@ -10,9 +10,11 @@ using System.Threading.Tasks;
 
 namespace CBProject.Repositories
 {
-    public class SubscriptionPackageRepository : IRepository<SubscriptionPackage>
+    public class SubscriptionPackageRepository : IRepository<SubscriptionPackage>, IDisposable
     {
         private ApplicationDbContext _context;
+        private bool disposedValue;
+
         public SubscriptionPackageRepository(IUnitOfWork unitOfWork)
         {
             this._context = unitOfWork.Context;
@@ -113,6 +115,23 @@ namespace CBProject.Repositories
             if (obj == null)
                 throw new ArgumentNullException(nameof(obj));
             this._context.Entry(obj).State = EntityState.Modified;
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    this._context.Dispose();
+                }
+                disposedValue = true;
+            }
+        }
+        public void Dispose()
+        {
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }

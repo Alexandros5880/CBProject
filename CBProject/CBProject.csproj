@@ -220,9 +220,11 @@
     <Compile Include="Controllers\ContentTypesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PaymentsController.cs" />
     <Compile Include="Controllers\RatingsController.cs" />
     <Compile Include="Controllers\ReviewsController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
+    <Compile Include="Controllers\SubscriptionPackagesController.cs" />
     <Compile Include="Controllers\TagsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\VideosController.cs" />
@@ -368,6 +370,16 @@
     <Content Include="Views\Video\MyVideosCC.cshtml" />
     <Content Include="Views\Video\EditVideo.cshtml" />
     <Content Include="Views\Video\_UploadVideo.cshtml" />
+    <Content Include="Views\SubscriptionPackages\Create.cshtml" />
+    <Content Include="Views\SubscriptionPackages\Delete.cshtml" />
+    <Content Include="Views\SubscriptionPackages\Details.cshtml" />
+    <Content Include="Views\SubscriptionPackages\Edit.cshtml" />
+    <Content Include="Views\SubscriptionPackages\Index.cshtml" />
+    <Content Include="Views\Payments\Create.cshtml" />
+    <Content Include="Views\Payments\Delete.cshtml" />
+    <Content Include="Views\Payments\Details.cshtml" />
+    <Content Include="Views\Payments\Edit.cshtml" />
+    <Content Include="Views\Payments\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
