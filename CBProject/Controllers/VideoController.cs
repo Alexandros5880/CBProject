@@ -15,12 +15,12 @@ namespace CBProject.Controllers
     public class VideoController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly string _userId;
+        
 
         public VideoController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            _userId = User.Identity.GetUserId();
+           
         }
 
 
@@ -51,10 +51,12 @@ namespace CBProject.Controllers
         [Authorize(Roles = "Admin, ContentCreator")]
         public ActionResult MyVideosCC() // Content Creator -> Add Video, Edit Video, Delete Video
         {
+            var userId = User.Identity.GetUserId();
 
             var viewModel = new VideoViewModel()
             {
-                Videos = _unitOfWork.Videos.GetVideosCC(_userId).ToList()
+                Videos = _unitOfWork.Videos.GetVideosCC(userId).ToList(),
+                Categories = _unitOfWork.Categories.GetAll()
             };
             return View(viewModel);
         }

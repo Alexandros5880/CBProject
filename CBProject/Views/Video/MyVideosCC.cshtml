@@ -7,13 +7,101 @@
 <h2>MyVideos</h2>
 
 <p>
-    
+
     @Html.ActionLink("Upload a new Video", "UploadVideo")
+    <div class="row">
+        <button style="margin-left: 27px; margin-bottom:10px;" type="button" class="btn btn-danger rounded-0" data-toggle="modal" data-target="#UploadVideo">  
+                        <i class="fa fa-plus-circle"></i> Add New  
+                    </button> 
+        <div class="modal fade" id="UploadVideo">
+            <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-header">Upload New Video</h4>
+            <button type="button" class="close" data-dismiss="modal">x</button>
+        </div>
+        <div class="modal-body">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Video.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Video.Title, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Video.Title, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Video.Thumbnail, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @*@Html.EditorFor(model => model.Video.Thumbnail, new { htmlAttributes = new { @class = "form-control" } })*@
+                            <input type="file" name="ImageFile" />
+                            @Html.ValidationMessageFor(model => model.Video.Thumbnail, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Video.VideoPath, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @*@Html.EditorFor(model => model.VideoPath, new { htmlAttributes = new { @class = "form-control" } })*@
+                            <input type="file" name="ImageFile" />
+                            @Html.ValidationMessageFor(model => model.Video.VideoPath, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Video.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Video.Description, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Video.Description, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Video.CategoryId, "CategoryId", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownListFor(model => model.Video.CategoryId, new SelectList(Model.Categories, "Id", "Name"), "Select Category", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Video.CategoryId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Video.Url, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Video.Url, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Video.Url, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+                </div>
+            }
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-default">Upload</button>
+            <button type="reset" class="btn btn-default">Reset</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+    </div>
+</div>
+    </div>
+    
+        
+    </div>
+
+
+
+
 
 </p>
 <table class="table">
     <tr>
-        <th>            
+        <th>
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Video.Title)
@@ -30,28 +118,35 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model.Videos) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.VideoImage)
-        </td>        
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>        
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UploadDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Url)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model.Videos)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.VideoImage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UploadDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Url)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
 </table>
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
