@@ -12,15 +12,15 @@ using Microsoft.AspNet.Identity;
 
 namespace CBProject.Controllers
 {
-    public class VideoController : Controller
+    public class VideosController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly string _userId;
+        
 
-        public VideoController(IUnitOfWork unitOfWork)
+        public VideosController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            _userId = User.Identity.GetUserId();
+           
         }
 
 
@@ -48,12 +48,34 @@ namespace CBProject.Controllers
 
         #region Content Creator
 
-        [Authorize(Roles = "ContentCreator")]
+        [Authorize(Roles = "Admin, ContentCreator")]
         public ActionResult MyVideosCC() // Content Creator -> Add Video, Edit Video, Delete Video
         {
-            var video = _unitOfWork.Videos.GetVideosCC(_userId);
-            return View(video);
+            var userId = User.Identity.GetUserId();
+
+            var viewModel = new VideoViewModel()
+            {
+                Videos = _unitOfWork.Videos.GetVideosCC(userId).ToList(),
+                Categories = _unitOfWork.Categories.GetAll()
+            };
+            return View(viewModel);
         }
+
+        [Authorize(Roles = "Admin, ContentCreator")]
+       //[ChildActionOnly]
+        public ActionResult UploadVideo()
+        {
+
+            var viewModel = new VideoViewModel()
+            {                
+                Video = new Video(),
+                Categories = _unitOfWork.Categories.GetAll()
+        };
+            return PartialView("_UploadVideo",viewModel);
+        }
+
+
+
 
         [Authorize(Roles = "ContentCreator")]
         public ActionResult EditVideo(int? id)
