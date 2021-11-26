@@ -7,13 +7,13 @@ namespace CBProject.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class AddEbookEntity : IMigrationMetadata
+    public sealed partial class Start : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddEbookEntity));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Start));
         
         string IMigrationMetadata.Id
         {
-            get { return "202111221431467_AddEbookEntity"; }
+            get { return "202111260053423_Start"; }
         }
         
         string IMigrationMetadata.Source
