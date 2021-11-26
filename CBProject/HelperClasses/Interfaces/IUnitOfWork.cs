@@ -13,7 +13,6 @@ namespace CBProject.HelperClasses.Interfaces
         RoleManager<IdentityRole> RoleManager { get; }
         UserStore<ApplicationUser> UserStore { get; }
         UserManager<ApplicationUser> UserManager { get; }
-
         CategoriesRepository Categories { get; }
         ContentTypeRepository ContentTypes { get; }
         VideosRepository Videos { get; }
