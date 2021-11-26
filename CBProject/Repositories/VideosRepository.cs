@@ -1,12 +1,10 @@
 ﻿using CBProject.HelperClasses.Interfaces;
 using CBProject.Models;
-using CBProject.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web.Mvc;
 
 namespace CBProject.Repositories
 {
@@ -18,12 +16,10 @@ namespace CBProject.Repositories
         {
             _context = unitOfWork.Context;
         }
-
         public IEnumerable<Video> GetVideosCC(string userId)
         {
             return GetAll().Where(v => v.CreatorId == userId);
         }
-
         public void Add(Video video)
         {
             if(video == null)

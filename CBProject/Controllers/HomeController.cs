@@ -2,6 +2,8 @@ using CBProject.HelperClasses.Interfaces;
 using CBProject.Models.EntityModels;
 using CBProject.Models.ViewModels;
 using CBProject.Repositories.Interfaces;
+using Microsoft.AspNet.Identity;
+using System;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -22,7 +24,15 @@ namespace CBProject.Controllers
         }
         public async Task<ActionResult> Index()
         {
+            try
+            {
+                var user = User.Identity.GetUserId(); // TODO:  Adoni des auto edw doulevei
+                ViewBag.User = user;
+            }
+            catch (Exception ex)
+            {
 
+            }
             HomeViewModel viewModel = new HomeViewModel()
             {
                 //Ebooks = await this._ebooksRepository.GetAllAsync()

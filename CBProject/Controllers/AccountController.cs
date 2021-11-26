@@ -172,6 +172,7 @@ namespace CBProject.Controllers
                     model.CVFile.SaveAs(model.CVPath);
                 }
                 var user = Mapper.Map<RegisterViewModel, ApplicationUser>(model);
+                user.UserName = user.Email;
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
