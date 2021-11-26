@@ -96,7 +96,7 @@ namespace CBProject.Controllers
             }
             else
             {
-                ModelState.AddModelError("", "This user was deictivated.");
+                ModelState.AddModelError("", "This user was deactivated.");
                 return View(model);
             }
         }
