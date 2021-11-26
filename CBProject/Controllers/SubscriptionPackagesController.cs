@@ -9,27 +9,31 @@ using System.Web;
 using System.Web.Mvc;
 using CBProject.Models;
 using CBProject.Models.EntityModels;
+using CBProject.HelperClasses.Interfaces;
+using CBProject.Repositories;
 
 namespace CBProject.Controllers
 {
     public class SubscriptionPackagesController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
-
-        // GET: SubscriptionPackages
-        public async Task<ActionResult> Index()
+        private SubscriptionPackageRepository _subscriptionRepo;
+        public SubscriptionPackagesController(IUnitOfWork unitOfWork)
         {
-            return View(await db.SubcriptionPackages.ToListAsync());
+            this._subscriptionRepo = unitOfWork.SubscriptionPackages;
         }
 
-        // GET: SubscriptionPackages/Details/5
+        public async Task<ActionResult> Index()
+        {
+            return View(await this._subscriptionRepo.GetAllAsync());
+        }
+
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            SubscriptionPackage subscriptionPackage = await db.SubcriptionPackages.FindAsync(id);
+            SubscriptionPackage subscriptionPackage = await this._subscriptionRepo.GetAsync(id);
             if (subscriptionPackage == null)
             {
                 return HttpNotFound();
@@ -37,37 +41,35 @@ namespace CBProject.Controllers
             return View(subscriptionPackage);
         }
 
-        // GET: SubscriptionPackages/Create
+        // TODO: View Model(Related records: payments, EnumPaymentMethod)
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: SubscriptionPackages/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        // TODO: View Model(Related records: payments, EnumPaymentMethod)
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "ID,Name,Price,Duration,AutoSubscription,StartDate")] SubscriptionPackage subscriptionPackage)
         {
             if (ModelState.IsValid)
             {
-                db.SubcriptionPackages.Add(subscriptionPackage);
-                await db.SaveChangesAsync();
+                this._subscriptionRepo.Add(subscriptionPackage);
+                await this._subscriptionRepo.SaveAsync();
                 return RedirectToAction("Index");
             }
 
             return View(subscriptionPackage);
         }
 
-        // GET: SubscriptionPackages/Edit/5
+        // TODO: View Model(Related records: payments, EnumPaymentMethod)
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            SubscriptionPackage subscriptionPackage = await db.SubcriptionPackages.FindAsync(id);
+            SubscriptionPackage subscriptionPackage = await this._subscriptionRepo.GetAsync(id);
             if (subscriptionPackage == null)
             {
                 return HttpNotFound();
@@ -75,30 +77,26 @@ namespace CBProject.Controllers
             return View(subscriptionPackage);
         }
 
-        // POST: SubscriptionPackages/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        // TODO: View Model(Related records: payments, EnumPaymentMethod)
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([Bind(Include = "ID,Name,Price,Duration,AutoSubscription,StartDate")] SubscriptionPackage subscriptionPackage)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(subscriptionPackage).State = EntityState.Modified;
-                await db.SaveChangesAsync();
+                this._subscriptionRepo.Update(subscriptionPackage);
+                await this._subscriptionRepo.SaveAsync();
                 return RedirectToAction("Index");
             }
             return View(subscriptionPackage);
         }
-
-        // GET: SubscriptionPackages/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            SubscriptionPackage subscriptionPackage = await db.SubcriptionPackages.FindAsync(id);
+            SubscriptionPackage subscriptionPackage = await this._subscriptionRepo.GetAsync(id);
             if (subscriptionPackage == null)
             {
                 return HttpNotFound();
@@ -106,14 +104,12 @@ namespace CBProject.Controllers
             return View(subscriptionPackage);
         }
 
-        // POST: SubscriptionPackages/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            SubscriptionPackage subscriptionPackage = await db.SubcriptionPackages.FindAsync(id);
-            db.SubcriptionPackages.Remove(subscriptionPackage);
-            await db.SaveChangesAsync();
+            this._subscriptionRepo.Delete(id);
+            await this._subscriptionRepo.SaveAsync();
             return RedirectToAction("Index");
         }
 
@@ -121,7 +117,7 @@ namespace CBProject.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                this._subscriptionRepo.Dispose();
             }
             base.Dispose(disposing);
         }
