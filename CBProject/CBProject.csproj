@@ -366,6 +366,7 @@
     <Content Include="Views\ContentTypes\Index.cshtml" />
     <Content Include="Views\Video\MyVideosCC.cshtml" />
     <Content Include="Views\Video\EditVideo.cshtml" />
+    <Content Include="Views\Video\_UploadVideo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

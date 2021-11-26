@@ -109,6 +109,23 @@ namespace CBProject.Migrations
                 StreetNumber = "14",
                 IsInactive = false
             };
+            var user_5 = new ApplicationUser()
+            {
+                BirthDate = DateTime.Today.AddYears(-30),
+                FirstName = "Antonis",
+                LastName = "Ploumis",
+                Email = "djplou@hotmail.com",
+                UserName = "djplou@hotmail.com",
+                PhoneNumber = "6945857485",
+                Password = "Antonis123!",
+                Country = "Greece",
+                State = "Attica",
+                City = "Athens",
+                PostalCode = "11147",
+                Street = "Athens",
+                StreetNumber = "14",
+                IsInactive = false
+            };
 
             var store = new UserStore<ApplicationUser>(context);
             var manager = new UserManager<ApplicationUser>(store);
@@ -117,6 +134,7 @@ namespace CBProject.Migrations
             manager.Create(user_2, user_2.Password);
             manager.Create(user_3, user_3.Password);
             manager.Create(user_4, user_4.Password);
+            manager.Create(user_5, user_5.Password);
 
             if (!manager.IsInRole(user_1.Id, "Admin"))
             {
@@ -133,6 +151,10 @@ namespace CBProject.Migrations
             if (!manager.IsInRole(user_4.Id, "Student"))
             {
                 manager.AddToRole(user_4.Id, "Student");
+            }
+            if (!manager.IsInRole(user_5.Id, "Admin"))
+            {
+                manager.AddToRole(user_5.Id, "Admin");
             }
         }
     }

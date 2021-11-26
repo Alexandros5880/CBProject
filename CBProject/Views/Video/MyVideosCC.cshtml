@@ -1,37 +1,39 @@
-﻿@model IEnumerable<CBProject.Models.Video>
+﻿@model CBProject.Models.ViewModels.VideoViewModel
 
 @{
-    ViewBag.Title = "MyVideosCC";
+    ViewBag.Title = "MyVideos";
 }
 
-<h2>MyVideosCC</h2>
+<h2>MyVideos</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    
+    @Html.ActionLink("Upload a new Video", "UploadVideo")
+
 </p>
 <table class="table">
     <tr>
         <th>            
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Title)
+            @Html.DisplayNameFor(model => model.Video.Title)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.DisplayNameFor(model => model.Video.Description)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.UploadDate)
+            @Html.DisplayNameFor(model => model.Video.UploadDate)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Url)
+            @Html.DisplayNameFor(model => model.Video.Url)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model.Videos) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Thumbnail)
+            @Html.DisplayFor(modelItem => item.VideoImage)
         </td>        
         <td>
             @Html.DisplayFor(modelItem => item.Title)
@@ -52,5 +54,4 @@
         </td>
     </tr>
 }
-
 </table>

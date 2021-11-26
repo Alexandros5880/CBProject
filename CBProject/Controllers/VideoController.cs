@@ -48,12 +48,32 @@ namespace CBProject.Controllers
 
         #region Content Creator
 
-        [Authorize(Roles = "ContentCreator")]
+        [Authorize(Roles = "Admin, ContentCreator")]
         public ActionResult MyVideosCC() // Content Creator -> Add Video, Edit Video, Delete Video
         {
-            var video = _unitOfWork.Videos.GetVideosCC(_userId);
-            return View(video);
+
+            var viewModel = new VideoViewModel()
+            {
+                Videos = _unitOfWork.Videos.GetVideosCC(_userId).ToList()
+            };
+            return View(viewModel);
         }
+
+        [Authorize(Roles = "Admin, ContentCreator")]
+       //[ChildActionOnly]
+        public ActionResult UploadVideo()
+        {
+
+            var viewModel = new VideoViewModel()
+            {                
+                Video = new Video(),
+                Categories = _unitOfWork.Categories.GetAll()
+        };
+            return PartialView("_UploadVideo",viewModel);
+        }
+
+
+
 
         [Authorize(Roles = "ContentCreator")]
         public ActionResult EditVideo(int? id)
