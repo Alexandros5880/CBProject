@@ -12,12 +12,12 @@ using Microsoft.AspNet.Identity;
 
 namespace CBProject.Controllers
 {
-    public class VideosController : Controller
+    public class VideoController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
         
 
-        public VideosController(IUnitOfWork unitOfWork)
+        public VideoController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
            
