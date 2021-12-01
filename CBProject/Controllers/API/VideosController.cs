@@ -22,6 +22,37 @@ namespace CBProject.Controllers.API
         [HttpGet]
         public IHttpActionResult GetVideos()
         {
+            
+            return Ok();
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetVideo(int id)
+        {
+            var video = _unitOfWork.Videos.Get(id);
+
+            if (video == null)
+                return NotFound();
+
+
+            return Ok(video);
+        }
+
+        [HttpPost]
+        public IHttpActionResult UploadVideo()
+        {
+            var video = 0;
+            return Created("",video);
+        }
+
+        [HttpPut]
+        public IHttpActionResult UpdateVideo()
+        {
+            return Ok();
+        }
+        [HttpDelete]
+        public IHttpActionResult DeleteVideo()
+        {
             return Ok();
         }
     }
