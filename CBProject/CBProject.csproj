@@ -227,20 +227,13 @@
     <Compile Include="Controllers\SubscriptionPackagesController.cs" />
     <Compile Include="Controllers\TagsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
-    <Compile Include="Controllers\VideoController.cs" />
+    <Compile Include="Controllers\VideosController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="HelperClasses\UnitOfWork.cs" />
     <Compile Include="HelperClasses\Interfaces\IUnitOfWork.cs" />
     <Compile Include="HelperClasses\StaticImfo.cs" />
-    <Compile Include="Migrations\202112011806560_Star.cs" />
-  
-      <DependentUpon>202112011806560_Star.cs</DependentUpon>
-    <Compile Include="Migrations\202112011142183_Start.cs" />
-    <Compile Include="Migrations\202112011142183_Start.designer.cs">
-      <DependentUpon>202112011142183_Start.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\EntityModels\Category.cs" />
@@ -292,7 +285,6 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="img\codeme_bigImg2_index.jpg" />
-    <Content Include="img\team_1.png" />
     <Content Include="img\test.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
