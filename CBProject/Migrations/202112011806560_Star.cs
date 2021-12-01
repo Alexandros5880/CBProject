@@ -3,7 +3,7 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Start : DbMigration
+    public partial class Star : DbMigration
     {
         public override void Up()
         {
@@ -204,9 +204,6 @@
                         UploadDate = c.DateTime(nullable: false),
                         CreatorId = c.String(),
                         CategoryId = c.Int(nullable: false),
-                        TagId = c.Int(nullable: false),
-                        ReviewId = c.Int(nullable: false),
-                        RatingId = c.Int(nullable: false),
                         ContentCreator_Id = c.String(maxLength: 128),
                     })
                 .PrimaryKey(t => t.ID)

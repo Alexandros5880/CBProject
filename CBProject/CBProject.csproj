@@ -234,9 +234,9 @@
     <Compile Include="HelperClasses\UnitOfWork.cs" />
     <Compile Include="HelperClasses\Interfaces\IUnitOfWork.cs" />
     <Compile Include="HelperClasses\StaticImfo.cs" />
-    <Compile Include="Migrations\202111261703396_Start.cs" />
-    <Compile Include="Migrations\202111261703396_Start.designer.cs">
-      <DependentUpon>202111261703396_Start.cs</DependentUpon>
+    <Compile Include="Migrations\202112011806560_Star.cs" />
+    <Compile Include="Migrations\202112011806560_Star.designer.cs">
+      <DependentUpon>202112011806560_Star.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -409,8 +409,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202111261703396_Start.resx">
-      <DependentUpon>202111261703396_Start.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202112011806560_Star.resx">
+      <DependentUpon>202112011806560_Star.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -15,26 +16,30 @@ namespace CBProject.Models.EntityModels
 
         public string Thumbnail { get; set; }
 
+        [NotMapped]
+        public HttpPostedFileBase EbookImage { get; set; }
+
+        [NotMapped]
+        public HttpPostedFileBase EbookFile { get; set; }
+
         public string Url { get; set; }
 
         public DateTime UploadDate { get; set; }
 
-        public ApplicationUser ContentCreator { get; set; }
         public string CreatorId { get; set; }
+
+        public ApplicationUser ContentCreator { get; set; }
+
+        public int CategoryId { get; set; }  
 
         public Category Category { get; set; }
 
-        public int CategoryId { get; set; }
         public ICollection<Tag> Tags { get; set; }
 
-        public int TagId { get; set; }
-
         public ICollection<Review> Reviews { get; set; }
-        public int ReviewId { get; set; }
 
         public ICollection<Rating> Ratings { get; set; }
 
-        public int RatingId { get; set; }
 
     }
 }

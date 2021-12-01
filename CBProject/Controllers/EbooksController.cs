@@ -14,6 +14,7 @@ using CBProject.Repositories;
 using CBProject.Repositories.Interfaces;
 using CBProject.Models.ViewModels;
 using AutoMapper;
+using Microsoft.AspNet.Identity;
 
 namespace CBProject.Controllers
 {
@@ -52,12 +53,14 @@ namespace CBProject.Controllers
             }
             return View(ebook);
         }
+
         //[Role("")]
         // GET: Ebooks/Create
+        [Authorize(Roles = "Admin, ContentCreator")]
         public async Task<ActionResult> Create()
         {
             //ViewBag.CategoryId = new SelectList(db.Categories, "ID", "Name");
-
+            var userId = User.Identity.GetUserId();
             EbookViewModel viewModel = new EbookViewModel();
             var categories = await this._categoriesRepository.GetAllAsync();
            
@@ -76,6 +79,7 @@ namespace CBProject.Controllers
 
             {
                 var ebookDB = Mapper.Map<EbookViewModel, Ebook>(ebook);
+                ebookDB.Category = await _categoriesRepository.GetAsync(ebook.CategoryId);
                 this._ebooksRepository.Add(ebookDB);
                 await this._ebooksRepository.SaveAsync();
                 return RedirectToAction("Index");

@@ -7,13 +7,13 @@ namespace CBProject.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class Start : IMigrationMetadata
+    public sealed partial class Star : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Start));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Star));
         
         string IMigrationMetadata.Id
         {
-            get { return "202111261703396_Start"; }
+            get { return "202112011806560_Star"; }
         }
         
         string IMigrationMetadata.Source

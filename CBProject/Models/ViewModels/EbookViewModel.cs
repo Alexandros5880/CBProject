@@ -21,24 +21,19 @@ namespace CBProject.Models.ViewModels
 
         public DateTime UploadDate { get; set; }
 
-        public ApplicationUser ContentCreator { get; set; }
-        public string CreatorId { get; set; }
+        public int CategoryId { get; set;  }
 
         public Category Category { get; set; }
 
         public SelectList Categories { get; set; }
 
-        public int CategoryId { get; set; }
         public ICollection<Tag> Tags { get; set; }
 
-        public int TagId { get; set; }
-
         public ICollection<Review> Reviews { get; set; }
-        public int ReviewId { get; set; }
 
         public ICollection<Rating> Ratings { get; set; }
 
-        public int RatingId { get; set; }
+     
 
 
     }
