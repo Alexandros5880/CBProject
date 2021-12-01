@@ -1,4 +1,6 @@
-﻿using CBProject.HelperClasses.Interfaces;
+﻿using AutoMapper;
+using CBProject.HelperClasses.Interfaces;
+using CBProject.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +25,7 @@ namespace CBProject.Controllers.API
         public IHttpActionResult GetVideos()
         {
             
-            return Ok();
+            return Ok(_unitOfWork.Videos.GetAll());
         }
 
         [HttpGet]
@@ -39,21 +41,57 @@ namespace CBProject.Controllers.API
         }
 
         [HttpPost]
-        public IHttpActionResult UploadVideo()
+        public IHttpActionResult UploadVideo(Video video)
         {
-            var video = 0;
-            return Created("",video);
+            if(!ModelState.IsValid)
+                return BadRequest();
+            
+            _unitOfWork.Videos.Add(video);
+            _unitOfWork.Videos.Save();
+
+            return Created(new Uri(Request.RequestUri + "/" + video.Id),video);
         }
 
         [HttpPut]
-        public IHttpActionResult UpdateVideo()
+        public IHttpActionResult UpdateVideo(int id, Video video)
         {
-            return Ok();
+            if (!ModelState.IsValid)
+                return BadRequest();
+            var videoInDb = _unitOfWork.Videos.Get(id);
+
+            if (videoInDb == null)
+                return NotFound();
+
+
+            videoInDb.Title = video.Title;
+            videoInDb.Description = video.Description;
+            videoInDb.VideoPath = video.VideoPath;
+            videoInDb.Url = video.Url;
+            videoInDb.Thumbnail = video.Thumbnail;
+            videoInDb.CategoryId = video.CategoryId;
+            _unitOfWork.Videos.Save();
+
+
+            
+            return StatusCode(HttpStatusCode.NoContent);
         }
         [HttpDelete]
-        public IHttpActionResult DeleteVideo()
+        public IHttpActionResult DeleteVideo(int id)
         {
+            var videoInDb = _unitOfWork.Videos.Get(id);
+            if (videoInDb == null)
+                return NotFound();
+
+            _unitOfWork.Videos.Delete(id);
+            _unitOfWork.Videos.Save();
             return Ok();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+                _unitOfWork.Videos.Dispose();
+            base.Dispose(disposing);
         }
     }
 }
