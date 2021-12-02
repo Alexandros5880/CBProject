@@ -152,6 +152,22 @@ footer {
    
 }
 
+/*------Buttons-------*/
+
+.btn-create {
+    background-color: #2FB8A9;
+    color: white;
+    font-weight: 400;
+    border: 0px;
+    border-bottom: 3px solid #2FB8A9;
+}
+
+.btn-create:hover {
+     background-color: #2FB8A9;
+     color: white;
+     border-bottom: 3px solid #26978a;
+     font-weight: 600;
+}
 
 @media screen and (max-width: 1246px) and (min-width: 600px) {
     .bigImage .text {
