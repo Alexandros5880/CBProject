@@ -11,7 +11,7 @@
     <p>
         @Html.ActionLink("Create New", "Create", "Ebboks", new { @class = "btn btn-default btn-create" })
     </p>
-    <table class="table">
+    <table class="table" id="ebooks">
         <tr>
 
             <th>
@@ -33,7 +33,7 @@
                Category
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CreatorId)
+               Creator
             </th>
             <th></th>
         </tr>
@@ -77,3 +77,26 @@
 </div>
 
 
+@section scripts{
+    
+    <script>
+        $(document).ready(function ()
+            {
+            $("#ebooks").on("click", ".btn-delete", function () {
+                var button = $(this);
+                if (confirm("Are you sure you want to delete this Ebook?")) {
+                    $.ajax({
+                        url: "/api/ebooks/" + button.attr("data-ebooks-id"),
+                        method: "DELETE"
+                    }).done(function (data) {
+                        button.parents("tr").remove();
+                    }).fail(function (error) {
+                        console.log(error);
+                    });
+                   
+                }
+
+            });
+        });
+    </script>
+    }
