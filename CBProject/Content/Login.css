@@ -1,0 +1,25 @@
+﻿
+/*:root {
+    --login-height: 691px;
+}*/
+
+
+body {
+   
+}
+
+
+
+
+.login-container {
+   /* min-height: 1000px !important;*/
+}
+
+.login-container-left {
+    /*height: var(--login-height);*/
+}
+
+.login-container-right {
+    background-color: #826EDA;
+    /*height: var(--login-height);*/
+}
