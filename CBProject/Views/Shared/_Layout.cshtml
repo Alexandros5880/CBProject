@@ -27,7 +27,8 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    @if(User.Identity.IsAuthenticated && User.IsInRole("Admin")) {
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                    {
                         <li>@Html.ActionLink("Roles", "Index", "Roles")</li>
                         <li>@Html.ActionLink("Users", "Index", "Users")</li>
                         <li>@Html.ActionLink("Deleted Users", "Deleted", "Users")</li>
