@@ -32,6 +32,10 @@ namespace CBProject
                       "~/Content/site.css",
                       "~/Content/Login.css"
                       ));
+            bundles.Add(new StyleBundle("~/Scripts/DataTables").Include(
+                "~/Scripts/DataTables*",
+                "~/Scripts/Datatables/jquery.dataTables.js",
+                "~/Scripts/Datatables/dataTables.bootstrap.js"));
         }
     }
 }
