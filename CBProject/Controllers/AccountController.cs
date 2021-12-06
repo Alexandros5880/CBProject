@@ -83,6 +83,10 @@ namespace CBProject.Controllers
                 switch (result)
                 {
                     case SignInStatus.Success:
+                        if (UserManager.IsInRole(user.Id, "Admin"))
+                        {
+                            return RedirectToAction("Index", "Users");
+                        }
                         return RedirectToLocal(returnUrl);
                     case SignInStatus.LockedOut:
                         return View("Lockout");
