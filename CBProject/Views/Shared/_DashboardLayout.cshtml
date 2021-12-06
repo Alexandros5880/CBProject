@@ -5,7 +5,13 @@
 
     @Html.Partial("~/Views/Shared/_title_meta.cshtml")
     @RenderSection("styles", false)
-    @Html.Partial("~/Views/Shared/_head_css.cshtml")
+
+    @Styles.Render("~/assets/css/bootstrap.min.css")
+    @Styles.Render("~/assets/css/icons.min.css")
+    @Styles.Render("~/assets/css/app.min.css")
+
+    @Styles.Render("~/Content/css")
+
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -44,7 +50,13 @@
     <!-- END layout-wrapper -->
     @Html.Partial("~/Views/Shared/_right_sidebar.cshtml")
 
-    @Html.Partial("~/Views/Shared/_vendor_scripts.cshtml")
+    @Scripts.Render("~/assets/libs/jquery/jquery.min.js")
+    @Scripts.Render("~/assets/libs/bootstrap/js/bootstrap.bundle.min.js")
+    @Scripts.Render("~/assets/libs/bootstrap/js/bootstrap.min.js")
+    @Scripts.Render("~/assets/libs/metismenu/metisMenu.min.js")
+    @Scripts.Render("~/assets/libs/simplebar/simplebar.min.js")
+    @Scripts.Render("~/assets/libs/node-waves/waves.min.js")
+    @Scripts.Render("~/assets/js/app.js")
 
     @RenderSection("scripts", required: false)
 
