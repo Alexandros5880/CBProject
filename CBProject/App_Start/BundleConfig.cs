@@ -27,16 +27,68 @@ namespace CBProject
                       "~/Scripts/bootbox.js"
                       ));
 
+
             bundles.Add(new StyleBundle("~/Content/css")
                 .Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
                       "~/Content/Login.css"
                       ));
-            bundles.Add(new StyleBundle("~/Scripts/DataTables").Include(
+            bundles.Add(new Bundle("~/Scripts/DataTables").Include(
                 "~/Scripts/DataTables*",
-                "~/Scripts/Datatables/jquery.dataTables.js",
+                "",
                 "~/Scripts/Datatables/dataTables.bootstrap.js"));
+            bundles.Add(new Bundle("~/Scripts/Datatables/jquery.dataTables.js").Include(
+                "~/Scripts/Datatables/jquery.dataTables.js"));
+            bundles.Add(new Bundle("~/Scripts/Datatables/dataTables.bootstrap.js").Include(
+                "~/Scripts/Datatables/dataTables.bootstrap.js"));
+
+
+
+
+            // Admin Dashboard
+            bundles.Add(new Bundle("~/assets/libs/jquery/jquery.min.js").Include(
+                      "~/assets/libs/jquery/jquery.min.js"
+                      ));
+            bundles.Add(new Bundle("~/assets/libs/bootstrap/js/bootstrap.bundle.min.js").Include(
+                      "~/assets/libs/bootstrap/js/bootstrap.bundle.min.js"
+                      ));
+            bundles.Add(new Bundle("~/assets/libs/bootstrap/js/bootstrap.min.js").Include(
+                      "~/assets/libs/bootstrap/js/bootstrap.bundle.min.js"
+                      ));
+            bundles.Add(new Bundle("~/assets/libs/metismenu/metisMenu.min.js").Include(
+                      "~/assets/libs/metismenu/metisMenu.min.js"
+                      ));
+            bundles.Add(new Bundle("~/assets/libs/simplebar/simplebar.min.js").Include(
+                      "~/assets/libs/simplebar/simplebar.min.js"
+                      ));
+            bundles.Add(new Bundle("~/assets/libs/node-waves/waves.min.js").Include(
+                      "~/assets/libs/node-waves/waves.min.js"
+                      ));
+            bundles.Add(new Bundle("~/assets/js/app.js").Include(
+                      "~/assets/js/app.js"
+                      ));
+
+            bundles.Add(new Bundle("~/assets/lib/jquery/dist/jquery.min.js").Include(
+                      "~/assets/lib/jquery/dist/jquery.min.js"
+                      ));
+
+            bundles.Add(new StyleBundle("~/assets/css/bootstrap.min.css").Include(
+                "~/assets/css/bootstrap.min.css"
+                ));
+            bundles.Add(new StyleBundle("~/assets/css/icons.min.css").Include(
+                "~/assets/css/icons.min.css"
+                ));
+            bundles.Add(new StyleBundle("~/assets/css/app.min.css").Include(
+                "~/assets/css/app.min.css"
+                ));
+
+            bundles.Add(new StyleBundle("~/assets/images/flags/spain.jpg").Include(
+                "~/assets/images/flags/spain.jpg"
+                ));
+
+
+            BundleTable.EnableOptimizations = true;
         }
     }
 }
