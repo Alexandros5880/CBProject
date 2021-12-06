@@ -1773,9 +1773,7 @@
     <Content Include="Views\Payments\Edit.cshtml" />
     <Content Include="Views\Payments\Index.cshtml" />
     <Content Include="Views\Shared\_DashboardLayout.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\Shared\_EbookEditFormPartial.cshtml" />
-=======
     <Content Include="Views\Shared\_footer.cshtml" />
     <Content Include="Views\Shared\_page_title.cshtml" />
     <Content Include="Views\Shared\_right_sidebar.cshtml" />
@@ -1787,7 +1785,6 @@
     <Content Include="Views\Shared\_horizontal.cshtml" />
     <Content Include="Views\Shared\_layout_ico_loading.cshtml" />
     <Content Include="Views\Shared\_sidebar.cshtml" />
->>>>>>> Alexandros
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
