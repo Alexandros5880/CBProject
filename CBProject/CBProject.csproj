@@ -1785,6 +1785,7 @@
     <Content Include="Views\Shared\_horizontal.cshtml" />
     <Content Include="Views\Shared\_layout_ico_loading.cshtml" />
     <Content Include="Views\Shared\_sidebar.cshtml" />
+    <Content Include="Views\Shared\_test.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
