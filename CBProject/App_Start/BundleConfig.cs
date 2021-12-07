@@ -35,6 +35,9 @@ namespace CBProject
                       "~/Content/Login.css"
                       ));
 
+
+
+
             bundles.Add(new StyleBundle("~/Scripts/DataTables").Include(
                 "~/Scripts/DataTables*",
                 "~/Scripts/Datatables/jquery.dataTables.js",
@@ -51,7 +54,7 @@ namespace CBProject
             bundles.Add(new Bundle("~/assets/libs/bootstrap/js/bootstrap.bundle.min.js").Include(
                       "~/assets/libs/bootstrap/js/bootstrap.bundle.min.js"
                       ));
-            //bundles.Add(new Bundle("~/assets/libs/bootstrap/js/bootstrap.min.js").Include(
+            //bundles.Add(new Bundle("~/assets/libs/bootstrap/js/bootstrap.min.js").Include( // Bootstrap
             //          "~/assets/libs/bootstrap/js/bootstrap.bundle.min.js"
             //          ));
             bundles.Add(new Bundle("~/assets/libs/metismenu/metisMenu.min.js").Include(

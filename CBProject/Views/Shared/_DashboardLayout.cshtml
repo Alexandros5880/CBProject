@@ -11,6 +11,7 @@
     @Styles.Render("~/assets/css/app.min.css")
 
     @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
 
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -57,6 +58,9 @@
     @Scripts.Render("~/assets/libs/simplebar/simplebar.min.js")
     @Scripts.Render("~/assets/libs/node-waves/waves.min.js")
     @Scripts.Render("~/assets/js/app.js")
+
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/Scripts/DataTables")
 
     @RenderSection("scripts", required: false)
 
