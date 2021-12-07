@@ -17,6 +17,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;500&family=Source+Sans+Pro&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
 </head>
 
 <body data-sidebar="dark">
@@ -40,7 +41,7 @@
             </div>
             <!-- End Page-content -->
 
-            @Html.Partial("~/Views/Shared/_footer.cshtml")
+            @Html.Partial("~/Views/Shared/_footer.cshtml"
         </div>
         <!-- end main content-->
 
@@ -51,18 +52,34 @@
     <!-- END layout-wrapper -->
     @Html.Partial("~/Views/Shared/_right_sidebar.cshtml")
 
-    @Scripts.Render("~/assets/libs/jquery/jquery.min.js")
+
+
+    @RenderSection("scripts", required: false)
+
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+
+    @*@Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @Scripts.Render("~/Scripts/DataTables")*@
+
+
+
+
+    @*@Scripts.Render("~/assets/libs/jquery/jquery.min.js")*@
     @Scripts.Render("~/assets/libs/bootstrap/js/bootstrap.bundle.min.js")
-    @*@Scripts.Render("~/assets/libs/bootstrap/js/bootstrap.min.js")*@
     @Scripts.Render("~/assets/libs/metismenu/metisMenu.min.js")
     @Scripts.Render("~/assets/libs/simplebar/simplebar.min.js")
     @Scripts.Render("~/assets/libs/node-waves/waves.min.js")
     @Scripts.Render("~/assets/js/app.js")
 
-    @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/Scripts/DataTables")
 
-    @RenderSection("scripts", required: false)
+
+
+
+
+
 
 </body>
 
