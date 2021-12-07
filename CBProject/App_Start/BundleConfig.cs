@@ -34,14 +34,12 @@ namespace CBProject
                       "~/Content/site.css",
                       "~/Content/Login.css"
                       ));
-            bundles.Add(new Bundle("~/Scripts/DataTables").Include(
+
+            bundles.Add(new StyleBundle("~/Scripts/DataTables").Include(
                 "~/Scripts/DataTables*",
-                "",
-                "~/Scripts/Datatables/dataTables.bootstrap.js"));
-            bundles.Add(new Bundle("~/Scripts/Datatables/jquery.dataTables.js").Include(
-                "~/Scripts/Datatables/jquery.dataTables.js"));
-            bundles.Add(new Bundle("~/Scripts/Datatables/dataTables.bootstrap.js").Include(
-                "~/Scripts/Datatables/dataTables.bootstrap.js"));
+                "~/Scripts/Datatables/jquery.dataTables.js",
+                "~/Scripts/Datatables/dataTables.bootstrap.js"
+                ));
 
 
 
@@ -53,9 +51,9 @@ namespace CBProject
             bundles.Add(new Bundle("~/assets/libs/bootstrap/js/bootstrap.bundle.min.js").Include(
                       "~/assets/libs/bootstrap/js/bootstrap.bundle.min.js"
                       ));
-            bundles.Add(new Bundle("~/assets/libs/bootstrap/js/bootstrap.min.js").Include(
-                      "~/assets/libs/bootstrap/js/bootstrap.bundle.min.js"
-                      ));
+            //bundles.Add(new Bundle("~/assets/libs/bootstrap/js/bootstrap.min.js").Include(
+            //          "~/assets/libs/bootstrap/js/bootstrap.bundle.min.js"
+            //          ));
             bundles.Add(new Bundle("~/assets/libs/metismenu/metisMenu.min.js").Include(
                       "~/assets/libs/metismenu/metisMenu.min.js"
                       ));
@@ -67,10 +65,6 @@ namespace CBProject
                       ));
             bundles.Add(new Bundle("~/assets/js/app.js").Include(
                       "~/assets/js/app.js"
-                      ));
-
-            bundles.Add(new Bundle("~/assets/lib/jquery/dist/jquery.min.js").Include(
-                      "~/assets/lib/jquery/dist/jquery.min.js"
                       ));
 
             bundles.Add(new StyleBundle("~/assets/css/bootstrap.min.css").Include(
