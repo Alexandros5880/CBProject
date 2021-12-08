@@ -1,4 +1,4 @@
-﻿namespace CBProject.Migrations
+namespace CBProject.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
