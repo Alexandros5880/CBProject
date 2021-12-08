@@ -32,6 +32,15 @@ namespace CBProject.App_Start
             Mapper.CreateMap<Ebook, EbookViewModel>();
             Mapper.CreateMap<EbookViewModel, Ebook>();
 
+            Mapper.CreateMap<Category, CategoryViewModel>();
+            Mapper.CreateMap<CategoryViewModel, Category>();
+
+            Mapper.CreateMap<Payment, PaymentViewModel>();
+            Mapper.CreateMap<PaymentViewModel, Payment>();
+
+            Mapper.CreateMap<SubscriptionPackage, SubscriptionPackageViewModel>();
+            Mapper.CreateMap<SubscriptionPackageViewModel, SubscriptionPackage>();
+
         }
     }
 }

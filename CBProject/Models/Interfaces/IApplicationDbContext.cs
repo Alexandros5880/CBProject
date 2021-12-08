@@ -1,5 +1,4 @@
-﻿using CBProject.Models.EntityModel;
-using CBProject.Models.EntityModels;
+﻿using CBProject.Models.EntityModels;
 using System.Data.Entity;
 
 namespace CBProject.Models

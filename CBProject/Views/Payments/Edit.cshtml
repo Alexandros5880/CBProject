@@ -1,4 +1,4 @@
-﻿@model CBProject.Models.EntityModel.Payment
+﻿@model CBProject.Models.ViewModels.PaymentViewModel
 
 @{
     ViewBag.Title = "Edit";
@@ -10,7 +10,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Payment</h4>
         <hr />

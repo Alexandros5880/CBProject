@@ -38,12 +38,24 @@ namespace CBProject
 
 
 
+<<<<<<< HEAD
             bundles.Add(new StyleBundle("~/Scripts/DataTables").Include(
                 "~/Scripts/DataTables*",
                 "~/Scripts/Datatables/jquery.dataTables.js",
                 "~/Scripts/Datatables/dataTables.bootstrap.js"
                 ));
 
+=======
+            //bundles.Add(new StyleBundle("~/Scripts/DataTables").Include(
+            //    "~/Scripts/DataTables*",
+            //    "~/Scripts/Datatables/jquery.dataTables.js",
+            //    "~/Scripts/Datatables/dataTables.bootstrap.js"
+            //    ));
+
+            bundles.Add(new Bundle("~/Scripts/DataTables_Videos.js").Include(
+                      "~/Scripts/DataTables_Videos.js"
+                      ));
+>>>>>>> 6e7bb942115fe82a4798e5278949ec0743e4ce98
 
 
 
@@ -54,9 +66,12 @@ namespace CBProject
             bundles.Add(new Bundle("~/assets/libs/bootstrap/js/bootstrap.bundle.min.js").Include(
                       "~/assets/libs/bootstrap/js/bootstrap.bundle.min.js"
                       ));
+<<<<<<< HEAD
             //bundles.Add(new Bundle("~/assets/libs/bootstrap/js/bootstrap.min.js").Include( // Bootstrap
             //          "~/assets/libs/bootstrap/js/bootstrap.bundle.min.js"
             //          ));
+=======
+>>>>>>> 6e7bb942115fe82a4798e5278949ec0743e4ce98
             bundles.Add(new Bundle("~/assets/libs/metismenu/metisMenu.min.js").Include(
                       "~/assets/libs/metismenu/metisMenu.min.js"
                       ));

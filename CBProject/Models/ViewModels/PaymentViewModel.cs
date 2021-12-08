@@ -1,12 +1,8 @@
-﻿namespace CBProject.Models.EntityModels
+﻿using CBProject.Models.EntityModels;
+
+namespace CBProject.Models.ViewModels
 {
-    public enum PaymentMethods
-    {
-        BankTransfer,
-        Paypal,
-        DebitCard
-    }
-    public class Payment
+    public class PaymentViewModel
     {
         public int ID { get; set; }
         public PaymentMethods PaymentMethods { get; set; }
@@ -14,6 +10,5 @@
         public decimal Price { get; set; }
         public double Tax { get; set; }
         public double Discount { get; set; }
-
     }
 }

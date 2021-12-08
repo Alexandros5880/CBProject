@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
-using CBProject.Models;
-using CBProject.Models.EntityModels;
+﻿using AutoMapper;
 using CBProject.HelperClasses.Interfaces;
+using CBProject.Models.EntityModels;
+using CBProject.Models.ViewModels;
 using CBProject.Repositories;
+using System.Net;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace CBProject.Controllers
 {
@@ -41,27 +36,28 @@ namespace CBProject.Controllers
             return View(category);
         }
 
+        [Authorize(Roles ="Admin")]
         public ActionResult Create()
         {
-            return View();
+            return View(new CategoryViewModel());
         }
 
-        // TODO: View Model(Related records: categories, videos)
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "ID,Name,Master")] Category category)
+        public async Task<ActionResult> Create(CategoryViewModel categoryViewModel)
         {
             if (ModelState.IsValid)
             {
+                var category = Mapper.Map<CategoryViewModel, Category>(categoryViewModel);
                 this._categories.Add(category);
                 await this._categories.SaveAsync();
                 return RedirectToAction("Index");
             }
 
-            return View(category);
+            return View(categoryViewModel);
         }
 
-        // TODO: View Model(Related records: categories, videos)
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,21 +69,22 @@ namespace CBProject.Controllers
             {
                 return HttpNotFound();
             }
-            return View(category);
+            var categoryViewModel = Mapper.Map<Category, CategoryViewModel>(category);
+            return View(categoryViewModel);
         }
 
-        // TODO: View Model(Related records: categories, videos)
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "ID,Name,Master")] Category category)
+        public async Task<ActionResult> Edit(CategoryViewModel categoryViewModel)
         {
             if (ModelState.IsValid)
             {
+                var category = Mapper.Map<CategoryViewModel, Category>(categoryViewModel);
                 this._categories.Update(category);
                 await this._categories.SaveAsync();
                 return RedirectToAction("Index");
             }
-            return View(category);
+            return View(categoryViewModel);
         }
 
         public async Task<ActionResult> Delete(int? id)

@@ -1,9 +1,12 @@
-﻿using System;
+﻿
+using CBProject.Models.EntityModels;
+using System;
 using System.Collections.Generic;
 
-namespace CBProject.Models.EntityModels
+
+namespace CBProject.Models.ViewModels
 {
-    public class SubscriptionPackage
+    public class SubscriptionPackageViewModel
     {
         public int ID { get; set; }
         public string Name { get; set; }
