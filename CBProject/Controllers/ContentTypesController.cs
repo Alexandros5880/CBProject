@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
-using CBProject.Models;
+﻿using CBProject.HelperClasses.Interfaces;
 using CBProject.Models.EntityModels;
 using CBProject.Repositories;
-using CBProject.HelperClasses.Interfaces;
+using System.Net;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace CBProject.Controllers
 {
@@ -46,7 +39,6 @@ namespace CBProject.Controllers
             return View();
         }
 
-        // TODO: Create View Model
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "ID,Name")] ContentType contentType)
@@ -61,7 +53,6 @@ namespace CBProject.Controllers
             return View(contentType);
         }
 
-        // TODO: Create View Model
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -76,7 +67,6 @@ namespace CBProject.Controllers
             return View(contentType);
         }
 
-        // TODO: Create View Model
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([Bind(Include = "ID,Name")] ContentType contentType)
