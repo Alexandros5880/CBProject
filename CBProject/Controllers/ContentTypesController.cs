@@ -1,5 +1,7 @@
-﻿using CBProject.HelperClasses.Interfaces;
+﻿using AutoMapper;
+using CBProject.HelperClasses.Interfaces;
 using CBProject.Models.EntityModels;
+using CBProject.Models.ViewModels;
 using CBProject.Repositories;
 using System.Net;
 using System.Threading.Tasks;
@@ -36,21 +38,22 @@ namespace CBProject.Controllers
 
         public ActionResult Create()
         {
-            return View();
+            return View(new ContentTypeViewModel());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "ID,Name")] ContentType contentType)
+        public async Task<ActionResult> Create(ContentTypeViewModel contentTypeViewModel)
         {
             if (ModelState.IsValid)
             {
+                var contentType = Mapper.Map<ContentTypeViewModel, ContentType>(contentTypeViewModel);
                 this._contentType.Add(contentType);
                 await this._contentType.SaveAsync();
                 return RedirectToAction("Index");
             }
 
-            return View(contentType);
+            return View(contentTypeViewModel);
         }
 
         public async Task<ActionResult> Edit(int? id)
@@ -64,20 +67,22 @@ namespace CBProject.Controllers
             {
                 return HttpNotFound();
             }
-            return View(contentType);
+            var contentTypeViewModel = Mapper.Map<ContentType, ContentTypeViewModel>(contentType);
+            return View(contentTypeViewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "ID,Name")] ContentType contentType)
+        public async Task<ActionResult> Edit(ContentTypeViewModel contentTypeViewModel)
         {
             if (ModelState.IsValid)
             {
+                var contentType = Mapper.Map<ContentTypeViewModel, ContentType>(contentTypeViewModel);
                 this._contentType.Update(contentType);
                 await this._contentType.SaveAsync();
                 return RedirectToAction("Index");
             }
-            return View(contentType);
+            return View(contentTypeViewModel);
         }
 
         public async Task<ActionResult> Delete(int? id)
