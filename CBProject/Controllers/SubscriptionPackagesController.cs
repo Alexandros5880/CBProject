@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
-using CBProject.Models;
-using CBProject.Models.EntityModels;
+﻿using AutoMapper;
 using CBProject.HelperClasses.Interfaces;
+using CBProject.Models.EntityModels;
+using CBProject.Models.ViewModels;
 using CBProject.Repositories;
+using System.Net;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace CBProject.Controllers
 {
@@ -41,28 +36,25 @@ namespace CBProject.Controllers
             return View(subscriptionPackage);
         }
 
-        // TODO: View Model(Related records: payments, EnumPaymentMethod)
         public ActionResult Create()
         {
-            return View();
+            return View(new SubscriptionPackageViewModel());
         }
 
-        // TODO: View Model(Related records: payments, EnumPaymentMethod)
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "ID,Name,Price,Duration,AutoSubscription,StartDate")] SubscriptionPackage subscriptionPackage)
+        public async Task<ActionResult> Create(SubscriptionPackageViewModel subscriptionPackageViewModel)
         {
             if (ModelState.IsValid)
             {
+                var subscriptionPackage = Mapper.Map<SubscriptionPackageViewModel, SubscriptionPackage>(subscriptionPackageViewModel);
                 this._subscriptionRepo.Add(subscriptionPackage);
                 await this._subscriptionRepo.SaveAsync();
                 return RedirectToAction("Index");
             }
-
-            return View(subscriptionPackage);
+            return View(subscriptionPackageViewModel);
         }
 
-        // TODO: View Model(Related records: payments, EnumPaymentMethod)
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -74,21 +66,22 @@ namespace CBProject.Controllers
             {
                 return HttpNotFound();
             }
-            return View(subscriptionPackage);
+            var subscriptionPackageViewModel = Mapper.Map<SubscriptionPackage, SubscriptionPackageViewModel>(subscriptionPackage);
+            return View(subscriptionPackageViewModel);
         }
 
-        // TODO: View Model(Related records: payments, EnumPaymentMethod)
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "ID,Name,Price,Duration,AutoSubscription,StartDate")] SubscriptionPackage subscriptionPackage)
+        public async Task<ActionResult> Edit(SubscriptionPackageViewModel subscriptionPackageViewModel)
         {
             if (ModelState.IsValid)
             {
+                var subscriptionPackage = Mapper.Map<SubscriptionPackageViewModel, SubscriptionPackage>(subscriptionPackageViewModel);
                 this._subscriptionRepo.Update(subscriptionPackage);
                 await this._subscriptionRepo.SaveAsync();
                 return RedirectToAction("Index");
             }
-            return View(subscriptionPackage);
+            return View(subscriptionPackageViewModel);
         }
         public async Task<ActionResult> Delete(int? id)
         {

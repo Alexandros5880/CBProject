@@ -1,6 +1,6 @@
 ﻿using CBProject.HelperClasses.Interfaces;
 using CBProject.Models;
-using CBProject.Models.EntityModel;
+using CBProject.Models.EntityModels;
 using CBProject.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;

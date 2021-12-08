@@ -1,4 +1,4 @@
-﻿using CBProject.Models.EntityModel;
+﻿using CBProject.Models.EntityModels;
 
 namespace CBProject.Models.ViewModels
 {

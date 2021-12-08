@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using CBProject.Models;
-using CBProject.Models.EntityModel;
 using CBProject.Models.EntityModels;
 using CBProject.Models.ViewModels;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -38,6 +37,9 @@ namespace CBProject.App_Start
 
             Mapper.CreateMap<Payment, PaymentViewModel>();
             Mapper.CreateMap<PaymentViewModel, Payment>();
+
+            Mapper.CreateMap<SubscriptionPackage, SubscriptionPackageViewModel>();
+            Mapper.CreateMap<SubscriptionPackageViewModel, SubscriptionPackage>();
 
         }
     }
