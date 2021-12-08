@@ -8,10 +8,20 @@
 
 <p>
     <div class="row">
-        <button style="margin-left: 27px; margin-bottom:10px;" type="button" class="btn btn-danger rounded-0" data-toggle="modal" data-target="#UploadVideo">
-            <i class="fa fa-plus-circle"></i> Add New
-        </button>
-        <div class="modal fade" id="UploadVideo">
+
+        <div class="col-md-03">
+            <button style="margin-left: 27px;
+                    margin-bottom:10px;"
+                    type="button"
+                    class="btn btn-danger rounded-0"
+                    data-toggle="modal"
+                    data-target="#UploadVideo">
+                <i class="fa fa-plus-circle"></i> Add New
+            </button>
+        </div>
+
+
+        <div class="modal fade col-md-12" id="UploadVideo">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -87,6 +97,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
 
 
@@ -99,19 +110,16 @@
 </p>
 <table class="table" id="videos">
     <thead></thead>
-
     <tbody></tbody>
-
 </table>
 
 
 
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/Scripts/DataTables")
-    
+    @Scripts.Render("~/Scripts/DataTables_Videos.js")
+
     <script>
-        
+
     </script>
 }
 
