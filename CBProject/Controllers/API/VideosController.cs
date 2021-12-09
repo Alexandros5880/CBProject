@@ -1,11 +1,14 @@
 ﻿using AutoMapper;
+using CBProject.HelperClasses;
 using CBProject.HelperClasses.Interfaces;
 using CBProject.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 
 namespace CBProject.Controllers.API
@@ -45,6 +48,10 @@ namespace CBProject.Controllers.API
         {
             if(!ModelState.IsValid)
                 return BadRequest();
+
+            string filePath = HttpContext.Current.Server.MapPath(StaticImfo.VideoImagePath + video.VideoFile.FileName);
+
+            video.VideoPath = filePath;
             
             _unitOfWork.Videos.Add(video);
             _unitOfWork.Videos.Save();

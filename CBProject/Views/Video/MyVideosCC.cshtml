@@ -37,9 +37,9 @@
                                 <hr />
                                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.Video.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    @Html.LabelFor(model => model.Video.Title, htmlAttributes: new {  @class = "control-label col-md-2" })
                                     <div class="col-md-10">
-                                        @Html.EditorFor(model => model.Video.Title, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.EditorFor(model => model.Video.Title, new { htmlAttributes = new { id = "getTitle", @class = "form-control" } })
                                         @Html.ValidationMessageFor(model => model.Video.Title, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -48,7 +48,7 @@
                                     @Html.LabelFor(model => model.Video.Thumbnail, htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-10">
                                         @*@Html.EditorFor(model => model.Video.Thumbnail, new { htmlAttributes = new { @class = "form-control" } })*@
-                                        <input type="file" name="ImageFile" />
+                                        <input type="file" name="ImageFile" id="getThumbnail" class="form-control"/>
                                         @Html.ValidationMessageFor(model => model.Video.Thumbnail, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -57,7 +57,7 @@
                                     @Html.LabelFor(model => model.Video.VideoPath, htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-10">
                                         @*@Html.EditorFor(model => model.VideoPath, new { htmlAttributes = new { @class = "form-control" } })*@
-                                        <input type="file" name="ImageFile" />
+                                        <input type="file" name="VideoFile" id="getVideo" class="form-control" />
                                         @Html.ValidationMessageFor(model => model.Video.VideoPath, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -65,7 +65,7 @@
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.Video.Description, htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-10">
-                                        @Html.EditorFor(model => model.Video.Description, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.EditorFor(model => model.Video.Description, new { htmlAttributes = new { id = "getDescription", @class = "form-control" } })
                                         @Html.ValidationMessageFor(model => model.Video.Description, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -73,7 +73,7 @@
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.Video.CategoryId, "CategoryId", htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-10">
-                                        @Html.DropDownListFor(model => model.Video.CategoryId, new SelectList(Model.Categories, "Id", "Name"), "Select Category", new { @class = "form-control" })
+                                        @Html.DropDownListFor(model => model.Video.CategoryId, new SelectList(Model.Categories, "Id", "Name"), "Select Category", new { id="getCategory", @class = "form-control" })
                                         @Html.ValidationMessageFor(model => model.Video.CategoryId, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -81,7 +81,7 @@
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.Video.Url, htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-10">
-                                        @Html.EditorFor(model => model.Video.Url, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.EditorFor(model => model.Video.Url, new { htmlAttributes = new { id="getUrl", @class = "form-control" } })
                                         @Html.ValidationMessageFor(model => model.Video.Url, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -91,7 +91,7 @@
                         }
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-default">Upload</button>
+                        <button type="submit" id="upload" class="btn btn-default">Upload</button>
                         <button type="reset" class="btn btn-default">Reset</button>
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                     </div>

@@ -36,4 +36,30 @@
 
         ]
     });
+
+    $("#upload").click(function () {
+        var formData = {
+            title: $("#getTitle").val(),
+            thumbnail: $("#getThumbnail").val(),
+            videoFile: $("#getVideo").val(),
+            description: $("#getDescription").val(),
+            categoryId: $("#getCategory").val(),
+            url: $("#getUrl").val()
+        };
+        $.ajax({
+            url: "/api/videos",
+            method: "POST",
+            data: formData
+        }).done(function () {
+            alert("success");
+            //window.location.href = "/video/myvideocc"
+        }).fail(function () {
+            alert("Fail");
+        });
+
+    });
+
+
+
+
 });
