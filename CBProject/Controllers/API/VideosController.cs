@@ -49,14 +49,38 @@ namespace CBProject.Controllers.API
             if(!ModelState.IsValid)
                 return BadRequest();
 
-            string filePath = HttpContext.Current.Server.MapPath(StaticImfo.VideoImagePath + video.VideoFile.FileName);
+            if (video.VideoImage == null)
+            {
 
-            video.VideoPath = filePath;
-            
-            _unitOfWork.Videos.Add(video);
-            _unitOfWork.Videos.Save();
+                video.Thumbnail = "no-image.jpg";
+            }
+            else
+            {
+                video.Thumbnail = Path.GetFileName(video.VideoImage.FileName);
+                string videoImageFilePath = Path.Combine(StaticImfo.VideoImagePath, video.Thumbnail);
+                //string videoImageFilePath = HttpContext.Current.Server.MapPath(StaticImfo.VideoImagePath + video.VideoImage.FileName);
+                video.VideoImage.SaveAs(videoImageFilePath);
 
-            return Created(new Uri(Request.RequestUri + "/" + video.Id),video);
+            }
+
+
+            if (video.VideoFile.ContentLength < 1073741824)
+            {
+                string videoFilePath = HttpContext.Current.Server.MapPath(StaticImfo.VideoPath + video.VideoFile.FileName);
+
+                
+
+                video.VideoFile.SaveAs(videoFilePath);
+                video.VideoPath = video.VideoFile.FileName;
+
+                _unitOfWork.Videos.Add(video);
+                _unitOfWork.Videos.Save();
+
+                return Created(new Uri(Request.RequestUri + "/" + video.Id), video);
+
+            }
+
+            return BadRequest();
         }
 
         [HttpPut]
