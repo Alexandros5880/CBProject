@@ -81,7 +81,6 @@
 @section scripts{
     <script>
         $(document).ready(function () {
-
             const url = "https://" + window.location.host;
             console.log(url + "/api/ebooks");
 
@@ -197,6 +196,13 @@
             $(".close-delete-modal").on("click", function () {
                 $('#deletemodal').hide(300);
             });
+        });
+
+        $(document).mouseup(function (e) {
+            var container = $(".modal-content");
+            if (!container.is(e.target) && container.has(e.target).length === 0) {
+                $("#deletemodal").hide(300);
+            }
         });
     </script>
 }
