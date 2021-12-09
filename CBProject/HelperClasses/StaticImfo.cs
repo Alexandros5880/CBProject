@@ -5,5 +5,7 @@
         public static string CVPath { get; } = @"~\CV\";
 
         public static string VideoImagePath { get; } = @"~\VideoImages\";
+
+        public static string VideoPath { get; } = @"~\VideoFiles\";
     }
 }

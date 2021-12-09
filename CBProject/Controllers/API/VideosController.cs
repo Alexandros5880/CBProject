@@ -1,11 +1,14 @@
 ﻿using AutoMapper;
+using CBProject.HelperClasses;
 using CBProject.HelperClasses.Interfaces;
 using CBProject.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 
 namespace CBProject.Controllers.API
@@ -45,11 +48,39 @@ namespace CBProject.Controllers.API
         {
             if(!ModelState.IsValid)
                 return BadRequest();
-            
-            _unitOfWork.Videos.Add(video);
-            _unitOfWork.Videos.Save();
 
-            return Created(new Uri(Request.RequestUri + "/" + video.Id),video);
+            if (video.VideoImage == null)
+            {
+
+                video.Thumbnail = "no-image.jpg";
+            }
+            else
+            {
+                video.Thumbnail = Path.GetFileName(video.VideoImage.FileName);
+                string videoImageFilePath = Path.Combine(StaticImfo.VideoImagePath, video.Thumbnail);
+                //string videoImageFilePath = HttpContext.Current.Server.MapPath(StaticImfo.VideoImagePath + video.VideoImage.FileName);
+                video.VideoImage.SaveAs(videoImageFilePath);
+
+            }
+
+
+            if (video.VideoFile.ContentLength < 1073741824)
+            {
+                string videoFilePath = HttpContext.Current.Server.MapPath(StaticImfo.VideoPath + video.VideoFile.FileName);
+
+                
+
+                video.VideoFile.SaveAs(videoFilePath);
+                video.VideoPath = video.VideoFile.FileName;
+
+                _unitOfWork.Videos.Add(video);
+                _unitOfWork.Videos.Save();
+
+                return Created(new Uri(Request.RequestUri + "/" + video.Id), video);
+
+            }
+
+            return BadRequest();
         }
 
         [HttpPut]
