@@ -1740,9 +1740,9 @@
     <Content Include="Views\Users\Deleted.cshtml" />
     <Content Include="Views\Ebooks\Create.cshtml" />
     <Content Include="Views\Ebooks\Delete.cshtml" />
-    <Content Include="Views\Ebooks\Details.cshtml" />
+    <Content Include="Views\Ebooks\Details_.cshtml" />
     <Content Include="Views\Ebooks\Edit.cshtml" />
-    <Content Include="Views\Ebooks\Index.cshtml" />
+    <Content Include="Views\Ebooks\Index_.cshtml" />
     <Content Include="Views\Categories\Create.cshtml" />
     <Content Include="Views\Categories\Delete.cshtml" />
     <Content Include="Views\Categories\Details.cshtml" />
@@ -1780,6 +1780,9 @@
     <Content Include="Views\Shared\_layout_ico_loading.cshtml" />
     <Content Include="Views\Shared\_sidebar.cshtml" />
     <Content Include="Views\Shared\_test.cshtml" />
+    <Content Include="Views\Ebooks\Index.cshtml" />
+    <Content Include="Views\Ebooks\_Details.cshtml" />
+    <Content Include="Views\Ebooks\_Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
