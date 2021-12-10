@@ -1783,6 +1783,7 @@
     <Content Include="Views\Ebooks\Index.cshtml" />
     <Content Include="Views\Ebooks\_Details.cshtml" />
     <Content Include="Views\Ebooks\_Edit.cshtml" />
+    <Content Include="Views\Ebooks\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
