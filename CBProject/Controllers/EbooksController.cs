@@ -36,10 +36,18 @@ namespace CBProject.Controllers
         public async Task<ActionResult> Index()
         {
             var ebooks = await this._ebooksRepository.GetAllAsync();
-            return View(ebooks);
+            var categories = await this._categoriesRepository.GetAllAsync();
+
+            List<EbookViewModel> viewModels = new List<EbookViewModel>();
+            foreach (var book in ebooks)
+            {
+                viewModels.Add(Mapper.Map<Ebook, EbookViewModel>(book));
+                viewModels.FirstOrDefault(b => b.ID == book.ID).Categories = new SelectList(categories, "ID", "Name");
+            }
+            return View(viewModels);
         }
 
-        // GET: Ebooks/Details/5
+        // GET: Ebooks/Details/5;
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
@@ -51,6 +59,7 @@ namespace CBProject.Controllers
             {
                 return HttpNotFound();
             }
+
             return View(ebook);
         }
 
