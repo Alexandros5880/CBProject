@@ -84,6 +84,7 @@ namespace CBProject.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplicationDbContext
     {
         public DbSet<Category> Categories { get; set; }
+        public DbSet<CategoryToCategory> CategoriesToCategories { get; set; }
         public DbSet<SubscriptionPackage> SubcriptionPackages { get; set; }
         public DbSet<ContentType> ContentTypes { get; set; }
         public DbSet<Ebook> Ebooks { get; set; }

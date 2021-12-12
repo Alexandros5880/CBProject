@@ -1,9 +1,8 @@
 namespace CBProject.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
-    
-    public partial class Initial : DbMigration
+
+    public partial class Start : DbMigration
     {
         public override void Up()
         {
@@ -14,10 +13,24 @@ namespace CBProject.Migrations
                         ID = c.Int(nullable: false, identity: true),
                         Name = c.String(nullable: false),
                         Master = c.Boolean(nullable: false),
+                    })
+                .PrimaryKey(t => t.ID);
+            
+            CreateTable(
+                "dbo.CategoryToCategories",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        MasterCategoryId = c.Int(nullable: false),
+                        ChiledCategoryId = c.Int(nullable: false),
                         Category_ID = c.Int(),
                     })
                 .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.Categories", t => t.ChiledCategoryId, cascadeDelete: false)
+                .ForeignKey("dbo.Categories", t => t.MasterCategoryId, cascadeDelete: true)
                 .ForeignKey("dbo.Categories", t => t.Category_ID)
+                .Index(t => t.MasterCategoryId)
+                .Index(t => t.ChiledCategoryId)
                 .Index(t => t.Category_ID);
             
             CreateTable(
@@ -279,7 +292,9 @@ namespace CBProject.Migrations
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Videos", "CategoryId", "dbo.Categories");
-            DropForeignKey("dbo.Categories", "Category_ID", "dbo.Categories");
+            DropForeignKey("dbo.CategoryToCategories", "Category_ID", "dbo.Categories");
+            DropForeignKey("dbo.CategoryToCategories", "MasterCategoryId", "dbo.Categories");
+            DropForeignKey("dbo.CategoryToCategories", "ChiledCategoryId", "dbo.Categories");
             DropIndex("dbo.VideoTags", new[] { "TagId" });
             DropIndex("dbo.VideoTags", new[] { "VideoId" });
             DropIndex("dbo.SubscriptionPackages", new[] { "Payment_ID" });
@@ -303,7 +318,9 @@ namespace CBProject.Migrations
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
             DropIndex("dbo.Videos", new[] { "CategoryId" });
             DropIndex("dbo.Videos", new[] { "CreatorId" });
-            DropIndex("dbo.Categories", new[] { "Category_ID" });
+            DropIndex("dbo.CategoryToCategories", new[] { "Category_ID" });
+            DropIndex("dbo.CategoryToCategories", new[] { "ChiledCategoryId" });
+            DropIndex("dbo.CategoryToCategories", new[] { "MasterCategoryId" });
             DropTable("dbo.VideoTags");
             DropTable("dbo.SubscriptionPackages");
             DropTable("dbo.AspNetRoles");
@@ -318,6 +335,7 @@ namespace CBProject.Migrations
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
             DropTable("dbo.Videos");
+            DropTable("dbo.CategoryToCategories");
             DropTable("dbo.Categories");
         }
     }
