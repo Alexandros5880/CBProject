@@ -298,6 +298,10 @@ namespace CBProject.Repositories.IdentityRepos
             user.PasswordHash = _manager.UserManager.PasswordHasher.HashPassword(newPassword);
             return Task.CompletedTask;
         }
+        public IQueryable<ApplicationUser> GetAllEnumerable()
+        {
+            return this._manager.UserManager.Users;
+        }
         protected virtual void Dispose(bool disposing)
         {
             if (!disposedValue)

@@ -3,6 +3,10 @@ using CBProject.HelperClasses.Interfaces;
 using CBProject.Models.EntityModels;
 using CBProject.Models.ViewModels;
 using CBProject.Repositories;
+using CBProject.Repositories.IdentityRepos;
+using CBProject.Repositories.IdentityRepos.Interfaces;
+using System.Data.Entity;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -12,16 +16,23 @@ namespace CBProject.Controllers
     public class SubscriptionPackagesController : Controller
     {
         private SubscriptionPackageRepository _subscriptionRepo;
-        public SubscriptionPackagesController(IUnitOfWork unitOfWork)
+        private UsersRepo _usersRepo;
+        private ContentTypeRepository _contentTypeRepo;
+        private PaymentsRepository _peynmentRepo;
+        public SubscriptionPackagesController(IUnitOfWork unitOfWork, IUsersRepo usersRepo)
         {
             this._subscriptionRepo = unitOfWork.SubscriptionPackages;
-        }
+            this._usersRepo = (UsersRepo)usersRepo;
+            this._contentTypeRepo = unitOfWork.ContentTypes;
+            this._peynmentRepo = unitOfWork.Payments;
 
+        }
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Index()
         {
             return View(await this._subscriptionRepo.GetAllAsync());
         }
-
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
@@ -35,12 +46,15 @@ namespace CBProject.Controllers
             }
             return View(subscriptionPackage);
         }
-
-        public ActionResult Create()
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult> Create()
         {
-            return View(new SubscriptionPackageViewModel());
+            var viewModel = new SubscriptionPackageViewModel();
+            viewModel.OtherUsers = await this._usersRepo.GetAllAsync();
+            viewModel.OtherContentType = await this._contentTypeRepo.GetAllAsync();
+            viewModel.OtherPayment = await this._peynmentRepo.GetAllAsync();
+            return View(viewModel);
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(SubscriptionPackageViewModel subscriptionPackageViewModel)
@@ -48,13 +62,20 @@ namespace CBProject.Controllers
             if (ModelState.IsValid)
             {
                 var subscriptionPackage = Mapper.Map<SubscriptionPackageViewModel, SubscriptionPackage>(subscriptionPackageViewModel);
+                if (subscriptionPackageViewModel.AddUsers != null && subscriptionPackageViewModel.AddUsers.Count > 0)
+                {
+                    foreach (var userId in subscriptionPackageViewModel.AddUsers)
+                    {
+                        subscriptionPackage.Users.Add(await this._usersRepo.GetAsync(userId));
+                    }
+                }
                 this._subscriptionRepo.Add(subscriptionPackage);
                 await this._subscriptionRepo.SaveAsync();
                 return RedirectToAction("Index");
             }
             return View(subscriptionPackageViewModel);
         }
-
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -66,10 +87,16 @@ namespace CBProject.Controllers
             {
                 return HttpNotFound();
             }
-            var subscriptionPackageViewModel = Mapper.Map<SubscriptionPackage, SubscriptionPackageViewModel>(subscriptionPackage);
-            return View(subscriptionPackageViewModel);
+            var viewModel = Mapper.Map<SubscriptionPackage, SubscriptionPackageViewModel>(subscriptionPackage);
+            viewModel.OtherUsers = await this._usersRepo.GetAllAsync();
+            viewModel.MyUsers = await this._usersRepo
+                                            .GetAllEnumerable()
+                                            .Where(u => !subscriptionPackage.Users.Contains(u))
+                                            .ToListAsync();
+            viewModel.OtherContentType = await this._contentTypeRepo.GetAllAsync();
+            viewModel.OtherPayment = await this._peynmentRepo.GetAllAsync();
+            return View(viewModel);
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(SubscriptionPackageViewModel subscriptionPackageViewModel)
@@ -78,11 +105,26 @@ namespace CBProject.Controllers
             {
                 var subscriptionPackage = Mapper.Map<SubscriptionPackageViewModel, SubscriptionPackage>(subscriptionPackageViewModel);
                 this._subscriptionRepo.Update(subscriptionPackage);
+                if (subscriptionPackageViewModel.AddUsers != null && subscriptionPackageViewModel.AddUsers.Count > 0)
+                {
+                    foreach (var userId in subscriptionPackageViewModel.AddUsers)
+                    {
+                        subscriptionPackage.Users.Add(await this._usersRepo.GetAsync(userId));
+                    }
+                }
+                if (subscriptionPackageViewModel.RemoveUsers != null && subscriptionPackageViewModel.RemoveUsers.Count > 0)
+                {
+                    foreach (var userId in subscriptionPackageViewModel.RemoveUsers)
+                    {
+                        subscriptionPackage.Users.Remove(await this._usersRepo.GetAsync(userId));
+                    }
+                }
                 await this._subscriptionRepo.SaveAsync();
                 return RedirectToAction("Index");
             }
             return View(subscriptionPackageViewModel);
         }
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
@@ -96,7 +138,6 @@ namespace CBProject.Controllers
             }
             return View(subscriptionPackage);
         }
-
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
@@ -105,12 +146,14 @@ namespace CBProject.Controllers
             await this._subscriptionRepo.SaveAsync();
             return RedirectToAction("Index");
         }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
                 this._subscriptionRepo.Dispose();
+                this._usersRepo.Dispose();
+                this._contentTypeRepo.Dispose();
+                this._peynmentRepo.Dispose();
             }
             base.Dispose(disposing);
         }
