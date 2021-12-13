@@ -113,7 +113,7 @@ namespace CBProject.Repositories
             return await _context.Categories
                 .Include(c => c.CategoriesToCategories)
                 .Include(v => v.Videos)
-                .FirstAsync(c => c.ID == id);
+                .FirstOrDefaultAsync(c => c.ID == id);
         }
         public Category Get(int? id)
         {
@@ -136,7 +136,7 @@ namespace CBProject.Repositories
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
             return await _context.Categories
-                .FirstAsync(c => c.ID == id);
+                .FirstOrDefaultAsync(c => c.ID == id);
         }
         public Category GetByName(string name)
         {

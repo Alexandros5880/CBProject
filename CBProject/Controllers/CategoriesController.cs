@@ -12,9 +12,11 @@ namespace CBProject.Controllers
     public class CategoriesController : Controller
     {
         private CategoriesRepository _categories;
+        private VideosRepository _videos;
         public CategoriesController(IUnitOfWork unitOfWork)
         {
             this._categories = unitOfWork.Categories;
+            this._videos = unitOfWork.Videos;
         }
         public async Task<ActionResult> Index()
         {
@@ -39,8 +41,8 @@ namespace CBProject.Controllers
         public async Task<ActionResult> Create()
         {
             var viewModel = new CategoryViewModel();
-            var category = Mapper.Map<CategoryViewModel, Category>(viewModel);
-            viewModel.OtherCategories = await _categories.GetOtherAllAsync(category.ID);
+            viewModel.OtherCategories = await this._categories.GetAllAsync();
+            viewModel.OtherVideos = await this._videos.GetAllAsync();
             return View(viewModel);
         }
         [HttpPost]
@@ -53,6 +55,13 @@ namespace CBProject.Controllers
                 if (categoryViewModel.AddCategories != null && categoryViewModel.AddCategories.Count > 0)
                 {
                     await this._categories.AddCategoriesAsync(category, categoryViewModel.AddCategories);
+                }
+                if (categoryViewModel.AddVideos != null && categoryViewModel.AddVideos.Count > 0)
+                {
+                    foreach(var videoId in categoryViewModel.AddVideos)
+                    {
+                        category.Videos.Add(await this._videos.GetAsync(videoId));
+                    }
                 }
                 this._categories.Add(category);
                 await this._categories.SaveAsync();
@@ -76,6 +85,8 @@ namespace CBProject.Controllers
             var viewModel = Mapper.Map<Category, CategoryViewModel>(category);
             viewModel.MyCategories = await _categories.GetMyAllAsync(category.ID);
             viewModel.OtherCategories = await _categories.GetOtherAllAsync(category.ID);
+            viewModel.MyVideos = await this._videos.GetVideosFromCategoryAsync(category.ID);
+            viewModel.OtherVideos = await this._videos.GetOtherVideosFromCategoryAsync(category.ID);
             return View(viewModel);
         }
         [HttpPost]
@@ -93,6 +104,20 @@ namespace CBProject.Controllers
                 if (categoryViewModel.RemoveCategories != null && categoryViewModel.RemoveCategories.Count > 0)
                 {
                     await this._categories.RemoveCategoriesAsync(category, categoryViewModel.RemoveCategories);
+                }
+                if(categoryViewModel.AddVideos != null && categoryViewModel.AddVideos.Count > 0)
+                {
+                    foreach (var videoId in categoryViewModel.AddVideos)
+                    {
+                        category.Videos.Add(await this._videos.GetAsync(videoId));
+                    }
+                }
+                if (categoryViewModel.RemoveVideos != null && categoryViewModel.RemoveVideos.Count > 0)
+                {
+                    foreach (var videoId in categoryViewModel.RemoveVideos)
+                    {
+                        category.Videos.Remove(await this._videos.GetAsync(videoId));
+                    }
                 }
                 await this._categories.SaveAsync();
                 return RedirectToAction("Index");

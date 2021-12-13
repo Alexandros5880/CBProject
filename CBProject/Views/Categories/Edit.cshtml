@@ -35,28 +35,31 @@
         </div>
     </div>
 
-    @{
-        var display = "";
-        if (Model.Master)
-        {
-            display = "display: block;";
-        }
-        else
-        {
-            display = "display: none;";
-        }
-    }
-    <div class="form-group categories" style="@display">
+    <div class="form-group categories" style="display:@(Model.Master ? "block":"none")">
         @Html.Label("Remove Categories:", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.ListBoxFor(model => model.RemoveCategories, new SelectList(Model.MyCategories, "Id", "Name"), new { @class = "form-control" })
         </div>
     </div>
 
-    <div class="form-group categories" style="@display">
+    <div class="form-group categories" style="display:@(Model.Master ? "block":"none")">
         @Html.Label("Add Categories:", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.ListBoxFor(model => model.AddCategories, new SelectList(Model.OtherCategories, "Id", "Name"), new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group videos" style="display:@(Model.Master ? "none":"block")">
+        @Html.Label("Remove Videos:", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.ListBoxFor(model => model.RemoveVideos, new SelectList(Model.MyVideos, "Id", "Name"), new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group videos" style="display:@(Model.Master ? "none":"block")">
+        @Html.Label("Add Videos:", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.ListBoxFor(model => model.AddVideos, new SelectList(Model.OtherVideos, "Id", "Name"), new { @class = "form-control" })
         </div>
     </div>
 
@@ -78,11 +81,12 @@
     <script>
         $(document).ready(function () {
             $('input[name="Master"]').change(function () {
-                console.log("master changed");
                 if ($('input[name="Master"]:checked').length > 0) {
                     $(".categories").show();
+                    $(".videos").hide();
                 } else {
                     $(".categories").hide();
+                    $(".videos").show();
                 }
             });
         });

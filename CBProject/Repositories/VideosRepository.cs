@@ -1,5 +1,6 @@
 ﻿using CBProject.HelperClasses.Interfaces;
 using CBProject.Models;
+using CBProject.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -8,108 +9,160 @@ using System.Threading.Tasks;
 
 namespace CBProject.Repositories
 {
-    public class VideosRepository :  IDisposable
+    public class VideosRepository : IRepository<Video>, IDisposable
     {
         private readonly ApplicationDbContext _context;
+        private readonly CategoriesRepository _categoriesRepository;
         private bool disposedValue;
         public VideosRepository(IUnitOfWork unitOfWork)
         {
-            _context = unitOfWork.Context;
+            this._context = unitOfWork.Context;
+            this._categoriesRepository = unitOfWork.Categories;
         }
-        public IEnumerable<Video> GetVideosCC(string userId)
+        public ICollection<Video> GetVideosCC(string userId)
         {
-            return GetAll().Where(v => v.CreatorId == userId);
+            return this.GetAll()
+                .Where(v => v.CreatorId == userId)
+                .ToList();
         }
         public void Add(Video video)
         {
             if(video == null)
                 throw new ArgumentNullException(nameof(video));
 
-            _context.Videos.Add(video);
+            this._context.Videos.Add(video);
         }
         public void Delete(int? id)
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
-            
-            var video = Get(id);
-
-
+            var video = this.Get(id);
             if (video == null)
                 throw new ArgumentNullException(nameof(video));
-
-            _context.Videos.Remove(video);
+            this._context.Videos.Remove(video);
         }
         public Video Get(int? id)
         {
-            return _context.Videos
+            return this._context.Videos
                 .Include(v=>v.Reviews)
                 .Include(v => v.Ratings)
                 .Include(v => v.Tags)
                 .SingleOrDefault(v=>v.Id == id);
         }
-        public IEnumerable<Video> GetAll()
+        public ICollection<Video> GetAll()
         {
-            return _context.Videos
+            return this._context.Videos
                 .Include(v => v.Reviews)
                 .Include(v => v.Ratings)
-                .Include(v => v.Tags);
+                .Include(v => v.Tags)
+                .ToList();
         }
-        public IEnumerable<Video> GetAllEmpty()
+        public ICollection<Video> GetAllEmpty()
         {
             
-            return _context.Videos.ToList();
+            return this._context.Videos.ToList();
         }
         public Video GetEmpty(int? id)
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
-
-            return _context.Videos.Find(id);
+            return this._context.Videos.Find(id);
+        }
+        public ICollection<Video> GetOtherVideosFromCategory(int? id)
+        {
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
+            var category = this._categoriesRepository.Get(id);
+            if (category == null)
+                throw new ArgumentNullException(nameof(category));
+            return _context.Videos
+                .Include(v => v.Reviews)
+                .Include(v => v.Ratings)
+                .Include(v => v.Tags)
+                .Where(v => !category.Videos.Contains(v))
+                .ToList();
+        }
+        public ICollection<Video> GetVideosFromCategory(int? id)
+        {
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
+            var category = this._categoriesRepository.Get(id);
+            if (category == null)
+                throw new ArgumentNullException(nameof(category));
+            return _context.Videos
+                .Include(v => v.Reviews)
+                .Include(v => v.Ratings)
+                .Include(v => v.Tags)
+                .Where(v => category.Videos.Contains(v))
+                .ToList();
         }
         public void Save()
         {
-            _context.SaveChanges();
+            this._context.SaveChanges();
         }
         public void Update(Video video)
         {
             if (video == null)
                 throw new ArgumentNullException(nameof(video));
-
-            _context.Entry(video).State = EntityState.Modified;
+            this._context.Entry(video).State = EntityState.Modified;
         }
-        // TODO: VideosRepository Async
-        public Task<int> UpdateAsync(Video obj)
+        public async Task<Video> GetAsync(int? id)
         {
-            throw new NotImplementedException();
+            return await this._context.Videos
+                .Include(v => v.Reviews)
+                .Include(v => v.Ratings)
+                .Include(v => v.Tags)
+                .SingleOrDefaultAsync(v => v.Id == id);
         }
-        public Task<int> SaveAsync()
+        public async Task<Video> GetEmptyAsync(int? id)
         {
-            throw new NotImplementedException();
+            return await this._context.Videos
+                .SingleOrDefaultAsync(v => v.Id == id);
         }
-        public Task<Video> GetEmptyAsync(int? id)
+        public async Task<ICollection<Video>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await this._context.Videos
+                .Include(v => v.Reviews)
+                .Include(v => v.Ratings)
+                .Include(v => v.Tags)
+                .ToListAsync();
         }
-        public Task<Video> GetAsync(int? id)
+        public async Task<ICollection<Video>> GetAllEmptyAsync()
         {
-            throw new NotImplementedException();
+            return await this._context.Videos
+                .ToListAsync();
         }
-        public Task<ICollection<Video>> GetAllEmptyAsync()
+        public async Task<ICollection<Video>> GetOtherVideosFromCategoryAsync(int? id)
         {
-            throw new NotImplementedException();
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
+            var category = await this._categoriesRepository.GetAsync(id);
+            if (category == null)
+                throw new ArgumentNullException(nameof(category));
+            return await _context.Videos
+                .Include(v => v.Reviews)
+                .Include(v => v.Ratings)
+                .Include(v => v.Tags)
+                .Where(v => !category.Videos.Contains(v))
+                .ToListAsync();
         }
-        public Task<ICollection<Video>> GetAllAsync()
+        public async Task<ICollection<Video>> GetVideosFromCategoryAsync(int? id)
         {
-            throw new NotImplementedException();
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
+            var category = await this._categoriesRepository.GetAsync(id);
+            if (category == null)
+                throw new ArgumentNullException(nameof(category));
+            return await _context.Videos
+                .Include(v => v.Reviews)
+                .Include(v => v.Ratings)
+                .Include(v => v.Tags)
+                .Where(v => category.Videos.Contains(v))
+                .ToListAsync();
         }
-        public Task<int> DeleteAsync(int? id)
+        public async Task<int> SaveAsync()
         {
-            throw new NotImplementedException();
-        }
-        public Task<int> AddAsync(Video obj)
-        {
-            throw new NotImplementedException();
+            return await this._context.SaveChangesAsync();
         }
         protected virtual void Dispose(bool disposing)
         {
@@ -118,6 +171,7 @@ namespace CBProject.Repositories
                 if (disposing)
                 {
                     this._context.Dispose();
+                    this._categoriesRepository.Dispose();
                 }
                 disposedValue = true;
             }
