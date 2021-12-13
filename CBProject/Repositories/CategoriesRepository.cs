@@ -52,31 +52,36 @@ namespace CBProject.Repositories
         public ICollection<Category> GetOtherAll(int? id)
         {
             var ccids = this._categoriesToCategoriesRepo
-                .GetAllOtherWhereParentId(id)
-                .Select(cc => cc.ChiledCategoryId);
+                .GetAllOtherWhereParentId(id);
+            var parents = this._categoriesToCategoriesRepo
+                                     .GetAllParentsWithChiledId(id);
             return _context.Categories
                 .Include(c => c.CategoriesToCategories)
                 .Include(v => v.Videos)
-                .Where(c => id != c.ID && ccids.Contains(c.ID))
+                .Where(c => id != c.ID)
+                .Where(c => !ccids.Contains(c.ID))
+                .Where(c => !parents.Contains(c.ID))
                 .ToList();
         }
         public async Task<ICollection<Category>> GetOtherAllAsync(int? id)
         {
-            var ccids = this._categoriesToCategoriesRepo
-                .GetAllOtherWhereParentId(id)
-                .Select(cc => cc.ChiledCategoryId);
+            var ccids = await this._categoriesToCategoriesRepo
+                .GetAllOtherWhereParentIdAsync(id);
+            var parents = await this._categoriesToCategoriesRepo
+                                     .GetAllParentsWithChiledIdAsync(id);
             var categories = await _context.Categories
                 .Include(c => c.CategoriesToCategories)
                 .Include(v => v.Videos)
-                .Where(c => id != c.ID && ccids.Contains(c.ID))
+                .Where(c => id != c.ID)
+                .Where(c => !ccids.Contains(c.ID))
+                .Where(c => !parents.Contains(c.ID))
                 .ToListAsync();
             return categories;
         }
         public ICollection<Category> GetMyAll(int? id)
         {
             var ccids = this._categoriesToCategoriesRepo
-                .GetAllWhereParentId(id)
-                .Select(cc => cc.ChiledCategoryId);
+                .GetAllWhereParentId(id);
             return _context.Categories
                 .Include(c => c.CategoriesToCategories)
                 .Include(v => v.Videos)
@@ -85,9 +90,8 @@ namespace CBProject.Repositories
         }
         public async Task<ICollection<Category>> GetMyAllAsync(int? id)
         {
-            var ccids = this._categoriesToCategoriesRepo
-                .GetAllWhereParentId(id)
-                .Select(cc => cc.ChiledCategoryId);
+            var ccids = await this._categoriesToCategoriesRepo
+                .GetAllWhereParentIdAsync(id);
             return await _context.Categories
                 .Include(c => c.CategoriesToCategories)
                 .Include(v => v.Videos)
@@ -152,7 +156,7 @@ namespace CBProject.Repositories
                  .Include(v => v.Videos)
                  .FirstOrDefaultAsync(c => c.Name == name);
         }
-        public void AddCategories(Category parent, Category chiled)
+        public void AddCategory(Category parent, Category chiled)
         {
             if (parent == null)
                 throw new ArgumentNullException(nameof(parent));
@@ -160,7 +164,7 @@ namespace CBProject.Repositories
                 throw new ArgumentNullException(nameof(chiled));
             this._categoriesToCategoriesRepo.AddChiled(parent.ID, chiled.ID);
         }
-        public async Task AddCategoriesAsync(Category parent, Category chiled)
+        public async Task AddCategoryAsync(Category parent, Category chiled)
         {
             if (parent == null)
                 throw new ArgumentNullException(nameof(parent));
@@ -168,7 +172,29 @@ namespace CBProject.Repositories
                 throw new ArgumentNullException(nameof(chiled));
             await this._categoriesToCategoriesRepo.AddChiledAsync(parent.ID, chiled.ID);
         }
-        public void RemoveCategories(Category parent, Category chiled)
+        public void AddCategories(Category parent, ICollection<int> categoriesIds)
+        {
+            if (parent == null)
+                throw new ArgumentNullException(nameof(parent));
+            if (categoriesIds.Count == 0)
+                throw new InvalidOperationException("Sequence contains no elements");
+            foreach (var id in categoriesIds)
+            {
+                this._categoriesToCategoriesRepo.AddChiled(parent.ID, id);
+            }
+        }
+        public async Task AddCategoriesAsync(Category parent, ICollection<int> categoriesIds)
+        {
+            if (parent == null)
+                throw new ArgumentNullException(nameof(parent));
+            if (categoriesIds.Count == 0)
+                throw new InvalidOperationException("Sequence contains no elements");
+            foreach (var id in categoriesIds)
+            {
+                await this._categoriesToCategoriesRepo.AddChiledAsync(parent.ID, id);
+            }
+        }
+        public void RemoveCategory(Category parent, Category chiled)
         {
             if (parent == null)
                 throw new ArgumentNullException(nameof(parent));
@@ -176,13 +202,35 @@ namespace CBProject.Repositories
                 throw new ArgumentNullException(nameof(chiled));
             this._categoriesToCategoriesRepo.RemoveChiled(parent.ID, chiled.ID);
         }
-        public async Task RemoveCategoriesAsync(Category parent, Category chiled)
+        public async Task RemoveCategoryAsync(Category parent, Category chiled)
         {
             if (parent == null)
                 throw new ArgumentNullException(nameof(parent));
             if (chiled == null)
                 throw new ArgumentNullException(nameof(chiled));
             await this._categoriesToCategoriesRepo.RemoveChiledAsync(parent.ID, chiled.ID);
+        }
+        public void RemoveCategories(Category parent, ICollection<int> categoriesIds)
+        {
+            if (parent == null)
+                throw new ArgumentNullException(nameof(parent));
+            if (categoriesIds.Count == 0)
+                throw new InvalidOperationException("Sequence contains no elements");
+            foreach (var id in categoriesIds)
+            {
+                this._categoriesToCategoriesRepo.RemoveChiled(parent.ID, id);
+            }
+        }
+        public async Task RemoveCategoriesAsync(Category parent, ICollection<int> categoriesIds)
+        {
+            if (parent == null)
+                throw new ArgumentNullException(nameof(parent));
+            if (categoriesIds.Count == 0)
+                throw new InvalidOperationException("Sequence contains no elements");
+            foreach (var id in categoriesIds)
+            {
+                await this._categoriesToCategoriesRepo.RemoveChiledAsync(parent.ID, id);
+            }
         }
         public void Save()
         {

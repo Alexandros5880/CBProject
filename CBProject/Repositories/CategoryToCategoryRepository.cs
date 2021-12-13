@@ -14,11 +14,9 @@ namespace CBProject.Repositories
     {
         private bool disposedValue;
         private ApplicationDbContext _context { get; set; }
-        private CategoriesRepository _categoriesRepository { get; set; }
         public CategoryToCategoryRepository(IUnitOfWork unitOfWork)
         {
             this._context = unitOfWork.Context;
-            this._categoriesRepository = unitOfWork.Categories;
         }
         public void Add(CategoryToCategory obj)
         {
@@ -39,11 +37,10 @@ namespace CBProject.Repositories
             {
                 CategoryToCategory cc = new CategoryToCategory()
                 {
-                    MasterCategory = this._categoriesRepository.Get(parentId),
-                    ChiledCategory = this._categoriesRepository.Get(chiledId)
+                    MasterCategory = this._context.Categories.FirstOrDefault(c => c.ID == parentId),
+                    ChiledCategory = this._context.Categories.FirstOrDefault(c => c.ID == chiledId),
                 };
                 this.Add(cc);
-                this.Save();
             }
         }
         public async Task AddChiledAsync(int? parentId, int? chiledId)
@@ -59,11 +56,10 @@ namespace CBProject.Repositories
             {
                 CategoryToCategory cc = new CategoryToCategory()
                 {
-                    MasterCategory = this._categoriesRepository.Get(parentId),
-                    ChiledCategory = this._categoriesRepository.Get(chiledId)
+                    MasterCategory = this._context.Categories.FirstOrDefault(c => c.ID == parentId),
+                    ChiledCategory = this._context.Categories.FirstOrDefault(c => c.ID == chiledId),
                 };
                 this.Add(cc);
-                await this.SaveAsync();
             }
         }
         public void RemoveChiled(int? parentId, int? chiledId)
@@ -81,7 +77,6 @@ namespace CBProject.Repositories
                 {
                     this._context.CategoriesToCategories.Remove(c);
                 }
-                this.Save();
             }
         }
         public async Task RemoveChiledAsync(int? parentId, int? chiledId)
@@ -99,7 +94,6 @@ namespace CBProject.Repositories
                 {
                     this._context.CategoriesToCategories.Remove(c);
                 }
-                await this.SaveAsync();
             }
         }
         public void Delete(int? id)
@@ -139,36 +133,58 @@ namespace CBProject.Repositories
             return await this._context.CategoriesToCategories
                 .ToListAsync();
         }
-        public ICollection<CategoryToCategory> GetAllWhereParentId(int? id)
+        public ICollection<int> GetAllWhereParentId(int? id)
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
             return this._context.CategoriesToCategories
-                .Where(cc => cc.ChiledCategoryId == id)
+                .Where(cc => cc.MasterCategoryId == id)
+                .Select(cc => cc.ChiledCategoryId)
                 .ToList();
         }
-        public async Task<ICollection<CategoryToCategory>> GetAllWhereParentIdAsync(int? id)
+        public async Task<ICollection<int>> GetAllWhereParentIdAsync(int? id)
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
             return await this._context.CategoriesToCategories
-                .Where(cc => cc.ChiledCategoryId == id)
+                .Where(cc => cc.MasterCategoryId == id)
+                .Select(cc => cc.ChiledCategoryId)
                 .ToListAsync();
         }
-        public ICollection<CategoryToCategory> GetAllOtherWhereParentId(int? id)
+        public ICollection<int> GetAllOtherWhereParentId(int? id)
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
             return this._context.CategoriesToCategories
-                .Where(cc => cc.ChiledCategoryId != id)
+                .Where(cc => cc.MasterCategoryId == id)
+                .Select(cc => cc.ChiledCategoryId)
                 .ToList();
         }
-        public async Task<ICollection<CategoryToCategory>> GetAllOtherWhereParentIdAsync(int? id)
+        public async Task<ICollection<int>> GetAllOtherWhereParentIdAsync(int? id)
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
             return await this._context.CategoriesToCategories
-                .Where(cc => cc.ChiledCategoryId != id)
+                .Where(cc => cc.MasterCategoryId == id)
+                .Select(cc => cc.ChiledCategoryId)
+                .ToListAsync();
+        }
+        public ICollection<int> GetAllParentsWithChiledId(int? id)
+        {
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
+            return this._context.CategoriesToCategories
+                .Where(cc => cc.ChiledCategoryId == id)
+                .Select(cc => cc.MasterCategoryId)
+                .ToList();
+        }
+        public async Task<ICollection<int>> GetAllParentsWithChiledIdAsync(int? id)
+        {
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
+            return await this._context.CategoriesToCategories
+                .Where(cc => cc.ChiledCategoryId == id)
+                .Select(cc => cc.MasterCategoryId)
                 .ToListAsync();
         }
         public async Task<CategoryToCategory> GetAsync(int? id)
@@ -213,7 +229,6 @@ namespace CBProject.Repositories
                 if (disposing)
                 {
                     this._context.Dispose();
-                    this._categoriesRepository.Dispose();
                 }
                 disposedValue = true;
             }

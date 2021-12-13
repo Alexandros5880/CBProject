@@ -11,7 +11,6 @@ namespace CBProject.HelperClasses
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
         private bool disposedValue;
-
         public ApplicationDbContext Context { get; protected set; }
         public RoleStore<IdentityRole> RoleStore { get; protected set; }
         public RoleManager<IdentityRole> RoleManager { get; protected set; }
@@ -27,8 +26,6 @@ namespace CBProject.HelperClasses
         public EbooksRepository Ebooks { get; protected set; }
         public SubscriptionPackageRepository SubscriptionPackages { get; protected set; }
         public PaymentsRepository Payments { get; protected set; }
-
-
         public UnitOfWork(IApplicationDbContext context)
         {
             this.Context = (ApplicationDbContext)context;
@@ -36,8 +33,8 @@ namespace CBProject.HelperClasses
             this.UserStore = new UserStore<ApplicationUser>(this.Context);
             this.RoleManager = new RoleManager<IdentityRole>(this.RoleStore);
             this.UserManager = new UserManager<ApplicationUser>(this.UserStore);
-            this.Categories = new CategoriesRepository(this);
             this.CategoryToCategory = new CategoryToCategoryRepository(this);
+            this.Categories = new CategoriesRepository(this);
             this.ContentTypes = new ContentTypeRepository(this);
             this.Videos = new VideosRepository(this);
             this.Ratings = new RatingsRepository(this);
@@ -47,7 +44,6 @@ namespace CBProject.HelperClasses
             this.SubscriptionPackages = new SubscriptionPackageRepository(this);
             this.Payments = new PaymentsRepository(this);
         }
-
         protected virtual void Dispose(bool disposing)
         {
             if (!disposedValue)

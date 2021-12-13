@@ -1,9 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CBProject.Models.EntityModels
 {
     public class CategoryToCategory
     {
+        [Key]
         public int ID { get; set; }
 
         [ForeignKey("MasterCategory")]

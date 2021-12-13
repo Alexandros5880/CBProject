@@ -16,12 +16,10 @@ namespace CBProject.Controllers
         {
             this._categories = unitOfWork.Categories;
         }
-
         public async Task<ActionResult> Index()
         {
             return View(await _categories.GetAllAsync());
         }
-
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,27 +31,29 @@ namespace CBProject.Controllers
             {
                 return HttpNotFound();
             }
-            return View(category);
+            var viewModel = Mapper.Map<Category, CategoryViewModel>(category);
+            viewModel.MyCategories = await _categories.GetMyAllAsync(category.ID);
+            return View(viewModel);
         }
-
         [Authorize(Roles ="Admin")]
         public async Task<ActionResult> Create()
         {
             var viewModel = new CategoryViewModel();
             var category = Mapper.Map<CategoryViewModel, Category>(viewModel);
             viewModel.OtherCategories = await _categories.GetOtherAllAsync(category.ID);
-            viewModel.MyCategories = await _categories.GetMyAllAsync(category.ID);
             return View(viewModel);
         }
-
         [HttpPost]
-        [ValidateAntiForgeryToken]  // TODO: Categories Controller Fix Post Create
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(CategoryViewModel categoryViewModel)
         {
             if (ModelState.IsValid)
             {
                 var category = Mapper.Map<CategoryViewModel, Category>(categoryViewModel);
-                //category.Categories = categoryViewModel.MyCategories;
+                if (categoryViewModel.AddCategories != null && categoryViewModel.AddCategories.Count > 0)
+                {
+                    await this._categories.AddCategoriesAsync(category, categoryViewModel.AddCategories);
+                }
                 this._categories.Add(category);
                 await this._categories.SaveAsync();
                 return RedirectToAction("Index");
@@ -61,7 +61,6 @@ namespace CBProject.Controllers
 
             return View(categoryViewModel);
         }
-
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Edit(int? id)
         {
@@ -75,41 +74,31 @@ namespace CBProject.Controllers
                 return HttpNotFound();
             }
             var viewModel = Mapper.Map<Category, CategoryViewModel>(category);
-            viewModel.OtherCategories = await _categories.GetOtherAllAsync(category.ID);
             viewModel.MyCategories = await _categories.GetMyAllAsync(category.ID);
+            viewModel.OtherCategories = await _categories.GetOtherAllAsync(category.ID);
             return View(viewModel);
         }
-
         [HttpPost]
-        [ValidateAntiForgeryToken] // TODO: Categories Controller Fix Post Edit
-        public async Task<ContentResult> Edit(CategoryViewModel categoryViewModel)
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit(CategoryViewModel categoryViewModel)
         {
             if (ModelState.IsValid)
             {
                 var category = Mapper.Map<CategoryViewModel, Category>(categoryViewModel);
-                //if (categoryViewModel.AddCategories != null && categoryViewModel.AddCategories.Count > 0)
-                //{
-                //    foreach (int id in categoryViewModel.AddCategories)
-                //    {
-                //        category.Categories.Add(await this._categories.GetAsync(id));
-                //    }
-                //}
-                //if (categoryViewModel.RemoveCategories != null && categoryViewModel.RemoveCategories.Count > 0)
-                //{
-                //    foreach (int id in categoryViewModel.RemoveCategories)
-                //    {
-                //        category.Categories.Remove(await this._categories.GetAsync(id));
-                //    }
-                //}
                 this._categories.Update(category);
+                if (categoryViewModel.AddCategories != null && categoryViewModel.AddCategories.Count > 0)
+                {
+                    await this._categories.AddCategoriesAsync(category, categoryViewModel.AddCategories);
+                }
+                if (categoryViewModel.RemoveCategories != null && categoryViewModel.RemoveCategories.Count > 0)
+                {
+                    await this._categories.RemoveCategoriesAsync(category, categoryViewModel.RemoveCategories);
+                }
                 await this._categories.SaveAsync();
-                //return RedirectToAction("Index");
-                return Content(category.CategoriesToCategories.Count.ToString());
+                return RedirectToAction("Index");
             }
-            //return View(categoryViewModel);
-            return Content("Error");
+            return View(categoryViewModel);
         }
-
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
@@ -123,7 +112,6 @@ namespace CBProject.Controllers
             }
             return View(category);
         }
-
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
@@ -132,7 +120,6 @@ namespace CBProject.Controllers
             await this._categories.SaveAsync();
             return RedirectToAction("Index");
         }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

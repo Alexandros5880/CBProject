@@ -1,4 +1,4 @@
-﻿@model CBProject.Models.EntityModels.Category
+﻿@model CBProject.Models.ViewModels.CategoryViewModel
 
 @{
     ViewBag.Title = "Details";
@@ -26,6 +26,13 @@
             @Html.DisplayFor(model => model.Master)
         </dd>
 
+        <dt>
+            
+        </dt>
+
+        <dd>
+            @{ Html.RenderPartial("_RelatedCategories", Model.MyCategories); }
+        </dd>
     </dl>
 </div>
 <p>

@@ -2,7 +2,7 @@ namespace CBProject.Migrations
 {
     using System.Data.Entity.Migrations;
 
-    public partial class Start : DbMigration
+    public partial class Initial : DbMigration
     {
         public override void Up()
         {
@@ -27,7 +27,7 @@ namespace CBProject.Migrations
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.Categories", t => t.ChiledCategoryId, cascadeDelete: false)
-                .ForeignKey("dbo.Categories", t => t.MasterCategoryId, cascadeDelete: true)
+                .ForeignKey("dbo.Categories", t => t.MasterCategoryId, cascadeDelete: false)
                 .ForeignKey("dbo.Categories", t => t.Category_ID)
                 .Index(t => t.MasterCategoryId)
                 .Index(t => t.ChiledCategoryId)
