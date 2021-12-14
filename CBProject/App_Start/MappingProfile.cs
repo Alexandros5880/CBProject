@@ -47,6 +47,17 @@ namespace CBProject.App_Start
             Mapper.CreateMap<SubscriptionPackage, SubscriptionPackageViewModel>();
             Mapper.CreateMap<SubscriptionPackageViewModel, SubscriptionPackage>();
 
+            Mapper.CreateMap<Rating, RatingViewModel>();
+            Mapper.CreateMap<RatingViewModel, Rating>();
+
+            Mapper.CreateMap<Review, ReviewViewModel>();
+            Mapper.CreateMap<ReviewViewModel, Review>();
+
+            Mapper.CreateMap<Tag, TagViewModel>();
+            Mapper.CreateMap<TagViewModel, Tag>();
+
+            Mapper.CreateMap<Video, VideoViewModel>();
+            Mapper.CreateMap<VideoViewModel, Video>();
         }
     }
 }

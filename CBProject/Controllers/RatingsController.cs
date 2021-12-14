@@ -1,105 +1,91 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
+﻿using AutoMapper;
+using CBProject.HelperClasses.Interfaces;
 using CBProject.Models;
+using CBProject.Models.ViewModels;
+using CBProject.Repositories;
+using CBProject.Repositories.IdentityRepos;
+using CBProject.Repositories.IdentityRepos.Interfaces;
+using System.Net;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace CBProject.Controllers
 {
     public class RatingsController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
-
-        // GET: Ratings
+        private readonly RatingsRepository _ratingsRepo;
+        private readonly UsersRepo _usersRepo;
+        private readonly VideosRepository _videoRepo;
+        public RatingsController(IUnitOfWork unitOfWork, IUsersRepo usersRepo)
+        {
+            this._ratingsRepo = unitOfWork.Ratings;
+            this._usersRepo = (UsersRepo)usersRepo;
+            this._videoRepo = unitOfWork.Videos;
+        }
         public async Task<ActionResult> Index()
         {
-            var ratings = db.Ratings.Include(r => r.Rater).Include(r => r.Video);
-            return View(await ratings.ToListAsync());
+            return View(await this._ratingsRepo.GetAllAsync());
         }
-
-        // GET: Ratings/Details/5
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Rating rating = await db.Ratings.FindAsync(id);
+            Rating rating = await this._ratingsRepo.GetAsync(id);
             if (rating == null)
             {
                 return HttpNotFound();
             }
             return View(rating);
         }
-
-        // GET: Ratings/Create
         public ActionResult Create()
         {
-            ViewBag.RaterId = new SelectList(db.ApplicationUsers, "Id", "FirstName");
-            ViewBag.VideoId = new SelectList(db.Videos, "Id", "Title");
-            return View();
+            var viewModel = new RatingViewModel();
+            viewModel.Users = new SelectList(this._usersRepo.GetAll(), "ID", "FullName");
+            viewModel.Videos = new SelectList(this._videoRepo.GetAll(), "ID", "Title");
+            return View(viewModel);
         }
-
-        // POST: Ratings/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Rate,RaterId,VideoId")] Rating rating)
+        public async Task<ActionResult> Create(RatingViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                db.Ratings.Add(rating);
-                await db.SaveChangesAsync();
+                var rating = Mapper.Map<RatingViewModel, Rating>(viewModel);
+                this._ratingsRepo.Add(rating);
+                await this._ratingsRepo.SaveAsync();
                 return RedirectToAction("Index");
             }
-
-            ViewBag.RaterId = new SelectList(db.ApplicationUsers, "Id", "FirstName", rating.RaterId);
-            ViewBag.VideoId = new SelectList(db.Videos, "Id", "Title", rating.VideoId);
-            return View(rating);
+            return View(viewModel);
         }
-
-        // GET: Ratings/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Rating rating = await db.Ratings.FindAsync(id);
+            Rating rating = await this._ratingsRepo.GetAsync(id);
             if (rating == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.RaterId = new SelectList(db.ApplicationUsers, "Id", "FirstName", rating.RaterId);
-            ViewBag.VideoId = new SelectList(db.Videos, "Id", "Title", rating.VideoId);
-            return View(rating);
+            var viewModel = Mapper.Map<Rating, RatingViewModel>(rating);
+            viewModel.Users = new SelectList(this._usersRepo.GetAll(), "ID", "FullName");
+            viewModel.Videos = new SelectList(this._videoRepo.GetAll(), "ID", "Title");
+            return View(viewModel);
         }
-
-        // POST: Ratings/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Rate,RaterId,VideoId")] Rating rating)
+        public async Task<ActionResult> Edit(RatingViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(rating).State = EntityState.Modified;
-                await db.SaveChangesAsync();
+                var rating = Mapper.Map<RatingViewModel, Rating>(viewModel);
                 return RedirectToAction("Index");
             }
-            ViewBag.RaterId = new SelectList(db.ApplicationUsers, "Id", "FirstName", rating.RaterId);
-            ViewBag.VideoId = new SelectList(db.Videos, "Id", "Title", rating.VideoId);
-            return View(rating);
+            return View(viewModel);
         }
-
-        // GET: Ratings/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
@@ -113,8 +99,6 @@ namespace CBProject.Controllers
             }
             return View(rating);
         }
-
-        // POST: Ratings/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
@@ -124,12 +108,13 @@ namespace CBProject.Controllers
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                db.Dispose();
+                this._ratingsRepo.Dispose();
+                this._usersRepo.Dispose();
+                this._videoRepo.Dispose();
             }
             base.Dispose(disposing);
         }
