@@ -20,8 +20,27 @@ namespace CBProject.Models.ViewModels
         public Category Category { get; set; }
         public int CategoryId { get; set; }
         public string Url { get; set; }
+
+
         public ICollection<Tag> Tags { get; set; }
         public ICollection<Review> Reviews { get; set; }
         public ICollection<Rating> Ratings { get; set; }
+
+
+        public ICollection<Tag> OtherTags { get; set; }
+        public ICollection<Tag> MyTags { get; set; }
+        public ICollection<int> AddTags { get; set; }
+        public ICollection<int> RemoveTags { get; set; }
+
+        public ICollection<Review> OtherReviews { get; set; }
+        public ICollection<Review> MyReviews { get; set; }
+        public ICollection<int> AddReviews { get; set; }
+        public ICollection<int> RemoveReviews { get; set; }
+
+        public ICollection<Rating> OtherRatings { get; set; }
+        public ICollection<Rating> MyRatings { get; set; }
+        public ICollection<int> AddRatings { get; set; }
+        public ICollection<int> RemoveRatings { get; set; }
+
     }
 }

@@ -37,13 +37,11 @@ namespace CBProject.Repositories
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
             return this._context.Tags
-                .Include(t=>t.Videos)
                 .SingleOrDefault(t=>t.Id == id);
         }
         public ICollection<Tag> GetAll()
         {
             return this._context.Tags
-                .Include(t=>t.Videos)
                 .ToList();
         }       
         public ICollection<Tag> GetAllEmpty()
@@ -83,7 +81,6 @@ namespace CBProject.Repositories
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
             return await this._context.Tags
-                .Include(t => t.Videos)
                 .SingleOrDefaultAsync(t => t.Id == id);
         }
         public async Task<ICollection<Tag>> GetAllEmptyAsync()
@@ -94,7 +91,6 @@ namespace CBProject.Repositories
         public async Task<ICollection<Tag>> GetAllAsync()
         {
             return await this._context.Tags
-                .Include(t => t.Videos)
                 .ToListAsync();
         }
         protected virtual void Dispose(bool disposing)

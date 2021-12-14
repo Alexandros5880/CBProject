@@ -34,18 +34,7 @@ namespace CBProject.Models.Configurations
 
             HasRequired(v => v.Category)
                 .WithMany(d => d.Videos)
-                .HasForeignKey(d => d.CategoryId);            
-
-            HasMany(v => v.Tags)
-                .WithMany(t => t.Videos)                
-                .Map(t =>
-                {
-                    t.ToTable("VideoTags");
-                    t.MapLeftKey("VideoId");
-                    t.MapRightKey("TagId");
-                });
-
-            
+                .HasForeignKey(d => d.CategoryId);                        
 
             HasMany(v => v.Reviews)
                 .WithRequired(r=>r.Video)

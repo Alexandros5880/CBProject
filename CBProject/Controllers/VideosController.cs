@@ -1,135 +1,132 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
+﻿using AutoMapper;
+using CBProject.HelperClasses.Interfaces;
 using CBProject.Models;
+using CBProject.Models.ViewModels;
+using CBProject.Repositories;
+using CBProject.Repositories.IdentityRepos;
+using CBProject.Repositories.IdentityRepos.Interfaces;
+using System.Net;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace CBProject.Controllers
 {
     public class VideosController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
-
-        // GET: Videos
+        private readonly VideosRepository _videoRepo;
+        private readonly UsersRepo _usersRepo;
+        private readonly CategoriesRepository _categoriesRepo;
+        private readonly TagsRepository _tagsRepo;
+        private readonly ReviewsRepository _reviewRepo;
+        private readonly RatingsRepository _ratingsRepo;
+        public VideosController(IUnitOfWork unitOfWork, IUsersRepo usersRepo)
+        {
+            this._videoRepo = unitOfWork.Videos;
+            this._usersRepo = (UsersRepo)usersRepo;
+            this._categoriesRepo = unitOfWork.Categories;
+            this._tagsRepo = unitOfWork.Tags;
+            this._reviewRepo = unitOfWork.Reviews;
+            this._ratingsRepo = unitOfWork.Ratings;
+        }
         public async Task<ActionResult> Index()
         {
-            var videos = db.Videos.Include(v => v.Category).Include(v => v.ContentCreator);
-            return View(await videos.ToListAsync());
+            return View(await this._videoRepo.GetAllAsync());
         }
-
-        // GET: Videos/Details/5
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Video video = await db.Videos.FindAsync(id);
+            Video video = await this._videoRepo.GetAsync(id);
             if (video == null)
             {
                 return HttpNotFound();
             }
             return View(video);
         }
-
-        // GET: Videos/Create
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
-            ViewBag.CategoryId = new SelectList(db.Categories, "ID", "Name");
-            ViewBag.CreatorId = new SelectList(db.ApplicationUsers, "Id", "FirstName");
-            return View();
+            var viewModel = new VideoViewModel();
+            viewModel.OtherTags = await this._tagsRepo.GetAllAsync();
+            viewModel.OtherReviews = await this._reviewRepo.GetAllAsync();
+            viewModel.OtherRatings = await this._ratingsRepo.GetAllAsync();
+            return View(viewModel);
         }
-
-        // POST: Videos/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Title,Thumbnail,VideoPath,Description,UploadDate,CreatorId,CategoryId,Url")] Video video)
+        public async Task<ActionResult> Create(VideoViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                db.Videos.Add(video);
-                await db.SaveChangesAsync();
+                var video = Mapper.Map<VideoViewModel, Video>(viewModel);
+                this._videoRepo.Add(video);
+                await this._videoRepo.SaveAsync();
                 return RedirectToAction("Index");
             }
-
-            ViewBag.CategoryId = new SelectList(db.Categories, "ID", "Name", video.CategoryId);
-            ViewBag.CreatorId = new SelectList(db.ApplicationUsers, "Id", "FirstName", video.CreatorId);
-            return View(video);
+            return View(viewModel);
         }
-
-        // GET: Videos/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Video video = await db.Videos.FindAsync(id);
+            Video video = await this._videoRepo.GetAsync(id);
             if (video == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.CategoryId = new SelectList(db.Categories, "ID", "Name", video.CategoryId);
-            ViewBag.CreatorId = new SelectList(db.ApplicationUsers, "Id", "FirstName", video.CreatorId);
-            return View(video);
+            var viewModel = Mapper.Map<Video, VideoViewModel>(video);
+            viewModel.OtherTags = await this._tagsRepo.GetAllAsync();
+            viewModel.OtherReviews = await this._reviewRepo.GetAllAsync();
+            viewModel.OtherRatings = await this._ratingsRepo.GetAllAsync();
+            return View(viewModel);
         }
-
-        // POST: Videos/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Title,Thumbnail,VideoPath,Description,UploadDate,CreatorId,CategoryId,Url")] Video video)
+        public async Task<ActionResult> Edit(VideoViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(video).State = EntityState.Modified;
-                await db.SaveChangesAsync();
+                var video = Mapper.Map<VideoViewModel, Video>(viewModel);
+                this._videoRepo.Update(video);
+                await this._videoRepo.SaveAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.CategoryId = new SelectList(db.Categories, "ID", "Name", video.CategoryId);
-            ViewBag.CreatorId = new SelectList(db.ApplicationUsers, "Id", "FirstName", video.CreatorId);
-            return View(video);
+            return View(viewModel);
         }
-
-        // GET: Videos/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Video video = await db.Videos.FindAsync(id);
+            Video video = await this._videoRepo.GetAsync(id);
             if (video == null)
             {
                 return HttpNotFound();
             }
             return View(video);
         }
-
-        // POST: Videos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Video video = await db.Videos.FindAsync(id);
-            db.Videos.Remove(video);
-            await db.SaveChangesAsync();
+            this._videoRepo.Delete(id);
+            await this._videoRepo.SaveAsync();
             return RedirectToAction("Index");
         }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                db.Dispose();
+                this._videoRepo.Dispose();
+                this._usersRepo.Dispose();
+                this._categoriesRepo.Dispose();
+                this._tagsRepo.Dispose();
+                this._reviewRepo.Dispose();
+                this._ratingsRepo.Dispose();
             }
             base.Dispose(disposing);
         }
