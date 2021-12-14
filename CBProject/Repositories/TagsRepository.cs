@@ -15,97 +15,87 @@ namespace CBProject.Repositories
         private bool disposedValue;
         public TagsRepository(IUnitOfWork unitOfWork)
         {
-            _context = unitOfWork.Context;
+            this._context = unitOfWork.Context;
         }
         public void Add(Tag tag)
         {
             if (tag == null)
                 throw new ArgumentNullException(nameof(tag));
-
-            _context.Tags.Add(tag);
+            this._context.Tags.Add(tag);
         }
         public void Delete(int? id)
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
-
-
-            var tag = Get(id);
-
+            var tag = this.Get(id);
             if (tag == null)
                 throw new Exception("Tag Not Found");
-
-            _context.Tags.Remove(tag);
+            this._context.Tags.Remove(tag);
         }
         public Tag Get(int? id)
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
-
-            return _context.Tags
+            return this._context.Tags
                 .Include(t=>t.Videos)
                 .SingleOrDefault(t=>t.Id == id);
         }
         public ICollection<Tag> GetAll()
         {
-            return _context.Tags
+            return this._context.Tags
                 .Include(t=>t.Videos)
                 .ToList();
         }       
         public ICollection<Tag> GetAllEmpty()
         {
-            return _context.Tags.ToList();
+            return this._context.Tags.ToList();
         }      
         public Tag GetEmpty(int? id)
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
-
-            return _context.Tags.Find(id);
+            return this._context.Tags
+                .FirstOrDefault(t => t.Id == id);
         }        
         public void Save()
         {
-            _context.SaveChanges();
+            this._context.SaveChanges();
         }       
         public void Update(Tag tag)
         {
             if (tag == null)
                 throw new ArgumentNullException(nameof(tag));
-
-            _context.Entry(tag).State = EntityState.Modified;
+            this._context.Entry(tag).State = EntityState.Modified;
         }
-        // TODO: TagsRepository Async
-        public Task<int> UpdateAsync(Tag obj)
+        public async Task<int> SaveAsync()
         {
-            throw new NotImplementedException();
+            return await this._context.SaveChangesAsync();
         }
-        public Task<int> AddAsync(Tag obj)
+        public async Task<Tag> GetEmptyAsync(int? id)
         {
-            throw new NotImplementedException();
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
+            return await this._context.Tags
+                .SingleOrDefaultAsync(t => t.Id == id);
         }
-        public Task<int> SaveAsync()
+        public async Task<Tag> GetAsync(int? id)
         {
-            throw new NotImplementedException();
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
+            return await this._context.Tags
+                .Include(t => t.Videos)
+                .SingleOrDefaultAsync(t => t.Id == id);
         }
-        public Task<Tag> GetEmptyAsync(int? id)
+        public async Task<ICollection<Tag>> GetAllEmptyAsync()
         {
-            throw new NotImplementedException();
+            return await this._context.Tags
+                .ToListAsync();
         }
-        public Task<Tag> GetAsync(int? id)
+        public async Task<ICollection<Tag>> GetAllAsync()
         {
-            throw new NotImplementedException();
-        }
-        public Task<ICollection<Tag>> GetAllEmptyAsync()
-        {
-            throw new NotImplementedException();
-        }
-        public Task<ICollection<Tag>> GetAllAsync()
-        {
-            throw new NotImplementedException();
-        }
-        public Task<int> DeleteAsync(int? id)
-        {
-            throw new NotImplementedException();
+            return await this._context.Tags
+                .Include(t => t.Videos)
+                .ToListAsync();
         }
         protected virtual void Dispose(bool disposing)
         {
