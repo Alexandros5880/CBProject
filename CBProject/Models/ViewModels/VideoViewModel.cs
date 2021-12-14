@@ -11,9 +11,10 @@ namespace CBProject.Models.ViewModels
         public int Id { get; set; }
         public string Title { get; set; }
         public string Thumbnail { get; set; }
-        public HttpPostedFileBase VideoImage { get; set; }
-        public string VideoPath { get; set; }
+        public HttpPostedFileBase VideoImageFile { get; set; }
+        public string VideoImagePath { get; set; }
         public HttpPostedFileBase VideoFile { get; set; }
+        public string VideoPath { get; set; }
         public string Description { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]

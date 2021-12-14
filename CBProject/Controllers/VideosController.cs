@@ -1,12 +1,16 @@
 ﻿using AutoMapper;
+using CBProject.HelperClasses;
 using CBProject.HelperClasses.Interfaces;
 using CBProject.Models;
 using CBProject.Models.ViewModels;
 using CBProject.Repositories;
 using CBProject.Repositories.IdentityRepos;
 using CBProject.Repositories.IdentityRepos.Interfaces;
+using System;
+using System.IO;
 using System.Net;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
 
 namespace CBProject.Controllers
@@ -57,10 +61,30 @@ namespace CBProject.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(VideoViewModel viewModel)
+        public async Task<ActionResult> Create(VideoViewModel viewModel, HttpPostedFileBase VideoImageFile, HttpPostedFileBase VideoFile)
         {
             if (ModelState.IsValid)
             {
+                // VideoImageFile
+                if (VideoImageFile != null)
+                {
+                    viewModel.VideoImageFile = VideoImageFile;
+                    string FileName = Path.GetFileNameWithoutExtension(viewModel.VideoImageFile.FileName);
+                    string FileExtension = Path.GetExtension(viewModel.VideoImageFile.FileName);
+                    FileName = DateTime.Now.ToString("yyyyMMdd") + "-" + FileName.Trim() + FileExtension;
+                    viewModel.VideoImagePath = Server.MapPath(StaticImfo.VideoImagePath + " " + viewModel.Title);
+                    viewModel.VideoImageFile.SaveAs(viewModel.VideoImagePath);
+                }
+                // VideoFile
+                if (VideoFile != null)
+                {
+                    viewModel.VideoFile = VideoFile;
+                    string FileName = Path.GetFileNameWithoutExtension(viewModel.VideoFile.FileName);
+                    string FileExtension = Path.GetExtension(viewModel.VideoFile.FileName);
+                    FileName = DateTime.Now.ToString("yyyyMMdd") + "-" + FileName.Trim() + FileExtension;
+                    viewModel.VideoPath = Server.MapPath(StaticImfo.VideoPath + " " + viewModel.Title);
+                    viewModel.VideoFile.SaveAs(viewModel.VideoPath);
+                }
                 var video = Mapper.Map<VideoViewModel, Video>(viewModel);
                 this._videoRepo.Add(video);
                 await this._videoRepo.SaveAsync();
@@ -89,10 +113,30 @@ namespace CBProject.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(VideoViewModel viewModel)
+        public async Task<ActionResult> Edit(VideoViewModel viewModel, HttpPostedFileBase VideoImageFile, HttpPostedFileBase VideoFile)
         {
             if (ModelState.IsValid)
             {
+                // VideoImageFile
+                if (VideoImageFile != null)
+                {
+                    viewModel.VideoImageFile = VideoImageFile;
+                    string FileName = Path.GetFileNameWithoutExtension(viewModel.VideoImageFile.FileName);
+                    string FileExtension = Path.GetExtension(viewModel.VideoImageFile.FileName);
+                    FileName = DateTime.Now.ToString("yyyyMMdd") + "-" + FileName.Trim() + FileExtension;
+                    viewModel.VideoImagePath = Server.MapPath(StaticImfo.VideoImagePath + " " + viewModel.Title);
+                    viewModel.VideoImageFile.SaveAs(viewModel.VideoImagePath);
+                }
+                // VideoFile
+                if (VideoFile != null)
+                {
+                    viewModel.VideoFile = VideoFile;
+                    string FileName = Path.GetFileNameWithoutExtension(viewModel.VideoFile.FileName);
+                    string FileExtension = Path.GetExtension(viewModel.VideoFile.FileName);
+                    FileName = DateTime.Now.ToString("yyyyMMdd") + "-" + FileName.Trim() + FileExtension;
+                    viewModel.VideoPath = Server.MapPath(StaticImfo.VideoPath + " " + viewModel.Title);
+                    viewModel.VideoFile.SaveAs(viewModel.VideoPath);
+                }
                 var video = Mapper.Map<VideoViewModel, Video>(viewModel);
                 this._videoRepo.Update(video);
                 await this._videoRepo.SaveAsync();
