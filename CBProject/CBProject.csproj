@@ -221,7 +221,7 @@
     <Compile Include="Controllers\SubscriptionPackagesController.cs" />
     <Compile Include="Controllers\TagsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
-    <Compile Include="Controllers\VideoController.cs" />
+    <Compile Include="Controllers\VideosController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1754,9 +1754,6 @@
     <Content Include="Views\ContentTypes\Details.cshtml" />
     <Content Include="Views\ContentTypes\Edit.cshtml" />
     <Content Include="Views\ContentTypes\Index.cshtml" />
-    <Content Include="Views\Video\MyVideosCC.cshtml" />
-    <Content Include="Views\Video\EditVideo.cshtml" />
-    <Content Include="Views\Video\_UploadVideo.cshtml" />
     <Content Include="Views\SubscriptionPackages\Create.cshtml" />
     <Content Include="Views\SubscriptionPackages\Delete.cshtml" />
     <Content Include="Views\SubscriptionPackages\Details.cshtml" />
@@ -1786,6 +1783,21 @@
     <Content Include="Views\Ebooks\_Edit.cshtml" />
     <Content Include="Views\Ebooks\Details.cshtml" />
     <Content Include="Views\Categories\_RelatedCategories.cshtml" />
+    <Content Include="Views\Ratings\Create.cshtml" />
+    <Content Include="Views\Ratings\Delete.cshtml" />
+    <Content Include="Views\Ratings\Details.cshtml" />
+    <Content Include="Views\Ratings\Edit.cshtml" />
+    <Content Include="Views\Ratings\Index.cshtml" />
+    <Content Include="Views\Reviews\Create.cshtml" />
+    <Content Include="Views\Reviews\Delete.cshtml" />
+    <Content Include="Views\Reviews\Details.cshtml" />
+    <Content Include="Views\Reviews\Edit.cshtml" />
+    <Content Include="Views\Reviews\Index.cshtml" />
+    <Content Include="Views\Videos\Create.cshtml" />
+    <Content Include="Views\Videos\Delete.cshtml" />
+    <Content Include="Views\Videos\Details.cshtml" />
+    <Content Include="Views\Videos\Edit.cshtml" />
+    <Content Include="Views\Videos\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1866,6 +1878,7 @@
     <Folder Include="CV\" />
     <Folder Include="VideoFiles\" />
     <Folder Include="VideoImages\" />
+    <Folder Include="Views\Tags\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

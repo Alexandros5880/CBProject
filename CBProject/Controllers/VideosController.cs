@@ -11,116 +11,116 @@ using CBProject.Models;
 
 namespace CBProject.Controllers
 {
-    public class RatingsController : Controller
+    public class VideosController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Ratings
+        // GET: Videos
         public async Task<ActionResult> Index()
         {
-            var ratings = db.Ratings.Include(r => r.Rater).Include(r => r.Video);
-            return View(await ratings.ToListAsync());
+            var videos = db.Videos.Include(v => v.Category).Include(v => v.ContentCreator);
+            return View(await videos.ToListAsync());
         }
 
-        // GET: Ratings/Details/5
+        // GET: Videos/Details/5
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Rating rating = await db.Ratings.FindAsync(id);
-            if (rating == null)
+            Video video = await db.Videos.FindAsync(id);
+            if (video == null)
             {
                 return HttpNotFound();
             }
-            return View(rating);
+            return View(video);
         }
 
-        // GET: Ratings/Create
+        // GET: Videos/Create
         public ActionResult Create()
         {
-            ViewBag.RaterId = new SelectList(db.ApplicationUsers, "Id", "FirstName");
-            ViewBag.VideoId = new SelectList(db.Videos, "Id", "Title");
+            ViewBag.CategoryId = new SelectList(db.Categories, "ID", "Name");
+            ViewBag.CreatorId = new SelectList(db.ApplicationUsers, "Id", "FirstName");
             return View();
         }
 
-        // POST: Ratings/Create
+        // POST: Videos/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Rate,RaterId,VideoId")] Rating rating)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Title,Thumbnail,VideoPath,Description,UploadDate,CreatorId,CategoryId,Url")] Video video)
         {
             if (ModelState.IsValid)
             {
-                db.Ratings.Add(rating);
+                db.Videos.Add(video);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.RaterId = new SelectList(db.ApplicationUsers, "Id", "FirstName", rating.RaterId);
-            ViewBag.VideoId = new SelectList(db.Videos, "Id", "Title", rating.VideoId);
-            return View(rating);
+            ViewBag.CategoryId = new SelectList(db.Categories, "ID", "Name", video.CategoryId);
+            ViewBag.CreatorId = new SelectList(db.ApplicationUsers, "Id", "FirstName", video.CreatorId);
+            return View(video);
         }
 
-        // GET: Ratings/Edit/5
+        // GET: Videos/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Rating rating = await db.Ratings.FindAsync(id);
-            if (rating == null)
+            Video video = await db.Videos.FindAsync(id);
+            if (video == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.RaterId = new SelectList(db.ApplicationUsers, "Id", "FirstName", rating.RaterId);
-            ViewBag.VideoId = new SelectList(db.Videos, "Id", "Title", rating.VideoId);
-            return View(rating);
+            ViewBag.CategoryId = new SelectList(db.Categories, "ID", "Name", video.CategoryId);
+            ViewBag.CreatorId = new SelectList(db.ApplicationUsers, "Id", "FirstName", video.CreatorId);
+            return View(video);
         }
 
-        // POST: Ratings/Edit/5
+        // POST: Videos/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Rate,RaterId,VideoId")] Rating rating)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Title,Thumbnail,VideoPath,Description,UploadDate,CreatorId,CategoryId,Url")] Video video)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(rating).State = EntityState.Modified;
+                db.Entry(video).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.RaterId = new SelectList(db.ApplicationUsers, "Id", "FirstName", rating.RaterId);
-            ViewBag.VideoId = new SelectList(db.Videos, "Id", "Title", rating.VideoId);
-            return View(rating);
+            ViewBag.CategoryId = new SelectList(db.Categories, "ID", "Name", video.CategoryId);
+            ViewBag.CreatorId = new SelectList(db.ApplicationUsers, "Id", "FirstName", video.CreatorId);
+            return View(video);
         }
 
-        // GET: Ratings/Delete/5
+        // GET: Videos/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Rating rating = await db.Ratings.FindAsync(id);
-            if (rating == null)
+            Video video = await db.Videos.FindAsync(id);
+            if (video == null)
             {
                 return HttpNotFound();
             }
-            return View(rating);
+            return View(video);
         }
 
-        // POST: Ratings/Delete/5
+        // POST: Videos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Rating rating = await db.Ratings.FindAsync(id);
-            db.Ratings.Remove(rating);
+            Video video = await db.Videos.FindAsync(id);
+            db.Videos.Remove(video);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }

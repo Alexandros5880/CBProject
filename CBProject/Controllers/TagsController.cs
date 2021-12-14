@@ -1,85 +1,128 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Net;
+using System.Web;
+using System.Web.Mvc;
+using CBProject.Models;
 
 namespace CBProject.Controllers
 {
     public class TagsController : Controller
     {
-        // GET: DashBoard/Tags
-        public ActionResult Index()
+        private ApplicationDbContext db = new ApplicationDbContext();
+
+        // GET: Tags
+        public async Task<ActionResult> Index()
         {
-            return View();
+            return View(await db.Tags.ToListAsync());
         }
 
-        // GET: DashBoard/Tags/Details/5
-        public ActionResult Details(int id)
+        // GET: Tags/Details/5
+        public async Task<ActionResult> Details(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Tag tag = await db.Tags.FindAsync(id);
+            if (tag == null)
+            {
+                return HttpNotFound();
+            }
+            return View(tag);
         }
 
-        // GET: DashBoard/Tags/Create
+        // GET: Tags/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: DashBoard/Tags/Create
+        // POST: Tags/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create([Bind(Include = "Id,Title,VideoId")] Tag tag)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add insert logic here
-
+                db.Tags.Add(tag);
+                await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            catch
+
+            return View(tag);
+        }
+
+        // GET: Tags/Edit/5
+        public async Task<ActionResult> Edit(int? id)
+        {
+            if (id == null)
             {
-                return View();
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-        }
-
-        // GET: DashBoard/Tags/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: DashBoard/Tags/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
+            Tag tag = await db.Tags.FindAsync(id);
+            if (tag == null)
             {
-                // TODO: Add update logic here
+                return HttpNotFound();
+            }
+            return View(tag);
+        }
 
+        // POST: Tags/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Title,VideoId")] Tag tag)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(tag).State = EntityState.Modified;
+                await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+            return View(tag);
         }
 
-        // GET: DashBoard/Tags/Delete/5
-        public ActionResult Delete(int id)
+        // GET: Tags/Delete/5
+        public async Task<ActionResult> Delete(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Tag tag = await db.Tags.FindAsync(id);
+            if (tag == null)
+            {
+                return HttpNotFound();
+            }
+            return View(tag);
         }
 
-        // POST: DashBoard/Tags/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        // POST: Tags/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            try
-            {
-                // TODO: Add delete logic here
+            Tag tag = await db.Tags.FindAsync(id);
+            db.Tags.Remove(tag);
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
 
-                return RedirectToAction("Index");
-            }
-            catch
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
             {
-                return View();
+                db.Dispose();
             }
+            base.Dispose(disposing);
         }
     }
 }

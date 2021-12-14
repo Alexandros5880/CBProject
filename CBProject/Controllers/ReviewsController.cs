@@ -1,89 +1,137 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using CBProject.Models;
 
 namespace CBProject.Controllers
 {
     public class ReviewsController : Controller
     {
-        // GET: DashBoard/Reviews
-        public ActionResult Index()
+        private ApplicationDbContext db = new ApplicationDbContext();
+
+        // GET: Reviews
+        public async Task<ActionResult> Index()
         {
-            return View();
+            var reviews = db.Reviews.Include(r => r.Reviewer).Include(r => r.Video);
+            return View(await reviews.ToListAsync());
         }
 
-        // GET: DashBoard/Reviews/Details/5
-        public ActionResult Details(int id)
+        // GET: Reviews/Details/5
+        public async Task<ActionResult> Details(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Review review = await db.Reviews.FindAsync(id);
+            if (review == null)
+            {
+                return HttpNotFound();
+            }
+            return View(review);
         }
 
-        // GET: DashBoard/Reviews/Create
+        // GET: Reviews/Create
         public ActionResult Create()
         {
+            ViewBag.ReviewerId = new SelectList(db.ApplicationUsers, "Id", "FirstName");
+            ViewBag.VideoId = new SelectList(db.Videos, "Id", "Title");
             return View();
         }
 
-        // POST: DashBoard/Reviews/Create
+        // POST: Reviews/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create([Bind(Include = "Id,ReviewerId,Comment,VideoId")] Review review)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add insert logic here
-
+                db.Reviews.Add(review);
+                await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            catch
+
+            ViewBag.ReviewerId = new SelectList(db.ApplicationUsers, "Id", "FirstName", review.ReviewerId);
+            ViewBag.VideoId = new SelectList(db.Videos, "Id", "Title", review.VideoId);
+            return View(review);
+        }
+
+        // GET: Reviews/Edit/5
+        public async Task<ActionResult> Edit(int? id)
+        {
+            if (id == null)
             {
-                return View();
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-        }
-
-        // GET: DashBoard/Reviews/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: DashBoard/Reviews/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
+            Review review = await db.Reviews.FindAsync(id);
+            if (review == null)
             {
-                // TODO: Add update logic here
+                return HttpNotFound();
+            }
+            ViewBag.ReviewerId = new SelectList(db.ApplicationUsers, "Id", "FirstName", review.ReviewerId);
+            ViewBag.VideoId = new SelectList(db.Videos, "Id", "Title", review.VideoId);
+            return View(review);
+        }
 
+        // POST: Reviews/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit([Bind(Include = "Id,ReviewerId,Comment,VideoId")] Review review)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(review).State = EntityState.Modified;
+                await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+            ViewBag.ReviewerId = new SelectList(db.ApplicationUsers, "Id", "FirstName", review.ReviewerId);
+            ViewBag.VideoId = new SelectList(db.Videos, "Id", "Title", review.VideoId);
+            return View(review);
         }
 
-        // GET: DashBoard/Reviews/Delete/5
-        public ActionResult Delete(int id)
+        // GET: Reviews/Delete/5
+        public async Task<ActionResult> Delete(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Review review = await db.Reviews.FindAsync(id);
+            if (review == null)
+            {
+                return HttpNotFound();
+            }
+            return View(review);
         }
 
-        // POST: DashBoard/Reviews/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        // POST: Reviews/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            try
-            {
-                // TODO: Add delete logic here
+            Review review = await db.Reviews.FindAsync(id);
+            db.Reviews.Remove(review);
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
 
-                return RedirectToAction("Index");
-            }
-            catch
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
             {
-                return View();
+                db.Dispose();
             }
+            base.Dispose(disposing);
         }
     }
 }
