@@ -9,7 +9,6 @@ namespace CBProject.Migrations
 
     internal sealed class Configuration : DbMigrationsConfiguration<CBProject.Models.ApplicationDbContext>
     {
-
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;

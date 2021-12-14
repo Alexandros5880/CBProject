@@ -1,4 +1,4 @@
-﻿@model CBProject.Models.Video
+﻿@model CBProject.Models.ViewModels.VideoViewModel
 
 @{
     ViewBag.Title = "Edit";
@@ -10,7 +10,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Video</h4>
         <hr />

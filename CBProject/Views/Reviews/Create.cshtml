@@ -1,4 +1,4 @@
-﻿@model CBProject.Models.Review
+﻿@model CBProject.Models.ViewModels.ReviewViewModel
 
 @{
     ViewBag.Title = "Create";
@@ -7,10 +7,10 @@
 <h2>Create</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Review</h4>
         <hr />
@@ -18,7 +18,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ReviewerId, "ReviewerId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("ReviewerId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.ReviewerId, Model.Users, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.ReviewerId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -34,7 +34,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.VideoId, "VideoId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("VideoId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.VideoId, Model.Videos, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.VideoId, "", new { @class = "text-danger" })
             </div>
         </div>

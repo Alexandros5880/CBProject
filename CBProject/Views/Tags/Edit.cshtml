@@ -1,4 +1,4 @@
-﻿@model CBProject.Models.Tag
+﻿@model CBProject.Models.ViewModels.TagViewModel
 
 @{
     ViewBag.Title = "Edit";
@@ -10,7 +10,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Tag</h4>
         <hr />

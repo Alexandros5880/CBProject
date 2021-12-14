@@ -51,6 +51,8 @@ namespace CBProject.Controllers
             viewModel.OtherTags = await this._tagsRepo.GetAllAsync();
             viewModel.OtherReviews = await this._reviewRepo.GetAllAsync();
             viewModel.OtherRatings = await this._ratingsRepo.GetAllAsync();
+            viewModel.OtherUsers = await this._usersRepo.GetAllAsync();
+            viewModel.OtherCategory = await this._categoriesRepo.GetAllAsync();
             return View(viewModel);
         }
         [HttpPost]
@@ -81,6 +83,8 @@ namespace CBProject.Controllers
             viewModel.OtherTags = await this._tagsRepo.GetAllAsync();
             viewModel.OtherReviews = await this._reviewRepo.GetAllAsync();
             viewModel.OtherRatings = await this._ratingsRepo.GetAllAsync();
+            viewModel.OtherUsers = await this._usersRepo.GetAllAsync();
+            viewModel.OtherCategory = await this._categoriesRepo.GetAllAsync();
             return View(viewModel);
         }
         [HttpPost]

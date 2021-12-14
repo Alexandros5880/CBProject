@@ -1,6 +1,7 @@
 ﻿using CBProject.Models.EntityModels;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Web;
 
 namespace CBProject.Models.ViewModels
@@ -14,6 +15,8 @@ namespace CBProject.Models.ViewModels
         public string VideoPath { get; set; }
         public HttpPostedFileBase VideoFile { get; set; }
         public string Description { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime UploadDate { get; set; }
         public ApplicationUser ContentCreator { get; set; }
         public string CreatorId { get; set; }
@@ -26,6 +29,9 @@ namespace CBProject.Models.ViewModels
         public ICollection<Review> Reviews { get; set; }
         public ICollection<Rating> Ratings { get; set; }
 
+
+        public ICollection<ApplicationUser> OtherUsers { get; set; }
+        public ICollection<Category> OtherCategory { get; set; }
 
         public ICollection<Tag> OtherTags { get; set; }
         public ICollection<Tag> MyTags { get; set; }
