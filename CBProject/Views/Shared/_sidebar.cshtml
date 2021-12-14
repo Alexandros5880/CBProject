@@ -11,6 +11,52 @@
 
                 <li>
                     <a href="javascript: void(0);" class="waves-effect">
+                        <i class="fas fa-directions"></i>
+                        </i><span class="badge rounded-pill bg-info float-end">3</span>
+                        <span>Account</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href=@Url.Action("Index", "Users")>Users</a></li>
+                        <li><a href=@Url.Action("Index", "Roles")>Roles</a></li>
+                        <li><a href=@Url.Action("Deleted", "Users")>Deleted Users</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);" class="waves-effect">
+                        <i class="fas fa-user-circle"></i>
+                        <span class="badge rounded-pill bg-info float-end">6</span>
+                        <span>Actions</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href=@Url.Action("Index", "Categories")>Categories</a></li>
+                        <li><a href=@Url.Action("Index", "ContentTypes")>ContentTypes</a></li>
+                        <li><a href=@Url.Action("Index", "Ebooks")>Ebooks</a></li>
+                        <li><a href=@Url.Action("Index", "Payments")>Payments</a></li>
+                        <li><a href=@Url.Action("Index", "SubscriptionPackages")>SubscriptionPackages</a></li>
+                        <li><a href=@Url.Action("Index", "Tags")>tAGS</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);" class="waves-effect">
+                        <i class="fas fa-photo-video"></i>
+                        <span class="badge rounded-pill bg-info float-end">4</span>
+                        <span>Videos</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href=@Url.Action("Index", "Ratings")>Ratings</a></li>
+                        <li><a href=@Url.Action("Index", "Reviews")>Reviews</a></li>
+                        <li><a href=@Url.Action("Index", "Tags")>Tags</a></li>
+                        <li><a href=@Url.Action("Index", "Videos")>Videos</a></li>
+                    </ul>
+                </li>
+
+                <hr style="margin-left: 3px; margin-right: 3px;"/>
+
+                @*
+                <li>
+                    <a href="javascript: void(0);" class="waves-effect">
                         <i class="bx bx-home-circle"></i><span class="badge rounded-pill bg-info float-end">04</span>
                         <span key="t-dashboards">Dashboards</span>
                     </a>
@@ -360,7 +406,7 @@
                         </li>
                     </ul>
                 </li>
-
+                *@
             </ul>
         </div>
         <!-- Sidebar -->

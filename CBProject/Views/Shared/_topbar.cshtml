@@ -1,4 +1,5 @@
-﻿<header id="page-topbar">
+﻿@using Microsoft.AspNet.Identity
+<header id="page-topbar">
     <div class="navbar-header">
         <div class="d-flex">
             <!-- LOGO -->
@@ -384,6 +385,23 @@
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item text-danger" href="#"><i class="bx bx-power-off font-size-16 align-middle me-1 text-danger"></i> <span key="t-logout">Logout</span></a>
                 </div>
+            </div>
+
+            <div class="d-inline-block" style="margin-left: 5px; margin-right: 5px;">
+                @if (Request.IsAuthenticated)
+                {
+                    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new {@class = "navbar-right" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ActionLink(User.Identity.Name + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                        <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+                    }
+                }
+                else
+                {
+                    @Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })
+                    @Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+                }
             </div>
 
             <div class="dropdown d-inline-block">
