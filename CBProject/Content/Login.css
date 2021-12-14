@@ -5,14 +5,13 @@
 
 
 body {
-   
 }
 
 
 
 
 .login-container {
-   /* min-height: 1000px !important;*/
+    /* min-height: 1000px !important;*/
 }
 
 .login-container-left {
@@ -21,14 +20,67 @@ body {
 
 .login-container-right {
     background-color: #826EDA;
+    height: 100%;
     /*height: var(--login-height);*/
 }
 
+.login-container-left img {
+    width: 100%;
+}
 
 .bigTitle {
-    margin-top: 30%;
+    margin-top: 20%;
     text-align: center;
     font-size: 25px;
     color: white;
+    margin-bottom: 8%;
+}
+
+.btn-loginForm {
+    width: 100%;
+    margin-bottom: 20%;
+    background-color: #b4e9e3;
+    color: #43a59a;
+    font-weight: 600;
+    border: 2px solid;
+}
+
+    .btn-loginForm:hover {
+        background-color: #78DACF;
+        color: white;
+    }
+
+.checkbox label {
+    padding-left: 0px !important;
+    color: #c7dbd9;
     margin-bottom: 10%;
+}
+
+.checkbox {
+    margin-top: 5px;
+    margin-bottom: 20%;
+}
+
+.register-new-user p a {
+    color: #78dacf;
+    font-size: 16px;
+}
+
+.register-new-user {
+    margin-bottom: 20%;
+}
+
+@media only screen and (max-width: 768px) {
+    .login-container-left img {
+        display: none;
+    }
+
+    .bigTitle {
+        margin-top: 0px;
+        padding-top: 10%;
+    }
+
+    .btn-loginForm {
+        margin-bottom: 10%;
+    }
 }
