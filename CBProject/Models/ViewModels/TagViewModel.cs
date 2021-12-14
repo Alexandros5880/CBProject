@@ -1,4 +1,6 @@
-﻿namespace CBProject.Models.ViewModels
+﻿using System.Web.Mvc;
+
+namespace CBProject.Models.ViewModels
 {
     public class TagViewModel
     {
