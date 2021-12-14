@@ -15,104 +15,90 @@ namespace CBProject.Repositories
         private bool disposedValue;
         public RatingsRepository(IUnitOfWork unitOfWork)
         {
-            _context = unitOfWork.Context;
+            this._context = unitOfWork.Context;
         }
-        public void Add(Rating rating)
+        public void Add(Rating obj)
         {
-            if (rating == null)
-                throw new ArgumentNullException(nameof(rating));
-
-            _context.Ratings.Add(rating);
+            if (obj == null)
+                throw new ArgumentNullException(nameof(obj));
+            this._context.Ratings.Add(obj);
         }
-        public void Delete(int id)
+        public void Update(Rating obj)
         {
-            var rating = Get(id);
-
-            if (rating == null)
-                throw new ArgumentNullException(nameof(rating));
-            
-            _context.Ratings.Remove(rating);
-        }
-        public Rating Get(int id)
-        {
-            return _context.Ratings.Find(id);
-        }
-        public ICollection<Rating> GetAll()
-        {
-            return _context.Ratings.ToList();
-        }
-        public ICollection<Rating> GetAllEmpty()
-        {
-            throw new NotImplementedException();
-        }
-        public Rating GetEmpty(int id)
-        {
-            throw new NotImplementedException();
-        }
-        public void Save()
-        {
-            _context.SaveChanges();
-        }
-        public void Update(Rating rating)
-        {
-            if (rating == null)
-                throw new ArgumentNullException(nameof(rating));
-
-            _context.Entry(rating).State = EntityState.Modified;
-
+            if (obj == null)
+                throw new ArgumentNullException(nameof(obj));
+            this._context.Entry(obj).State = EntityState.Modified;
         }
         public void Delete(int? id)
         {
-            throw new NotImplementedException();
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
+            var rating = this.Get(id);
+            if (rating == null)
+                throw new ArgumentNullException(nameof(rating));
+            this._context.Ratings.Remove(rating);
         }
         public Rating Get(int? id)
         {
-            throw new NotImplementedException();
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
+            return this._context.Ratings
+                .Include(r => r.Rater)
+                .Include(r => r.Video)
+                .FirstOrDefault(r => r.Id == id);
+        }
+        public async Task<Rating> GetAsync(int? id)
+        {
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
+            return await this._context.Ratings
+                .Include(r => r.Rater)
+                .Include(r => r.Video)
+                .FirstOrDefaultAsync(r => r.Id == id);
         }
         public Rating GetEmpty(int? id)
         {
-            throw new NotImplementedException();
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
+            return this._context.Ratings
+                .FirstOrDefault(r => r.Id == id);
         }
-        // TODO: RatingsRepository Async
-        public Task<int> UpdateAsync(Rating obj)
+        public async Task<Rating> GetEmptyAsync(int? id)
         {
-            throw new NotImplementedException();
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
+            return await this._context.Ratings
+                .FirstOrDefaultAsync(r => r.Id == id);
         }
-        public Task<int> SaveAsync()
+        public ICollection<Rating> GetAll()
         {
-            throw new NotImplementedException();
+            return this._context.Ratings
+                .Include(r => r.Rater)
+                .Include(r => r.Video)
+                .ToList();
         }
-        public Task<Rating> GetEmptyAsync(int id)
+        public async Task<ICollection<Rating>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await this._context.Ratings
+                .Include(r => r.Rater)
+                .Include(r => r.Video)
+                .ToListAsync();
         }
-        public Task<Rating> GetAsync(int id)
+        public ICollection<Rating> GetAllEmpty()
         {
-            throw new NotImplementedException();
+            return this._context.Ratings.ToList();
         }
-        public Task<ICollection<Rating>> GetAllEmptyAsync()
+        public async Task<ICollection<Rating>> GetAllEmptyAsync()
         {
-            throw new NotImplementedException();
+            return await this._context.Ratings.ToListAsync();
         }
-        public Task<ICollection<Rating>> GetAllAsync()
+        public void Save()
         {
-            throw new NotImplementedException();
+            this._context.SaveChanges();
         }
-        public Task<int> DeleteAsync(int id)
+        public async Task<int> SaveAsync()
         {
-            throw new NotImplementedException();
-        }
-        public Task<int> AddAsync(Rating obj)
-        {
-            throw new NotImplementedException();
-        }
-        public Task<Rating> GetAsync(int? id)
-        {
-            throw new NotImplementedException();
-        }
-        public Task<Rating> GetEmptyAsync(int? id)
-        {
-            throw new NotImplementedException();
+            return await this._context.SaveChangesAsync();
         }
         protected virtual void Dispose(bool disposing)
         {
