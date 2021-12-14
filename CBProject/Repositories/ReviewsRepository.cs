@@ -15,99 +15,89 @@ namespace CBProject.Repositories
         private bool disposedValue;
         public ReviewsRepository(IUnitOfWork unitOfWork)
         {
-            _context = unitOfWork.Context;
+            this._context = unitOfWork.Context;
         }
         public void Add(Review review)
         {
             if (review == null)
                 throw new ArgumentNullException(nameof(review));
-
-            _context.Reviews.Add(review);
+            this._context.Reviews.Add(review);
         }        
         public void Delete(int? id)
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
-            
-            var review = Get(id);
-
+            var review = this.Get(id);
             if (review == null)
                 throw new ArgumentNullException(nameof(review));
-
-            _context.Reviews.Remove(review);
-        }        
+            this._context.Reviews.Remove(review);
+        }
         public Review Get(int? id)
         {
             if (id == null)
-                throw new ArgumentNullException(nameof(id)); 
-
-            return _context.Reviews.Find(id);
+                throw new ArgumentNullException(nameof(id));
+            return this._context.Reviews
+                .Include(r => r.Video)
+                .Include(r => r.Reviewer)
+                .FirstOrDefault(r => r.Id == id);
         }
         public ICollection<Review> GetAll()
         {
-            return _context.Reviews
+            return this._context.Reviews
                 .Include(r=>r.Video)
                 .Include(r=>r.Reviewer)
                 .ToList();
         }        
         public ICollection<Review> GetAllEmpty()
         {
-
-            return _context.Reviews.ToList();
+            return this._context.Reviews.ToList();
         }        
         public Review GetEmpty(int? id)
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
-
-            return _context.Reviews
-                .Include(r => r.Video)
-                .Include(r => r.Reviewer)
+            return this._context.Reviews
                 .SingleOrDefault(r=>r.Id == id);
         }        
         public void Save()
         {
-            _context.SaveChanges();
+            this._context.SaveChanges();
         }        
         public void Update(Review review)
         {
             if (review == null)
                 throw new ArgumentNullException(nameof(review));
-
-            _context.Entry(review).State = EntityState.Modified;
+            this._context.Entry(review).State = EntityState.Modified;
         }
-        // TODO: ReviewsRepository Async
-        public Task<int> UpdateAsync(Review obj)
+        public async Task<int> SaveAsync()
         {
-            throw new NotImplementedException();
+            return await this._context.SaveChangesAsync();
         }
-        public Task<int> SaveAsync()
+        public async Task<Review> GetEmptyAsync(int? id)
         {
-            throw new NotImplementedException();
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
+            return await this._context.Reviews
+                .FirstOrDefaultAsync(r => r.Id == id);
         }
-        public Task<Review> GetEmptyAsync(int? id)
+        public async Task<Review> GetAsync(int? id)
         {
-            throw new NotImplementedException();
+            return await this._context.Reviews
+                .Include(r => r.Video)
+                .Include(r => r.Reviewer)
+                .FirstOrDefaultAsync(r => r.Id == id);
         }
-        public Task<Review> GetAsync(int? id)
+        public async Task<ICollection<Review>> GetAllEmptyAsync()
         {
-            throw new NotImplementedException();
+            return await this._context.Reviews
+                .ToListAsync();
         }
-        public Task<ICollection<Review>> GetAllEmptyAsync()
+        public async Task<ICollection<Review>> GetAllAsync()
         {
-            throw new NotImplementedException();
-        }
-        public Task<ICollection<Review>> GetAllAsync()
-        {
-            throw new NotImplementedException();
-        }
-        public Task<int> DeleteAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-        public Task<int> AddAsync(Review obj)
-        {
-            throw new NotImplementedException();
+            return await this._context.Reviews
+                .Include(r => r.Video)
+                .Include(r => r.Reviewer)
+                .ToListAsync();
         }
         protected virtual void Dispose(bool disposing)
         {
