@@ -92,7 +92,7 @@ namespace CBProject.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Rating rating = await db.Ratings.FindAsync(id);
+            Rating rating = await this._ratingsRepo.GetAsync(id);
             if (rating == null)
             {
                 return HttpNotFound();
@@ -103,9 +103,8 @@ namespace CBProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Rating rating = await db.Ratings.FindAsync(id);
-            db.Ratings.Remove(rating);
-            await db.SaveChangesAsync();
+            this._ratingsRepo.Delete(id);
+            await this._ratingsRepo.SaveAsync();
             return RedirectToAction("Index");
         }
         protected override void Dispose(bool disposing)

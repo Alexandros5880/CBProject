@@ -1,4 +1,6 @@
-﻿namespace CBProject.Models.ViewModels
+﻿using System.Web.Mvc;
+
+namespace CBProject.Models.ViewModels
 {
     public class ReviewViewModel
     {
@@ -8,5 +10,7 @@
         public string Comment { get; set; }
         public Video Video { get; set; }
         public int VideoId { get; set; }
+        public SelectList Users { get; set; }
+        public SelectList Videos { get; set; }
     }
 }

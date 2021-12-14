@@ -1,135 +1,121 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
+﻿using AutoMapper;
+using CBProject.HelperClasses.Interfaces;
 using CBProject.Models;
+using CBProject.Models.ViewModels;
+using CBProject.Repositories;
+using CBProject.Repositories.IdentityRepos;
+using CBProject.Repositories.IdentityRepos.Interfaces;
+using System.Net;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace CBProject.Controllers
 {
     public class ReviewsController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
-
-        // GET: Reviews
+        private readonly ReviewsRepository _reviewRepo;
+        private readonly UsersRepo _usersRepo;
+        private readonly VideosRepository _videoRepo;
+        public ReviewsController(IUnitOfWork unitOfWork, IUsersRepo usersRepo)
+        {
+            this._reviewRepo = unitOfWork.Reviews;
+            this._usersRepo = (UsersRepo)usersRepo;
+            this._videoRepo = unitOfWork.Videos;
+        }
         public async Task<ActionResult> Index()
         {
-            var reviews = db.Reviews.Include(r => r.Reviewer).Include(r => r.Video);
-            return View(await reviews.ToListAsync());
+            return View(await this._reviewRepo.GetAllAsync());
         }
-
-        // GET: Reviews/Details/5
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Review review = await db.Reviews.FindAsync(id);
+            Review review = await this._reviewRepo.GetAsync(id);
             if (review == null)
             {
                 return HttpNotFound();
             }
             return View(review);
         }
-
-        // GET: Reviews/Create
         public ActionResult Create()
         {
-            ViewBag.ReviewerId = new SelectList(db.ApplicationUsers, "Id", "FirstName");
-            ViewBag.VideoId = new SelectList(db.Videos, "Id", "Title");
-            return View();
+            var viewModel = new ReviewViewModel();
+            viewModel.Users = new SelectList(this._usersRepo.GetAll(), "ID", "FullName");
+            viewModel.Videos = new SelectList(this._videoRepo.GetAll(), "ID", "Title");
+            return View(viewModel);
         }
-
-        // POST: Reviews/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,ReviewerId,Comment,VideoId")] Review review)
+        public async Task<ActionResult> Create(ReviewViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                db.Reviews.Add(review);
-                await db.SaveChangesAsync();
+                var review = Mapper.Map<ReviewViewModel, Review>(viewModel);
+                this._reviewRepo.Add(review);
+                await this._reviewRepo.SaveAsync();
                 return RedirectToAction("Index");
             }
-
-            ViewBag.ReviewerId = new SelectList(db.ApplicationUsers, "Id", "FirstName", review.ReviewerId);
-            ViewBag.VideoId = new SelectList(db.Videos, "Id", "Title", review.VideoId);
-            return View(review);
+            return View(viewModel);
         }
-
-        // GET: Reviews/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Review review = await db.Reviews.FindAsync(id);
+            Review review = await this._reviewRepo.GetAsync(id);
             if (review == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.ReviewerId = new SelectList(db.ApplicationUsers, "Id", "FirstName", review.ReviewerId);
-            ViewBag.VideoId = new SelectList(db.Videos, "Id", "Title", review.VideoId);
-            return View(review);
+            var viewModel = Mapper.Map<Review, ReviewViewModel>(review);
+            viewModel.Users = new SelectList(this._usersRepo.GetAll(), "ID", "FullName");
+            viewModel.Videos = new SelectList(this._videoRepo.GetAll(), "ID", "Title");
+            return View(viewModel);
         }
-
-        // POST: Reviews/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,ReviewerId,Comment,VideoId")] Review review)
+        public async Task<ActionResult> Edit(ReviewViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(review).State = EntityState.Modified;
-                await db.SaveChangesAsync();
+                var review = Mapper.Map<ReviewViewModel, Review>(viewModel);
+                this._reviewRepo.Update(review);
+                await this._reviewRepo.SaveAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.ReviewerId = new SelectList(db.ApplicationUsers, "Id", "FirstName", review.ReviewerId);
-            ViewBag.VideoId = new SelectList(db.Videos, "Id", "Title", review.VideoId);
-            return View(review);
+            return View(viewModel);
         }
-
-        // GET: Reviews/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Review review = await db.Reviews.FindAsync(id);
+            Review review = await this._reviewRepo.GetAsync(id);
             if (review == null)
             {
                 return HttpNotFound();
             }
             return View(review);
         }
-
-        // POST: Reviews/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Review review = await db.Reviews.FindAsync(id);
-            db.Reviews.Remove(review);
-            await db.SaveChangesAsync();
+            this._reviewRepo.Delete(id);
+            await this._reviewRepo.SaveAsync();
             return RedirectToAction("Index");
         }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                db.Dispose();
+                this._reviewRepo.Dispose();
+                this._usersRepo.Dispose();
+                this._videoRepo.Dispose();
             }
             base.Dispose(disposing);
         }
