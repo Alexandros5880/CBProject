@@ -1744,7 +1744,6 @@
     <Content Include="Views\Ebooks\Delete.cshtml" />
     <Content Include="Views\Ebooks\Details_.cshtml" />
     <Content Include="Views\Ebooks\Edit.cshtml" />
-    <Content Include="Views\Ebooks\Index_.cshtml" />
     <Content Include="Views\Categories\Create.cshtml" />
     <Content Include="Views\Categories\Delete.cshtml" />
     <Content Include="Views\Categories\Details.cshtml" />

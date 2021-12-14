@@ -23,3 +23,12 @@ body {
     background-color: #826EDA;
     /*height: var(--login-height);*/
 }
+
+
+.bigTitle {
+    margin-top: 30%;
+    text-align: center;
+    font-size: 25px;
+    color: white;
+    margin-bottom: 10%;
+}

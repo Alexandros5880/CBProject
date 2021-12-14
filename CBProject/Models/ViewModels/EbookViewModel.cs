@@ -1,8 +1,7 @@
 ﻿using CBProject.Models.EntityModels;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
 namespace CBProject.Models.ViewModels
@@ -19,6 +18,8 @@ namespace CBProject.Models.ViewModels
 
         public string Url { get; set; }
 
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime UploadDate { get; set; }
 
         public int CategoryId { get; set;  }
