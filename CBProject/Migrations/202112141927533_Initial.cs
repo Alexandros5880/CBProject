@@ -72,6 +72,7 @@ namespace CBProject.Migrations
                         SubscriptionId = c.Int(nullable: false),
                         ContentAccess = c.String(),
                         CVPath = c.String(),
+                        ImagePath = c.String(),
                         ContentCategoryId = c.Int(nullable: false),
                         ContentId = c.Int(nullable: false),
                         NewsletterAcception = c.Boolean(nullable: false),

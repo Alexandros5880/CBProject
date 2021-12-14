@@ -7,5 +7,7 @@
         public static string VideoImagePath { get; } = @"~\VideoImages\";
 
         public static string VideoPath { get; } = @"~\VideoFiles\";
+
+        public static string UsersImagesPath { get; } = @"~\UsersImages\";
     }
 }

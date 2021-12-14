@@ -25,21 +25,18 @@ namespace CBProject.Controllers
             this._rolesRepo = (RolesRepo)rolesRepo;
             this._usersRepo = (UsersRepo)usersRepo;
         }
-
         public async Task<ActionResult> Index()
         {
             var users = await _usersRepo.GetAllAsync();
             List<ApplicationUser> activeUsers = users.Where(u => u.IsInactive == false).ToList();
             return View(activeUsers);
         }
-
         public async Task<ActionResult> Deleted()
         {
             var users = await _usersRepo.GetAllAsync();
             List<ApplicationUser> deactiveUsers = users.Where(u => u.IsInactive == true).ToList();
             return View(deactiveUsers);
         }
-
         public async Task<ActionResult> Details(string id)
         {
             if (id == null)
@@ -52,35 +49,29 @@ namespace CBProject.Controllers
             viewModel.MyRoles = await _rolesRepo.GetAllByNamesAsync(roles);
             return View(viewModel);
         }
-
         public ActionResult Create()
         {
             return View();
         }
-
-        public async Task<ActionResult> Activate(string id)
-        {
-            if (id == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var user = await _usersRepo.GetAsync(id);
-            if (user == null)
-                return HttpNotFound();
-            user.IsInactive = false;
-            await _usersRepo.UpdateAsync(user);
-            var users = await _usersRepo.GetAllAsync();
-            List<ApplicationUser> activeUsers = users.Where(u => u.IsInactive == false).ToList();
-            return View("Index", activeUsers);
-        }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(RegisterViewModel model, HttpPostedFileBase CVFile)
+        public async Task<ActionResult> Create(RegisterViewModel model, HttpPostedFileBase CVFile, HttpPostedFileBase ImageFile)
         {
             try
             {
                 if (model == null)
                     return HttpNotFound();
-                // Get CV file
+                // Save Image File
+                if (ImageFile != null)
+                {
+                    model.ImageFile = ImageFile;
+                    string FileName = Path.GetFileNameWithoutExtension(model.ImageFile.FileName);
+                    string FileExtension = Path.GetExtension(model.ImageFile.FileName);
+                    FileName = DateTime.Now.ToString("yyyyMMdd") + "-" + FileName.Trim() + FileExtension;
+                    model.CVPath = Server.MapPath(StaticImfo.UsersImagesPath + model.FirstName + " " + model.LastName + FileName);
+                    model.ImageFile.SaveAs(model.CVPath);
+                }
+                // Save CV File
                 if (CVFile != null)
                 {
                     model.CVFile = CVFile;
@@ -100,7 +91,6 @@ namespace CBProject.Controllers
                 return View();
             }
         }
-
         public async Task<ActionResult> Edit(string id)
         {
             if (id == null)
@@ -114,16 +104,25 @@ namespace CBProject.Controllers
             viewModel.MyRoles = await _rolesRepo.GetAllByNamesAsync(roles);
             return View(viewModel);
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(ApplicationUserViewModel model, HttpPostedFileBase CVFile)
+        public async Task<ActionResult> Edit(ApplicationUserViewModel model, HttpPostedFileBase CVFile, HttpPostedFileBase ImageFile)
         {
             try
             {
                 if (model == null)
                     return HttpNotFound();
-                // Get CV file
+                // Save Image File
+                if (ImageFile != null)
+                {
+                    model.ImageFile = ImageFile;
+                    string FileName = Path.GetFileNameWithoutExtension(model.ImageFile.FileName);
+                    string FileExtension = Path.GetExtension(model.ImageFile.FileName);
+                    FileName = DateTime.Now.ToString("yyyyMMdd") + "-" + FileName.Trim() + FileExtension;
+                    model.CVPath = Server.MapPath(StaticImfo.UsersImagesPath + model.FirstName + " " + model.LastName + FileName);
+                    model.ImageFile.SaveAs(model.CVPath);
+                }
+                // Save CV File
                 if (CVFile != null)
                 {
                     model.CVFile = CVFile;
@@ -133,7 +132,6 @@ namespace CBProject.Controllers
                     model.CVPath = Server.MapPath(StaticImfo.CVPath + model.FirstName + " " + model.LastName + FileName);
                     model.CVFile.SaveAs(model.CVPath);
                 }
-
                 var userDB = await _usersRepo.GetAsync(model.Id);
                 var user = Mapper.Map<ApplicationUserViewModel, ApplicationUser>(model);
                 user.UserName = user.Email;
@@ -188,7 +186,6 @@ namespace CBProject.Controllers
                 return View(viewModel);
             }
         }
-
         public async Task<ActionResult> Delete(string id)
         {
             if (id == null)
@@ -199,7 +196,6 @@ namespace CBProject.Controllers
             var viewModel = Mapper.Map<ApplicationUser, ApplicationUserViewModel>(user);
             return View(viewModel);
         }
-
         public async Task<ActionResult> DeleteForEver(string id)
         {
             if (id == null)
@@ -212,7 +208,6 @@ namespace CBProject.Controllers
             List<ApplicationUser> activeUsers = users.Where(u => u.IsInactive == false).ToList();
             return View("Index", activeUsers);
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Delete(ApplicationUserViewModel model)
@@ -233,6 +228,19 @@ namespace CBProject.Controllers
             {
                 return View();
             }
+        }
+        public async Task<ActionResult> Activate(string id)
+        {
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var user = await _usersRepo.GetAsync(id);
+            if (user == null)
+                return HttpNotFound();
+            user.IsInactive = false;
+            await _usersRepo.UpdateAsync(user);
+            var users = await _usersRepo.GetAllAsync();
+            List<ApplicationUser> activeUsers = users.Where(u => u.IsInactive == false).ToList();
+            return View("Index", activeUsers);
         }
     }
 }

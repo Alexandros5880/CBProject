@@ -43,6 +43,14 @@ namespace CBProject.Migrations
                 manager_3.Create(role_3);
             }
 
+            if (!context.Roles.Any(r => r.Name == "Guest"))
+            {
+                var store_3 = new RoleStore<IdentityRole>(context);
+                var manager_3 = new RoleManager<IdentityRole>(store_3);
+                var role_3 = new IdentityRole { Name = "Guest" };
+                manager_3.Create(role_3);
+            }
+
             var user_1 = new ApplicationUser()
             {
                 BirthDate = DateTime.Today.AddYears(-30),

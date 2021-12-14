@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using CBProject.HelperClasses;
 using CBProject.Models;
+using CBProject.Repositories.IdentityRepos;
+using CBProject.Repositories.IdentityRepos.Interfaces;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -18,15 +20,21 @@ namespace CBProject.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private UsersRepo _usersRepo;
+        private readonly RolesRepo _rolesRepo;
 
-        public AccountController()
+        public AccountController(IUsersRepo usersRepo, IRolesRepo rolesRepo)
         {
+            this._usersRepo = (UsersRepo)usersRepo;
+            this._rolesRepo = (RolesRepo)rolesRepo;
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IUsersRepo usersRepo, IRolesRepo rolesRepo)
         {
-            UserManager = userManager;
-            SignInManager = signInManager;
+            this.UserManager = userManager;
+            this.SignInManager = signInManager;
+            this._usersRepo = (UsersRepo)usersRepo;
+            this._rolesRepo = (RolesRepo)rolesRepo;
         }
 
         public ApplicationSignInManager SignInManager
@@ -172,11 +180,19 @@ namespace CBProject.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model, HttpPostedFileBase CVFile)
+        public async Task<ActionResult> Register(RegisterViewModel model, HttpPostedFileBase CVFile, HttpPostedFileBase ImageFile)
         {
-            //if (ModelState.IsValid)
-            //{
-            // Get CV file
+            // Save Image File
+            if (ImageFile != null)
+            {
+                model.ImageFile = ImageFile;
+                string FileName = Path.GetFileNameWithoutExtension(model.ImageFile.FileName);
+                string FileExtension = Path.GetExtension(model.ImageFile.FileName);
+                FileName = DateTime.Now.ToString("yyyyMMdd") + "-" + FileName.Trim() + FileExtension;
+                model.CVPath = Server.MapPath(StaticImfo.UsersImagesPath + model.FirstName + " " + model.LastName + FileName);
+                model.ImageFile.SaveAs(model.CVPath);
+            }
+            // Save CV File
             if (CVFile != null)
             {
                 model.CVFile = CVFile;
@@ -189,9 +205,13 @@ namespace CBProject.Controllers
             var user = Mapper.Map<RegisterViewModel, ApplicationUser>(model);
             user.UserName = user.Email;
             var result = await UserManager.CreateAsync(user, model.Password);
+
             if (result.Succeeded)
             {
                 await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+
+                var visitorsRole = await this._rolesRepo.GetByNameAsync("Guest");
+                this._usersRepo.AddRole(user, visitorsRole);
 
                 // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
@@ -211,10 +231,12 @@ namespace CBProject.Controllers
                 {
                     return RedirectToAction("Index", "Videos");
                 }
+                else if (UserManager.IsInRole(user.Id, "Guest"))
+                {
+                    return RedirectToAction("Index", "Home");
+                }
             }
             AddErrors(result);
-            //}
-
             // If we got this far, something failed, redisplay form
             return View(model);
         }

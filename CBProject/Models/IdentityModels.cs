@@ -57,6 +57,8 @@ namespace CBProject.Models
 
         public string CVPath { get; set; }
 
+        public string ImagePath { get; set; }
+
         public int ContentCategoryId { get; set; }
 
         public int ContentId { get; set; }

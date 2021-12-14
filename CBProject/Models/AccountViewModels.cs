@@ -129,8 +129,10 @@ namespace CBProject.Models
         public string StreetNumber { get; set; }
 
         public string CVPath { get; set; }
-
         public HttpPostedFileBase CVFile { get; set; }
+
+        public string ImagePath { get; set; }
+        public HttpPostedFileBase ImageFile { get; set; }
 
         public bool NewsletterAcception { get; set; }
 
