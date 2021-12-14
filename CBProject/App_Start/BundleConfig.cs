@@ -32,7 +32,8 @@ namespace CBProject
                 .Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
-                      "~/Content/Login.css"
+                      "~/Content/Login.css",
+                      "~/Content/About.css"
                       ));
 
 

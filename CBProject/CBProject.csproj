@@ -371,6 +371,7 @@
     <Content Include="assets\images\small\img-5.jpg" />
     <Content Include="assets\images\small\img-6.jpg" />
     <Content Include="assets\images\small\img-7.jpg" />
+    <Content Include="assets\images\tg.jpg" />
     <Content Include="assets\images\users\avatar-1.jpg" />
     <Content Include="assets\images\users\avatar-2.jpg" />
     <Content Include="assets\images\users\avatar-3.jpg" />
@@ -1389,6 +1390,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="img\codeme_bigImg2_index.jpg" />
     <Content Include="img\login_register.png" />
+    <Content Include="img\tg.jpg" />
     <Content Include="Scripts\bootbox.js" />
     <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Scripts\bootstrap.js" />

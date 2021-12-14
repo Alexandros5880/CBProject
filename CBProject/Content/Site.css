@@ -42,6 +42,43 @@ textarea {
     color: #78DACF; /* light green*/
     font-weight: bold;
 }
+/*-----About------*/
+.about-title {
+    margin-top: 5%;
+}
+
+    .about-title p {
+        font-size: 22px;
+    }
+
+.about-text h3 {
+    font-style: italic;
+    text-align: center;
+    margin: 10% 0 3% 0;
+}
+
+.about-paragraph {
+    margin-bottom: 10%;
+}
+
+#team-members {
+    margin: 10% 0% 10% 0%;
+}
+
+    #team-members img {
+        border-radius: 50%;
+        filter: grayscale(100%);
+    }
+
+    #team-members h4 {
+        margin-top: 15px;
+        font-weight: 600;
+        text-align: center;
+    }
+
+    #team-members p {
+        text-align: center;
+    }
 
 
 /*-------Index---------*/
@@ -162,43 +199,7 @@ footer {
 }
 
 
-/*-----About------*/
-.about-title {
-    margin-top: 5%;
-}
 
-    .about-title p {
-        font-size: 22px;
-    }
-
-.about-text h3 {
-    font-style: italic;
-    text-align: center;
-    margin: 10% 0 3% 0;
-}
-
-.about-paragraph {
-    margin-bottom: 10%;
-}
-
-#team-members {
-    margin: 10% 0% 10% 0%;
-}
-
-    #team-members img {
-        border-radius: 50%;
-        filter: grayscale(100%);
-    }
-
-    #team-members h4 {
-        margin-top: 15px;
-        font-weight: 600;
-        text-align: center;
-    }
-
-    #team-members p {
-        text-align: center;
-    }
 /*------Buttons-------*/
 .btn-create {
     background-color: #2FB8A9;
