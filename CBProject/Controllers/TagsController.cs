@@ -1,126 +1,116 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
+﻿using AutoMapper;
+using CBProject.HelperClasses.Interfaces;
 using CBProject.Models;
+using CBProject.Models.ViewModels;
+using CBProject.Repositories;
+using CBProject.Repositories.IdentityRepos.Interfaces;
+using System.Net;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace CBProject.Controllers
 {
     public class TagsController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
-
-        // GET: Tags
+        private readonly TagsRepository _tagsRepo;
+        private readonly VideosRepository _videoRepo;
+        public TagsController(IUnitOfWork unitOfWork, IUsersRepo usersRepo)
+        {
+            this._tagsRepo = unitOfWork.Tags;
+            this._videoRepo = unitOfWork.Videos;
+        }
         public async Task<ActionResult> Index()
         {
-            return View(await db.Tags.ToListAsync());
+            return View(await this._tagsRepo.GetAllAsync());
         }
-
-        // GET: Tags/Details/5
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tag tag = await db.Tags.FindAsync(id);
+            Tag tag = await this._tagsRepo.GetAsync(id);
             if (tag == null)
             {
                 return HttpNotFound();
             }
             return View(tag);
         }
-
-        // GET: Tags/Create
         public ActionResult Create()
         {
-            return View();
+            var viewModel = new TagViewModel();
+            viewModel.Videos = new SelectList(this._videoRepo.GetAll(), "ID", "Title");
+            return View(viewModel);
         }
-
-        // POST: Tags/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Title,VideoId")] Tag tag)
+        public async Task<ActionResult> Create(TagViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                db.Tags.Add(tag);
-                await db.SaveChangesAsync();
+                var tag = Mapper.Map<TagViewModel, Tag>(viewModel);
+                this._tagsRepo.Add(tag);
+                await this._tagsRepo.SaveAsync();
                 return RedirectToAction("Index");
             }
 
-            return View(tag);
+            return View(viewModel);
         }
-
-        // GET: Tags/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tag tag = await db.Tags.FindAsync(id);
+            Tag tag = await this._tagsRepo.GetAsync(id);
             if (tag == null)
             {
                 return HttpNotFound();
             }
-            return View(tag);
+            var viewModel = Mapper.Map<Tag, TagViewModel>(tag);
+            viewModel.Videos = new SelectList(this._videoRepo.GetAll(), "ID", "Title");
+            return View(viewModel);
         }
-
-        // POST: Tags/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Title,VideoId")] Tag tag)
+        public async Task<ActionResult> Edit(TagViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(tag).State = EntityState.Modified;
-                await db.SaveChangesAsync();
+                var tag = Mapper.Map<TagViewModel, Tag>(viewModel);
+                this._tagsRepo.Update(tag);
+                await this._tagsRepo.SaveAsync();
                 return RedirectToAction("Index");
             }
-            return View(tag);
+            return View(viewModel);
         }
-
-        // GET: Tags/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tag tag = await db.Tags.FindAsync(id);
+            Tag tag = await this._tagsRepo.GetAsync(id);
             if (tag == null)
             {
                 return HttpNotFound();
             }
             return View(tag);
         }
-
-        // POST: Tags/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Tag tag = await db.Tags.FindAsync(id);
-            db.Tags.Remove(tag);
-            await db.SaveChangesAsync();
+            this._tagsRepo.Delete(id);
+            await this._tagsRepo.SaveAsync();
             return RedirectToAction("Index");
         }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                db.Dispose();
+                this._tagsRepo.Dispose();
+                this._videoRepo.Dispose();
             }
             base.Dispose(disposing);
         }
