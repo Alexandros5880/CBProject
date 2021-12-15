@@ -259,5 +259,81 @@ namespace CBProject.HelperClasses
                 throw new Exception(ex.Message);
             }
         }
+        public static void CreateContentTypes(ApplicationDbContext context)
+        {
+            try
+            {
+                ContentType content1 = new ContentType()
+                {
+                    ID = 1,
+                    Name = "ContentType1"
+                };
+                ContentType content2 = new ContentType()
+                {
+                    ID = 2,
+                    Name = "ContentType2"
+                };
+                ContentType content3 = new ContentType()
+                {
+                    ID = 3,
+                    Name = "ContentType3"
+                };
+                ContentType content4 = new ContentType()
+                {
+                    ID = 4,
+                    Name = "ContentType4"
+                };
+                ContentType content5 = new ContentType()
+                {
+                    ID = 5,
+                    Name = "ContentType5"
+                };
+                ContentType content6 = new ContentType()
+                {
+                    ID = 6,
+                    Name = "ContentType6"
+                };
+                ContentType content7 = new ContentType()
+                {
+                    ID = 7,
+                    Name = "ContentType7"
+                };
+                ContentType content8 = new ContentType()
+                {
+                    ID = 8,
+                    Name = "ContentType8"
+                };
+                ContentType content9 = new ContentType()
+                {
+                    ID = 9,
+                    Name = "ContentType9"
+                };
+                ContentType content10 = new ContentType()
+                {
+                    ID = 10,
+                    Name = "ContentType10"
+                };
+                ContentType content11 = new ContentType()
+                {
+                    ID = 11,
+                    Name = "ContentType11"
+                };
+                context.ContentTypes.Add(content1);
+                context.ContentTypes.Add(content2);
+                context.ContentTypes.Add(content3);
+                context.ContentTypes.Add(content4);
+                context.ContentTypes.Add(content5);
+                context.ContentTypes.Add(content6);
+                context.ContentTypes.Add(content7);
+                context.ContentTypes.Add(content8);
+                context.ContentTypes.Add(content9);
+                context.ContentTypes.Add(content10);
+                context.ContentTypes.Add(content11);
+                context.SaveChanges();
+            } catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }
