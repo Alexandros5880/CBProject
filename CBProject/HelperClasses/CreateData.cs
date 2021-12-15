@@ -501,6 +501,7 @@ namespace CBProject.HelperClasses
                 context.SubcriptionPackages.Add(package3);
                 context.SubcriptionPackages.Add(package4);
                 context.SubcriptionPackages.Add(package5);
+                context.SaveChanges();
             } catch (Exception ex)
             {
                 throw new Exception(ex.Message);
@@ -511,7 +512,26 @@ namespace CBProject.HelperClasses
             try
             {
                 // TODO: Create Ebooks
+                Ebook ebook1 = new Ebook()
+                {
+                    // TODO: Create Ebbooks
+                    Category = context.Categories.FirstOrDefault(c => c.ID == 1),
+                };
+                context.Ebooks.Add(ebook1);
+                // TODO: Add all ebooks
+                context.SaveChanges();
             } catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public static void CreateVideo(ApplicationDbContext context)
+        {
+            try
+            {
+                // Todo: Create Video
+            }
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
@@ -532,17 +552,6 @@ namespace CBProject.HelperClasses
             try
             {
                 // TODO: Create Review
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
-        public static void CreateVideo(ApplicationDbContext context)
-        {
-            try
-            {
-                // Todo: Create Video
             }
             catch (Exception ex)
             {
