@@ -15,6 +15,7 @@ namespace CBProject.Migrations
             CreateData.CreateUsersAndRoles(context);
             CreateData.CreateCategories(context);
             CreateData.CreateContentTypes(context);
+            CreateData.CreatePayments(context);
         }
     }
 }

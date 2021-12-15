@@ -1,8 +1,7 @@
-﻿using CBProject.Models.EntityModels;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace CBProject.Models
+namespace CBProject.Models.EntityModels
 {
     public class Tag
     {

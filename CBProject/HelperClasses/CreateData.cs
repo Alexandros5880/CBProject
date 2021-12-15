@@ -114,6 +114,23 @@ namespace CBProject.HelperClasses
                 var user_5 = new ApplicationUser()
                 {
                     BirthDate = DateTime.Today.AddYears(-30),
+                    FirstName = "Alexandros_5",
+                    LastName = "Platanios_5",
+                    Email = "alexandrosplatanios5@gmail.com",
+                    UserName = "alexandrosplatanios5@gmail.com",
+                    PhoneNumber = "6949277784",
+                    Password = "Takara0000",
+                    Country = "Greece",
+                    State = "Attica",
+                    City = "Voula",
+                    PostalCode = "16673",
+                    Street = "Fleming",
+                    StreetNumber = "14",
+                    IsInactive = false
+                };
+                var user_6 = new ApplicationUser()
+                {
+                    BirthDate = DateTime.Today.AddYears(-30),
                     FirstName = "Antonis",
                     LastName = "Ploumis",
                     Email = "djplou@hotmail.com",
@@ -137,7 +154,7 @@ namespace CBProject.HelperClasses
                 manager.Create(user_3, user_3.Password);
                 manager.Create(user_4, user_4.Password);
                 manager.Create(user_5, user_5.Password);
-
+                manager.Create(user_6, user_6.Password);
                 if (!manager.IsInRole(user_1.Id, "Admin"))
                 {
                     manager.AddToRole(user_1.Id, "Admin");
@@ -158,7 +175,11 @@ namespace CBProject.HelperClasses
                 {
                     manager.AddToRole(user_5.Id, "Admin");
                 }
-            }catch (Exception ex)
+                if (!manager.IsInRole(user_6.Id, "Guest"))
+                {
+                    manager.AddToRole(user_6.Id, "Guest");
+                }
+            } catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
@@ -329,6 +350,66 @@ namespace CBProject.HelperClasses
                 context.ContentTypes.Add(content9);
                 context.ContentTypes.Add(content10);
                 context.ContentTypes.Add(content11);
+                context.SaveChanges();
+            } catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public static void CreatePayments(ApplicationDbContext context)
+        {
+            try
+            {
+                Payment payment1 = new Payment()
+                {
+                    ID = 1,
+                    PaymentMethods = PaymentMethods.Paypal,
+                    User = (ApplicationUser)context.Users.FirstOrDefault(U => U.FirstName.Equals("Alexandros_1")),
+                    Price = 100M,
+                    Tax = 24.00,
+                    Discount = 00.33
+                };
+                Payment payment2 = new Payment()
+                {
+                    ID = 2,
+                    PaymentMethods = PaymentMethods.DebitCard,
+                    User = (ApplicationUser)context.Users.FirstOrDefault(U => U.FirstName.Equals("Alexandros_2")),
+                    Price = 100M,
+                    Tax = 24.00,
+                    Discount = 00.33
+                };
+                Payment payment3 = new Payment()
+                {
+                    ID = 3,
+                    PaymentMethods = PaymentMethods.BankTransfer,
+                    User = (ApplicationUser)context.Users.FirstOrDefault(U => U.FirstName.Equals("Alexandros_3")),
+                    Price = 100M,
+                    Tax = 24.00,
+                    Discount = 00.33
+                };
+                Payment payment4 = new Payment()
+                {
+                    ID = 4,
+                    PaymentMethods = PaymentMethods.Paypal,
+                    User = (ApplicationUser)context.Users.FirstOrDefault(U => U.FirstName.Equals("Alexandros_4")),
+                    Price = 100M,
+                    Tax = 24.00,
+                    Discount = 00.33
+                };
+                Payment payment5 = new Payment()
+                {
+                    ID = 5,
+                    PaymentMethods = PaymentMethods.DebitCard,
+                    User = (ApplicationUser)context.Users.FirstOrDefault(U => U.FirstName.Equals("Alexandros_5")),
+                    Price = 100M,
+                    Tax = 24.00,
+                    Discount = 00.33
+                };
+                context.Payments.Add(payment1);
+                context.Payments.Add(payment2);
+                context.Payments.Add(payment3);
+                context.Payments.Add(payment4);
+                context.Payments.Add(payment5);
                 context.SaveChanges();
             } catch (Exception ex)
             {
