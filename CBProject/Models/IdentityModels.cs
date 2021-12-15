@@ -1,5 +1,4 @@
-﻿using CBProject.Models.Configurations;
-using CBProject.Models.EntityModels;
+﻿using CBProject.Models.EntityModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
@@ -18,57 +17,36 @@ namespace CBProject.Models
     {
         [DataType(DataType.Date)]
         public DateTime BirthDate { get; set; }
-
         [Required]
         public string FirstName { get; set; }
-
         [Required]
         public string LastName { get; set; }
-
         [NotMapped]
         public string FullName { get { return this.FirstName + " " + this.LastName; } }
-
         [Required]
         public string Password { get; set; }
-
         [Required]
         public string Country { get; set; }
-
         [Required]
         public string State { get; set; }
-
         [Required]
         public string City { get; set; }
-
         [Required]
         public string PostalCode { get; set; }
-
         [Required]
         public string Street { get; set; }
-
         [Required]
         public string StreetNumber { get; set; }
-
         public string CreditCardNum { get; set; }
-
         public int SubscriptionId { get; set; }
-
         public string ContentAccess { get; set; }
-
         public string CVPath { get; set; }
-
         public string ImagePath { get; set; }
-
-        public int ContentCategoryId { get; set; }
-
-        public int ContentId { get; set; }
-
         public bool NewsletterAcception { get; set; }
-
         public bool IsInactive { get; set; }
-
         public ICollection<Video> Videos { get; set; }
         public ICollection<Payment> Payments { get; set; }
+        public ICollection<Ebook> Ebooks { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
@@ -107,10 +85,10 @@ namespace CBProject.Models
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             // modelBuilder.Configurations.Add(new CategoryConfig());
-            modelBuilder.Configurations.Add(new RatingConfig());
-            modelBuilder.Configurations.Add(new ReviewConfig());
-            modelBuilder.Configurations.Add(new TagConfig());
-            modelBuilder.Configurations.Add(new VideoConfig());
+            //modelBuilder.Configurations.Add(new RatingConfig());
+            //modelBuilder.Configurations.Add(new ReviewConfig());
+            //modelBuilder.Configurations.Add(new TagConfig());
+            //modelBuilder.Configurations.Add(new VideoConfig());
             base.OnModelCreating(modelBuilder);
 
         }

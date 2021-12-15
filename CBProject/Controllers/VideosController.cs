@@ -47,7 +47,11 @@ namespace CBProject.Controllers
             {
                 return HttpNotFound();
             }
-            return View(video);
+            var viewModel = Mapper.Map<Video, VideoViewModel>(video);
+            viewModel.MyTags = await this._tagsRepo.GetAllFromVideoAsync(video);
+            viewModel.MyReviews = await this._reviewRepo.GetAllFromVideoAsync(video);
+            viewModel.MyRatings = await this._ratingsRepo.GetAllFromVideoAsync(video);
+            return View(viewModel);
         }
         public async Task<ActionResult> Create()
         {
@@ -104,9 +108,9 @@ namespace CBProject.Controllers
                 return HttpNotFound();
             }
             var viewModel = Mapper.Map<Video, VideoViewModel>(video);
-            viewModel.OtherTags = await this._tagsRepo.GetAllAsync();
-            viewModel.OtherReviews = await this._reviewRepo.GetAllAsync();
-            viewModel.OtherRatings = await this._ratingsRepo.GetAllAsync();
+            viewModel.OtherTags = await this._tagsRepo.GetAllOtherFromVideoAsync(video);
+            viewModel.OtherReviews = await this._reviewRepo.GetAllOtherFromVideoAsync(video);
+            viewModel.OtherRatings = await this._ratingsRepo.GetAllOtherFromVideoAsync(video);
             viewModel.OtherUsers = await this._usersRepo.GetAllAsync();
             viewModel.OtherCategory = await this._categoriesRepo.GetAllAsync();
             return View(viewModel);

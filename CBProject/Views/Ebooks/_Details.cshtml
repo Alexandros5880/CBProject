@@ -52,13 +52,58 @@
             @Html.DisplayFor(model => model.UploadDate)
         </dd>
 
-        @*<dt>
-            @Html.DisplayNameFor(model => model.CreatorId)
+        <dt>
+            @Html.DisplayNameFor(model => model.Category)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.CreatorId)
-        </dd>*@
+            @Html.DisplayFor(model => model.Category)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Tags")
+        </dt>
+
+        <dd>
+            <ul>
+                @foreach (var tag in Model.MyTags)
+                {
+                    <li>
+                        @Html.DisplayFor(model => tag.Title)
+                    </li>
+                }
+            </ul>
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Reviews")
+        </dt>
+
+        <dd>
+            <ul>
+                @foreach (var review in Model.MyReviews)
+                {
+                    <li>
+                        @Html.DisplayFor(model => review.Comment)
+                    </li>
+                }
+            </ul>
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Ratings")
+        </dt>
+
+        <dd>
+            <ul>
+                @foreach (var rating in Model.MyRatings)
+                {
+                    <li>
+                        @Html.DisplayFor(model => rating.Rate)
+                    </li>
+                }
+            </ul>
+        </dd>
 
     </dl>
 </div>

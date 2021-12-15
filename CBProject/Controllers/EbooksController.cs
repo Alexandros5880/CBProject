@@ -1,38 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
+﻿using AutoMapper;
+using CBProject.HelperClasses;
+using CBProject.HelperClasses.Interfaces;
 using CBProject.Models;
 using CBProject.Models.EntityModels;
-using CBProject.HelperClasses.Interfaces;
-using CBProject.Repositories;
-using CBProject.Repositories.Interfaces;
 using CBProject.Models.ViewModels;
-using AutoMapper;
+using CBProject.Repositories;
 using Microsoft.AspNet.Identity;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Mvc;
 
 namespace CBProject.Controllers
 {
     public class EbooksController : Controller
     {
-        private IRepository<Ebook> _ebooksRepository;
-        private IRepository<Category> _categoriesRepository;
+        private EbooksRepository _ebooksRepository;
+        private CategoriesRepository _categoriesRepository;
+        private TagsRepository _tagsRepository;
+        private RatingsRepository _ratingsRepository;
+        private ReviewsRepository _reviewsRepository;
         private ApplicationDbContext _context;
-
         public EbooksController(IUnitOfWork unitOfWork)
         {
             this._ebooksRepository = unitOfWork.Ebooks;
             this._categoriesRepository = unitOfWork.Categories;
+            this._tagsRepository = unitOfWork.Tags;
+            this._ratingsRepository = unitOfWork.Ratings;
+            this._reviewsRepository = unitOfWork.Reviews;
             this._context = unitOfWork.Context;
 
         }
-
-        // GET: Ebooks
         public async Task<ActionResult> Index()
         {
             var ebooks = await this._ebooksRepository.GetAllAsync();
@@ -46,8 +49,6 @@ namespace CBProject.Controllers
             }
             return View(viewModels);
         }
-
-        // GET: Ebooks/Details/5;
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
@@ -59,45 +60,59 @@ namespace CBProject.Controllers
             {
                 return HttpNotFound();
             }
-
-            return View(ebook);
+            var viewModel = Mapper.Map<Ebook, EbookViewModel>(ebook);
+            viewModel.MyTags = await this._tagsRepository.GetAllFromEbookAsync(ebook);
+            viewModel.MyReviews = await this._reviewsRepository.GetAllFromEbookAsync(ebook);
+            viewModel.MyRatings = await this._ratingsRepository.GetAllFromEbookAsync(ebook);
+            return View(viewModel);
         }
-
-        //[Role("")]
-        // GET: Ebooks/Create
         [Authorize(Roles = "Admin, ContentCreator")]
         public async Task<ActionResult> Create()
         {
-            //ViewBag.CategoryId = new SelectList(db.Categories, "ID", "Name");
             var userId = User.Identity.GetUserId();
             EbookViewModel viewModel = new EbookViewModel();
             var categories = await this._categoriesRepository.GetAllAsync();
-           
+            viewModel.OtherTags = await this._tagsRepository.GetAllAsync();
+            viewModel.OtherReviews = await this._reviewsRepository.GetAllAsync();
+            viewModel.OtherRatings = await this._ratingsRepository.GetAllAsync();
             viewModel.Categories = new SelectList(categories, "ID", "Name");
             return View(viewModel);
         }
-
-        // POST: Ebooks/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(EbookViewModel ebook)
+        public async Task<ActionResult> Create(EbookViewModel viewModel, HttpPostedFileBase EbookImageFile, HttpPostedFileBase EbookFile)
         {  
             if (ModelState.IsValid)
-
             {
-                var ebookDB = Mapper.Map<EbookViewModel, Ebook>(ebook);
-                ebookDB.Category = await _categoriesRepository.GetAsync(ebook.CategoryId);
+                // EbookImageFile
+                if (EbookImageFile != null)
+                {
+                    viewModel.EbookImageFile = EbookImageFile;
+                    string FileName = Path.GetFileNameWithoutExtension(viewModel.EbookImageFile.FileName);
+                    string FileExtension = Path.GetExtension(viewModel.EbookImageFile.FileName);
+                    FileName = DateTime.Now.ToString("yyyyMMdd") + "-" + FileName.Trim() + FileExtension;
+                    viewModel.EbookImagePath = Server.MapPath(StaticImfo.EbooksImagesPath + " " + viewModel.Title);
+                    viewModel.EbookImageFile.SaveAs(viewModel.EbookImagePath);
+                }
+                // EbookFile
+                if (EbookFile != null)
+                {
+                    viewModel.EbookFile = EbookFile;
+                    string FileName = Path.GetFileNameWithoutExtension(viewModel.EbookFile.FileName);
+                    string FileExtension = Path.GetExtension(viewModel.EbookFile.FileName);
+                    FileName = DateTime.Now.ToString("yyyyMMdd") + "-" + FileName.Trim() + FileExtension;
+                    viewModel.EbookFilePath = Server.MapPath(StaticImfo.EbooksFilesPath + " " + viewModel.Title);
+                    viewModel.EbookFile.SaveAs(viewModel.EbookFilePath);
+                }
+                var ebookDB = Mapper.Map<EbookViewModel, Ebook>(viewModel);
+                ebookDB.Category = await _categoriesRepository.GetAsync(viewModel.CategoryId);
                 this._ebooksRepository.Add(ebookDB);
                 await this._ebooksRepository.SaveAsync();
                 return RedirectToAction("Index");
             }
         
-            return View(ebook);
+            return View(viewModel);
         }
-
-        // GET: Ebooks/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -112,29 +127,46 @@ namespace CBProject.Controllers
             EbookViewModel viewModel = Mapper.Map<Ebook, EbookViewModel>(ebook);
             var categories = await this._categoriesRepository.GetAllAsync();
             viewModel.Categories = new SelectList(categories, "ID", "Name");
+            viewModel.OtherTags = await this._tagsRepository.GetAllOtherFromEbookAsync(ebook);
+            viewModel.OtherReviews = await this._reviewsRepository.GetAllOtherFromEbookAsync(ebook);
+            viewModel.OtherRatings = await this._ratingsRepository.GetAllOtherFromEbookAsync(ebook);
             return View(viewModel);
          
         }
-
-        // POST: Ebooks/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(EbookViewModel ebook)
+        public async Task<ActionResult> Edit(EbookViewModel viewModel, HttpPostedFileBase EbookImageFile, HttpPostedFileBase EbookFile)
         {
             if (ModelState.IsValid)
             {
-                var ebookDB = Mapper.Map<EbookViewModel, Ebook>(ebook);
+                // EbookImageFile
+                if (EbookImageFile != null)
+                {
+                    viewModel.EbookImageFile = EbookImageFile;
+                    string FileName = Path.GetFileNameWithoutExtension(viewModel.EbookImageFile.FileName);
+                    string FileExtension = Path.GetExtension(viewModel.EbookImageFile.FileName);
+                    FileName = DateTime.Now.ToString("yyyyMMdd") + "-" + FileName.Trim() + FileExtension;
+                    viewModel.EbookImagePath = Server.MapPath(StaticImfo.EbooksImagesPath + " " + viewModel.Title);
+                    viewModel.EbookImageFile.SaveAs(viewModel.EbookImagePath);
+                }
+                // EbookFile
+                if (EbookFile != null)
+                {
+                    viewModel.EbookFile = EbookFile;
+                    string FileName = Path.GetFileNameWithoutExtension(viewModel.EbookFile.FileName);
+                    string FileExtension = Path.GetExtension(viewModel.EbookFile.FileName);
+                    FileName = DateTime.Now.ToString("yyyyMMdd") + "-" + FileName.Trim() + FileExtension;
+                    viewModel.EbookFilePath = Server.MapPath(StaticImfo.EbooksFilesPath + " " + viewModel.Title);
+                    viewModel.EbookFile.SaveAs(viewModel.EbookFilePath);
+                }
+                var ebookDB = Mapper.Map<EbookViewModel, Ebook>(viewModel);
                _context.Entry(ebookDB).State = EntityState.Modified;
                 await _ebooksRepository.SaveAsync();
                 return RedirectToAction("Index");
             }
             
-            return View(ebook);
+            return View(viewModel);
         }
-
-        // GET: Ebooks/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
@@ -148,8 +180,6 @@ namespace CBProject.Controllers
             }
             return View(ebook);
         }
-
-        // POST: Ebooks/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
@@ -158,12 +188,16 @@ namespace CBProject.Controllers
             await _ebooksRepository.SaveAsync();
             return RedirectToAction("Index");
         }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                //db.Dispose();
+                this._ebooksRepository.Dispose();
+                this._categoriesRepository.Dispose();
+                this._tagsRepository.Dispose();
+                this._ratingsRepository.Dispose();
+                this._reviewsRepository.Dispose();
+                this._context.Dispose();
             }
             base.Dispose(disposing);
         }

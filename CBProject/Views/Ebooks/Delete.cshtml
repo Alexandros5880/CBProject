@@ -1,4 +1,4 @@
-﻿@model CBProject.Models.EntityModels.Ebook
+﻿@model CBProject.Models.ViewModels.EbookViewModel
 
 @{
     ViewBag.Title = "Delete";
@@ -66,8 +66,6 @@
         <dd>
             @Html.DisplayFor(model => model.CreatorId)
         </dd>
-
-    </dl>
 
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()

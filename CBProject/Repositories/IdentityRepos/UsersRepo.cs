@@ -249,8 +249,6 @@ namespace CBProject.Repositories.IdentityRepos
             user.CreditCardNum = obj.CreditCardNum;
             user.SubscriptionId = obj.SubscriptionId;
             user.ContentAccess = obj.ContentAccess;
-            user.ContentCategoryId = obj.ContentCategoryId;
-            user.ContentId = obj.ContentId;
             user.CVPath = obj.CVPath;
             this._manager.UserManager.Update(user);
             this._manager.Context.SaveChanges();
@@ -279,8 +277,6 @@ namespace CBProject.Repositories.IdentityRepos
             user.CreditCardNum = obj.CreditCardNum;
             user.SubscriptionId = obj.SubscriptionId;
             user.ContentAccess = obj.ContentAccess;
-            user.ContentCategoryId = obj.ContentCategoryId;
-            user.ContentId = obj.ContentId;
             user.CVPath = obj.CVPath;
             await this._manager.UserManager.UpdateAsync(user);
             return await this._manager.Context.SaveChangesAsync();

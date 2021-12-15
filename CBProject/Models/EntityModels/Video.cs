@@ -1,27 +1,31 @@
 ﻿using CBProject.Models.EntityModels;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Web;
 
 namespace CBProject.Models
 {
     public class Video
     {
-        public int Id { get; set; }
+        [Key]
+        public int ID { get; set; }
+        [MaxLength(150)]
+        [Required]
         public string Title { get; set; }
         public string Thumbnail { get; set; }
-        [NotMapped]
-        public HttpPostedFileBase VideoImage { get; set; }
+        public string VideoImagePath { get; set; }
         public string VideoPath { get; set; }
-        [NotMapped]
-        public HttpPostedFileBase VideoFile { get; set; }
+        [MaxLength]
+        [Required]
         public string Description { get; set; }
         public DateTime UploadDate { get; set; }
-        public ApplicationUser ContentCreator { get; set; }
+        [ForeignKey("Creator")]
         public string CreatorId { get; set; }
-        public Category Category { get; set; } 
+        public ApplicationUser Creator  { get; set; }
+        [ForeignKey("Category")]
         public int CategoryId { get; set; }
+        public Category Category { get; set; }
         public string Url { get; set; }
         public ICollection<Tag> Tags { get; set; }
         public ICollection<Review> Reviews { get; set; }

@@ -225,12 +225,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="HelperClasses\CreateData.cs" />
     <Compile Include="HelperClasses\UnitOfWork.cs" />
     <Compile Include="HelperClasses\Interfaces\IUnitOfWork.cs" />
     <Compile Include="HelperClasses\StaticImfo.cs" />
-    <Compile Include="Migrations\202112141927533_Initial.cs" />
-    <Compile Include="Migrations\202112141927533_Initial.Designer.cs">
-      <DependentUpon>202112141927533_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\202112151325243_Initial.cs" />
+    <Compile Include="Migrations\202112151325243_Initial.Designer.cs">
+      <DependentUpon>202112151325243_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -238,11 +239,6 @@
     <Compile Include="Models\EntityModels\CategoryToCategory.cs" />
     <Compile Include="Models\EntityModels\ContentType.cs" />
     <Compile Include="Models\EntityModels\Ebook.cs" />
-    <Compile Include="Models\Configurations\CategoryConfig.cs" />
-    <Compile Include="Models\Configurations\RatingConfig.cs" />
-    <Compile Include="Models\Configurations\ReviewConfig.cs" />
-    <Compile Include="Models\Configurations\TagConfig.cs" />
-    <Compile Include="Models\Configurations\VideoConfig.cs" />
     <Compile Include="Models\EntityModels\Payment.cs" />
     <Compile Include="Models\EntityModels\SubscriptionPackage.cs" />
     <Compile Include="Models\Interfaces\IApplicationDbContext.cs" />
@@ -1887,6 +1883,8 @@
     <Folder Include="assets\libs\table-edits\src\" />
     <Folder Include="assets\libs\toastr\tests\" />
     <Folder Include="CV\" />
+    <Folder Include="EbooksFiles\" />
+    <Folder Include="EbooksImages\" />
     <Folder Include="UsersImages\" />
     <Folder Include="VideoFiles\" />
     <Folder Include="VideoImages\" />
@@ -1905,8 +1903,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202112141927533_Initial.resx">
-      <DependentUpon>202112141927533_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202112151325243_Initial.resx">
+      <DependentUpon>202112151325243_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

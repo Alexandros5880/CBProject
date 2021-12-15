@@ -1,5 +1,6 @@
 ﻿using CBProject.HelperClasses.Interfaces;
 using CBProject.Models;
+using CBProject.Models.EntityModels;
 using CBProject.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -37,7 +38,7 @@ namespace CBProject.Repositories
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
             return this._context.Tags
-                .SingleOrDefault(t=>t.Id == id);
+                .SingleOrDefault(t=>t.ID == id);
         }
         public ICollection<Tag> GetAll()
         {
@@ -53,7 +54,7 @@ namespace CBProject.Repositories
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
             return this._context.Tags
-                .FirstOrDefault(t => t.Id == id);
+                .FirstOrDefault(t => t.ID == id);
         }        
         public void Save()
         {
@@ -74,14 +75,14 @@ namespace CBProject.Repositories
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
             return await this._context.Tags
-                .SingleOrDefaultAsync(t => t.Id == id);
+                .SingleOrDefaultAsync(t => t.ID == id);
         }
         public async Task<Tag> GetAsync(int? id)
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
             return await this._context.Tags
-                .SingleOrDefaultAsync(t => t.Id == id);
+                .SingleOrDefaultAsync(t => t.ID == id);
         }
         public async Task<ICollection<Tag>> GetAllEmptyAsync()
         {
@@ -91,6 +92,70 @@ namespace CBProject.Repositories
         public async Task<ICollection<Tag>> GetAllAsync()
         {
             return await this._context.Tags
+                .ToListAsync();
+        }
+        public ICollection<Tag> GetAllOtherFromVideo(Video video)
+        {
+            if (video == null)
+                throw new ArgumentNullException(nameof(video));
+            return this._context.Tags
+                .Where(t => !video.Tags.Contains(t))
+                .ToList();
+        }
+        public async Task<ICollection<Tag>> GetAllOtherFromVideoAsync(Video video)
+        {
+            if (video == null)
+                throw new ArgumentNullException(nameof(video));
+            return await this._context.Tags
+                .Where(t => !video.Tags.Contains(t))
+                .ToListAsync();
+        }
+        public ICollection<Tag> GetAllFromVideo(Video video)
+        {
+            if (video == null)
+                throw new ArgumentNullException(nameof(video));
+            return this._context.Tags
+                .Where(t => video.Tags.Contains(t))
+                .ToList();
+        }
+        public async Task<ICollection<Tag>> GetAllFromVideoAsync(Video video)
+        {
+            if (video == null)
+                throw new ArgumentNullException(nameof(video));
+            return await this._context.Tags
+                .Where(t => video.Tags.Contains(t))
+                .ToListAsync();
+        }
+        public ICollection<Tag> GetAllOtherFromEbook(Ebook ebook)
+        {
+            if (ebook == null)
+                throw new ArgumentNullException(nameof(ebook));
+            return this._context.Tags
+                .Where(t => !ebook.Tags.Contains(t))
+                .ToList();
+        }
+        public async Task<ICollection<Tag>> GetAllOtherFromEbookAsync(Ebook ebook)
+        {
+            if (ebook == null)
+                throw new ArgumentNullException(nameof(ebook));
+            return await this._context.Tags
+                .Where(t => !ebook.Tags.Contains(t))
+                .ToListAsync();
+        }
+        public ICollection<Tag> GetAllFromEbook(Ebook ebook)
+        {
+            if (ebook == null)
+                throw new ArgumentNullException(nameof(ebook));
+            return this._context.Tags
+                .Where(t => ebook.Tags.Contains(t))
+                .ToList();
+        }
+        public async Task<ICollection<Tag>> GetAllFromEbookAsync(Ebook ebook)
+        {
+            if (ebook == null)
+                throw new ArgumentNullException(nameof(ebook));
+            return await this._context.Tags
+                .Where(t => ebook.Tags.Contains(t))
                 .ToListAsync();
         }
         protected virtual void Dispose(bool disposing)

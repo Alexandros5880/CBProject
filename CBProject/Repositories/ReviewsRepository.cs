@@ -1,5 +1,6 @@
 ﻿using CBProject.HelperClasses.Interfaces;
 using CBProject.Models;
+using CBProject.Models.EntityModels;
 using CBProject.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -39,7 +40,7 @@ namespace CBProject.Repositories
             return this._context.Reviews
                 .Include(r => r.Video)
                 .Include(r => r.Reviewer)
-                .FirstOrDefault(r => r.Id == id);
+                .FirstOrDefault(r => r.ID == id);
         }
         public ICollection<Review> GetAll()
         {
@@ -57,7 +58,7 @@ namespace CBProject.Repositories
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
             return this._context.Reviews
-                .SingleOrDefault(r=>r.Id == id);
+                .SingleOrDefault(r=>r.ID == id);
         }        
         public void Save()
         {
@@ -78,14 +79,14 @@ namespace CBProject.Repositories
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
             return await this._context.Reviews
-                .FirstOrDefaultAsync(r => r.Id == id);
+                .FirstOrDefaultAsync(r => r.ID == id);
         }
         public async Task<Review> GetAsync(int? id)
         {
             return await this._context.Reviews
                 .Include(r => r.Video)
                 .Include(r => r.Reviewer)
-                .FirstOrDefaultAsync(r => r.Id == id);
+                .FirstOrDefaultAsync(r => r.ID == id);
         }
         public async Task<ICollection<Review>> GetAllEmptyAsync()
         {
@@ -97,6 +98,70 @@ namespace CBProject.Repositories
             return await this._context.Reviews
                 .Include(r => r.Video)
                 .Include(r => r.Reviewer)
+                .ToListAsync();
+        }
+        public ICollection<Review> GetAllOtherFromVideo(Video video)
+        {
+            if (video == null)
+                throw new ArgumentNullException(nameof(video));
+            return this._context.Reviews
+                .Where(r => !video.Reviews.Contains(r))
+                .ToList();
+        }
+        public async Task<ICollection<Review>> GetAllOtherFromVideoAsync(Video video)
+        {
+            if (video == null)
+                throw new ArgumentNullException(nameof(video));
+            return await this._context.Reviews
+                .Where(r => !video.Reviews.Contains(r))
+                .ToListAsync();
+        }
+        public ICollection<Review> GetAllFromVideo(Video video)
+        {
+            if (video == null)
+                throw new ArgumentNullException(nameof(video));
+            return this._context.Reviews
+                .Where(r => video.Reviews.Contains(r))
+                .ToList();
+        }
+        public async Task<ICollection<Review>> GetAllFromVideoAsync(Video video)
+        {
+            if (video == null)
+                throw new ArgumentNullException(nameof(video));
+            return await this._context.Reviews
+                .Where(r => video.Reviews.Contains(r))
+                .ToListAsync();
+        }
+        public ICollection<Review> GetAllOtherFromEbook(Ebook ebook)
+        {
+            if (ebook == null)
+                throw new ArgumentNullException(nameof(ebook));
+            return this._context.Reviews
+                .Where(r => !ebook.Reviews.Contains(r))
+                .ToList();
+        }
+        public async Task<ICollection<Review>> GetAllOtherFromEbookAsync(Ebook ebook)
+        {
+            if (ebook == null)
+                throw new ArgumentNullException(nameof(ebook));
+            return await this._context.Reviews
+                .Where(r => !ebook.Reviews.Contains(r))
+                .ToListAsync();
+        }
+        public ICollection<Review> GetAllFromEbook(Ebook ebook)
+        {
+            if (ebook == null)
+                throw new ArgumentNullException(nameof(ebook));
+            return this._context.Reviews
+                .Where(r => ebook.Reviews.Contains(r))
+                .ToList();
+        }
+        public async Task<ICollection<Review>> GetAllFromEbookAsync(Ebook ebook)
+        {
+            if (ebook == null)
+                throw new ArgumentNullException(nameof(ebook));
+            return await this._context.Reviews
+                .Where(r => ebook.Reviews.Contains(r))
                 .ToListAsync();
         }
         protected virtual void Dispose(bool disposing)

@@ -57,13 +57,69 @@
         </div>
     </div>
 
-    @*<div class="form-group">
-            @Html.LabelFor(model => model.CreatorId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CreatorId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CreatorId, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
+    <div class="form-group">
+        @Html.LabelFor(model => model.CategoryId, "CategoryId", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(e => e.CategoryId, Model.Categories, null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.EbookImageFile, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <input type="file" name="VideoFile" ) />
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.EbookFile, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <input type="file" name="EbookFile" ) />
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Remove Tags:", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.ListBoxFor(model => model.RemoveTags, new SelectList(Model.MyTags, "Id", "Title"), new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Add Tags:", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.ListBoxFor(model => model.AddTags, new SelectList(Model.OtherTags, "Id", "Title"), new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Remove Reviews:", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.ListBoxFor(model => model.RemoveReviews, new SelectList(Model.MyReviews, "Id", "Comment"), new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Add Reviews:", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.ListBoxFor(model => model.AddReviews, new SelectList(Model.OtherReviews, "Id", "Comment"), new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Remove Ratings:", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.ListBoxFor(model => model.RemoveRatings, new SelectList(Model.MyRatings, "Id", "Comment"), new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Add Ratings:", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.ListBoxFor(model => model.AddRatings, new SelectList(Model.OtherRatings, "Id", "Comment"), new { @class = "form-control" })
+        </div>
+    </div>
 
     .ToListAsync()
 

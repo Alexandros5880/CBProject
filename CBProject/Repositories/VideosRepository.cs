@@ -47,7 +47,7 @@ namespace CBProject.Repositories
                 .Include(v=>v.Reviews)
                 .Include(v => v.Ratings)
                 .Include(v => v.Tags)
-                .SingleOrDefault(v=>v.Id == id);
+                .SingleOrDefault(v => v.ID == id);
         }
         public ICollection<Video> GetAll()
         {
@@ -112,12 +112,12 @@ namespace CBProject.Repositories
                 .Include(v => v.Reviews)
                 .Include(v => v.Ratings)
                 .Include(v => v.Tags)
-                .SingleOrDefaultAsync(v => v.Id == id);
+                .SingleOrDefaultAsync(v => v.ID == id);
         }
         public async Task<Video> GetEmptyAsync(int? id)
         {
             return await this._context.Videos
-                .SingleOrDefaultAsync(v => v.Id == id);
+                .SingleOrDefaultAsync(v => v.ID == id);
         }
         public async Task<ICollection<Video>> GetAllAsync()
         {

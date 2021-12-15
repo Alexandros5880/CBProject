@@ -1,4 +1,4 @@
-﻿@model CBProject.Models.Video
+﻿@model CBProject.Models.ViewModels.VideoViewModel
 
 @{
     ViewBag.Title = "Details";
@@ -19,11 +19,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.ContentCreator.FirstName)
+            @Html.DisplayNameFor(model => model.Creator.FirstName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ContentCreator.FirstName)
+            @Html.DisplayFor(model => model.Creator.FirstName)
         </dd>
 
         <dt>
@@ -74,9 +74,54 @@
             @Html.DisplayFor(model => model.Url)
         </dd>
 
+        <dt>
+            @Html.DisplayName("Tags")
+        </dt>
+
+        <dd>
+            <ul>
+                @foreach (var tag in Model.MyTags)
+                {
+                    <li>
+                        @Html.DisplayFor(model => tag.Title)
+                    </li>
+                }
+            </ul>
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Reviews")
+        </dt>
+
+        <dd>
+            <ul>
+                @foreach (var review in Model.MyReviews)
+                {
+                    <li>
+                        @Html.DisplayFor(model => review.Comment)
+                    </li>
+                }
+            </ul>
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Ratings")
+        </dt>
+
+        <dd>
+            <ul>
+                @foreach (var rating in Model.MyRatings)
+                {
+                    <li>
+                        @Html.DisplayFor(model => rating.Rate)
+                    </li>
+                }
+            </ul>
+        </dd>
+
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
