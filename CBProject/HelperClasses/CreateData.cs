@@ -216,7 +216,7 @@ namespace CBProject.HelperClasses
                 Category category5 = new Category()
                 {
                     ID = 5,
-                    Name = "CORE",
+                    Name = "XAMARIN",
                     Master = false
                 };
                 Category category6 = new Category()
@@ -515,9 +515,7 @@ namespace CBProject.HelperClasses
                 Ebook ebook1 = new Ebook()
                 {
                     // TODO: Create Ebbooks
-                    Category = context.Categories.FirstOrDefault(c => c.ID == 1),
                 };
-                context.Ebooks.Add(ebook1);
                 // TODO: Add all ebooks
                 context.SaveChanges();
             } catch (Exception ex)
