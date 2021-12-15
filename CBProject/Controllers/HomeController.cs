@@ -26,7 +26,7 @@ namespace CBProject.Controllers
         {
             try
             {
-                var user = User.Identity.GetUserId(); // TODO:  Adoni des auto edw doulevei
+                var user = User.Identity.GetUserId(); // TODO:  Home User ID
                 ViewBag.User = user;
             }
             catch (Exception ex)

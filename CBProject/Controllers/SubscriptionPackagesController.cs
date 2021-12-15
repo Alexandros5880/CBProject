@@ -66,7 +66,7 @@ namespace CBProject.Controllers
                 {
                     foreach (var userId in subscriptionPackageViewModel.AddUsers)
                     {
-                        subscriptionPackage.Users.Add(await this._usersRepo.GetAsync(userId));
+                        subscriptionPackage.MyUsers.Add(await this._usersRepo.GetAsync(userId));
                     }
                 }
                 this._subscriptionRepo.Add(subscriptionPackage);
@@ -91,7 +91,7 @@ namespace CBProject.Controllers
             viewModel.OtherUsers = await this._usersRepo.GetAllAsync();
             viewModel.MyUsers = await this._usersRepo
                                             .GetAllEnumerable()
-                                            .Where(u => !subscriptionPackage.Users.Contains(u))
+                                            .Where(u => !subscriptionPackage.MyUsers.Contains(u))
                                             .ToListAsync();
             viewModel.OtherContentType = await this._contentTypeRepo.GetAllAsync();
             viewModel.OtherPayment = await this._peynmentRepo.GetAllAsync();
@@ -109,14 +109,14 @@ namespace CBProject.Controllers
                 {
                     foreach (var userId in subscriptionPackageViewModel.AddUsers)
                     {
-                        subscriptionPackage.Users.Add(await this._usersRepo.GetAsync(userId));
+                        subscriptionPackage.MyUsers.Add(await this._usersRepo.GetAsync(userId));
                     }
                 }
                 if (subscriptionPackageViewModel.RemoveUsers != null && subscriptionPackageViewModel.RemoveUsers.Count > 0)
                 {
                     foreach (var userId in subscriptionPackageViewModel.RemoveUsers)
                     {
-                        subscriptionPackage.Users.Remove(await this._usersRepo.GetAsync(userId));
+                        subscriptionPackage.MyUsers.Remove(await this._usersRepo.GetAsync(userId));
                     }
                 }
                 await this._subscriptionRepo.SaveAsync();

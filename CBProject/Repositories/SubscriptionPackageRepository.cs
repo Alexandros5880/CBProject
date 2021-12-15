@@ -38,21 +38,21 @@ namespace CBProject.Repositories
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
             return this._context.SubcriptionPackages
-                .Include(s => s.Users)
+                .Include(s => s.MyUsers)
                 .Include(s => s.ContentType)
                 .FirstOrDefault(s => s.ID == id);
         }
         public ICollection<SubscriptionPackage> GetAll()
         {
             return this._context.SubcriptionPackages
-                .Include(s => s.Users)
+                .Include(s => s.MyUsers)
                 .Include(s => s.ContentType)
                 .ToList();
         }
         public async Task<ICollection<SubscriptionPackage>> GetAllAsync()
         {
             return await this._context.SubcriptionPackages
-                .Include(s => s.Users)
+                .Include(s => s.MyUsers)
                 .Include(s => s.ContentType)
                 .ToListAsync();
         }
@@ -71,7 +71,7 @@ namespace CBProject.Repositories
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
             return await this._context.SubcriptionPackages
-                .Include(s => s.Users)
+                .Include(s => s.MyUsers)
                 .Include(s => s.ContentType)
                 .FirstAsync(s => s.ID == id);
         }

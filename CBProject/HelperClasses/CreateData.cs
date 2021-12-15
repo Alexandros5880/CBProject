@@ -3,6 +3,7 @@ using CBProject.Models.EntityModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace CBProject.HelperClasses
@@ -412,6 +413,138 @@ namespace CBProject.HelperClasses
                 context.Payments.Add(payment5);
                 context.SaveChanges();
             } catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public static void CreateSubscriptionPackages(ApplicationDbContext context)
+        {
+            try
+            {
+                SubscriptionPackage package1 = new SubscriptionPackage()
+                {
+                    ID = 1,
+                    Name = "PACKAGE 1",
+                    Price = 100,
+                    Duration = 23.33f,
+                    MyUsers = new List<ApplicationUser>()
+                    {
+                        context.Users.FirstOrDefault()
+                    },
+                    ContentType = context.ContentTypes.FirstOrDefault(c => c.ID == 1),
+                    AutoSubscription = true,
+                    StartDate = DateTime.Today,
+                    Payment = context.Payments.FirstOrDefault(p => p.ID == 1)
+                };
+                SubscriptionPackage package2 = new SubscriptionPackage()
+                {
+                    ID = 2,
+                    Name = "PACKAGE 2",
+                    Price = 100,
+                    Duration = 23.33f,
+                    MyUsers = new List<ApplicationUser>()
+                    {
+                        context.Users.FirstOrDefault()
+                    },
+                    ContentType = context.ContentTypes.FirstOrDefault(c => c.ID == 2),
+                    AutoSubscription = true,
+                    StartDate = DateTime.Today,
+                    Payment = context.Payments.FirstOrDefault(p => p.ID == 2)
+                };
+                SubscriptionPackage package3 = new SubscriptionPackage()
+                {
+                    ID = 3,
+                    Name = "PACKAGE 3",
+                    Price = 100,
+                    Duration = 23.33f,
+                    MyUsers = new List<ApplicationUser>()
+                    {
+                        context.Users.FirstOrDefault()
+                    },
+                    ContentType = context.ContentTypes.FirstOrDefault(c => c.ID == 3),
+                    AutoSubscription = true,
+                    StartDate = DateTime.Today,
+                    Payment = context.Payments.FirstOrDefault(p => p.ID == 3)
+                };
+                SubscriptionPackage package4 = new SubscriptionPackage()
+                {
+                    ID = 4,
+                    Name = "PACKAGE 4",
+                    Price = 100,
+                    Duration = 23.33f,
+                    MyUsers = new List<ApplicationUser>()
+                    {
+                        context.Users.FirstOrDefault()
+                    },
+                    ContentType = context.ContentTypes.FirstOrDefault(c => c.ID == 4),
+                    AutoSubscription = true,
+                    StartDate = DateTime.Today,
+                    Payment = context.Payments.FirstOrDefault(p => p.ID == 4)
+                };
+                SubscriptionPackage package5 = new SubscriptionPackage()
+                {
+                    ID = 5,
+                    Name = "PACKAGE 5",
+                    Price = 100,
+                    Duration = 23.33f,
+                    MyUsers = new List<ApplicationUser>()
+                    {
+                        context.Users.FirstOrDefault()
+                    },
+                    ContentType = context.ContentTypes.FirstOrDefault(c => c.ID == 5),
+                    AutoSubscription = true,
+                    StartDate = DateTime.Today,
+                    Payment = context.Payments.FirstOrDefault(p => p.ID == 5)
+                };
+                context.SubcriptionPackages.Add(package1);
+                context.SubcriptionPackages.Add(package2);
+                context.SubcriptionPackages.Add(package3);
+                context.SubcriptionPackages.Add(package4);
+                context.SubcriptionPackages.Add(package5);
+            } catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public static void CreateEbook(ApplicationDbContext context)
+        {
+            try
+            {
+                // TODO: Create Ebooks
+            } catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public static void CreateRating(ApplicationDbContext context)
+        {
+            try
+            {
+                // TODO: Create Rating
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public static void CreateReview(ApplicationDbContext context)
+        {
+            try
+            {
+                // TODO: Create Review
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public static void CreateVideo(ApplicationDbContext context)
+        {
+            try
+            {
+                // Todo: Create Video
+            }
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }

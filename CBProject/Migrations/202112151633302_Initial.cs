@@ -38,8 +38,8 @@ namespace CBProject.Migrations
                 c => new
                     {
                         ID = c.Int(nullable: false, identity: true),
-                        Title = c.String(),
-                        Description = c.String(),
+                        Title = c.String(nullable: false),
+                        Description = c.String(nullable: false),
                         Thumbnail = c.String(),
                         EbookImagePath = c.String(),
                         EbookFilePath = c.String(),
@@ -174,7 +174,7 @@ namespace CBProject.Migrations
                 c => new
                     {
                         ID = c.Int(nullable: false, identity: true),
-                        Rate = c.Decimal(nullable: false, precision: 5, scale: 2),
+                        Rate = c.Decimal(nullable: false, precision: 18, scale: 2),
                         RaterId = c.String(nullable: false, maxLength: 128),
                         VideoId = c.Int(nullable: false),
                         EbookId = c.Int(nullable: false),
@@ -262,8 +262,8 @@ namespace CBProject.Migrations
         
         public override void Down()
         {
-            DropForeignKey("dbo.AspNetUsers", "SubscriptionPackage_ID", "dbo.SubscriptionPackages");
             DropForeignKey("dbo.SubscriptionPackages", "Payment_ID", "dbo.Payments");
+            DropForeignKey("dbo.AspNetUsers", "SubscriptionPackage_ID", "dbo.SubscriptionPackages");
             DropForeignKey("dbo.SubscriptionPackages", "ContentType_ID", "dbo.ContentTypes");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
             DropForeignKey("dbo.Tags", "VideoId", "dbo.Videos");
