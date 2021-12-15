@@ -1,0 +1,23 @@
+﻿body {
+}
+
+
+.main-details-row {
+    background-color: #82C0CC;
+}
+
+.product-title{
+    margin-top:5%;
+    font-size:33px;
+    color:white;
+    font-weight:600;
+}
+.product-description{
+    color:white;
+    font-size:22px;
+   
+}
+
+.raiting{
+    padding:0px !important;
+}

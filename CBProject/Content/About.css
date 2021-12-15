@@ -17,21 +17,21 @@
     margin-bottom: 10%;
 }
 
-#team-members {
+.team-members {
     margin: 10% 0% 10% 0%;
 }
 
-    #team-members img {
-        border-radius: 50%;
-        filter: grayscale(100%);
-    }
+.team-members img {
+   border-radius: 50%;
+   filter: grayscale(100%);
+.}
 
-    #team-members h4 {
-        margin-top: 15px;
-        font-weight: 600;
-        text-align: center;
-    }
+.team-members h4 {
+   margin-top: 15px;
+   font-weight: 600;
+   text-align: center;
+}
 
-    #team-members p {
+.team-members p {
         text-align: center;
     }

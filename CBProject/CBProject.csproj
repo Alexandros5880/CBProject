@@ -1379,6 +1379,7 @@
     <Content Include="Content\DataTables\images\sort_desc.png" />
     <Content Include="Content\DataTables\images\sort_desc_disabled.png" />
     <Content Include="Content\DataTables\swf\flashExport.swf" />
+    <Content Include="Content\Details.css" />
     <Content Include="Content\Login.css" />
     <Content Include="fonts\boxicons.svg" />
     <Content Include="fonts\dripicons-v2.svg" />
@@ -1748,7 +1749,6 @@
     <Content Include="Views\Users\Deleted.cshtml" />
     <Content Include="Views\Ebooks\Create.cshtml" />
     <Content Include="Views\Ebooks\Delete.cshtml" />
-    <Content Include="Views\Ebooks\Details_.cshtml" />
     <Content Include="Views\Ebooks\Edit.cshtml" />
     <Content Include="Views\Categories\Create.cshtml" />
     <Content Include="Views\Categories\Delete.cshtml" />

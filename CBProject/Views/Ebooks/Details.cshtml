@@ -3,14 +3,40 @@
 @{
     ViewBag.Title = "Details";
 }
+<div class="main-details-row">
+    <div class="row ">
+        <div class="col-md-5">
+           
+        </div>
+        <div class="col-md-7">
+            <p class="product-title"> @Html.DisplayFor(model => model.Title)</p>
 
-<h2>Details</h2>
+            <br />
+            <p class="product-description"> @Html.DisplayFor(model => model.Description)</p>
+            <div class="row">
+                <div class="col-md-2 raiting" >
 
+                    <p id="raiting">Rating</p>
+                </div>
+                <div class="col-md-10">
+                    <span class="fa fa-star checked "></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                </div>
+
+            </div>
+            
+        </div>
+    </div>
+</div>
 <div>
     <h4>Ebook</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
+            <p class="product-title"> book </p>
             @Html.DisplayNameFor(model => model.Title)
         </dt>
 
