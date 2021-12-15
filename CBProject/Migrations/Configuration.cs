@@ -13,6 +13,7 @@ namespace CBProject.Migrations
         protected override void Seed(CBProject.Models.ApplicationDbContext context)
         {
             CreateData.CreateUsersAndRoles(context);
+            CreateData.CreateCategories(context);
         }
     }
 }

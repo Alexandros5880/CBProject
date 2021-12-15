@@ -1,4 +1,5 @@
 ﻿using CBProject.Models;
+using CBProject.Models.EntityModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
@@ -158,6 +159,102 @@ namespace CBProject.HelperClasses
                     manager.AddToRole(user_5.Id, "Admin");
                 }
             }catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public static void CreateCategories(ApplicationDbContext context)
+        {
+            try
+            {
+                Category category1 = new Category()
+                {
+                    ID = 1,
+                    Name = ".NET",
+                    Master = true
+                };
+                Category category2 = new Category()
+                {
+                    ID = 2,
+                    Name = "FRAMEWORK",
+                    Master = true
+                };
+                Category category3 = new Category()
+                {
+                    ID = 3,
+                    Name = "CORE",
+                    Master = true
+                };
+                Category category4 = new Category()
+                {
+                    ID = 4,
+                    Name = "MVC",
+                    Master = false
+                };
+                Category category5 = new Category()
+                {
+                    ID = 5,
+                    Name = "CORE",
+                    Master = false
+                };
+                Category category6 = new Category()
+                {
+                    ID = 6,
+                    Name = "WPF",
+                    Master = false
+                };
+                context.Categories.Add(category1);
+                context.Categories.Add(category2);
+                context.Categories.Add(category3);
+                context.Categories.Add(category4);
+                context.Categories.Add(category5);
+                context.Categories.Add(category6);
+
+                CategoryToCategory catToCat1 = new CategoryToCategory()
+                {
+                    ID = 7,
+                    MasterCategory = category1,
+                    ChiledCategory = category2
+                };
+                CategoryToCategory catToCat2 = new CategoryToCategory()
+                {
+                    ID = 8,
+                    MasterCategory = category1,
+                    ChiledCategory = category3
+                };
+                CategoryToCategory catToCat3 = new CategoryToCategory()
+                {
+                    ID = 9,
+                    MasterCategory = category2,
+                    ChiledCategory = category4
+                };
+                CategoryToCategory catToCat4 = new CategoryToCategory()
+                {
+                    ID = 10,
+                    MasterCategory = category3,
+                    ChiledCategory = category4
+                };
+                CategoryToCategory catToCat5 = new CategoryToCategory()
+                {
+                    ID = 11,
+                    MasterCategory = category3,
+                    ChiledCategory = category5
+                };
+                CategoryToCategory catToCat6 = new CategoryToCategory()
+                {
+                    ID = 12,
+                    MasterCategory = category3,
+                    ChiledCategory = category6
+                };
+                context.CategoriesToCategories.Add(catToCat1);
+                context.CategoriesToCategories.Add(catToCat2);
+                context.CategoriesToCategories.Add(catToCat3);
+                context.CategoriesToCategories.Add(catToCat4);
+                context.CategoriesToCategories.Add(catToCat5);
+                context.CategoriesToCategories.Add(catToCat6);
+
+                context.SaveChanges();
+            } catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
