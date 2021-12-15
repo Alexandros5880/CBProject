@@ -20,7 +20,7 @@ namespace CBProject.Models.ViewModels
         public ICollection<string> AddUsers { get; set; }
         public ICollection<string> RemoveUsers { get; set; }
 
-        public ICollection<ContentType> ContentType { get; set; }
+        public ContentType ContentType { get; set; }
         public ICollection<ContentType> OtherContentType { get; set; }
 
         public ICollection<Payment> Payment { get; set; }
