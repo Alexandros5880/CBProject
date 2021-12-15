@@ -32,14 +32,14 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.VideoImagePath, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.Label("Upload Image Video", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             <input type="file" name="VideoImageFile" ) />
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.VideoPath, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.Label("Upload Video", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             <input type="file" name="VideoFile" ) />
         </div>
@@ -82,6 +82,27 @@
         <div class="col-md-10">
             @Html.EditorFor(model => model.Url, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Url, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Add Tags:", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.ListBoxFor(model => model.AddTags, new SelectList(Model.OtherTags, "Id", "Title"), new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Add Reviews:", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.ListBoxFor(model => model.AddReviews, new SelectList(Model.OtherReviews, "Id", "Comment"), new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Add Ratings:", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.ListBoxFor(model => model.AddRatings, new SelectList(Model.OtherRatings, "Id", "Comment"), new { @class = "form-control" })
         </div>
     </div>
 

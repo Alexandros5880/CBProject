@@ -4,7 +4,7 @@ namespace CBProject.Models.ViewModels
 {
     public class TagViewModel
     {
-        public int Id { get; set; }
+        public int ID { get; set; }
         public string Title { get; set; }
         public SelectList Videos { get; set; }
         public int VideoId { get; set; }

@@ -8,7 +8,7 @@ namespace CBProject.Models.ViewModels
 {
     public class VideoViewModel
     {
-        public int Id { get; set; }
+        public int ID { get; set; }
         public string Title { get; set; }
         public string Thumbnail { get; set; }
         public HttpPostedFileBase VideoImageFile { get; set; }
@@ -19,7 +19,7 @@ namespace CBProject.Models.ViewModels
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime UploadDate { get; set; }
-        public ApplicationUser ContentCreator { get; set; }
+        public ApplicationUser Creator { get; set; }
         public string CreatorId { get; set; }
         public Category Category { get; set; }
         public int CategoryId { get; set; }

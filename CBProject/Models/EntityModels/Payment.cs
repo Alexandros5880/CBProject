@@ -1,4 +1,6 @@
-﻿namespace CBProject.Models.EntityModels
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace CBProject.Models.EntityModels
 {
     public enum PaymentMethods
     {
@@ -8,6 +10,7 @@
     }
     public class Payment
     {
+        [Key]
         public int ID { get; set; }
         public PaymentMethods PaymentMethods { get; set; }
         public ApplicationUser User { get; set; }

@@ -1,4 +1,4 @@
-﻿@model CBProject.Models.ViewModels.VideoViewModel
+﻿@model CBProject.Models.ViewModels.EbookViewModel
 
 @{
     ViewBag.Title = "Details";
@@ -7,7 +7,7 @@
 <h2>Details</h2>
 
 <div>
-    <h4>Video</h4>
+    <h4>Ebook</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -19,35 +19,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Creator.FirstName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Creator.FirstName)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.Title)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Title)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Thumbnail)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Thumbnail)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.VideoPath)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.VideoPath)
         </dd>
 
         <dt>
@@ -59,11 +35,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.UploadDate)
+            @Html.DisplayNameFor(model => model.Thumbnail)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.UploadDate)
+            @Html.DisplayFor(model => model.Thumbnail)
         </dd>
 
         <dt>
@@ -72,6 +48,22 @@
 
         <dd>
             @Html.DisplayFor(model => model.Url)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UploadDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UploadDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatorId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatorId)
         </dd>
 
         <dt>
@@ -118,6 +110,8 @@
                 }
             </ul>
         </dd>
+
+    </dl>
 
     </dl>
 </div>
