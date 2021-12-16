@@ -19,7 +19,7 @@ using System.Web.Mvc;
 namespace CBProject.Controllers
 {
     public class EbooksController : Controller
-    {   // TODO: EBooks Controller Fix files Image and file to save in directory
+    {
         private EbooksRepository _ebooksRepository;
         private CategoriesRepository _categoriesRepository;
         private TagsRepository _tagsRepository;
@@ -82,6 +82,7 @@ namespace CBProject.Controllers
             viewModel.OtherReviews = await this._reviewsRepository.GetAllAsync();
             viewModel.OtherRatings = await this._ratingsRepository.GetAllAsync();
             viewModel.Categories = new SelectList(categories, "ID", "Name");
+            viewModel.UploadDate = DateTime.Today;
             return View(viewModel);
         }
         [HttpPost]
@@ -96,9 +97,9 @@ namespace CBProject.Controllers
                     viewModel.EbookImageFile = EbookImageFile;
                     string FileName = Path.GetFileNameWithoutExtension(viewModel.EbookImageFile.FileName);
                     string FileExtension = Path.GetExtension(viewModel.EbookImageFile.FileName);
-                    FileName = DateTime.Now.ToString("yyyyMMdd") + "-" + FileName.Trim() + FileExtension;
-                    viewModel.EbookImagePath = Server.MapPath(StaticImfo.EbooksImagesPath + " " + viewModel.Title);
-                    viewModel.EbookImageFile.SaveAs(viewModel.EbookImagePath);
+                    FileName = Path.GetFileNameWithoutExtension(FileName);
+                    viewModel.EbookImagePath = StaticImfo.EbooksImagesPath + " " + viewModel.Title;
+                    viewModel.EbookImageFile.SaveAs(Server.MapPath(viewModel.EbookImagePath));
                 }
                 // EbookFile
                 if (EbookFile != null)
@@ -106,9 +107,9 @@ namespace CBProject.Controllers
                     viewModel.EbookFile = EbookFile;
                     string FileName = Path.GetFileNameWithoutExtension(viewModel.EbookFile.FileName);
                     string FileExtension = Path.GetExtension(viewModel.EbookFile.FileName);
-                    FileName = DateTime.Now.ToString("yyyyMMdd") + "-" + FileName.Trim() + FileExtension;
-                    viewModel.EbookFilePath = Server.MapPath(StaticImfo.EbooksFilesPath + " " + viewModel.Title);
-                    viewModel.EbookFile.SaveAs(viewModel.EbookFilePath);
+                    FileName = Path.GetFileNameWithoutExtension(FileName);
+                    viewModel.EbookFilePath = StaticImfo.EbooksFilesPath + " " + viewModel.Title;
+                    viewModel.EbookFile.SaveAs(Server.MapPath(viewModel.EbookFilePath));
                 }
                 var ebookDB = Mapper.Map<EbookViewModel, Ebook>(viewModel);
                 ebookDB.Category = await _categoriesRepository.GetAsync(viewModel.CategoryId);
@@ -145,25 +146,33 @@ namespace CBProject.Controllers
             if (ModelState.IsValid)
             {
                 // EbookImageFile
+                var imgFile = false;
                 if (EbookImageFile != null)
                 {
                     viewModel.EbookImageFile = EbookImageFile;
                     string FileName = Path.GetFileNameWithoutExtension(viewModel.EbookImageFile.FileName);
                     string FileExtension = Path.GetExtension(viewModel.EbookImageFile.FileName);
-                    FileName = DateTime.Now.ToString("yyyyMMdd") + "-" + FileName.Trim() + FileExtension;
-                    viewModel.EbookImagePath = Server.MapPath(StaticImfo.EbooksImagesPath + " " + viewModel.Title);
-                    viewModel.EbookImageFile.SaveAs(viewModel.EbookImagePath);
+                    FileName = Path.GetFileNameWithoutExtension(FileName);
+                    viewModel.EbookImagePath = StaticImfo.EbooksImagesPath + " " + viewModel.Title;
+                    viewModel.EbookImageFile.SaveAs(Server.MapPath(viewModel.EbookImagePath));
+                    imgFile = true;
                 }
                 // EbookFile
+                var file = false;
                 if (EbookFile != null)
                 {
                     viewModel.EbookFile = EbookFile;
                     string FileName = Path.GetFileNameWithoutExtension(viewModel.EbookFile.FileName);
                     string FileExtension = Path.GetExtension(viewModel.EbookFile.FileName);
-                    FileName = DateTime.Now.ToString("yyyyMMdd") + "-" + FileName.Trim() + FileExtension;
-                    viewModel.EbookFilePath = Server.MapPath(StaticImfo.EbooksFilesPath + " " + viewModel.Title);
-                    viewModel.EbookFile.SaveAs(viewModel.EbookFilePath);
+                    FileName = Path.GetFileNameWithoutExtension(FileName);
+                    viewModel.EbookFilePath = StaticImfo.EbooksFilesPath + " " + viewModel.Title;
+                    viewModel.EbookFile.SaveAs(Server.MapPath(viewModel.EbookFilePath));
+                    file = true;
                 }
+                var oldImg = (await this._ebooksRepository.GetAsync(viewModel.ID)).EbookImagePath;
+                var olfFile = (await this._ebooksRepository.GetAsync(viewModel.ID)).EbookFilePath;
+                if (!imgFile) viewModel.EbookImagePath = oldImg;
+                if (!file) viewModel.EbookFilePath = olfFile;
                 var ebookDB = Mapper.Map<EbookViewModel, Ebook>(viewModel);
                _context.Entry(ebookDB).State = EntityState.Modified;
                 await _ebooksRepository.SaveAsync();

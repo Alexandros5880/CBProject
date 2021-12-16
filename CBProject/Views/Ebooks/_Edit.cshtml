@@ -1,7 +1,7 @@
 ﻿@model CBProject.Models.ViewModels.EbookViewModel
 
 
-@using (@Html.BeginForm("Edit", "Ebooks", FormMethod.Post))
+@using (Html.BeginForm("Edit", "Ebooks", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     
