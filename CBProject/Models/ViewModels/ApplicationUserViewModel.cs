@@ -32,7 +32,6 @@ namespace CBProject.Models.ViewModels
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
@@ -76,6 +75,7 @@ namespace CBProject.Models.ViewModels
         public HttpPostedFileBase CVFile { get; set; }
 
         public string ImagePath { get; set; }
+        [Required]
         public HttpPostedFileBase ImageFile { get; set; }
 
         public bool NewsletterAcception { get; set; }

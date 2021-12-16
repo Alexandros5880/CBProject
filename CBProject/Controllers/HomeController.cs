@@ -23,7 +23,6 @@ namespace CBProject.Controllers
             // this._videosRepository = unitOfWork.Videos;
             //this._plansRepository = unitOfWork.Plans;
             this._usersRepo = (UsersRepo)usersRepo;
-
         }
         public async Task<ActionResult> Index()
         {

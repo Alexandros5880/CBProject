@@ -35,7 +35,6 @@ namespace CBProject.HelperClasses
                     var role_3 = new IdentityRole { Name = "Student" };
                     manager_3.Create(role_3);
                 }
-
                 if (!context.Roles.Any(r => r.Name == "Guest"))
                 {
                     var store_3 = new RoleStore<IdentityRole>(context);
@@ -59,7 +58,8 @@ namespace CBProject.HelperClasses
                     PostalCode = "16673",
                     Street = "Fleming",
                     StreetNumber = "14",
-                    IsInactive = false
+                    IsInactive = false,
+                    ImagePath = "/assets/images/users/avatar-1.jpg"
                 };
                 var user_2 = new ApplicationUser()
                 {
@@ -76,7 +76,8 @@ namespace CBProject.HelperClasses
                     PostalCode = "16673",
                     Street = "Fleming",
                     StreetNumber = "14",
-                    IsInactive = false
+                    IsInactive = false,
+                    ImagePath = "/assets/images/users/avatar-2jpg"
                 };
                 var user_3 = new ApplicationUser()
                 {
@@ -93,7 +94,8 @@ namespace CBProject.HelperClasses
                     PostalCode = "16673",
                     Street = "Fleming",
                     StreetNumber = "14",
-                    IsInactive = false
+                    IsInactive = false,
+                    ImagePath = "/assets/images/users/avatar-3.jpg"
                 };
                 var user_4 = new ApplicationUser()
                 {
@@ -110,7 +112,8 @@ namespace CBProject.HelperClasses
                     PostalCode = "16673",
                     Street = "Fleming",
                     StreetNumber = "14",
-                    IsInactive = false
+                    IsInactive = false,
+                    ImagePath = "/assets/images/users/avatar-4.jpg"
                 };
                 var user_5 = new ApplicationUser()
                 {
@@ -127,7 +130,8 @@ namespace CBProject.HelperClasses
                     PostalCode = "16673",
                     Street = "Fleming",
                     StreetNumber = "14",
-                    IsInactive = false
+                    IsInactive = false,
+                    ImagePath = "/assets/images/users/avatar-5.jpg"
                 };
                 var user_6 = new ApplicationUser()
                 {
@@ -144,7 +148,8 @@ namespace CBProject.HelperClasses
                     PostalCode = "11147",
                     Street = "Athens",
                     StreetNumber = "14",
-                    IsInactive = false
+                    IsInactive = false,
+                    ImagePath = "/assets/images/users/avatar-6.jpg"
                 };
 
                 var store = new UserStore<ApplicationUser>(context);

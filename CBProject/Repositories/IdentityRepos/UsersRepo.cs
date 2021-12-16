@@ -229,7 +229,6 @@ namespace CBProject.Repositories.IdentityRepos
         {
             if (obj == null)
                 throw new NullReferenceException("In Users repository Update method parametrer is null.");
-
             var user = this.Get(obj.Id);
             user.BirthDate = obj.BirthDate;
             user.FirstName = obj.FirstName;
@@ -249,6 +248,7 @@ namespace CBProject.Repositories.IdentityRepos
             user.CreditCardNum = obj.CreditCardNum;
             user.SubscriptionId = obj.SubscriptionId;
             user.ContentAccess = obj.ContentAccess;
+            user.ImagePath = obj.ImagePath;
             user.CVPath = obj.CVPath;
             this._manager.UserManager.Update(user);
             this._manager.Context.SaveChanges();
@@ -257,7 +257,6 @@ namespace CBProject.Repositories.IdentityRepos
         {
             if (obj == null)
                 throw new NullReferenceException("In Users repository Update method parametrer is null.");
-
             var user = await this.GetAsync(obj.Id);
             user.BirthDate = obj.BirthDate;
             user.FirstName = obj.FirstName;
@@ -277,6 +276,7 @@ namespace CBProject.Repositories.IdentityRepos
             user.CreditCardNum = obj.CreditCardNum;
             user.SubscriptionId = obj.SubscriptionId;
             user.ContentAccess = obj.ContentAccess;
+            user.ImagePath = obj.ImagePath;
             user.CVPath = obj.CVPath;
             await this._manager.UserManager.UpdateAsync(user);
             return await this._manager.Context.SaveChangesAsync();
