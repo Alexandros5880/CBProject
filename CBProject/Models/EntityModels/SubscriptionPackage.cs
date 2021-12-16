@@ -14,6 +14,7 @@ namespace CBProject.Models.EntityModels
         public ICollection<ApplicationUser> MyUsers { get; set; }
         public ContentType ContentType { get; set; }
         public bool AutoSubscription { get; set; }
+        [DataType(DataType.Date)]
         public DateTime StartDate { get; set; }
         public Payment Payment { get; set; }
     }

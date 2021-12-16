@@ -17,6 +17,7 @@ namespace CBProject.Models.EntityModels
         public string EbookImagePath { get; set; }
         public string EbookFilePath { get; set; }
         public string Url { get; set; }
+        [DataType(DataType.Date)]
         public DateTime UploadDate { get; set; }
         public string CreatorId { get; set; }
         public ApplicationUser ContentCreator { get; set; }

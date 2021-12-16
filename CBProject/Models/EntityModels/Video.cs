@@ -19,6 +19,7 @@ namespace CBProject.Models
         [MaxLength]
         [Required]
         public string Description { get; set; }
+        [DataType(DataType.Date)]
         public DateTime UploadDate { get; set; }
         [ForeignKey("Creator")]
         public string CreatorId { get; set; }
