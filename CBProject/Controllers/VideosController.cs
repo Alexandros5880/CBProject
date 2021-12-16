@@ -61,6 +61,7 @@ namespace CBProject.Controllers
             viewModel.OtherRatings = await this._ratingsRepo.GetAllAsync();
             viewModel.OtherUsers = await this._usersRepo.GetAllAsync();
             viewModel.OtherCategory = await this._categoriesRepo.GetAllAsync();
+            viewModel.UploadDate = DateTime.Today;
             return View(viewModel);
         }
         [HttpPost]
@@ -75,7 +76,7 @@ namespace CBProject.Controllers
                     viewModel.VideoImageFile = VideoImageFile;
                     string FileName = Path.GetFileNameWithoutExtension(viewModel.VideoImageFile.FileName);
                     string FileExtension = Path.GetExtension(viewModel.VideoImageFile.FileName);
-                    FileName = DateTime.Now.ToString("yyyyMMdd") + "-" + FileName.Trim() + FileExtension;
+                    FileName = FileName.Trim() + FileExtension;
                     viewModel.VideoImagePath = Server.MapPath(StaticImfo.VideoImagePath + " " + viewModel.Title);
                     viewModel.VideoImageFile.SaveAs(viewModel.VideoImagePath);
                 }
@@ -85,7 +86,7 @@ namespace CBProject.Controllers
                     viewModel.VideoFile = VideoFile;
                     string FileName = Path.GetFileNameWithoutExtension(viewModel.VideoFile.FileName);
                     string FileExtension = Path.GetExtension(viewModel.VideoFile.FileName);
-                    FileName = DateTime.Now.ToString("yyyyMMdd") + "-" + FileName.Trim() + FileExtension;
+                    FileName = FileName.Trim() + FileExtension;
                     viewModel.VideoPath = Server.MapPath(StaticImfo.VideoPath + " " + viewModel.Title);
                     viewModel.VideoFile.SaveAs(viewModel.VideoPath);
                 }
@@ -122,25 +123,33 @@ namespace CBProject.Controllers
             if (ModelState.IsValid)
             {
                 // VideoImageFile
+                var imgFile = false;
                 if (VideoImageFile != null)
                 {
                     viewModel.VideoImageFile = VideoImageFile;
                     string FileName = Path.GetFileNameWithoutExtension(viewModel.VideoImageFile.FileName);
                     string FileExtension = Path.GetExtension(viewModel.VideoImageFile.FileName);
-                    FileName = DateTime.Now.ToString("yyyyMMdd") + "-" + FileName.Trim() + FileExtension;
+                    FileName = FileName.Trim() + FileExtension;
                     viewModel.VideoImagePath = Server.MapPath(StaticImfo.VideoImagePath + " " + viewModel.Title);
                     viewModel.VideoImageFile.SaveAs(viewModel.VideoImagePath);
+                    imgFile = true;
                 }
                 // VideoFile
+                var videoFile = false;
                 if (VideoFile != null)
                 {
                     viewModel.VideoFile = VideoFile;
                     string FileName = Path.GetFileNameWithoutExtension(viewModel.VideoFile.FileName);
                     string FileExtension = Path.GetExtension(viewModel.VideoFile.FileName);
-                    FileName = DateTime.Now.ToString("yyyyMMdd") + "-" + FileName.Trim() + FileExtension;
+                    FileName = FileName.Trim() + FileExtension;
                     viewModel.VideoPath = Server.MapPath(StaticImfo.VideoPath + " " + viewModel.Title);
                     viewModel.VideoFile.SaveAs(viewModel.VideoPath);
+                    videoFile = true;
                 }
+                var imgFileOld = (await this._videoRepo.GetAsync(viewModel.ID)).VideoImagePath;
+                var vidFileOld = (await this._videoRepo.GetAsync(viewModel.ID)).VideoPath;
+                if (!imgFile) viewModel.VideoImagePath = imgFileOld;
+                if (!videoFile) viewModel.VideoPath = vidFileOld;
                 var video = Mapper.Map<VideoViewModel, Video>(viewModel);
                 this._videoRepo.Update(video);
                 await this._videoRepo.SaveAsync();

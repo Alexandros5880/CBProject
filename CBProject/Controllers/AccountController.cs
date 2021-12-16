@@ -6,7 +6,6 @@ using CBProject.Repositories.IdentityRepos.Interfaces;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -188,7 +187,7 @@ namespace CBProject.Controllers
                 model.ImageFile = ImageFile;
                 string FileName = Path.GetFileNameWithoutExtension(model.ImageFile.FileName);
                 string FileExtension = Path.GetExtension(model.ImageFile.FileName);
-                FileName = DateTime.Now.ToString("yyyyMMdd") + "-" + FileName.Trim() + FileExtension;
+                FileName = FileName.Trim() + FileExtension;
                 model.CVPath = Server.MapPath(StaticImfo.UsersImagesPath + model.FirstName + " " + model.LastName + FileName);
                 model.ImageFile.SaveAs(model.CVPath);
             }
@@ -198,7 +197,7 @@ namespace CBProject.Controllers
                 model.CVFile = CVFile;
                 string FileName = Path.GetFileNameWithoutExtension(model.CVFile.FileName);
                 string FileExtension = Path.GetExtension(model.CVFile.FileName);
-                FileName = DateTime.Now.ToString("yyyyMMdd") + "-" + FileName.Trim() + FileExtension;
+                FileName = FileName.Trim() + FileExtension;
                 model.CVPath = Server.MapPath(StaticImfo.CVPath + model.FirstName + " " + model.LastName + FileName);
                 model.CVFile.SaveAs(model.CVPath);
             }

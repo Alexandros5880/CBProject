@@ -70,7 +70,7 @@ namespace CBProject.Controllers
                     model.ImageFile = ImageFile;
                     string FileName = Path.GetFileNameWithoutExtension(model.ImageFile.FileName);
                     string FileExtension = Path.GetExtension(model.ImageFile.FileName);
-                    FileName = DateTime.Now.ToString("yyyyMMdd") + "-" + FileName.Trim() + FileExtension;
+                    FileName = FileName.Trim() + FileExtension;
                     model.ImagePath = StaticImfo.UsersImagesPath + user.Id + FileName;
                     model.ImageFile.SaveAs(Server.MapPath(model.ImagePath));
                 }
@@ -80,7 +80,7 @@ namespace CBProject.Controllers
                     model.CVFile = CVFile;
                     string FileName = Path.GetFileNameWithoutExtension(model.CVFile.FileName);
                     string FileExtension = Path.GetExtension(model.CVFile.FileName);
-                    FileName = DateTime.Now.ToString("yyyyMMdd") + "-" + FileName.Trim() + FileExtension;
+                    FileName = FileName.Trim() + FileExtension;
                     model.CVPath = StaticImfo.CVPath + user.Id + FileName;
                     model.CVFile.SaveAs(Server.MapPath(model.CVPath));
                 }
@@ -119,7 +119,7 @@ namespace CBProject.Controllers
                     model.ImageFile = ImageFile;
                     string FileName = Path.GetFileNameWithoutExtension(model.ImageFile.FileName);
                     string FileExtension = Path.GetExtension(model.ImageFile.FileName);
-                    FileName = DateTime.Now.ToString("yyyyMMdd") + "-" + FileName.Trim() + FileExtension;
+                    FileName = FileName.Trim() + FileExtension;
                     model.ImagePath = StaticImfo.UsersImagesPath + model.Id + FileName;
                     model.ImageFile.SaveAs(Server.MapPath(model.ImagePath));
                     imgPath = true;
@@ -131,7 +131,7 @@ namespace CBProject.Controllers
                     model.CVFile = CVFile;
                     string FileName = Path.GetFileNameWithoutExtension(model.CVFile.FileName);
                     string FileExtension = Path.GetExtension(model.CVFile.FileName);
-                    FileName = DateTime.Now.ToString("yyyyMMdd") + "-" + FileName.Trim() + FileExtension;
+                    FileName = FileName.Trim() + FileExtension;
                     model.CVPath = StaticImfo.CVPath + model.Id + FileName;
                     model.CVFile.SaveAs(Server.MapPath(model.CVPath));
                     cvPath = true;

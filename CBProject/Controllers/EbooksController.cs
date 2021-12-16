@@ -97,7 +97,7 @@ namespace CBProject.Controllers
                     viewModel.EbookImageFile = EbookImageFile;
                     string FileName = Path.GetFileNameWithoutExtension(viewModel.EbookImageFile.FileName);
                     string FileExtension = Path.GetExtension(viewModel.EbookImageFile.FileName);
-                    FileName = Path.GetFileNameWithoutExtension(FileName);
+                    FileName = FileName.Trim() + FileExtension;
                     viewModel.EbookImagePath = StaticImfo.EbooksImagesPath + " " + viewModel.Title;
                     viewModel.EbookImageFile.SaveAs(Server.MapPath(viewModel.EbookImagePath));
                 }
@@ -107,7 +107,7 @@ namespace CBProject.Controllers
                     viewModel.EbookFile = EbookFile;
                     string FileName = Path.GetFileNameWithoutExtension(viewModel.EbookFile.FileName);
                     string FileExtension = Path.GetExtension(viewModel.EbookFile.FileName);
-                    FileName = Path.GetFileNameWithoutExtension(FileName);
+                    FileName = FileName.Trim() + FileExtension;
                     viewModel.EbookFilePath = StaticImfo.EbooksFilesPath + " " + viewModel.Title;
                     viewModel.EbookFile.SaveAs(Server.MapPath(viewModel.EbookFilePath));
                 }
@@ -152,7 +152,7 @@ namespace CBProject.Controllers
                     viewModel.EbookImageFile = EbookImageFile;
                     string FileName = Path.GetFileNameWithoutExtension(viewModel.EbookImageFile.FileName);
                     string FileExtension = Path.GetExtension(viewModel.EbookImageFile.FileName);
-                    FileName = Path.GetFileNameWithoutExtension(FileName);
+                    FileName = FileName.Trim() + FileExtension;
                     viewModel.EbookImagePath = StaticImfo.EbooksImagesPath + " " + viewModel.Title;
                     viewModel.EbookImageFile.SaveAs(Server.MapPath(viewModel.EbookImagePath));
                     imgFile = true;
@@ -164,7 +164,7 @@ namespace CBProject.Controllers
                     viewModel.EbookFile = EbookFile;
                     string FileName = Path.GetFileNameWithoutExtension(viewModel.EbookFile.FileName);
                     string FileExtension = Path.GetExtension(viewModel.EbookFile.FileName);
-                    FileName = Path.GetFileNameWithoutExtension(FileName);
+                    FileName = FileName.Trim() + FileExtension;
                     viewModel.EbookFilePath = StaticImfo.EbooksFilesPath + " " + viewModel.Title;
                     viewModel.EbookFile.SaveAs(Server.MapPath(viewModel.EbookFilePath));
                     file = true;

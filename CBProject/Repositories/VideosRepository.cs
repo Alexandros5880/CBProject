@@ -47,6 +47,8 @@ namespace CBProject.Repositories
                 .Include(v=>v.Reviews)
                 .Include(v => v.Ratings)
                 .Include(v => v.Tags)
+                .Include(v => v.Category)
+                .Include(v => v.Creator)
                 .SingleOrDefault(v => v.ID == id);
         }
         public ICollection<Video> GetAll()
@@ -55,6 +57,8 @@ namespace CBProject.Repositories
                 .Include(v => v.Reviews)
                 .Include(v => v.Ratings)
                 .Include(v => v.Tags)
+                .Include(v => v.Category)
+                .Include(v => v.Creator)
                 .ToList();
         }
         public ICollection<Video> GetAllEmpty()
@@ -112,6 +116,8 @@ namespace CBProject.Repositories
                 .Include(v => v.Reviews)
                 .Include(v => v.Ratings)
                 .Include(v => v.Tags)
+                .Include(v => v.Category)
+                .Include(v => v.Creator)
                 .SingleOrDefaultAsync(v => v.ID == id);
         }
         public async Task<Video> GetEmptyAsync(int? id)
@@ -125,6 +131,8 @@ namespace CBProject.Repositories
                 .Include(v => v.Reviews)
                 .Include(v => v.Ratings)
                 .Include(v => v.Tags)
+                .Include(v => v.Category)
+                .Include(v => v.Creator)
                 .ToListAsync();
         }
         public async Task<ICollection<Video>> GetAllEmptyAsync()
