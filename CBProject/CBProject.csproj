@@ -208,7 +208,6 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\API\EbooksController.cs" />
-    <Compile Include="Controllers\API\UsersController.cs" />
     <Compile Include="Controllers\API\VideosController.cs" />
     <Compile Include="Controllers\EbooksController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
@@ -1699,7 +1698,6 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Scripts\_topbar_scripts.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

@@ -61,6 +61,9 @@ namespace CBProject.Controllers
             {
                 if (model == null)
                     return HttpNotFound();
+                var user = Mapper.Map<RegisterViewModel, ApplicationUser>(model);
+                user.UserName = user.Email;
+                await _usersRepo.AddAsync(user);
                 // Save Image File
                 if (ImageFile != null)
                 {
@@ -68,8 +71,8 @@ namespace CBProject.Controllers
                     string FileName = Path.GetFileNameWithoutExtension(model.ImageFile.FileName);
                     string FileExtension = Path.GetExtension(model.ImageFile.FileName);
                     FileName = DateTime.Now.ToString("yyyyMMdd") + "-" + FileName.Trim() + FileExtension;
-                    model.CVPath = Server.MapPath(StaticImfo.UsersImagesPath + model.FirstName + " " + model.LastName + FileName);
-                    model.ImageFile.SaveAs(model.CVPath);
+                    model.ImagePath = StaticImfo.UsersImagesPath + user.Id + FileName;
+                    model.ImageFile.SaveAs(Server.MapPath(model.ImagePath));
                 }
                 // Save CV File
                 if (CVFile != null)
@@ -78,12 +81,9 @@ namespace CBProject.Controllers
                     string FileName = Path.GetFileNameWithoutExtension(model.CVFile.FileName);
                     string FileExtension = Path.GetExtension(model.CVFile.FileName);
                     FileName = DateTime.Now.ToString("yyyyMMdd") + "-" + FileName.Trim() + FileExtension;
-                    model.CVPath = Server.MapPath(StaticImfo.CVPath + model.FirstName + " " + model.LastName + FileName);
-                    model.CVFile.SaveAs(model.CVPath);
+                    model.CVPath = StaticImfo.CVPath + user.Id + FileName;
+                    model.CVFile.SaveAs(Server.MapPath(model.CVPath));
                 }
-                var user = Mapper.Map<RegisterViewModel, ApplicationUser>(model);
-                user.UserName = user.Email;
-                await _usersRepo.AddAsync(user);
                 return RedirectToAction("Index");
             }
             catch
@@ -113,29 +113,37 @@ namespace CBProject.Controllers
                 if (model == null)
                     return HttpNotFound();
                 // Save Image File
+                var imgPath = false;
                 if (ImageFile != null)
                 {
                     model.ImageFile = ImageFile;
                     string FileName = Path.GetFileNameWithoutExtension(model.ImageFile.FileName);
                     string FileExtension = Path.GetExtension(model.ImageFile.FileName);
                     FileName = DateTime.Now.ToString("yyyyMMdd") + "-" + FileName.Trim() + FileExtension;
-                    model.CVPath = Server.MapPath(StaticImfo.UsersImagesPath + model.FirstName + " " + model.LastName + FileName);
-                    model.ImageFile.SaveAs(model.CVPath);
+                    model.ImagePath = StaticImfo.UsersImagesPath + model.Id + FileName;
+                    model.ImageFile.SaveAs(Server.MapPath(model.ImagePath));
+                    imgPath = true;
                 }
                 // Save CV File
+                var cvPath = false;
                 if (CVFile != null)
                 {
                     model.CVFile = CVFile;
                     string FileName = Path.GetFileNameWithoutExtension(model.CVFile.FileName);
                     string FileExtension = Path.GetExtension(model.CVFile.FileName);
                     FileName = DateTime.Now.ToString("yyyyMMdd") + "-" + FileName.Trim() + FileExtension;
-                    model.CVPath = Server.MapPath(StaticImfo.CVPath + model.FirstName + " " + model.LastName + FileName);
-                    model.CVFile.SaveAs(model.CVPath);
+                    model.CVPath = StaticImfo.CVPath + model.Id + FileName;
+                    model.CVFile.SaveAs(Server.MapPath(model.CVPath));
+                    cvPath = true;
                 }
                 var userDB = await _usersRepo.GetAsync(model.Id);
+                var imgOldPath = (await this._usersRepo.GetAsync(model.Id)).ImagePath;
+                var cvOldPath = (await this._usersRepo.GetAsync(model.Id)).CVPath;
                 var user = Mapper.Map<ApplicationUserViewModel, ApplicationUser>(model);
+                if (!imgPath) user.ImagePath = imgOldPath;
+                if (!cvPath) user.CVPath = cvOldPath;
                 user.UserName = user.Email;
-                if (user.Password == null || user.Password.Length == 0)
+                if (model.Password == null || model.Password.Length == 0)
                 {
                     user.Password = userDB.Password;
                 } 
@@ -146,7 +154,6 @@ namespace CBProject.Controllers
                         _usersRepo.ChangePassword(user.Id, user.Password);
                     }
                 }
-
                 if (model.RemoveRoles != null)
                 {
                     if (model.RemoveRoles.Count > 0)
@@ -158,7 +165,6 @@ namespace CBProject.Controllers
                         }
                     }
                 }
-                
                 if (model.AddRoles != null)
                 {
                     if (model.AddRoles.Count > 0)
@@ -174,8 +180,9 @@ namespace CBProject.Controllers
                 int result = await _usersRepo.UpdateAsync(user);
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
+                throw new Exception(ex.Message);
                 var user = await _usersRepo.GetAsync(model.Id);
                 if (user == null)
                     return HttpNotFound();
