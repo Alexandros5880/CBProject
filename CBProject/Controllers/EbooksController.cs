@@ -42,10 +42,16 @@ namespace CBProject.Controllers
             var categories = await this._categoriesRepository.GetAllAsync();
 
             List<EbookViewModel> viewModels = new List<EbookViewModel>();
-            foreach (var book in ebooks)
+            foreach (var ebook in ebooks)
             {
-                viewModels.Add(Mapper.Map<Ebook, EbookViewModel>(book));
-                viewModels.FirstOrDefault(b => b.ID == book.ID).Categories = new SelectList(categories, "ID", "Name");
+                viewModels.Add(Mapper.Map<Ebook, EbookViewModel>(ebook));
+                viewModels.FirstOrDefault(b => b.ID == ebook.ID).Categories = new SelectList(categories, "ID", "Name");
+                viewModels.FirstOrDefault(b => b.ID == ebook.ID).MyTags = await this._tagsRepository.GetAllFromEbookAsync(ebook);
+                viewModels.FirstOrDefault(b => b.ID == ebook.ID).MyReviews = await this._reviewsRepository.GetAllFromEbookAsync(ebook);
+                viewModels.FirstOrDefault(b => b.ID == ebook.ID).MyRatings = await this._ratingsRepository.GetAllFromEbookAsync(ebook);
+                viewModels.FirstOrDefault(b => b.ID == ebook.ID).OtherTags = await this._tagsRepository.GetAllOtherFromEbookAsync(ebook);
+                viewModels.FirstOrDefault(b => b.ID == ebook.ID).OtherReviews = await this._reviewsRepository.GetAllOtherFromEbookAsync(ebook);
+                viewModels.FirstOrDefault(b => b.ID == ebook.ID).OtherRatings = await this._ratingsRepository.GetAllOtherFromEbookAsync(ebook);
             }
             return View(viewModels);
         }
@@ -110,7 +116,6 @@ namespace CBProject.Controllers
                 await this._ebooksRepository.SaveAsync();
                 return RedirectToAction("Index");
             }
-        
             return View(viewModel);
         }
         public async Task<ActionResult> Edit(int? id)
