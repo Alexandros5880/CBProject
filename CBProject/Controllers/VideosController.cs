@@ -76,9 +76,9 @@ namespace CBProject.Controllers
                     viewModel.VideoImageFile = VideoImageFile;
                     string FileName = Path.GetFileNameWithoutExtension(viewModel.VideoImageFile.FileName);
                     string FileExtension = Path.GetExtension(viewModel.VideoImageFile.FileName);
-                    FileName = FileName.Trim() + FileExtension;
-                    viewModel.VideoImagePath = Server.MapPath(StaticImfo.VideoImagePath + " " + viewModel.Title);
-                    viewModel.VideoImageFile.SaveAs(viewModel.VideoImagePath);
+                    FileName = viewModel.Title.Trim() + FileExtension;
+                    viewModel.VideoImagePath = StaticImfo.VideoImagePath + " " + FileName;
+                    viewModel.VideoImageFile.SaveAs(Server.MapPath(viewModel.VideoImagePath));
                 }
                 // VideoFile
                 if (VideoFile != null)
@@ -86,9 +86,9 @@ namespace CBProject.Controllers
                     viewModel.VideoFile = VideoFile;
                     string FileName = Path.GetFileNameWithoutExtension(viewModel.VideoFile.FileName);
                     string FileExtension = Path.GetExtension(viewModel.VideoFile.FileName);
-                    FileName = FileName.Trim() + FileExtension;
-                    viewModel.VideoPath = Server.MapPath(StaticImfo.VideoPath + " " + viewModel.Title);
-                    viewModel.VideoFile.SaveAs(viewModel.VideoPath);
+                    FileName = viewModel.Title.Trim() + FileExtension;
+                    viewModel.VideoPath = StaticImfo.VideoPath + " " + FileName;
+                    viewModel.VideoFile.SaveAs(Server.MapPath(viewModel.VideoPath));
                 }
                 var video = Mapper.Map<VideoViewModel, Video>(viewModel);
                 this._videoRepo.Add(video);
@@ -130,8 +130,8 @@ namespace CBProject.Controllers
                     string FileName = Path.GetFileNameWithoutExtension(viewModel.VideoImageFile.FileName);
                     string FileExtension = Path.GetExtension(viewModel.VideoImageFile.FileName);
                     FileName = FileName.Trim() + FileExtension;
-                    viewModel.VideoImagePath = Server.MapPath(StaticImfo.VideoImagePath + " " + viewModel.Title);
-                    viewModel.VideoImageFile.SaveAs(viewModel.VideoImagePath);
+                    viewModel.VideoImagePath = StaticImfo.VideoImagePath + " " + FileName;
+                    viewModel.VideoImageFile.SaveAs(Server.MapPath(viewModel.VideoImagePath));
                     imgFile = true;
                 }
                 // VideoFile
@@ -142,8 +142,8 @@ namespace CBProject.Controllers
                     string FileName = Path.GetFileNameWithoutExtension(viewModel.VideoFile.FileName);
                     string FileExtension = Path.GetExtension(viewModel.VideoFile.FileName);
                     FileName = FileName.Trim() + FileExtension;
-                    viewModel.VideoPath = Server.MapPath(StaticImfo.VideoPath + " " + viewModel.Title);
-                    viewModel.VideoFile.SaveAs(viewModel.VideoPath);
+                    viewModel.VideoPath = viewModel.VideoPath = StaticImfo.VideoPath + " " + FileName;
+                    viewModel.VideoFile.SaveAs(Server.MapPath(viewModel.VideoPath));
                     videoFile = true;
                 }
                 var imgFileOld = (await this._videoRepo.GetAsync(viewModel.ID)).VideoImagePath;

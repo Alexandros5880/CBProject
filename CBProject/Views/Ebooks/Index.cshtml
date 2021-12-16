@@ -30,10 +30,10 @@
                 @Html.DisplayNameFor(model => model.UploadDate)
             </th>
             <th>
-                Category
+                Cover
             </th>
             <th>
-                Creator
+                Category
             </th>
             <th></th>
         </tr>
@@ -44,70 +44,73 @@
 
     @foreach (var item in Model)
     {
-        <tr>
+<tr>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Thumbnail)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Url)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UploadDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category.Name)
-            </td>
-            @*<td>
-                    @Html.DisplayFor(modelItem => item.CreatorId)
-                </td>*@
-            <td>
-                <div id="myModal" class="modal fade" role="dialog">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">Modal Header</h4>
-                            </div>
-                            <div class="modal-body">
-                                @{ Html.RenderPartial("_Details", item); }
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            </div>
-                        </div>
+    <td>
+        @Html.DisplayFor(modelItem => item.Title)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Description)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Thumbnail)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Url)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.UploadDate)
+    </td>
+    <td>
+        <img alt="Cover Foto" src="@item.EbookImagePath" style="height:77px;"/>
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Category.Name)
+    </td>
+    @*<td>
+            @Html.DisplayFor(modelItem => item.CreatorId)
+        </td>*@
+    <td>
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Modal Header</h4>
+                    </div>
+                    <div class="modal-body">
+                        @{ Html.RenderPartial("_Details", item); }
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </div>
-                <div id="editModal" class="modal fade" role="dialog">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">Modal Header</h4>
-                            </div>
-                            <div class="modal-body">
-                                @{ Html.RenderPartial("_Edit", item); }
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            </div>
-                        </div>
+            </div>
+        </div>
+        <div id="editModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Modal Header</h4>
+                    </div>
+                    <div class="modal-body">
+                        @{ Html.RenderPartial("_Edit", item); }
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </div>
-                @*@Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.ID }) |*@
-                @*@Html.ActionLink("Delete", "Delete", new { id = item.ID })*@
-                <button type="button" data-id="@item.ID" class="btn btn-success " data-toggle="modal" data-target="#editModal">Edit</button>
-                <button type="button" data-id="@item.ID" class="btn btn-info " data-toggle="modal" data-target="#myModal">Details</button>
-                <button type="button" data-id="@item.ID" class='btn btn-danger btn-delete' data-toggle="modal">Delete</button>
-            </td>
-        </tr>
+            </div>
+        </div>
+        @*@Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id = item.ID }) |*@
+        @*@Html.ActionLink("Delete", "Delete", new { id = item.ID })*@
+        <button type="button" data-id="@item.ID" class="btn btn-success " data-toggle="modal" data-target="#editModal">Edit</button>
+        <button type="button" data-id="@item.ID" class="btn btn-info " data-toggle="modal" data-target="#myModal">Details</button>
+        <button type="button" data-id="@item.ID" class='btn btn-danger btn-delete' data-toggle="modal">Delete</button>
+    </td>
+</tr>
     }
 
 </table>
