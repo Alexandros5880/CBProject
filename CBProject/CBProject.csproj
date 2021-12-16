@@ -340,6 +340,8 @@
     <Content Include="assets\images\flags\select2\wa.png" />
     <Content Include="assets\images\flags\spain.jpg" />
     <Content Include="assets\images\flags\us.jpg" />
+    <Content Include="assets\images\home\codeme_bigImg1_index2-half.jpg" />
+    <Content Include="assets\images\home\codeme_bigImg2_index.jpg" />
     <Content Include="assets\images\laptop-img.png" />
     <Content Include="assets\images\layouts\layout-1.jpg" />
     <Content Include="assets\images\layouts\layout-2.jpg" />
@@ -1385,7 +1387,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="img\codeme_bigImg2_index.jpg" />
+    <Content Include="assets\images\codeme_bigImg2_index.jpg" />
     <Content Include="img\login_register.png" />
     <Content Include="img\tg.jpg" />
     <Content Include="Scripts\bootbox.js" />

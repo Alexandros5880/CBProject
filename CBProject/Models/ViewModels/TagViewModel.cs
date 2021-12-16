@@ -8,5 +8,7 @@ namespace CBProject.Models.ViewModels
         public string Title { get; set; }
         public SelectList Videos { get; set; }
         public int VideoId { get; set; }
+        public SelectList Ebooks { get; set; }
+        public int EbookId { get; set; }
     }
 }
