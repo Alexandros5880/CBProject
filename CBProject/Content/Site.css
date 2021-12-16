@@ -86,6 +86,7 @@ textarea {
 .bigImage {
     position: relative;
     display: inline-block;
+    padding:0px !important;
 }
 
     .bigImage img {
@@ -101,8 +102,10 @@ textarea {
         width: 40%; /* Set the width of the positioned div */
     }
 
-.text h1 {
+#home-big-title {
     font-weight: bold;
+    font-size:35px;
+    margin-top: 17%;
 }
 
 .btn-search {
@@ -156,7 +159,9 @@ textarea {
     font-size: 45px;
     font-weight: bold;
 }
-
+.quote-img{
+    padding: 0px;
+}
 .card-title {
     color: #5B65E8;
     font-size: 22px;
@@ -219,7 +224,8 @@ footer {
 
 @media screen and (max-width: 1246px) and (min-width: 600px) {
     .bigImage .text {
-        top: 5%;
+        top: 4%;
+
     }
 
     #quote {
@@ -228,7 +234,19 @@ footer {
     }
 }
 
+@media screen and (max-width: 1068px) and (min-width: 992px) {
+    .home-search-bar {
+        margin-bottom: 10%;
+    }
+    #home-big-title{
+        margin-top:10%;
+    }
+}
 @media screen and (max-width: 990px) {
+    #home-big-title {
+        margin-top: 10%;
+        font-size:25px;
+    }
     .bigImage .text {
         top: 0%;
     }
@@ -246,5 +264,16 @@ footer {
 
     .bigImage .text {
         font-size: 20px;
+    }
+}
+
+
+@media screen and (max-width: 768px) {
+    .bigImage img {
+        display: none;
+    }
+
+    .home-search-bar{
+        margin-bottom:10%;
     }
 }

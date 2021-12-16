@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using CBProject.Models.EntityModels;
+using System.Web.Mvc;
 
 namespace CBProject.Models.ViewModels
 {
@@ -12,5 +13,8 @@ namespace CBProject.Models.ViewModels
         public int VideoId { get; set; }
         public SelectList Users { get; set; }
         public SelectList Videos { get; set; }
+        public Ebook Ebook { get; set; }
+        public int EbookId { get; set; }
+        public SelectList Ebooks { get; set; }
     }
 }
