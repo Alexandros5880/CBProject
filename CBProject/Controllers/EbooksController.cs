@@ -10,7 +10,6 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web;
@@ -44,14 +43,15 @@ namespace CBProject.Controllers
             List<EbookViewModel> viewModels = new List<EbookViewModel>();
             foreach (var ebook in ebooks)
             {
-                viewModels.Add(Mapper.Map<Ebook, EbookViewModel>(ebook));
-                viewModels.FirstOrDefault(b => b.ID == ebook.ID).Categories = new SelectList(categories, "ID", "Name");
-                viewModels.FirstOrDefault(b => b.ID == ebook.ID).MyTags = await this._tagsRepository.GetAllFromEbookAsync(ebook);
-                viewModels.FirstOrDefault(b => b.ID == ebook.ID).MyReviews = await this._reviewsRepository.GetAllFromEbookAsync(ebook);
-                viewModels.FirstOrDefault(b => b.ID == ebook.ID).MyRatings = await this._ratingsRepository.GetAllFromEbookAsync(ebook);
-                viewModels.FirstOrDefault(b => b.ID == ebook.ID).OtherTags = await this._tagsRepository.GetAllOtherFromEbookAsync(ebook);
-                viewModels.FirstOrDefault(b => b.ID == ebook.ID).OtherReviews = await this._reviewsRepository.GetAllOtherFromEbookAsync(ebook);
-                viewModels.FirstOrDefault(b => b.ID == ebook.ID).OtherRatings = await this._ratingsRepository.GetAllOtherFromEbookAsync(ebook);
+                var viewModel = Mapper.Map<Ebook, EbookViewModel>(ebook);
+                viewModel.Categories = new SelectList(categories, "ID", "Name");
+                viewModel.MyTags = await this._tagsRepository.GetAllFromEbookAsync(ebook);
+                viewModel.MyReviews = await this._reviewsRepository.GetAllFromEbookAsync(ebook);
+                viewModel.MyRatings = await this._ratingsRepository.GetAllFromEbookAsync(ebook);
+                viewModel.OtherTags = await this._tagsRepository.GetAllOtherFromEbookAsync(ebook);
+                viewModel.OtherReviews = await this._reviewsRepository.GetAllOtherFromEbookAsync(ebook);
+                viewModel.OtherRatings = await this._ratingsRepository.GetAllOtherFromEbookAsync(ebook);
+                viewModels.Add(viewModel);
             }
             return View(viewModels);
         }
@@ -98,7 +98,7 @@ namespace CBProject.Controllers
                     string FileName = Path.GetFileNameWithoutExtension(viewModel.EbookImageFile.FileName);
                     string FileExtension = Path.GetExtension(viewModel.EbookImageFile.FileName);
                     FileName = viewModel.Title.Trim() + FileExtension;
-                    viewModel.EbookImagePath = StaticImfo.EbooksImagesPath + " " + FileName;
+                    viewModel.EbookImagePath = (StaticImfo.EbooksImagesPath + " " + FileName).Trim();
                     viewModel.EbookImageFile.SaveAs(Server.MapPath(viewModel.EbookImagePath));
                 }
                 // EbookFile
@@ -108,7 +108,7 @@ namespace CBProject.Controllers
                     string FileName = Path.GetFileNameWithoutExtension(viewModel.EbookFile.FileName);
                     string FileExtension = Path.GetExtension(viewModel.EbookFile.FileName);
                     FileName = viewModel.Title.Trim() + FileExtension;
-                    viewModel.EbookFilePath = StaticImfo.EbooksFilesPath + " " + FileName;
+                    viewModel.EbookFilePath = (StaticImfo.EbooksFilesPath + " " + FileName).Trim();
                     viewModel.EbookFile.SaveAs(Server.MapPath(viewModel.EbookFilePath));
                 }
                 var ebookDB = Mapper.Map<EbookViewModel, Ebook>(viewModel);
@@ -153,7 +153,7 @@ namespace CBProject.Controllers
                     string FileName = Path.GetFileNameWithoutExtension(viewModel.EbookImageFile.FileName);
                     string FileExtension = Path.GetExtension(viewModel.EbookImageFile.FileName);
                     FileName = viewModel.Title.Trim() + FileExtension;
-                    viewModel.EbookImagePath = StaticImfo.EbooksImagesPath + " " + FileName;
+                    viewModel.EbookImagePath = (StaticImfo.EbooksImagesPath + " " + FileName).Trim();
                     viewModel.EbookImageFile.SaveAs(Server.MapPath(viewModel.EbookImagePath));
                     imgFile = true;
                 }
@@ -165,7 +165,7 @@ namespace CBProject.Controllers
                     string FileName = Path.GetFileNameWithoutExtension(viewModel.EbookFile.FileName);
                     string FileExtension = Path.GetExtension(viewModel.EbookFile.FileName);
                     FileName = viewModel.Title.Trim() + FileExtension;
-                    viewModel.EbookFilePath = StaticImfo.EbooksFilesPath + " " + FileName;
+                    viewModel.EbookFilePath = (StaticImfo.EbooksFilesPath + " " + FileName).Trim();
                     viewModel.EbookFile.SaveAs(Server.MapPath(viewModel.EbookFilePath));
                     file = true;
                 }

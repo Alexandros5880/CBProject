@@ -2,6 +2,9 @@
   "title": "Panel de control | Skote - Plantilla de administrador y panel",
   "t-menu": "Menú",
 
+  "t-manage": "Gestionar",
+  "t-dashboard": "Tablero De Mandos",
+  "t-logout": "Cerrar Sesión",
   "t-account": "Cuenta",
   "t-users": "Usuarias",
   "t-roles": "Roles",

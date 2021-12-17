@@ -71,7 +71,7 @@ namespace CBProject.Controllers
                     string FileName = Path.GetFileNameWithoutExtension(model.ImageFile.FileName);
                     string FileExtension = Path.GetExtension(model.ImageFile.FileName);
                     FileName = FileName.Trim() + FileExtension;
-                    model.ImagePath = StaticImfo.UsersImagesPath + user.Id + FileName;
+                    model.ImagePath = (StaticImfo.UsersImagesPath + user.Id + FileName).Trim();
                     model.ImageFile.SaveAs(Server.MapPath(model.ImagePath));
                 }
                 // Save CV File
@@ -81,7 +81,7 @@ namespace CBProject.Controllers
                     string FileName = Path.GetFileNameWithoutExtension(model.CVFile.FileName);
                     string FileExtension = Path.GetExtension(model.CVFile.FileName);
                     FileName = FileName.Trim() + FileExtension;
-                    model.CVPath = StaticImfo.CVPath + user.Id + FileName;
+                    model.CVPath = (StaticImfo.CVPath + user.Id + FileName).Trim();
                     model.CVFile.SaveAs(Server.MapPath(model.CVPath));
                 }
                 return RedirectToAction("Index");
@@ -120,7 +120,7 @@ namespace CBProject.Controllers
                     string FileName = Path.GetFileNameWithoutExtension(model.ImageFile.FileName);
                     string FileExtension = Path.GetExtension(model.ImageFile.FileName);
                     FileName = FileName.Trim() + FileExtension;
-                    model.ImagePath = StaticImfo.UsersImagesPath + model.Id + FileName;
+                    model.ImagePath = (StaticImfo.UsersImagesPath + model.Id + FileName).Trim();
                     model.ImageFile.SaveAs(Server.MapPath(model.ImagePath));
                     imgPath = true;
                 }
@@ -132,7 +132,7 @@ namespace CBProject.Controllers
                     string FileName = Path.GetFileNameWithoutExtension(model.CVFile.FileName);
                     string FileExtension = Path.GetExtension(model.CVFile.FileName);
                     FileName = FileName.Trim() + FileExtension;
-                    model.CVPath = StaticImfo.CVPath + model.Id + FileName;
+                    model.CVPath = (StaticImfo.CVPath + model.Id + FileName).Trim();
                     model.CVFile.SaveAs(Server.MapPath(model.CVPath));
                     cvPath = true;
                 }

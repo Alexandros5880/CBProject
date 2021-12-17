@@ -1,0 +1,138 @@
+﻿@model CBProject.Models.ViewModels.VideoViewModel
+
+<div>
+    <h4>VideoViewModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Thumbnail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Thumbnail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VideoImagePath)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VideoImagePath)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VideoPath)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VideoPath)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UploadDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UploadDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatorId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatorId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CategoryId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CategoryId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Url)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Url)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Tags")
+        </dt>
+
+        <dd>
+            <ul>
+                @if (Model.MyTags != null && Model.MyTags.Count > 0)
+                {
+                    foreach (var tag in Model.MyTags)
+                    {
+                        <li>
+                            Html.DisplayFor(model => tag.Title)
+                        </li>
+                    }
+                }
+            </ul>
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Reviews")
+        </dt>
+
+        <dd>
+            <ul>
+                @if (Model.MyReviews != null && Model.MyReviews.Count > 0)
+                {
+                    foreach (var review in Model.MyReviews)
+                    {
+                        <li>
+                            Html.DisplayFor(model => review.Comment)
+                        </li>
+                    }
+                }
+            </ul>
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Ratings")
+        </dt>
+
+        <dd>
+            <ul>
+                @if (Model.MyRatings != null && Model.MyRatings.Count > 0)
+                {
+                    foreach (var rating in Model.MyRatings)
+                    {
+                        <li>
+                            @Html.DisplayFor(model => rating.Rate)
+                        </li>
+                    }
+                }
+            </ul>
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
