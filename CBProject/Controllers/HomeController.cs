@@ -40,13 +40,14 @@ namespace CBProject.Controllers
                 //Ebooks = await this._ebooksRepository.GetAllAsync()
             };
 
-            if ( User.IsInRole("Admin") )
-            {
-                return RedirectToAction("Index", "Users");
-            } else
-            {
-                return View(viewModel);
-            }
+            //if (User.IsInRole("Admin") )
+            //{
+            //    return RedirectToAction("Index", "Users");
+            //} else
+            //{
+            //    return View(viewModel);
+            //}
+            return View(viewModel);
         }
         public ActionResult About()
         {

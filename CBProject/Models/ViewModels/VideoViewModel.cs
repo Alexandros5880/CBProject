@@ -25,11 +25,9 @@ namespace CBProject.Models.ViewModels
         public int CategoryId { get; set; }
         public string Url { get; set; }
 
-
         public ICollection<Tag> Tags { get; set; }
         public ICollection<Review> Reviews { get; set; }
         public ICollection<Rating> Ratings { get; set; }
-
 
         public ICollection<ApplicationUser> OtherUsers { get; set; }
         public ICollection<Category> OtherCategory { get; set; }
@@ -48,6 +46,5 @@ namespace CBProject.Models.ViewModels
         public ICollection<Rating> MyRatings { get; set; }
         public ICollection<int> AddRatings { get; set; }
         public ICollection<int> RemoveRatings { get; set; }
-
     }
 }

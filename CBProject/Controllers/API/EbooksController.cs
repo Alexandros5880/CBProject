@@ -3,8 +3,10 @@ using CBProject.HelperClasses.Interfaces;
 using CBProject.Models.EntityModels;
 using CBProject.Models.ViewModels;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 
 namespace CBProject.Controllers.API
@@ -61,9 +63,17 @@ namespace CBProject.Controllers.API
         public async Task<IHttpActionResult> DeleteEbook(int id)
         {
             var ebookInDb = await _unitOfWork.Ebooks.GetAsync(id);
-            if (ebookInDb == null)
-                return NotFound();
-
+            FileInfo img = new FileInfo(HttpRuntime.AppDomainAppPath + ebookInDb.EbookImagePath);
+            FileInfo file = new FileInfo(HttpRuntime.AppDomainAppPath + ebookInDb.EbookFilePath);
+            System.Diagnostics.Debug.WriteLine(img.FullName);
+            if (img.Exists)
+            {
+                img.Delete();
+            }
+            if (file.Exists)
+            {
+                file.Delete();
+            }
             _unitOfWork.Ebooks.Delete(id);
             _unitOfWork.Ebooks.Save();
             return Ok();

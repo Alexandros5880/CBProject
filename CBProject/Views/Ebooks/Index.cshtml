@@ -143,13 +143,13 @@
 
 
 @section scripts{
-    <script>$(document).ready(function () {
+    <script>
+        $(document).ready(function () {
             $("#ebooks").on("click", ".btn-delete", function () {
                 var button = $(this);
                 $('#deletemodal').show(300);
                 $(".save-delete-modal").on("click", function () {
                     $.ajax({
-
                         url:"/api/ebooks/" + button.attr("data-id"),
                         method: "DELETE"
                     }).done(function (data) {

@@ -54,8 +54,6 @@ namespace CBProject.Models
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
             ApplicationUser applicationUser = this;
             userIdentity.AddClaim(new Claim("FullName", applicationUser.FullName));
-            //if (applicationUser.ImagePath == null)
-            //    applicationUser.ImagePath = "/assets/images/users/avatar-1.jpg";
             userIdentity.AddClaim(new Claim("ImagePath", applicationUser.ImagePath));
             // Add custom user claims here
             return userIdentity;

@@ -71,7 +71,7 @@ namespace CBProject.Controllers
                     string FileName = Path.GetFileNameWithoutExtension(model.ImageFile.FileName);
                     string FileExtension = Path.GetExtension(model.ImageFile.FileName);
                     FileName = FileName.Trim() + FileExtension;
-                    model.ImagePath = StaticImfo.UsersImagesPath + user.Id + FileName;
+                    model.ImagePath = (StaticImfo.UsersImagesPath + user.Id + FileName).Trim();
                     model.ImageFile.SaveAs(Server.MapPath(model.ImagePath));
                 }
                 // Save CV File
@@ -81,7 +81,7 @@ namespace CBProject.Controllers
                     string FileName = Path.GetFileNameWithoutExtension(model.CVFile.FileName);
                     string FileExtension = Path.GetExtension(model.CVFile.FileName);
                     FileName = FileName.Trim() + FileExtension;
-                    model.CVPath = StaticImfo.CVPath + user.Id + FileName;
+                    model.CVPath = (StaticImfo.CVPath + user.Id + FileName).Trim();
                     model.CVFile.SaveAs(Server.MapPath(model.CVPath));
                 }
                 return RedirectToAction("Index");
@@ -120,7 +120,7 @@ namespace CBProject.Controllers
                     string FileName = Path.GetFileNameWithoutExtension(model.ImageFile.FileName);
                     string FileExtension = Path.GetExtension(model.ImageFile.FileName);
                     FileName = FileName.Trim() + FileExtension;
-                    model.ImagePath = StaticImfo.UsersImagesPath + model.Id + FileName;
+                    model.ImagePath = (StaticImfo.UsersImagesPath + model.Id + FileName).Trim();
                     model.ImageFile.SaveAs(Server.MapPath(model.ImagePath));
                     imgPath = true;
                 }
@@ -132,7 +132,7 @@ namespace CBProject.Controllers
                     string FileName = Path.GetFileNameWithoutExtension(model.CVFile.FileName);
                     string FileExtension = Path.GetExtension(model.CVFile.FileName);
                     FileName = FileName.Trim() + FileExtension;
-                    model.CVPath = StaticImfo.CVPath + model.Id + FileName;
+                    model.CVPath = (StaticImfo.CVPath + model.Id + FileName).Trim();
                     model.CVFile.SaveAs(Server.MapPath(model.CVPath));
                     cvPath = true;
                 }
@@ -141,7 +141,23 @@ namespace CBProject.Controllers
                 var cvOldPath = (await this._usersRepo.GetAsync(model.Id)).CVPath;
                 var user = Mapper.Map<ApplicationUserViewModel, ApplicationUser>(model);
                 if (!imgPath) user.ImagePath = imgOldPath;
+                else
+                {
+                    FileInfo img = new FileInfo(HttpRuntime.AppDomainAppPath + imgOldPath);
+                    if (img.Exists)
+                    {
+                        img.Delete();
+                    }
+                }
                 if (!cvPath) user.CVPath = cvOldPath;
+                else
+                {
+                    FileInfo file = new FileInfo(HttpRuntime.AppDomainAppPath + cvOldPath);
+                    if (file.Exists)
+                    {
+                        file.Delete();
+                    }
+                }
                 user.UserName = user.Email;
                 if (model.Password == null || model.Password.Length == 0)
                 {
@@ -176,7 +192,6 @@ namespace CBProject.Controllers
                         }
                     }
                 }
-
                 int result = await _usersRepo.UpdateAsync(user);
                 return RedirectToAction("Index");
             }
@@ -210,6 +225,16 @@ namespace CBProject.Controllers
             var user = await _usersRepo.GetAsync(id);
             if (user == null)
                 return HttpNotFound();
+            FileInfo img = new FileInfo(HttpRuntime.AppDomainAppPath + user.ImagePath);
+            if (img.Exists)
+            {
+                img.Delete();
+            }
+            FileInfo file = new FileInfo(HttpRuntime.AppDomainAppPath + user.CVPath);
+            if (file.Exists)
+            {
+                file.Delete();
+            }
             await this._usersRepo.DeleteRealAsync(user.Id);
             var users = await _usersRepo.GetAllAsync();
             List<ApplicationUser> activeUsers = users.Where(u => u.IsInactive == false).ToList();

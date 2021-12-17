@@ -7,6 +7,7 @@ using CBProject.Repositories;
 using CBProject.Repositories.IdentityRepos;
 using CBProject.Repositories.IdentityRepos.Interfaces;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
@@ -34,7 +35,22 @@ namespace CBProject.Controllers
         }
         public async Task<ActionResult> Index()
         {
-            return View(await this._videoRepo.GetAllAsync());
+            var videos = await this._videoRepo.GetAllAsync();
+            var categories = await this._categoriesRepo.GetAllAsync();
+            List<VideoViewModel> viewModels  = new List<VideoViewModel>();
+            foreach(var video in videos)
+            {
+                var viewModel = Mapper.Map<Video, VideoViewModel>(video);
+                viewModel.OtherCategory = categories;
+                viewModel.MyTags = await this._tagsRepo.GetAllFromVideoAsync(video);
+                viewModel.MyReviews = await this._reviewRepo.GetAllFromVideoAsync(video);
+                viewModel.MyRatings = await this._ratingsRepo.GetAllFromVideoAsync(video);
+                viewModel.OtherTags = await this._tagsRepo.GetAllOtherFromVideoAsync(video);
+                viewModel.OtherReviews = await this._reviewRepo.GetAllOtherFromVideoAsync(video);
+                viewModel.OtherRatings = await this._ratingsRepo.GetAllOtherFromVideoAsync(video);
+                viewModels.Add(viewModel);
+            }
+            return View(viewModels);
         }
         public async Task<ActionResult> Details(int? id)
         {
@@ -77,7 +93,7 @@ namespace CBProject.Controllers
                     string FileName = Path.GetFileNameWithoutExtension(viewModel.VideoImageFile.FileName);
                     string FileExtension = Path.GetExtension(viewModel.VideoImageFile.FileName);
                     FileName = viewModel.Title.Trim() + FileExtension;
-                    viewModel.VideoImagePath = StaticImfo.VideoImagePath + " " + FileName;
+                    viewModel.VideoImagePath = (StaticImfo.VideoImagePath + " " + FileName).Trim();
                     viewModel.VideoImageFile.SaveAs(Server.MapPath(viewModel.VideoImagePath));
                 }
                 // VideoFile
@@ -87,7 +103,7 @@ namespace CBProject.Controllers
                     string FileName = Path.GetFileNameWithoutExtension(viewModel.VideoFile.FileName);
                     string FileExtension = Path.GetExtension(viewModel.VideoFile.FileName);
                     FileName = viewModel.Title.Trim() + FileExtension;
-                    viewModel.VideoPath = StaticImfo.VideoPath + " " + FileName;
+                    viewModel.VideoPath = (StaticImfo.VideoPath + " " + FileName).Trim();
                     viewModel.VideoFile.SaveAs(Server.MapPath(viewModel.VideoPath));
                 }
                 var video = Mapper.Map<VideoViewModel, Video>(viewModel);
@@ -130,7 +146,7 @@ namespace CBProject.Controllers
                     string FileName = Path.GetFileNameWithoutExtension(viewModel.VideoImageFile.FileName);
                     string FileExtension = Path.GetExtension(viewModel.VideoImageFile.FileName);
                     FileName = FileName.Trim() + FileExtension;
-                    viewModel.VideoImagePath = StaticImfo.VideoImagePath + " " + FileName;
+                    viewModel.VideoImagePath = (StaticImfo.VideoImagePath + " " + FileName).Trim();
                     viewModel.VideoImageFile.SaveAs(Server.MapPath(viewModel.VideoImagePath));
                     imgFile = true;
                 }
@@ -142,14 +158,30 @@ namespace CBProject.Controllers
                     string FileName = Path.GetFileNameWithoutExtension(viewModel.VideoFile.FileName);
                     string FileExtension = Path.GetExtension(viewModel.VideoFile.FileName);
                     FileName = FileName.Trim() + FileExtension;
-                    viewModel.VideoPath = viewModel.VideoPath = StaticImfo.VideoPath + " " + FileName;
+                    viewModel.VideoPath = (viewModel.VideoPath = StaticImfo.VideoPath + " " + FileName).Trim();
                     viewModel.VideoFile.SaveAs(Server.MapPath(viewModel.VideoPath));
                     videoFile = true;
                 }
                 var imgFileOld = (await this._videoRepo.GetAsync(viewModel.ID)).VideoImagePath;
                 var vidFileOld = (await this._videoRepo.GetAsync(viewModel.ID)).VideoPath;
                 if (!imgFile) viewModel.VideoImagePath = imgFileOld;
+                else
+                {
+                    FileInfo img = new FileInfo(HttpRuntime.AppDomainAppPath + imgFileOld);
+                    if (img.Exists)
+                    {
+                        img.Delete();
+                    }
+                }
                 if (!videoFile) viewModel.VideoPath = vidFileOld;
+                else
+                {
+                    FileInfo file = new FileInfo(HttpRuntime.AppDomainAppPath + vidFileOld);
+                    if (file.Exists)
+                    {
+                        file.Delete();
+                    }
+                }
                 var video = Mapper.Map<VideoViewModel, Video>(viewModel);
                 this._videoRepo.Update(video);
                 await this._videoRepo.SaveAsync();
@@ -174,6 +206,17 @@ namespace CBProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
+            var video = await this._videoRepo.GetAsync(id);
+            FileInfo img = new FileInfo(HttpRuntime.AppDomainAppPath + video.VideoImagePath);
+            if (img.Exists)
+            {
+                img.Delete();
+            }
+            FileInfo file = new FileInfo(HttpRuntime.AppDomainAppPath + video.VideoPath);
+            if (file.Exists)
+            {
+                file.Delete();
+            }
             this._videoRepo.Delete(id);
             await this._videoRepo.SaveAsync();
             return RedirectToAction("Index");

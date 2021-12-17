@@ -10,7 +10,6 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web;
@@ -44,14 +43,15 @@ namespace CBProject.Controllers
             List<EbookViewModel> viewModels = new List<EbookViewModel>();
             foreach (var ebook in ebooks)
             {
-                viewModels.Add(Mapper.Map<Ebook, EbookViewModel>(ebook));
-                viewModels.FirstOrDefault(b => b.ID == ebook.ID).Categories = new SelectList(categories, "ID", "Name");
-                viewModels.FirstOrDefault(b => b.ID == ebook.ID).MyTags = await this._tagsRepository.GetAllFromEbookAsync(ebook);
-                viewModels.FirstOrDefault(b => b.ID == ebook.ID).MyReviews = await this._reviewsRepository.GetAllFromEbookAsync(ebook);
-                viewModels.FirstOrDefault(b => b.ID == ebook.ID).MyRatings = await this._ratingsRepository.GetAllFromEbookAsync(ebook);
-                viewModels.FirstOrDefault(b => b.ID == ebook.ID).OtherTags = await this._tagsRepository.GetAllOtherFromEbookAsync(ebook);
-                viewModels.FirstOrDefault(b => b.ID == ebook.ID).OtherReviews = await this._reviewsRepository.GetAllOtherFromEbookAsync(ebook);
-                viewModels.FirstOrDefault(b => b.ID == ebook.ID).OtherRatings = await this._ratingsRepository.GetAllOtherFromEbookAsync(ebook);
+                var viewModel = Mapper.Map<Ebook, EbookViewModel>(ebook);
+                viewModel.Categories = new SelectList(categories, "ID", "Name");
+                viewModel.MyTags = await this._tagsRepository.GetAllFromEbookAsync(ebook);
+                viewModel.MyReviews = await this._reviewsRepository.GetAllFromEbookAsync(ebook);
+                viewModel.MyRatings = await this._ratingsRepository.GetAllFromEbookAsync(ebook);
+                viewModel.OtherTags = await this._tagsRepository.GetAllOtherFromEbookAsync(ebook);
+                viewModel.OtherReviews = await this._reviewsRepository.GetAllOtherFromEbookAsync(ebook);
+                viewModel.OtherRatings = await this._ratingsRepository.GetAllOtherFromEbookAsync(ebook);
+                viewModels.Add(viewModel);
             }
             return View(viewModels);
         }
@@ -102,7 +102,7 @@ namespace CBProject.Controllers
                     string FileName = Path.GetFileNameWithoutExtension(viewModel.EbookImageFile.FileName);
                     string FileExtension = Path.GetExtension(viewModel.EbookImageFile.FileName);
                     FileName = viewModel.Title.Trim() + FileExtension;
-                    viewModel.EbookImagePath = StaticImfo.EbooksImagesPath + " " + FileName;
+                    viewModel.EbookImagePath = (StaticImfo.EbooksImagesPath + " " + FileName).Trim();
                     viewModel.EbookImageFile.SaveAs(Server.MapPath(viewModel.EbookImagePath));
                 }
                 // EbookFile
@@ -112,7 +112,7 @@ namespace CBProject.Controllers
                     string FileName = Path.GetFileNameWithoutExtension(viewModel.EbookFile.FileName);
                     string FileExtension = Path.GetExtension(viewModel.EbookFile.FileName);
                     FileName = viewModel.Title.Trim() + FileExtension;
-                    viewModel.EbookFilePath = StaticImfo.EbooksFilesPath + " " + FileName;
+                    viewModel.EbookFilePath = (StaticImfo.EbooksFilesPath + " " + FileName).Trim();
                     viewModel.EbookFile.SaveAs(Server.MapPath(viewModel.EbookFilePath));
                 }
                 var ebookDB = Mapper.Map<EbookViewModel, Ebook>(viewModel);
@@ -157,7 +157,7 @@ namespace CBProject.Controllers
                     string FileName = Path.GetFileNameWithoutExtension(viewModel.EbookImageFile.FileName);
                     string FileExtension = Path.GetExtension(viewModel.EbookImageFile.FileName);
                     FileName = viewModel.Title.Trim() + FileExtension;
-                    viewModel.EbookImagePath = StaticImfo.EbooksImagesPath + " " + FileName;
+                    viewModel.EbookImagePath = (StaticImfo.EbooksImagesPath + " " + FileName).Trim();
                     viewModel.EbookImageFile.SaveAs(Server.MapPath(viewModel.EbookImagePath));
                     imgFile = true;
                 }
@@ -169,14 +169,30 @@ namespace CBProject.Controllers
                     string FileName = Path.GetFileNameWithoutExtension(viewModel.EbookFile.FileName);
                     string FileExtension = Path.GetExtension(viewModel.EbookFile.FileName);
                     FileName = viewModel.Title.Trim() + FileExtension;
-                    viewModel.EbookFilePath = StaticImfo.EbooksFilesPath + " " + FileName;
+                    viewModel.EbookFilePath = (StaticImfo.EbooksFilesPath + " " + FileName).Trim();
                     viewModel.EbookFile.SaveAs(Server.MapPath(viewModel.EbookFilePath));
                     file = true;
                 }
                 var oldImg = (await this._ebooksRepository.GetAsync(viewModel.ID)).EbookImagePath;
                 var olfFile = (await this._ebooksRepository.GetAsync(viewModel.ID)).EbookFilePath;
                 if (!imgFile) viewModel.EbookImagePath = oldImg;
+                else
+                {
+                    FileInfo img = new FileInfo(HttpRuntime.AppDomainAppPath + oldImg);
+                    if (img.Exists)
+                    {
+                        img.Delete();
+                    }
+                }
                 if (!file) viewModel.EbookFilePath = olfFile;
+                else
+                {
+                    FileInfo f = new FileInfo(HttpRuntime.AppDomainAppPath + olfFile);
+                    if (f.Exists)
+                    {
+                        f.Delete();
+                    }
+                }
                 var ebookDB = Mapper.Map<EbookViewModel, Ebook>(viewModel);
                _context.Entry(ebookDB).State = EntityState.Modified;
                 await _ebooksRepository.SaveAsync();
@@ -202,6 +218,17 @@ namespace CBProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
+            var ebook = await this._ebooksRepository.GetAsync(id);
+            FileInfo img = new FileInfo(HttpRuntime.AppDomainAppPath + ebook.EbookImagePath);
+            if (img.Exists)
+            {
+                img.Delete();
+            }
+            FileInfo f = new FileInfo(HttpRuntime.AppDomainAppPath + ebook.EbookFilePath);
+            if (f.Exists)
+            {
+                f.Delete();
+            }
             _ebooksRepository.Delete(id);
             await _ebooksRepository.SaveAsync();
             return RedirectToAction("Index");

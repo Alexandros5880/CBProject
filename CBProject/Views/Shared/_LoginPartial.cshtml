@@ -3,20 +3,64 @@
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
-    @Html.AntiForgeryToken()
+        @Html.AntiForgeryToken()
 
-    <ul class="nav navbar-nav navbar-right">
-        <li>
-            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-        </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-    </ul>
+        <div class="dropdown d-inline-block">
+            @{
+                var fullname = ((System.Security.Claims.ClaimsIdentity)User.Identity).FindFirst("FullName");
+                var user_image = ((System.Security.Claims.ClaimsIdentity)User.Identity).FindFirst("ImagePath");
+            }
+
+            <button class="btn btn-secondary dropdown-toggle"
+                    type="button"
+                    id="dropdownMenuButton"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false">
+                <img class="rounded-circle header-profile-user"
+                     src="@user_image.Value"
+                     style="height:50px;"
+                     alt="Header Avatar">
+                <span class="d-none d-xl-inline-block ms-1">@fullname.Value</span>
+                <div style="float:right; margin-top: 7%;">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         width="20"
+                         height="20"
+                         fill="currentColor"
+                         class="bi bi-arrow-down-circle-fill"
+                         viewBox="0 0 16 16">
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z" />
+                    </svg>
+                </div>
+            </button>
+
+            <div class="dropdown-menu dropdown-menu-end">
+                <ul>
+                    <li>
+                        <a href=@Url.Action("Index", "Manage", routeValues: null) key="t-manage">Manage</a>
+                    </li>
+                    <li>
+                        <a href=@Url.Action("Index", "Users") key="t-dashboard">Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="javascript:document.getElementById('logoutForm').submit()"  key="t-logout">Log Off</a>
+                    </li>
+                </ul>
+
+                @*<a class="dropdown-item" href="#"><i class="bx bx-user font-size-16 align-middle me-1"></i> <span key="t-profile">Profile</span></a>
+                <a class="dropdown-item" href="#"><i class="bx bx-wallet font-size-16 align-middle me-1"></i> <span key="t-my-wallet">My Wallet</span></a>
+                <a class="dropdown-item d-block" href="#"><span class="badge bg-success float-end">11</span><i class="bx bx-wrench font-size-16 align-middle me-1"></i> <span key="t-settings">Settings</span></a>
+                <a class="dropdown-item" href="#"><i class="bx bx-lock-open font-size-16 align-middle me-1"></i> <span key="t-lock-screen">Lock screen</span></a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item text-danger" href="javascript:document.getElementById('logoutForm').submit()"><i class="bx bx-power-off font-size-16 align-middle me-1 text-danger"></i> <span key="t-logout">Logout</span></a>*@
+            </div>
+        </div>
     }
 }
 else
 {
-    <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new {id = "registerLink" })</li>
+    <ul class="nav navbar-nav navbar-right dropdown d-inline-block">
+        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
         <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
     </ul>
 }
