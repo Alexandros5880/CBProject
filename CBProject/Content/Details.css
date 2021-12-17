@@ -7,7 +7,7 @@
 }
 
 .product-title{
-    margin-top:5%;
+    margin-top:3%;
     font-size:33px;
     color:white;
     font-weight:600;
@@ -18,6 +18,46 @@
    
 }
 
-.raiting{
+.raiting, #stars{
     padding:0px !important;
+    margin:3% 0 3% 0;
+}
+
+.checked {
+    color: #f3d35e;
+}
+
+.btn-subscribe {
+    background-color: #5B65E8;
+    border: 2px solid #5B65E8;
+    color: white;
+    margin-bottom: 3%;
+}
+    .btn-subscribe:hover {
+        background-color: white;
+        color: #5B65E8;
+        border: 2px solid #5B65E8;
+        margin-bottom: 3%;
+    }
+.details-bar {
+    background-color: #ececec;
+    margin-top: -17%;
+    border-radius: 10px;
+}
+
+.my-accordion-item{
+    font-size:16px;
+    font-weight:300;
+}
+.accordion-button:not(.collapsed) {
+    color: #1f6a78;
+    background-color: #eaf7f9;
+}
+#accordion-item{
+    margin-top:3% ;
+}
+
+.details-bar h5{
+    margin-top:8%;
+   
 }

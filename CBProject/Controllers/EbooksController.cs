@@ -72,6 +72,10 @@ namespace CBProject.Controllers
             viewModel.MyRatings = await this._ratingsRepository.GetAllFromEbookAsync(ebook);
             return View(viewModel);
         }
+
+    
+
+
         [Authorize(Roles = "Admin, ContentCreator")]
         public async Task<ActionResult> Create()
         {
