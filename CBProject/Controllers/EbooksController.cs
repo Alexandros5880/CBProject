@@ -172,7 +172,23 @@ namespace CBProject.Controllers
                 var oldImg = (await this._ebooksRepository.GetAsync(viewModel.ID)).EbookImagePath;
                 var olfFile = (await this._ebooksRepository.GetAsync(viewModel.ID)).EbookFilePath;
                 if (!imgFile) viewModel.EbookImagePath = oldImg;
+                else
+                {
+                    FileInfo img = new FileInfo(HttpRuntime.AppDomainAppPath + oldImg);
+                    if (img.Exists)
+                    {
+                        img.Delete();
+                    }
+                }
                 if (!file) viewModel.EbookFilePath = olfFile;
+                else
+                {
+                    FileInfo f = new FileInfo(HttpRuntime.AppDomainAppPath + olfFile);
+                    if (f.Exists)
+                    {
+                        f.Delete();
+                    }
+                }
                 var ebookDB = Mapper.Map<EbookViewModel, Ebook>(viewModel);
                _context.Entry(ebookDB).State = EntityState.Modified;
                 await _ebooksRepository.SaveAsync();
@@ -198,6 +214,17 @@ namespace CBProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
+            var ebook = await this._ebooksRepository.GetAsync(id);
+            FileInfo img = new FileInfo(HttpRuntime.AppDomainAppPath + ebook.EbookImagePath);
+            if (img.Exists)
+            {
+                img.Delete();
+            }
+            FileInfo f = new FileInfo(HttpRuntime.AppDomainAppPath + ebook.EbookFilePath);
+            if (f.Exists)
+            {
+                f.Delete();
+            }
             _ebooksRepository.Delete(id);
             await _ebooksRepository.SaveAsync();
             return RedirectToAction("Index");

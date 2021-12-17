@@ -149,7 +149,6 @@
                 $('#deletemodal').show(300);
                 $(".save-delete-modal").on("click", function () {
                     $.ajax({
-
                         url:"/api/ebooks/" + button.attr("data-id"),
                         method: "DELETE"
                     }).done(function (data) {

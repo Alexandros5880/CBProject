@@ -149,7 +149,23 @@ namespace CBProject.Controllers
                 var imgFileOld = (await this._videoRepo.GetAsync(viewModel.ID)).VideoImagePath;
                 var vidFileOld = (await this._videoRepo.GetAsync(viewModel.ID)).VideoPath;
                 if (!imgFile) viewModel.VideoImagePath = imgFileOld;
+                else
+                {
+                    FileInfo img = new FileInfo(HttpRuntime.AppDomainAppPath + imgFileOld);
+                    if (img.Exists)
+                    {
+                        img.Delete();
+                    }
+                }
                 if (!videoFile) viewModel.VideoPath = vidFileOld;
+                else
+                {
+                    FileInfo file = new FileInfo(HttpRuntime.AppDomainAppPath + vidFileOld);
+                    if (file.Exists)
+                    {
+                        file.Delete();
+                    }
+                }
                 var video = Mapper.Map<VideoViewModel, Video>(viewModel);
                 this._videoRepo.Update(video);
                 await this._videoRepo.SaveAsync();
@@ -174,6 +190,17 @@ namespace CBProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
+            var video = await this._videoRepo.GetAsync(id);
+            FileInfo img = new FileInfo(HttpRuntime.AppDomainAppPath + video.VideoImagePath);
+            if (img.Exists)
+            {
+                img.Delete();
+            }
+            FileInfo file = new FileInfo(HttpRuntime.AppDomainAppPath + video.VideoPath);
+            if (file.Exists)
+            {
+                file.Delete();
+            }
             this._videoRepo.Delete(id);
             await this._videoRepo.SaveAsync();
             return RedirectToAction("Index");

@@ -141,7 +141,23 @@ namespace CBProject.Controllers
                 var cvOldPath = (await this._usersRepo.GetAsync(model.Id)).CVPath;
                 var user = Mapper.Map<ApplicationUserViewModel, ApplicationUser>(model);
                 if (!imgPath) user.ImagePath = imgOldPath;
+                else
+                {
+                    FileInfo img = new FileInfo(HttpRuntime.AppDomainAppPath + imgOldPath);
+                    if (img.Exists)
+                    {
+                        img.Delete();
+                    }
+                }
                 if (!cvPath) user.CVPath = cvOldPath;
+                else
+                {
+                    FileInfo file = new FileInfo(HttpRuntime.AppDomainAppPath + cvOldPath);
+                    if (file.Exists)
+                    {
+                        file.Delete();
+                    }
+                }
                 user.UserName = user.Email;
                 if (model.Password == null || model.Password.Length == 0)
                 {
@@ -176,7 +192,6 @@ namespace CBProject.Controllers
                         }
                     }
                 }
-
                 int result = await _usersRepo.UpdateAsync(user);
                 return RedirectToAction("Index");
             }
@@ -210,6 +225,16 @@ namespace CBProject.Controllers
             var user = await _usersRepo.GetAsync(id);
             if (user == null)
                 return HttpNotFound();
+            FileInfo img = new FileInfo(HttpRuntime.AppDomainAppPath + user.ImagePath);
+            if (img.Exists)
+            {
+                img.Delete();
+            }
+            FileInfo file = new FileInfo(HttpRuntime.AppDomainAppPath + user.CVPath);
+            if (file.Exists)
+            {
+                file.Delete();
+            }
             await this._usersRepo.DeleteRealAsync(user.Id);
             var users = await _usersRepo.GetAllAsync();
             List<ApplicationUser> activeUsers = users.Where(u => u.IsInactive == false).ToList();
