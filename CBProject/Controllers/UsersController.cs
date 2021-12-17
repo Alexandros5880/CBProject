@@ -29,7 +29,22 @@ namespace CBProject.Controllers
         {
             var users = await _usersRepo.GetAllAsync();
             List<ApplicationUser> activeUsers = users.Where(u => u.IsInactive == false).ToList();
-            return View(activeUsers);
+            List<ApplicationUserViewModel> viewModels = new List<ApplicationUserViewModel>();
+            foreach(var user in activeUsers)
+            {
+                var viewModel = Mapper.Map<ApplicationUser, ApplicationUserViewModel>(user);
+                if (user.Roles.Count > 0)
+                {
+                    foreach (var role in user.Roles)
+                    {
+                        if (viewModel.MyRoles == null)
+                            viewModel.MyRoles = new List<IdentityRole>();
+                        viewModel.MyRoles.Add(await this._rolesRepo.GetAsync(role.RoleId));
+                    }
+                }
+                viewModels.Add(viewModel);
+            }
+            return View(viewModels);
         }
         public async Task<ActionResult> Deleted()
         {
