@@ -368,50 +368,36 @@
             </div>
 
             <!-- Account Tab -->
-            @if (Request.IsAuthenticated)
+            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
             {
-        <div class="dropdown d-inline-block">
-            @{
-                var fullname = ((System.Security.Claims.ClaimsIdentity)User.Identity).FindFirst("FullName");
-                var user_image = ((System.Security.Claims.ClaimsIdentity)User.Identity).FindFirst("ImagePath");
-            }
-            <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
-                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <img class="rounded-circle header-profile-user" src="@user_image.Value"
-                    alt="Header Avatar">
-                <span class="d-none d-xl-inline-block ms-1">@fullname.Value</span>
-                <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
-            </button>
-            <div class="dropdown-menu dropdown-menu-end">
-                <!-- item-->
-                <a class="dropdown-item" href="#"><i class="bx bx-user font-size-16 align-middle me-1"></i> <span key="t-profile">Profile</span></a>
-                <a class="dropdown-item" href="#"><i class="bx bx-wallet font-size-16 align-middle me-1"></i> <span key="t-my-wallet">My Wallet</span></a>
-                <a class="dropdown-item d-block" href="#"><span class="badge bg-success float-end">11</span><i class="bx bx-wrench font-size-16 align-middle me-1"></i> <span key="t-settings">Settings</span></a>
-                <a class="dropdown-item" href="#"><i class="bx bx-lock-open font-size-16 align-middle me-1"></i> <span key="t-lock-screen">Lock screen</span></a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item text-danger" href="#"><i class="bx bx-power-off font-size-16 align-middle me-1 text-danger"></i> <span key="t-logout">Logout</span></a>
-            </div>
-        </div>
-            }
-
-            @*
-        <div class="d-inline-block" style="margin-left: 5px; margin-right: 5px;">
-            @if (Request.IsAuthenticated)
-            {
-                using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                @Html.AntiForgeryToken()
+                if (Request.IsAuthenticated)
                 {
-                    @Html.AntiForgeryToken()
-                    @Html.ActionLink(User.Identity.Name + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-                    <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+                    <div class="dropdown d-inline-block">
+                        @{
+                            var fullname = ((System.Security.Claims.ClaimsIdentity)User.Identity).FindFirst("FullName");
+                            var user_image = ((System.Security.Claims.ClaimsIdentity)User.Identity).FindFirst("ImagePath");
+                        }
+                        <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img class="rounded-circle header-profile-user" src="@user_image.Value"
+                                 alt="Header Avatar">
+                            <span class="d-none d-xl-inline-block ms-1">@fullname.Value</span>
+                            <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <!-- item-->
+                            <a class="dropdown-item" href="#"><i class="bx bx-user font-size-16 align-middle me-1"></i> <span key="t-profile">Profile</span></a>
+                            <a class="dropdown-item" href="#"><i class="bx bx-wallet font-size-16 align-middle me-1"></i> <span key="t-my-wallet">My Wallet</span></a>
+                            <a class="dropdown-item d-block" href="#"><span class="badge bg-success float-end">11</span><i class="bx bx-wrench font-size-16 align-middle me-1"></i> <span key="t-settings">Settings</span></a>
+                            <a class="dropdown-item" href="#"><i class="bx bx-lock-open font-size-16 align-middle me-1"></i> <span key="t-lock-screen">Lock screen</span></a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item text-danger" href="javascript:document.getElementById('logoutForm').submit()"><i class="bx bx-power-off font-size-16 align-middle me-1 text-danger"></i> <span key="t-logout">Logout</span></a>
+                        </div>
+                    </div>
                 }
             }
-            else
-            {
-                @Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })
-                @Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
-            }
-        </div>
-            *@
+
 
             <div class="dropdown d-inline-block">
                 <button type="button" class="btn header-item noti-icon right-bar-toggle waves-effect">
