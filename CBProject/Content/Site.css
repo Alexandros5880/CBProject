@@ -155,7 +155,7 @@ textarea {
     }
 
 #quote {
-    margin-top: 15%;
+    margin-top: 20%;
     font-size: 45px;
     font-weight: bold;
 }
@@ -222,15 +222,15 @@ footer {
         font-weight: 600;
     }
 
-@media screen and (max-width: 1246px) and (min-width: 600px) {
+@media screen and (max-width: 1246px) {
     .bigImage .text {
         top: 4%;
 
     }
 
     #quote {
-        margin-top: 25%;
-        font-size: 35px;
+        margin-top: 20%;
+        font-size: 30px;
     }
 }
 
@@ -240,6 +240,10 @@ footer {
     }
     #home-big-title{
         margin-top:10%;
+    }
+    #quote {
+        margin-top: 10%;
+        font-size: 30px;
     }
 }
 @media screen and (max-width: 990px) {
@@ -252,10 +256,9 @@ footer {
     }
 
     #quote {
-        margin-top: 25%;
-        font-size: 35px;
+     
+        font-size: 25px;
     }
-
     .card {
         width: 70%;
         margin-left: 15%;
@@ -268,12 +271,28 @@ footer {
 }
 
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 768px){
     .bigImage img {
         display: none;
     }
 
-    .home-search-bar{
-        margin-bottom:10%;
+    .home-search-bar {
+        margin-bottom: 10%;
+    }
+    .quote-img img{
+        display:none;
+    }
+    #quote {
+        margin-top: 8%;
+        margin-bottom:8%;
+        font-size: 30px;
+        text-align:center;
+    }
+}
+
+@media screen and (max-width: 1472px) and (min-width: 1247px) {
+    #quote {
+        margin-top: 25%;
+        font-size: 35px;
     }
 }
