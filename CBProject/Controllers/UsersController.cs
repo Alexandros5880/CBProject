@@ -4,7 +4,6 @@ using CBProject.Models;
 using CBProject.Models.ViewModels;
 using CBProject.Repositories.IdentityRepos;
 using CBProject.Repositories.IdentityRepos.Interfaces;
-using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -38,7 +37,7 @@ namespace CBProject.Controllers
                     foreach (var role in user.Roles)
                     {
                         if (viewModel.MyRoles == null)
-                            viewModel.MyRoles = new List<IdentityRole>();
+                            viewModel.MyRoles = new List<ApplicationRole>();
                         viewModel.MyRoles.Add(await this._rolesRepo.GetAsync(role.RoleId));
                     }
                 }
@@ -191,7 +190,7 @@ namespace CBProject.Controllers
                     {
                         foreach (var roleId in model.RemoveRoles)
                         {
-                            IdentityRole r = _rolesRepo.Get(roleId);
+                            ApplicationRole r = _rolesRepo.Get(roleId);
                             _usersRepo.RemoveRole(user, r);
                         }
                     }
@@ -202,7 +201,7 @@ namespace CBProject.Controllers
                     {
                         foreach (var roleId in model.AddRoles)
                         {
-                            IdentityRole r = _rolesRepo.Get(roleId);
+                            ApplicationRole r = _rolesRepo.Get(roleId);
                             _usersRepo.AddRole(user, r);
                         }
                     }

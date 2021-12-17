@@ -9,8 +9,8 @@ namespace CBProject.HelperClasses.Interfaces
     public interface IUnitOfWork
     {
         ApplicationDbContext Context { get; }
-        RoleStore<IdentityRole> RoleStore { get; }
-        RoleManager<IdentityRole> RoleManager { get; }
+        RoleStore<ApplicationRole> RoleStore { get; }
+        RoleManager<ApplicationRole> RoleManager { get; }
         UserStore<ApplicationUser> UserStore { get; }
         UserManager<ApplicationUser> UserManager { get; }
         CategoriesRepository Categories { get; }

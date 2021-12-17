@@ -3,7 +3,6 @@ using CBProject.HelperClasses.Interfaces;
 using CBProject.Models;
 using CBProject.Repositories.IdentityRepos.Interfaces;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -178,13 +177,13 @@ namespace CBProject.Repositories.IdentityRepos
                 .Where(u => usernames.Contains(u.UserName))
                 .ToListAsync();
         }
-        public List<IdentityRole> GetRolesForUser(ApplicationUser user)
+        public List<ApplicationRole> GetRolesForUser(ApplicationUser user)
         {
             var userRoles = _manager.UserManager.GetRoles(user.Id);
             var roles = _manager.RoleManager.Roles.Where(r => !userRoles.Contains(r.Name)).ToList();
             return roles;
         }
-        public async Task<List<IdentityRole>> GetRolesForUserAsync(ApplicationUser user)
+        public async Task<List<ApplicationRole>> GetRolesForUserAsync(ApplicationUser user)
         {
             var userRoles = await _manager.UserManager.GetRolesAsync(user.Id);
             var roles = await _manager.RoleManager.Roles.Where(r => !userRoles.Contains(r.Name)).ToListAsync();
@@ -202,7 +201,7 @@ namespace CBProject.Repositories.IdentityRepos
             var usersIds = role.Users.Select(u => u.UserId).ToList();
             return await this._manager.UserManager.Users.Where(u => usersIds.Contains(u.Id)).ToListAsync();
         }
-        public void RemoveRole(ApplicationUser user, IdentityRole role)
+        public void RemoveRole(ApplicationUser user, ApplicationRole role)
         {
             _manager.UserManager.RemoveFromRole(user.Id, role.Name);
         }
@@ -216,7 +215,7 @@ namespace CBProject.Repositories.IdentityRepos
                 .ToArray();
             _manager.UserManager.RemoveFromRoles(user.Id, rolesNames);
         }
-        public void AddRole(ApplicationUser user, IdentityRole role)
+        public void AddRole(ApplicationUser user, ApplicationRole role)
         {
             if (user == null)
                 throw new Exception("User == Null.");

@@ -234,6 +234,7 @@ namespace CBProject.Migrations
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
+                        Level = c.Int(nullable: false),
                         Name = c.String(nullable: false, maxLength: 256),
                     })
                 .PrimaryKey(t => t.Id)

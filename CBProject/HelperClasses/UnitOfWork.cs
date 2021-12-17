@@ -12,8 +12,8 @@ namespace CBProject.HelperClasses
     {
         private bool disposedValue;
         public ApplicationDbContext Context { get; protected set; }
-        public RoleStore<IdentityRole> RoleStore { get; protected set; }
-        public RoleManager<IdentityRole> RoleManager { get; protected set; }
+        public RoleStore<ApplicationRole> RoleStore { get; protected set; }
+        public RoleManager<ApplicationRole> RoleManager { get; protected set; }
         public UserStore<ApplicationUser> UserStore { get; protected set; }
         public UserManager<ApplicationUser> UserManager { get; protected set; }
         public CategoriesRepository Categories { get; protected set; }
@@ -29,9 +29,9 @@ namespace CBProject.HelperClasses
         public UnitOfWork(IApplicationDbContext context)
         {
             this.Context = (ApplicationDbContext)context;
-            this.RoleStore = new RoleStore<IdentityRole>(this.Context);
+            this.RoleStore = new RoleStore<ApplicationRole>(this.Context);
             this.UserStore = new UserStore<ApplicationUser>(this.Context);
-            this.RoleManager = new RoleManager<IdentityRole>(this.RoleStore);
+            this.RoleManager = new RoleManager<ApplicationRole>(this.RoleStore);
             this.UserManager = new UserManager<ApplicationUser>(this.UserStore);
             this.CategoryToCategory = new CategoryToCategoryRepository(this);
             this.Categories = new CategoriesRepository(this);

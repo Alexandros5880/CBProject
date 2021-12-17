@@ -9,5 +9,7 @@ namespace CBProject.Models.ViewModels
         public string Id { get; set; }
         [Required]
         public string Name { get; set; }
+        [Required]
+        public RoleLevel Level { get; set; }
     }
 }

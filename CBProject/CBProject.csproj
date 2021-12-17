@@ -229,9 +229,9 @@
     <Compile Include="HelperClasses\UnitOfWork.cs" />
     <Compile Include="HelperClasses\Interfaces\IUnitOfWork.cs" />
     <Compile Include="HelperClasses\StaticImfo.cs" />
-    <Compile Include="Migrations\202112161356353_Initial.cs" />
-    <Compile Include="Migrations\202112161356353_Initial.Designer.cs">
-      <DependentUpon>202112161356353_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\202112171720387_Initial.cs" />
+    <Compile Include="Migrations\202112171720387_Initial.Designer.cs">
+      <DependentUpon>202112171720387_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -1807,12 +1807,9 @@
     <Content Include="Views\Tags\Details.cshtml" />
     <Content Include="Views\Tags\Edit.cshtml" />
     <Content Include="Views\Tags\Index.cshtml" />
-
     <Content Include="Views\Ebooks\PublicDetails.cshtml" />
-
     <Content Include="Views\Videos\_Details.cshtml" />
     <Content Include="Views\Videos\_Edit.cshtml" />
-
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1911,8 +1908,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202112161356353_Initial.resx">
-      <DependentUpon>202112161356353_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202112171720387_Initial.resx">
+      <DependentUpon>202112171720387_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

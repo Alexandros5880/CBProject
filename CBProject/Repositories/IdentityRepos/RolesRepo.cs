@@ -1,8 +1,8 @@
 ﻿using CBProject.HelperClasses;
 using CBProject.HelperClasses.Interfaces;
+using CBProject.Models;
 using CBProject.Repositories.IdentityRepos.Interfaces;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -19,69 +19,71 @@ namespace CBProject.Repositories.IdentityRepos
         {
             this._manager = ((UnitOfWork)manager);
         }
-        public IdentityRole Get(string id)
+        public ApplicationRole Get(string id)
         {
             return this._manager.RoleManager.FindById(id);
         }
-        public IdentityRole GetByName(string name)
+        public ApplicationRole GetByName(string name)
         {
             return this._manager.RoleManager.FindByName(name);
         }
-        public ICollection<IdentityRole> GetAll()
+        public ICollection<ApplicationRole> GetAll()
         {
             return this._manager.RoleManager.Roles.ToList();
         }
-        public ICollection<IdentityRole> GetAllByNames(ICollection<string> names)
+        public ICollection<ApplicationRole> GetAllByNames(ICollection<string> names)
         {
             return this._manager.RoleManager.Roles.Where(r => names.Contains(r.Name)).ToList();
         }
-        public async Task<IdentityRole> GetAsync(string id)
+        public async Task<ApplicationRole> GetAsync(string id)
         {
             return await this._manager.RoleManager.FindByIdAsync(id);
         }
-        public async Task<IdentityRole> GetByNameAsync(string name)
+        public async Task<ApplicationRole> GetByNameAsync(string name)
         {
             return await this._manager.RoleManager.FindByNameAsync(name);
         }
-        public async Task<ICollection<IdentityRole>> GetAllAsync()
+        public async Task<ICollection<ApplicationRole>> GetAllAsync()
         {
             return await this._manager.RoleManager.Roles.ToListAsync();
         }
-        public async Task<ICollection<IdentityRole>> GetAllByNamesAsync(ICollection<string> names)
+        public async Task<ICollection<ApplicationRole>> GetAllByNamesAsync(ICollection<string> names)
         {
             return await this._manager.RoleManager.Roles.Where(r => names.Contains(r.Name)).ToListAsync();
         }
-        public void Add(string name)
+        public void Add(string name, RoleLevel level)
         {
             if(!this._manager.RoleManager.RoleExists(name))
             {
-                IdentityRole role = new IdentityRole()
+                ApplicationRole role = new ApplicationRole()
                 {
-                    Name = name
+                    Name = name,
+                    Level = level
                 };
                 this._manager.RoleManager.Create(role);
             }
         }
-        public void Add(IdentityRole role)
+        public void Add(ApplicationRole role)
         {
             if (!this._manager.RoleManager.RoleExists(role.Name))
             {
                 this._manager.RoleManager.Create(role);
             }
         }
-        public async Task<IdentityResult> AddAsync(string name)
+        public async Task<IdentityResult> AddAsync(string name, RoleLevel level)
         {
             if (!this._manager.RoleManager.RoleExists(name))
             {
-                IdentityRole role = new IdentityRole()
+                ApplicationRole role = new ApplicationRole()
                 {
-                    Name = name
+                    Name = name,
+                    Level = level
                 };
                 return await this._manager.RoleManager.CreateAsync(role);
             }
             return null;
         }
-        public async Task<IdentityResult> AddAsync(IdentityRole role)
+        public async Task<IdentityResult> AddAsync(ApplicationRole role)
         {
             if (!this._manager.RoleManager.RoleExists(role.Name))
             {
@@ -106,12 +108,12 @@ namespace CBProject.Repositories.IdentityRepos
         }
         public void Update(string oldName, string newName)
         {
-            IdentityRole role = this.GetByName(oldName);
+            ApplicationRole role = this.GetByName(oldName);
             role.Name = newName;
             this._manager.RoleManager.Update(role);
             this._manager.Context.SaveChanges();
         }
-        public void Update(IdentityRole role)
+        public void Update(ApplicationRole role)
         {
             //this._manager.RoleManager.Update(role);
             //this._manager.Context.SaveChanges();
@@ -119,13 +121,13 @@ namespace CBProject.Repositories.IdentityRepos
         }
         public async Task<IdentityResult> UpdateAsync(string oldName, string newName)
         {
-            IdentityRole role = await this.GetByNameAsync(oldName);
+            ApplicationRole role = await this.GetByNameAsync(oldName);
             role.Name = newName;
             //await this._manager.RoleManager.UpdateAsync(role);
             //return await this._manager.Context.SaveChangesAsync();
             return await this._manager.RoleManager.UpdateAsync(role);
         }
-        public async Task<IdentityResult> UpdateAsync(IdentityRole role)
+        public async Task<IdentityResult> UpdateAsync(ApplicationRole role)
         {
             //await this._manager.RoleManager.UpdateAsync(role);
             //return await this._manager.Context.SaveChangesAsync();

@@ -2,7 +2,6 @@
 using CBProject.Models;
 using CBProject.Models.EntityModels;
 using CBProject.Models.ViewModels;
-using Microsoft.AspNet.Identity.EntityFramework;
 using System.Collections.Generic;
 
 namespace CBProject.App_Start
@@ -11,8 +10,8 @@ namespace CBProject.App_Start
     {
         public MappingProfile()
         {
-            Mapper.CreateMap<IdentityRole, IdentityRoleViewModel>();
-            Mapper.CreateMap<IdentityRoleViewModel, IdentityRole>();
+            Mapper.CreateMap<ApplicationRole, IdentityRoleViewModel>();
+            Mapper.CreateMap<IdentityRoleViewModel, ApplicationRole>();
 
             Mapper.CreateMap<ApplicationUser, RegisterViewModel>();
             Mapper.CreateMap<RegisterViewModel, ApplicationUser>();
@@ -20,8 +19,8 @@ namespace CBProject.App_Start
             Mapper.CreateMap<ApplicationUser, ApplicationUserViewModel>();
             Mapper.CreateMap<ApplicationUserViewModel, ApplicationUser>();
 
-            Mapper.CreateMap<ICollection<IdentityRole>, ICollection<IdentityRoleViewModel>>();
-            Mapper.CreateMap<ICollection<IdentityRoleViewModel>, ICollection<IdentityRole>>();
+            Mapper.CreateMap<ICollection<ApplicationRole>, ICollection<IdentityRoleViewModel>>();
+            Mapper.CreateMap<ICollection<IdentityRoleViewModel>, ICollection<ApplicationRole>>();
 
             Mapper.CreateMap<ICollection<ApplicationUser>, ICollection<RegisterViewModel>>();
             Mapper.CreateMap<ICollection<RegisterViewModel>, ICollection<ApplicationUser>>();

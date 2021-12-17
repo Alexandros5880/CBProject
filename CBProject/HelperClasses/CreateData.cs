@@ -16,30 +16,30 @@ namespace CBProject.HelperClasses
             {
                 if (!context.Roles.Any(r => r.Name == "Admin"))
                 {
-                    var store_1 = new RoleStore<IdentityRole>(context);
-                    var manager_1 = new RoleManager<IdentityRole>(store_1);
-                    var role_1 = new IdentityRole { Name = "Admin" };
+                    var store_1 = new RoleStore<ApplicationRole>(context);
+                    var manager_1 = new RoleManager<ApplicationRole>(store_1);
+                    var role_1 = new ApplicationRole { Name = "Admin", Level = RoleLevel.XXSECURE };
                     manager_1.Create(role_1);
                 }
                 if (!context.Roles.Any(r => r.Name == "Teacher"))
                 {
-                    var store_2 = new RoleStore<IdentityRole>(context);
-                    var manager_2 = new RoleManager<IdentityRole>(store_2);
-                    var role_2 = new IdentityRole { Name = "Teacher" };
+                    var store_2 = new RoleStore<ApplicationRole>(context);
+                    var manager_2 = new RoleManager<ApplicationRole>(store_2);
+                    var role_2 = new ApplicationRole { Name = "Teacher", Level = RoleLevel.SECURE };
                     manager_2.Create(role_2);
                 }
                 if (!context.Roles.Any(r => r.Name == "Student"))
                 {
-                    var store_3 = new RoleStore<IdentityRole>(context);
-                    var manager_3 = new RoleManager<IdentityRole>(store_3);
-                    var role_3 = new IdentityRole { Name = "Student" };
+                    var store_3 = new RoleStore<ApplicationRole>(context);
+                    var manager_3 = new RoleManager<ApplicationRole>(store_3);
+                    var role_3 = new ApplicationRole { Name = "Student", Level = RoleLevel.MID };
                     manager_3.Create(role_3);
                 }
                 if (!context.Roles.Any(r => r.Name == "Guest"))
                 {
-                    var store_3 = new RoleStore<IdentityRole>(context);
-                    var manager_3 = new RoleManager<IdentityRole>(store_3);
-                    var role_3 = new IdentityRole { Name = "Guest" };
+                    var store_3 = new RoleStore<ApplicationRole>(context);
+                    var manager_3 = new RoleManager<ApplicationRole>(store_3);
+                    var role_3 = new ApplicationRole { Name = "Guest", Level = RoleLevel.XLOW };
                     manager_3.Create(role_3);
                 }
 
@@ -152,8 +152,8 @@ namespace CBProject.HelperClasses
                     ImagePath = "/assets/images/users/avatar-6.jpg"
                 };
 
-                var store = new UserStore<ApplicationUser>(context);
-                var manager = new UserManager<ApplicationUser>(store);
+                var store = new UserStore<ApplicationUser, ApplicationRole, string, IdentityUserLogin, IdentityUserRole, IdentityUserClaim>(context);
+                CBProject.ApplicationUserManager manager = new CBProject.ApplicationUserManager(store);
 
                 manager.Create(user_1, user_1.Password);
                 manager.Create(user_2, user_2.Password);
@@ -185,7 +185,8 @@ namespace CBProject.HelperClasses
                 {
                     manager.AddToRole(user_6.Id, "Guest");
                 }
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }

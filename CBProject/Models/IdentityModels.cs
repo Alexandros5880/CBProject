@@ -13,6 +13,17 @@ namespace CBProject.Models
 {
 
 
+    public enum RoleLevel
+    {
+        XXLOW,
+        XLOW,
+        LOW,
+        MID,
+        SECURE,
+        XSECURE,
+        XXSECURE
+    }
+
     public class ApplicationUser : IdentityUser
     {
         [DataType(DataType.Date)]
@@ -48,7 +59,7 @@ namespace CBProject.Models
         public ICollection<Payment> Payments { get; set; }
         public ICollection<Ebook> Ebooks { get; set; }
 
-        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
+        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser, string> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
@@ -60,11 +71,18 @@ namespace CBProject.Models
         }
     }
 
+    public class ApplicationRole : IdentityRole
+    {
+        public RoleLevel Level { get; set; }
+    }
 
-
-
-
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplicationDbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser,
+                                                            ApplicationRole,
+                                                            string,
+                                                            IdentityUserLogin,
+                                                            IdentityUserRole,
+                                                            IdentityUserClaim>,
+                                            IApplicationDbContext
     {
         public DbSet<Category> Categories { get; set; }
         public DbSet<CategoryToCategory> CategoriesToCategories { get; set; }
@@ -78,7 +96,7 @@ namespace CBProject.Models
         public DbSet<Payment> Payments { get; set; }
 
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("DefaultConnection")
         {
         }
         public static ApplicationDbContext Create()

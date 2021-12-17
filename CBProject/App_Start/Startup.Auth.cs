@@ -1,11 +1,10 @@
-﻿using System;
+﻿using CBProject.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
-using Microsoft.Owin.Security.Google;
 using Owin;
-using CBProject.Models;
+using System;
 
 namespace CBProject
 {
@@ -63,6 +62,9 @@ namespace CBProject
             //    ClientId = "",
             //    ClientSecret = ""
             //});
+
+            app.CreatePerOwinContext<ApplicationRoleManager>(ApplicationRoleManager.Create);
+
         }
     }
 }

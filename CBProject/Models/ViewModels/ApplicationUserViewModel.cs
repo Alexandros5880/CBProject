@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -82,8 +81,8 @@ namespace CBProject.Models.ViewModels
 
         public bool IsInactive { get; set; }
 
-        public ICollection<IdentityRole> OtherRoles { get; set; }
-        public ICollection<IdentityRole> MyRoles { get; set; }
+        public ICollection<ApplicationRole> OtherRoles { get; set; }
+        public ICollection<ApplicationRole> MyRoles { get; set; }
         public ICollection<string> AddRoles { get; set; }
         public ICollection<string> RemoveRoles { get; set; }
     }

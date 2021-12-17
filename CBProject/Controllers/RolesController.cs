@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
+using CBProject.Models;
 using CBProject.Models.ViewModels;
 using CBProject.Repositories.IdentityRepos;
 using CBProject.Repositories.IdentityRepos.Interfaces;
-using Microsoft.AspNet.Identity.EntityFramework;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
@@ -14,17 +14,19 @@ namespace CBProject.Controllers
     {
         private readonly RolesRepo _rolesRepo;
         private readonly UsersRepo _userRepo;
-        public RolesController(IRolesRepo rolesRepo, IUsersRepo usersRepo)
+        private ApplicationDbContext _context { get; set; }
+        public RolesController(IApplicationDbContext context, IRolesRepo rolesRepo, IUsersRepo usersRepo)
         {
+            this._context = (ApplicationDbContext)context;
             this._rolesRepo = (RolesRepo) rolesRepo;
             this._userRepo = (UsersRepo) usersRepo;
         }
 
         public async Task<ActionResult> Index()
         {
-            ICollection<IdentityRole> roles = await this._rolesRepo.GetAllAsync();
-            //ICollection<IdentityRoleViewModel> viewModels = 
-            //    Mapper.Map<ICollection<IdentityRole>, ICollection<IdentityRoleViewModel>>(roles);
+            ICollection<ApplicationRole> roles = await this._rolesRepo.GetAllAsync();
+            //ICollection<ApplicationRoleViewModel> viewModels = 
+            //    Mapper.Map<ICollection<ApplicationRole>, ICollection<ApplicationRoleViewModel>>(roles);
             return View(roles);
         }
 
@@ -35,7 +37,7 @@ namespace CBProject.Controllers
             var role = await _rolesRepo.GetAsync(id);
             if (role == null)
                 return HttpNotFound();
-            var viewModel = Mapper.Map<IdentityRole, IdentityRoleViewModel>(role);
+            var viewModel = Mapper.Map<ApplicationRole, IdentityRoleViewModel>(role);
             return View(viewModel);
         }
 
@@ -54,7 +56,12 @@ namespace CBProject.Controllers
                 {
                     return HttpNotFound();
                 }
-                await _rolesRepo.AddAsync(model.Name);
+                ApplicationRole role = new ApplicationRole()
+                {
+                    Name = model.Name,
+                    Level = model.Level
+                };
+                await _rolesRepo.AddAsync(role);
                 return RedirectToAction("Index");
             }
             catch
@@ -70,7 +77,7 @@ namespace CBProject.Controllers
             var role = await _rolesRepo.GetAsync(id);
             if (role == null)
                 return HttpNotFound();
-            var viewModel = Mapper.Map<IdentityRole, IdentityRoleViewModel>(role);
+            var viewModel = Mapper.Map<ApplicationRole, IdentityRoleViewModel>(role);
             return View(viewModel);
         }
 
@@ -78,19 +85,13 @@ namespace CBProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(IdentityRoleViewModel model)
         {
-            try
-            {
-                IdentityRole role = await _rolesRepo.GetAsync(model.Id);
-                if (role == null)
-                    return HttpNotFound();
-                role.Name = model.Name;
-                await _rolesRepo.UpdateAsync(role);
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }   
+            ApplicationRole role = await _rolesRepo.GetAsync(model.Id);
+            role.Level = model.Level;
+            if (role == null)
+                return HttpNotFound();
+            role.Name = model.Name;
+            await _rolesRepo.UpdateAsync(role);
+            return RedirectToAction("Index");
         }
 
         public async Task<ActionResult> Delete(string id)
@@ -100,7 +101,7 @@ namespace CBProject.Controllers
             var role = await _rolesRepo.GetAsync(id);
             if (role == null)
                 return HttpNotFound();
-            var viewModel = Mapper.Map<IdentityRole, IdentityRoleViewModel>(role);
+            var viewModel = Mapper.Map<ApplicationRole, IdentityRoleViewModel>(role);
             return View(viewModel);
         }
 
