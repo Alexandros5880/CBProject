@@ -35,6 +35,9 @@
             <th>
                 Category
             </th>
+            <th>
+                Rating
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -67,10 +70,53 @@
     <td>
         @Html.DisplayFor(modelItem => item.Category.Name)
     </td>
-    @*<td>
-            @Html.DisplayFor(modelItem => item.CreatorId)
-        </td>*@
     <td>
+        @{
+            decimal sum = 0;
+            if (item.MyRatings.Count > 0)
+            {
+                foreach (var rate in item.MyRatings)
+                {
+                    sum += rate.Rate;
+                }
+                sum = sum / item.MyRatings.Count;
+            }
+        }
+        @Html.DisplayFor(modelItem => @sum)
+    </td>
+    <td>
+        <div id="myModalEC" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Add Comment</h4>
+                    </div>
+                    <div class="modal-body">
+                        Comments Here
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="myModalER" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Add Ratings</h4>
+                    </div>
+                    <div class="modal-body">
+                        Ratings Here
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div id="myModal" class="modal fade" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -103,12 +149,20 @@
                 </div>
             </div>
         </div>
+        @if (!User.IsInRole("Admin") && !User.IsInRole("Teacher"))
+        {
+            <button type="button" data - id="@item.ID" class="btn btn-primary" data-toggle="modal" data-target="#myModalEC">Comment</button>
+            <button type="button" data-id="@item.ID" class="btn btn-info" data-toggle="modal" data-target="#myModal">Details</button>
+            <button type="button" data-id="@item.ID" class="btn btn-warning" data-toggle="modal" data-target="#myModalER">Youre Rate</button>
+        }
+        else if (User.Identity.IsAuthenticated)
+        {
+            <button type="button" data-id="@item.ID" class="btn btn-success" data-toggle="modal" data-target="#editModal">Edit</button>
+            <button type="button" data-id="@item.ID" class='btn btn-danger btn-delete' data-toggle="modal">Delete</button>
+        }
         @*@Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id = item.ID }) |*@
+        @Html.ActionLink("Details", "Details", new { id = item.ID }) |*@
         @*@Html.ActionLink("Delete", "Delete", new { id = item.ID })*@
-        <button type="button" data-id="@item.ID" class="btn btn-success " data-toggle="modal" data-target="#editModal">Edit</button>
-        <button type="button" data-id="@item.ID" class="btn btn-info " data-toggle="modal" data-target="#myModal">Details</button>
-        <button type="button" data-id="@item.ID" class='btn btn-danger btn-delete' data-toggle="modal">Delete</button>
     </td>
 </tr>
     }
