@@ -26,15 +26,50 @@
 
                 var fullName = currentUser.FullName;
                 var userImage = currentUser.ImagePath;
+                RoleLevel access = RoleLevel.SUPERLOW;
 
-
-                List<ApplicationRole> roles = new List<ApplicationRole>();
                 foreach (var role in currentUser.Roles)
                 {
-                    roles.Add(roleManager.FindById(role.RoleId));
+                    var myRole = roleManager.FindById(role.RoleId);
+                    if (myRole.Level == RoleLevel.FULL)
+                    {
+                        access = myRole.Level;
+                    }
+                    else if (myRole.Level == RoleLevel.PLUSSFULL)
+                    {
+                        if (access != RoleLevel.FULL)
+                        {
+                            access = myRole.Level;
+                        }
+                    }
+                    else if (myRole.Level == RoleLevel.MIDDLE)
+                    {
+                        if (access != RoleLevel.FULL &&
+                            access != RoleLevel.PLUSSFULL)
+                        {
+                            access = myRole.Level;
+                        }
+                    }
+                    else if (myRole.Level == RoleLevel.LOW)
+                    {
+                        if (access != RoleLevel.FULL &&
+                            access != RoleLevel.PLUSSFULL &&
+                            access != RoleLevel.MIDDLE)
+                        {
+                            access = myRole.Level;
+                        }
+                    }
+                    else if (myRole.Level == RoleLevel.SUPERLOW)
+                    {
+                        if (access != RoleLevel.FULL &&
+                            access != RoleLevel.PLUSSFULL &&
+                            access != RoleLevel.MIDDLE &&
+                            access != RoleLevel.LOW)
+                        {
+                            access = myRole.Level;
+                        }
+                    }
                 }
-                var accessLevel = roles[0].Level;
-
             }
 
             <button class="btn btn-secondary dropdown-toggle"
@@ -65,7 +100,9 @@
                     <li>
                         <a href=@Url.Action("Index", "Manage", routeValues: null) key="t-manage">Manage</a>
                     </li>
-                    @if (accessLevel == RoleLevel.FULL || accessLevel == RoleLevel.PLUSSFULL || accessLevel == RoleLevel.MIDDLE)
+                    @if (access == RoleLevel.FULL ||
+                        access == RoleLevel.PLUSSFULL ||
+                        access == RoleLevel.MIDDLE)
                     {
                         <li>
                             <a href=@Url.Action("Index", "Users") key="t-dashboard">Dashboard</a>
@@ -75,7 +112,7 @@
                         <a href="javascript:document.getElementById('logoutForm').submit()" key="t-logout">Log Off</a>
                     </li>
                     <li>
-                        @accessLevel
+                        @access
                     </li>
                 </ul>
 

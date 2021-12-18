@@ -1,10 +1,73 @@
 ﻿@model IEnumerable<CBProject.Models.ViewModels.EbookViewModel>
 
-@{
-    ViewBag.Title = "Index";
-}
+@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.EntityFramework
+@using CBProject.Models
 
-<h2>Index</h2>
+@{
+    //var fullname = ((System.Security.Claims.ClaimsIdentity)User.Identity).FindFirst("FullName");
+    //var user_image = ((System.Security.Claims.ClaimsIdentity)User.Identity).FindFirst("ImagePath");
+
+
+
+    var context = new ApplicationDbContext();
+    var userStore = new UserStore<ApplicationUser, ApplicationRole, string, IdentityUserLogin, IdentityUserRole, IdentityUserClaim>(context);
+    var userManager = new CBProject.ApplicationUserManager(userStore);
+    var currentUser = userManager.FindById(User.Identity.GetUserId());
+    var roleStore = new RoleStore<ApplicationRole>(context);
+    var roleManager = new RoleManager<ApplicationRole>(roleStore);
+
+
+    var fullName = currentUser.FullName;
+    var userImage = currentUser.ImagePath;
+    RoleLevel access = RoleLevel.SUPERLOW;
+
+    if (User.Identity.IsAuthenticated)
+    {
+        foreach (var role in currentUser.Roles)
+        {
+            var myRole = roleManager.FindById(role.RoleId);
+            if (myRole.Level == RoleLevel.FULL)
+            {
+                access = myRole.Level;
+            }
+            else if (myRole.Level == RoleLevel.PLUSSFULL)
+            {
+                if (access != RoleLevel.FULL)
+                {
+                    access = myRole.Level;
+                }
+            }
+            else if (myRole.Level == RoleLevel.MIDDLE)
+            {
+                if (access != RoleLevel.FULL &&
+                    access != RoleLevel.PLUSSFULL)
+                {
+                    access = myRole.Level;
+                }
+            }
+            else if (myRole.Level == RoleLevel.LOW)
+            {
+                if (access != RoleLevel.FULL &&
+                    access != RoleLevel.PLUSSFULL &&
+                    access != RoleLevel.MIDDLE)
+                {
+                    access = myRole.Level;
+                }
+            }
+            else if (myRole.Level == RoleLevel.SUPERLOW)
+            {
+                if (access != RoleLevel.FULL &&
+                    access != RoleLevel.PLUSSFULL &&
+                    access != RoleLevel.MIDDLE &&
+                    access != RoleLevel.LOW)
+                {
+                    access = myRole.Level;
+                }
+            }
+        }
+    }
+}
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -47,148 +110,156 @@
 
     @foreach (var item in Model)
     {
-<tr>
+        <tr>
 
-    <td>
-        @Html.DisplayFor(modelItem => item.Title)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Description)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Thumbnail)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Url)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.UploadDate)
-    </td>
-    <td>
-        <img alt="Cover Foto" src="@item.EbookImagePath" style="height:77px;"/>
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Category.Name)
-    </td>
-    <td>
-        @{
-            decimal sum = 0;
-            if (item.MyRatings.Count > 0)
-            {
-                foreach (var rate in item.MyRatings)
-                {
-                    sum += rate.Rate;
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Thumbnail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Url)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UploadDate)
+            </td>
+            <td>
+                <img alt="Cover Foto" src="@item.EbookImagePath" style="height:77px;" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.Name)
+            </td>
+            <td>
+                @{
+                    decimal sum = 0;
+                    if (item.MyRatings.Count > 0)
+                    {
+                        foreach (var rate in item.MyRatings)
+                        {
+                            sum += rate.Rate;
+                        }
+                        sum = sum / item.MyRatings.Count;
+                    }
                 }
-                sum = sum / item.MyRatings.Count;
-            }
-        }
-        @Html.DisplayFor(modelItem => @sum)
-    </td>
-    <td>
-        <div id="myModalEC" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Add Comment</h4>
-                    </div>
-                    <div class="modal-body">
-                        Comments Here
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="myModalER" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Add Ratings</h4>
-                    </div>
-                    <div class="modal-body">
-                        Ratings Here
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                @Html.DisplayFor(modelItem => @sum)
+            </td>
+            <td>
+                <div id="myModalEC" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Add Comment</h4>
+                            </div>
+                            <div class="modal-body">
+                                Comments Here
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div id="myModal" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Modal Header</h4>
-                    </div>
-                    <div class="modal-body">
-                        @{ Html.RenderPartial("_Details", item); }
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="editModal" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Modal Header</h4>
-                    </div>
-                    <div class="modal-body">
-                        @{ Html.RenderPartial("_Edit", item); }
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <div id="myModalER" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Add Ratings</h4>
+                            </div>
+                            <div class="modal-body">
+                                Ratings Here
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        @if (!User.IsInRole("Admin"))
-        {
-            <button type="button" data - id="@item.ID" class="btn btn-primary" data-toggle="modal" data-target="#myModalEC">Comment</button>
-            <button type="button" data-id="@item.ID" class="btn btn-info" data-toggle="modal" data-target="#myModal">Details</button>
-            <button type="button" data-id="@item.ID" class="btn btn-warning" data-toggle="modal" data-target="#myModalER">Youre Rate</button>
-            <button type="button" data-id="@item.ID" class="btn btn-success" data-toggle="modal" data-target="#editModal">Edit</button>
-            <button type="button" data-id="@item.ID" class='btn btn-danger btn-delete' data-toggle="modal">Delete</button>
-        }
-        else if (!User.IsInRole("Teacher"))
-        {
-            <button type="button" data - id="@item.ID" class="btn btn-primary" data-toggle="modal" data-target="#myModalEC">Comment</button>
-            <button type="button" data-id="@item.ID" class="btn btn-info" data-toggle="modal" data-target="#myModal">Details</button>
-            <button type="button" data-id="@item.ID" class="btn btn-warning" data-toggle="modal" data-target="#myModalER">Youre Rate</button>
-            <button type="button" data-id="@item.ID" class="btn btn-success" data-toggle="modal" data-target="#editModal">Edit</button>
-            <button type="button" data-id="@item.ID" class='btn btn-danger btn-delete' data-toggle="modal">Delete</button>
-        }
-        else if (!User.IsInRole("Student"))
-        {
-            <button type="button" data - id="@item.ID" class="btn btn-primary" data-toggle="modal" data-target="#myModalEC">Comment</button>
-            <button type="button" data-id="@item.ID" class="btn btn-info" data-toggle="modal" data-target="#myModal">Details</button>
-            <button type="button" data-id="@item.ID" class="btn btn-warning" data-toggle="modal" data-target="#myModalER">Youre Rate</button>
-            <button type="button" data-id="@item.ID" class="btn btn-success" data-toggle="modal" data-target="#editModal">Edit</button>
-            <button type="button" data-id="@item.ID" class='btn btn-danger btn-delete' data-toggle="modal">Delete</button>
-        }
-        else if (!User.IsInRole("Guest"))
-        {
-            <button type="button" data - id="@item.ID" class="btn btn-primary" data-toggle="modal" data-target="#myModalEC">Comment</button>
-            <button type="button" data-id="@item.ID" class="btn btn-info" data-toggle="modal" data-target="#myModal">Details</button>
-            <button type="button" data-id="@item.ID" class="btn btn-warning" data-toggle="modal" data-target="#myModalER">Youre Rate</button>
-            <button type="button" data-id="@item.ID" class="btn btn-success" data-toggle="modal" data-target="#editModal">Edit</button>
-            <button type="button" data-id="@item.ID" class='btn btn-danger btn-delete' data-toggle="modal">Delete</button>
-        }
-        else if (User.Identity.IsAuthenticated)
-        {
-        }
-        @*@Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                <div id="myModal" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Modal Header</h4>
+                            </div>
+                            <div class="modal-body">
+                                @{ Html.RenderPartial("_Details", item); }
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="editModal" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Modal Header</h4>
+                            </div>
+                            <div class="modal-body">
+                                @{ Html.RenderPartial("_Edit", item); }
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @if (access == RoleLevel.FULL)
+                {
+                    <button type="button" data - id="@item.ID" class="btn btn-primary" data-toggle="modal" data-target="#myModalEC">Comment</button>
+                    <button type="button" data-id="@item.ID" class="btn btn-info" data-toggle="modal" data-target="#myModal">Details</button>
+                    <button type="button" data-id="@item.ID" class="btn btn-warning" data-toggle="modal" data-target="#myModalER">Youre Rate</button>
+                    <button type="button" data-id="@item.ID" class="btn btn-success" data-toggle="modal" data-target="#editModal">Edit</button>
+                    <button type="button" data-id="@item.ID" class='btn btn-danger btn-delete' data-toggle="modal">Delete</button>
+                }
+                else if (access == RoleLevel.PLUSSFULL)
+                {
+                    <button type="button" data - id="@item.ID" class="btn btn-primary" data-toggle="modal" data-target="#myModalEC">Comment</button>
+                    <button type="button" data-id="@item.ID" class="btn btn-info" data-toggle="modal" data-target="#myModal">Details</button>
+                    <button type="button" data-id="@item.ID" class="btn btn-warning" data-toggle="modal" data-target="#myModalER">Youre Rate</button>
+                    <button type="button" data-id="@item.ID" class="btn btn-success" data-toggle="modal" data-target="#editModal">Edit</button>
+                    <button type="button" data-id="@item.ID" class='btn btn-danger btn-delete' data-toggle="modal">Delete</button>
+                }
+                else if (access == RoleLevel.MIDDLE)
+                {
+                    <button type="button" data - id="@item.ID" class="btn btn-primary" data-toggle="modal" data-target="#myModalEC">Comment</button>
+                    <button type="button" data-id="@item.ID" class="btn btn-info" data-toggle="modal" data-target="#myModal">Details</button>
+                    <button type="button" data-id="@item.ID" class="btn btn-warning" data-toggle="modal" data-target="#myModalER">Youre Rate</button>
+                    <button type="button" data-id="@item.ID" class="btn btn-success" data-toggle="modal" data-target="#editModal">Edit</button>
+                    <button type="button" data-id="@item.ID" class='btn btn-danger btn-delete' data-toggle="modal">Delete</button>
+                }
+                else if (access == RoleLevel.LOW)
+                {
+                    <button type="button" data - id="@item.ID" class="btn btn-primary" data-toggle="modal" data-target="#myModalEC">Comment</button>
+                    <button type="button" data-id="@item.ID" class="btn btn-info" data-toggle="modal" data-target="#myModal">Details</button>
+                    <button type="button" data-id="@item.ID" class="btn btn-warning" data-toggle="modal" data-target="#myModalER">Youre Rate</button>
+                    <button type="button" data-id="@item.ID" class="btn btn-success" data-toggle="modal" data-target="#editModal">Edit</button>
+                    <button type="button" data-id="@item.ID" class='btn btn-danger btn-delete' data-toggle="modal">Delete</button>
+                }
+                else if (access == RoleLevel.SUPERLOW)
+                {
+                    <button type="button" data - id="@item.ID" class="btn btn-primary" data-toggle="modal" data-target="#myModalEC">Comment</button>
+                    <button type="button" data-id="@item.ID" class="btn btn-info" data-toggle="modal" data-target="#myModal">Details</button>
+                    <button type="button" data-id="@item.ID" class="btn btn-warning" data-toggle="modal" data-target="#myModalER">Youre Rate</button>
+                    <button type="button" data-id="@item.ID" class="btn btn-success" data-toggle="modal" data-target="#editModal">Edit</button>
+                    <button type="button" data-id="@item.ID" class='btn btn-danger btn-delete' data-toggle="modal">Delete</button>
+                }
+                else if (access == RoleLevel.FULL)
+                {
+                }
+                @*@Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
         @Html.ActionLink("Details", "Details", new { id = item.ID }) |*@
-        @*@Html.ActionLink("Delete", "Delete", new { id = item.ID })*@
-    </td>
-</tr>
+                @*@Html.ActionLink("Delete", "Delete", new { id = item.ID })*@
+            </td>
+        </tr>
     }
 
 </table>
@@ -228,7 +299,7 @@
                 $('#deletemodal').show(300);
                 $(".save-delete-modal").on("click", function () {
                     $.ajax({
-                        url:"/api/ebooks/" + button.attr("data-id"),
+                        url: "/api/ebooks/" + button.attr("data-id"),
                         method: "DELETE"
                     }).done(function (data) {
                         button.parents("tr").remove();

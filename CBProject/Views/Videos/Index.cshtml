@@ -1,15 +1,78 @@
 ﻿@model IEnumerable<CBProject.Models.ViewModels.VideoViewModel>
 
-@{
-    ViewBag.Title = "Index";
-}
+@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.EntityFramework
+@using CBProject.Models
 
-<h2>Index</h2>
+@{
+    //var fullname = ((System.Security.Claims.ClaimsIdentity)User.Identity).FindFirst("FullName");
+    //var user_image = ((System.Security.Claims.ClaimsIdentity)User.Identity).FindFirst("ImagePath");
+
+
+
+    var context = new ApplicationDbContext();
+    var userStore = new UserStore<ApplicationUser, ApplicationRole, string, IdentityUserLogin, IdentityUserRole, IdentityUserClaim>(context);
+    var userManager = new CBProject.ApplicationUserManager(userStore);
+    var currentUser = userManager.FindById(User.Identity.GetUserId());
+    var roleStore = new RoleStore<ApplicationRole>(context);
+    var roleManager = new RoleManager<ApplicationRole>(roleStore);
+
+
+    var fullName = currentUser.FullName;
+    var userImage = currentUser.ImagePath;
+    RoleLevel access = RoleLevel.SUPERLOW;
+
+    if (User.Identity.IsAuthenticated)
+    {
+        foreach (var role in currentUser.Roles)
+        {
+            var myRole = roleManager.FindById(role.RoleId);
+            if (myRole.Level == RoleLevel.FULL)
+            {
+                access = myRole.Level;
+            }
+            else if (myRole.Level == RoleLevel.PLUSSFULL)
+            {
+                if (access != RoleLevel.FULL)
+                {
+                    access = myRole.Level;
+                }
+            }
+            else if (myRole.Level == RoleLevel.MIDDLE)
+            {
+                if (access != RoleLevel.FULL &&
+                    access != RoleLevel.PLUSSFULL)
+                {
+                    access = myRole.Level;
+                }
+            }
+            else if (myRole.Level == RoleLevel.LOW)
+            {
+                if (access != RoleLevel.FULL &&
+                    access != RoleLevel.PLUSSFULL &&
+                    access != RoleLevel.MIDDLE)
+                {
+                    access = myRole.Level;
+                }
+            }
+            else if (myRole.Level == RoleLevel.SUPERLOW)
+            {
+                if (access != RoleLevel.FULL &&
+                    access != RoleLevel.PLUSSFULL &&
+                    access != RoleLevel.MIDDLE &&
+                    access != RoleLevel.LOW)
+                {
+                    access = myRole.Level;
+                }
+            }
+        }
+    }
+}
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table"  id="videos">
+<table class="table" id="videos">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Category.Name)
@@ -153,7 +216,7 @@
                         </div>
                     </div>
                 </div>
-                @if (!User.IsInRole("Admin"))
+                @if (access == RoleLevel.FULL)
                 {
                     <button type="button" data-id="@item.ID" class="btn btn-primary" data-toggle="modal" data-target="#myModalVC">Comment</button>
                     <button type="button" data-id="@item.ID" class="btn btn-info " data-toggle="modal" data-target="#myModalV">Details</button>
@@ -161,7 +224,7 @@
                     <button type="button" data-id="@item.ID" class="btn btn-success " data-toggle="modal" data-target="#editModalV">Edit</button>
                     <button type="button" data-id="@item.ID" class='btn btn-danger btn-delete' data-toggle="modal">Delete</button>
                 }
-                else if (!User.IsInRole("Teacher"))
+                else if (access == RoleLevel.PLUSSFULL)
                 {
                     <button type="button" data-id="@item.ID" class="btn btn-primary" data-toggle="modal" data-target="#myModalVC">Comment</button>
                     <button type="button" data-id="@item.ID" class="btn btn-info " data-toggle="modal" data-target="#myModalV">Details</button>
@@ -169,7 +232,7 @@
                     <button type="button" data-id="@item.ID" class="btn btn-success " data-toggle="modal" data-target="#editModalV">Edit</button>
                     <button type="button" data-id="@item.ID" class='btn btn-danger btn-delete' data-toggle="modal">Delete</button>
                 }
-                else if (!User.IsInRole("Student"))
+                else if (access == RoleLevel.MIDDLE)
                 {
                     <button type="button" data-id="@item.ID" class="btn btn-primary" data-toggle="modal" data-target="#myModalVC">Comment</button>
                     <button type="button" data-id="@item.ID" class="btn btn-info " data-toggle="modal" data-target="#myModalV">Details</button>
@@ -177,7 +240,7 @@
                     <button type="button" data-id="@item.ID" class="btn btn-success " data-toggle="modal" data-target="#editModalV">Edit</button>
                     <button type="button" data-id="@item.ID" class='btn btn-danger btn-delete' data-toggle="modal">Delete</button>
                 }
-                else if (!User.IsInRole("Guest"))
+                else if (access == RoleLevel.LOW)
                 {
                     <button type="button" data-id="@item.ID" class="btn btn-primary" data-toggle="modal" data-target="#myModalVC">Comment</button>
                     <button type="button" data-id="@item.ID" class="btn btn-info " data-toggle="modal" data-target="#myModalV">Details</button>
@@ -185,12 +248,17 @@
                     <button type="button" data-id="@item.ID" class="btn btn-success " data-toggle="modal" data-target="#editModalV">Edit</button>
                     <button type="button" data-id="@item.ID" class='btn btn-danger btn-delete' data-toggle="modal">Delete</button>
                 }
-                else if (User.Identity.IsAuthenticated)
+                else if (access == RoleLevel.SUPERLOW)
                 {
+                    <button type="button" data-id="@item.ID" class="btn btn-primary" data-toggle="modal" data-target="#myModalVC">Comment</button>
+                    <button type="button" data-id="@item.ID" class="btn btn-info " data-toggle="modal" data-target="#myModalV">Details</button>
+                    <button type="button" data-id="@item.ID" class="btn btn-warning" data-toggle="modal" data-target="#myModalVR">Youre Rate</button>
+                    <button type="button" data-id="@item.ID" class="btn btn-success " data-toggle="modal" data-target="#editModalV">Edit</button>
+                    <button type="button" data-id="@item.ID" class='btn btn-danger btn-delete' data-toggle="modal">Delete</button>
                 }
                 @*@Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-        @Html.ActionLink("Delete", "Delete", new { id = item.ID })*@
+                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })*@
             </td>
         </tr>
     }

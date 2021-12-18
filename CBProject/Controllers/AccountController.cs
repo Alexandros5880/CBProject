@@ -83,6 +83,50 @@ namespace CBProject.Controllers
             var user = await UserManager.FindByEmailAsync(model.Email);
             if (user != null && user.IsInactive == false)
             {
+                RoleLevel access = RoleLevel.SUPERLOW;
+                foreach (var role in user.Roles)
+                {
+                    var myRole = await this._rolesRepo.GetAsync(role.RoleId);
+                    if (myRole.Level == RoleLevel.FULL)
+                    {
+                        access = myRole.Level;
+                    }
+                    else if (myRole.Level == RoleLevel.PLUSSFULL)
+                    {
+                        if (access != RoleLevel.FULL)
+                        {
+                            access = myRole.Level;
+                        }
+                    }
+                    else if (myRole.Level == RoleLevel.MIDDLE)
+                    {
+                        if (access != RoleLevel.FULL &&
+                            access != RoleLevel.PLUSSFULL)
+                        {
+                            access = myRole.Level;
+                        }
+                    }
+                    else if (myRole.Level == RoleLevel.LOW)
+                    {
+                        if (access != RoleLevel.FULL &&
+                            access != RoleLevel.PLUSSFULL &&
+                            access != RoleLevel.MIDDLE)
+                        {
+                            access = myRole.Level;
+                        }
+                    }
+                    else if (myRole.Level == RoleLevel.SUPERLOW)
+                    {
+                        if (access != RoleLevel.FULL &&
+                            access != RoleLevel.PLUSSFULL &&
+                            access != RoleLevel.MIDDLE &&
+                            access != RoleLevel.LOW)
+                        {
+                            access = myRole.Level;
+                        }
+                    }
+                }
+
                 //model.RememberMe = true;
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, change to shouldLockout: true
@@ -90,20 +134,25 @@ namespace CBProject.Controllers
                 switch (result)
                 {
                     case SignInStatus.Success:
-                        if (UserManager.IsInRole(user.Id, "Admin"))
+                        if (access == RoleLevel.FULL) 
                         {
-                            if (User.IsInRole("Admin")) 
-                            {
-                                return RedirectToAction("Index", "Users");
-                            } 
-                            else if (UserManager.IsInRole(user.Id, "Teacher"))
-                            {
-                                return RedirectToAction("Index", "Reviews");
-                            }
-                            else if (UserManager.IsInRole(user.Id, "Student"))
-                            {
-                                return RedirectToAction("Index", "Videos");
-                            }
+                            return RedirectToAction("Index", "Users");
+                        } 
+                        else if (access == RoleLevel.PLUSSFULL)
+                        {
+                            return RedirectToAction("Index", "Users");
+                        }
+                        else if (access == RoleLevel.MIDDLE)
+                        {
+                            return RedirectToAction("Index", "Videos");
+                        }
+                        else if (access == RoleLevel.LOW)
+                        {
+                            return RedirectToAction("Index", "Videos");
+                        }
+                        else if (access == RoleLevel.SUPERLOW)
+                        {
+                            return RedirectToAction("Index", "Home");
                         }
                         return RedirectToLocal(returnUrl);
                     case SignInStatus.LockedOut:
