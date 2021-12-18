@@ -15,13 +15,11 @@ namespace CBProject.Models
 
     public enum RoleLevel
     {
-        XXLOW,
-        XLOW,
+        SUPERLOW,
         LOW,
-        MID,
-        SECURE,
-        XSECURE,
-        XXSECURE
+        MIDDLE,
+        PLUSSFULL,
+        FULL
     }
 
     public class ApplicationUser : IdentityUser
@@ -66,8 +64,8 @@ namespace CBProject.Models
             ApplicationUser applicationUser = this;
             userIdentity.AddClaim(new Claim("FullName", applicationUser.FullName));
             userIdentity.AddClaim(new Claim("ImagePath", applicationUser.ImagePath));
-            // Add custom user claims here
-            return userIdentity;
+        // Add custom user claims here
+        return userIdentity;
         }
     }
 
