@@ -175,16 +175,16 @@ namespace CBProject.Migrations
                         ID = c.Int(nullable: false, identity: true),
                         Rate = c.Decimal(nullable: false, precision: 18, scale: 2),
                         RaterId = c.String(nullable: false, maxLength: 128),
-                        VideoId = c.Int(nullable: false),
-                        EbookId = c.Int(nullable: false),
+                        Video_ID = c.Int(),
+                        Ebook_ID = c.Int(),
                     })
                 .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.Ebooks", t => t.EbookId, cascadeDelete: true)
                 .ForeignKey("dbo.AspNetUsers", t => t.RaterId, cascadeDelete: true)
-                .ForeignKey("dbo.Videos", t => t.VideoId, cascadeDelete: false)
+                .ForeignKey("dbo.Videos", t => t.Video_ID)
+                .ForeignKey("dbo.Ebooks", t => t.Ebook_ID)
                 .Index(t => t.RaterId)
-                .Index(t => t.VideoId)
-                .Index(t => t.EbookId);
+                .Index(t => t.Video_ID)
+                .Index(t => t.Ebook_ID);
             
             CreateTable(
                 "dbo.Reviews",
@@ -193,16 +193,16 @@ namespace CBProject.Migrations
                         ID = c.Int(nullable: false, identity: true),
                         ReviewerId = c.String(nullable: false, maxLength: 128),
                         Comment = c.String(nullable: false),
-                        VideoId = c.Int(nullable: false),
-                        EbookId = c.Int(nullable: false),
+                        Video_ID = c.Int(),
+                        Ebook_ID = c.Int(),
                     })
                 .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.Ebooks", t => t.EbookId, cascadeDelete: true)
                 .ForeignKey("dbo.AspNetUsers", t => t.ReviewerId, cascadeDelete: true)
-                .ForeignKey("dbo.Videos", t => t.VideoId, cascadeDelete: false)
+                .ForeignKey("dbo.Videos", t => t.Video_ID)
+                .ForeignKey("dbo.Ebooks", t => t.Ebook_ID)
                 .Index(t => t.ReviewerId)
-                .Index(t => t.VideoId)
-                .Index(t => t.EbookId);
+                .Index(t => t.Video_ID)
+                .Index(t => t.Ebook_ID);
             
             CreateTable(
                 "dbo.ContentTypes",
@@ -212,6 +212,62 @@ namespace CBProject.Migrations
                         Name = c.String(),
                     })
                 .PrimaryKey(t => t.ID);
+            
+            CreateTable(
+                "dbo.RatingToEbooks",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        RatingId = c.Int(nullable: false),
+                        EbookId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.Ebooks", t => t.EbookId, cascadeDelete: true)
+                .ForeignKey("dbo.Ratings", t => t.RatingId, cascadeDelete: true)
+                .Index(t => t.RatingId)
+                .Index(t => t.EbookId);
+            
+            CreateTable(
+                "dbo.RatingToVideos",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        RatingId = c.Int(nullable: false),
+                        VideoId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.Ratings", t => t.RatingId, cascadeDelete: true)
+                .ForeignKey("dbo.Videos", t => t.VideoId, cascadeDelete: true)
+                .Index(t => t.RatingId)
+                .Index(t => t.VideoId);
+            
+            CreateTable(
+                "dbo.ReviewToEbooks",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        ReviewId = c.Int(nullable: false),
+                        EbookId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.Ebooks", t => t.EbookId, cascadeDelete: true)
+                .ForeignKey("dbo.Reviews", t => t.ReviewId, cascadeDelete: true)
+                .Index(t => t.ReviewId)
+                .Index(t => t.EbookId);
+            
+            CreateTable(
+                "dbo.ReviewToVideos",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        ReviewId = c.Int(nullable: false),
+                        VideoId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.Reviews", t => t.ReviewId, cascadeDelete: true)
+                .ForeignKey("dbo.Videos", t => t.VideoId, cascadeDelete: true)
+                .Index(t => t.ReviewId)
+                .Index(t => t.VideoId);
             
             CreateTable(
                 "dbo.AspNetRoles",
@@ -292,12 +348,20 @@ namespace CBProject.Migrations
             DropForeignKey("dbo.AspNetUsers", "SubscriptionPackage_ID", "dbo.SubscriptionPackages");
             DropForeignKey("dbo.SubscriptionPackages", "ContentType_ID", "dbo.ContentTypes");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
-            DropForeignKey("dbo.Reviews", "VideoId", "dbo.Videos");
+            DropForeignKey("dbo.ReviewToVideos", "VideoId", "dbo.Videos");
+            DropForeignKey("dbo.ReviewToVideos", "ReviewId", "dbo.Reviews");
+            DropForeignKey("dbo.ReviewToEbooks", "ReviewId", "dbo.Reviews");
+            DropForeignKey("dbo.ReviewToEbooks", "EbookId", "dbo.Ebooks");
+            DropForeignKey("dbo.RatingToVideos", "VideoId", "dbo.Videos");
+            DropForeignKey("dbo.RatingToVideos", "RatingId", "dbo.Ratings");
+            DropForeignKey("dbo.RatingToEbooks", "RatingId", "dbo.Ratings");
+            DropForeignKey("dbo.RatingToEbooks", "EbookId", "dbo.Ebooks");
+            DropForeignKey("dbo.Reviews", "Ebook_ID", "dbo.Ebooks");
+            DropForeignKey("dbo.Ratings", "Ebook_ID", "dbo.Ebooks");
+            DropForeignKey("dbo.Reviews", "Video_ID", "dbo.Videos");
             DropForeignKey("dbo.Reviews", "ReviewerId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.Reviews", "EbookId", "dbo.Ebooks");
-            DropForeignKey("dbo.Ratings", "VideoId", "dbo.Videos");
+            DropForeignKey("dbo.Ratings", "Video_ID", "dbo.Videos");
             DropForeignKey("dbo.Ratings", "RaterId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.Ratings", "EbookId", "dbo.Ebooks");
             DropForeignKey("dbo.Videos", "CreatorId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Videos", "CategoryId", "dbo.Categories");
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
@@ -316,11 +380,19 @@ namespace CBProject.Migrations
             DropIndex("dbo.SubscriptionPackages", new[] { "Payment_ID" });
             DropIndex("dbo.SubscriptionPackages", new[] { "ContentType_ID" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
-            DropIndex("dbo.Reviews", new[] { "EbookId" });
-            DropIndex("dbo.Reviews", new[] { "VideoId" });
+            DropIndex("dbo.ReviewToVideos", new[] { "VideoId" });
+            DropIndex("dbo.ReviewToVideos", new[] { "ReviewId" });
+            DropIndex("dbo.ReviewToEbooks", new[] { "EbookId" });
+            DropIndex("dbo.ReviewToEbooks", new[] { "ReviewId" });
+            DropIndex("dbo.RatingToVideos", new[] { "VideoId" });
+            DropIndex("dbo.RatingToVideos", new[] { "RatingId" });
+            DropIndex("dbo.RatingToEbooks", new[] { "EbookId" });
+            DropIndex("dbo.RatingToEbooks", new[] { "RatingId" });
+            DropIndex("dbo.Reviews", new[] { "Ebook_ID" });
+            DropIndex("dbo.Reviews", new[] { "Video_ID" });
             DropIndex("dbo.Reviews", new[] { "ReviewerId" });
-            DropIndex("dbo.Ratings", new[] { "EbookId" });
-            DropIndex("dbo.Ratings", new[] { "VideoId" });
+            DropIndex("dbo.Ratings", new[] { "Ebook_ID" });
+            DropIndex("dbo.Ratings", new[] { "Video_ID" });
             DropIndex("dbo.Ratings", new[] { "RaterId" });
             DropIndex("dbo.Videos", new[] { "CategoryId" });
             DropIndex("dbo.Videos", new[] { "CreatorId" });
@@ -341,6 +413,10 @@ namespace CBProject.Migrations
             DropTable("dbo.Tags");
             DropTable("dbo.SubscriptionPackages");
             DropTable("dbo.AspNetRoles");
+            DropTable("dbo.ReviewToVideos");
+            DropTable("dbo.ReviewToEbooks");
+            DropTable("dbo.RatingToVideos");
+            DropTable("dbo.RatingToEbooks");
             DropTable("dbo.ContentTypes");
             DropTable("dbo.Reviews");
             DropTable("dbo.Ratings");

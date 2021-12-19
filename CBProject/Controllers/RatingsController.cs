@@ -43,7 +43,6 @@ namespace CBProject.Controllers
         {
             var viewModel = new RatingViewModel();
             viewModel.Users = new SelectList(this._usersRepo.GetAll(), "ID", "FullName");
-            viewModel.Videos = new SelectList(this._videoRepo.GetAll(), "ID", "Title");
             return View(viewModel);
         }
         [HttpPost]
@@ -72,7 +71,6 @@ namespace CBProject.Controllers
             }
             var viewModel = Mapper.Map<Rating, RatingViewModel>(rating);
             viewModel.Users = new SelectList(this._usersRepo.GetAll(), "ID", "FullName");
-            viewModel.Videos = new SelectList(this._videoRepo.GetAll(), "ID", "Title");
             return View(viewModel);
         }
         [HttpPost]

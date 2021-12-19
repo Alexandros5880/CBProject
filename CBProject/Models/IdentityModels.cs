@@ -94,6 +94,10 @@ namespace CBProject.Models
         public DbSet<Payment> Payments { get; set; }
         public DbSet<TagToVideo> TagsToVideos { get; set; }
         public DbSet<TagToEbook> TagsToEbooks { get; set; }
+        public DbSet<RatingToEbook> RatingsToEbooks { get; set; }
+        public DbSet<RatingToVideo> RatingsToVideos { get; set; }
+        public DbSet<ReviewToVideo> ReviewsToVideos { get; set; }
+        public DbSet<ReviewToEbook> ReviewsToEbooks { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection")

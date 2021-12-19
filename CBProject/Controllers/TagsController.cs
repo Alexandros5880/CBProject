@@ -39,7 +39,6 @@ namespace CBProject.Controllers
         public ActionResult Create()
         {
             var viewModel = new TagViewModel();
-            viewModel.Videos = new SelectList(this._videoRepo.GetAll(), "ID", "Title");
             return View(viewModel);
         }
         [HttpPost]
@@ -68,7 +67,6 @@ namespace CBProject.Controllers
                 return HttpNotFound();
             }
             var viewModel = Mapper.Map<Tag, TagViewModel>(tag);
-            viewModel.Videos = new SelectList(this._videoRepo.GetAll(), "ID", "Title");
             return View(viewModel);
         }
         [HttpPost]
