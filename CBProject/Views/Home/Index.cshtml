@@ -28,16 +28,24 @@
             </div>
         </div>
 }
+
+
+
 <div class="grey-row">
     <div class="container">
         <br />
-        <h2>User: @ViewBag.User</h2>
         <br />
         <div class="row">
             <div class="col-md-12">
                 <h2>Lessons</h2><br />
                 <ul class="nav nav-tabs tabs-index">
-                    <li class="nav-item">
+                    @foreach (var cat in Model.Categories)
+                    {
+                        <li>
+                            <a class="nav-link active" aria-current="page" href="#">@cat.Name</a>
+                        </li>
+                    }
+                    @*<li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="#">Active</a>
                     </li>
                     <li class="nav-item">
@@ -48,12 +56,68 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                    </li>
+                    </li>*@
                 </ul>
             </div>
         </div>
         <br />
+
         <div class="row">
+            <div class="col-md-3 ">
+                <div class="card">
+                    <img class="card-img-top" style="width:100%" src="~/img/image.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h4>Angular 9</h4>
+                        <p class="card-text"><img class="img-icon-index" src="~/img/icons-person.png" alt="person" /> Programming with mosh </p>
+                        <p class="card-text"><img class="img-icon-index" src="~/img/icon-video.png" alt="video" /> 22 hours on-demand video  </p>
+                        <br />
+                        <a href="#" class="btn btn-card">More</a>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <img class="card-img-top" style="width:100%" src="~/img/image.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h4>Angular 9</h4>
+                        <p class="card-text"><img class="img-icon-index" src="~/img/icons-person.png" alt="person" /> Programming with mosh </p>
+                        <p class="card-text"><img class="img-icon-index" src="~/img/icon-video.png" alt="video" /> 22 hours on-demand video  </p>
+                        <br />
+                        <a href="#" class="btn btn-card">More</a>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <img class="card-img-top" style="width:100%" src="~/img/image.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h4>Angular 9</h4>
+                        <p class="card-text"><img class="img-icon-index" src="~/img/icons-person.png" alt="person" /> Programming with mosh </p>
+                        <p class="card-text"><img class="img-icon-index" src="~/img/icon-video.png" alt="video" /> 22 hours on-demand video  </p>
+                        <br />
+                        <a href="#" class="btn btn-card">More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <img class="card-img-top" style="width:100%" src="~/img/image.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h4>Angular 9</h4>
+                        <p class="card-text"><img class="img-icon-index" src="~/img/icons-person.png" alt="person" /> Programming with mosh </p>
+                        <p class="card-text"><img class="img-icon-index" src="~/img/icon-video.png" alt="video" /> 22 hours on-demand video  </p>
+                        <br />
+                        <a href="#" class="btn btn-card">More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+
+
+        @*<div class="row">
             <div class="col-md-3 ">
                 <div class="card">
                     <img class="card-img-top" style="width:100%" src="~/img/image.jpg" alt="Card image cap">
@@ -155,12 +219,13 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>*@
     </div>
     <br />
     <br /><br />
     <br />
 </div>
+
 
 <div class="container-fluid">
     <div class="row">

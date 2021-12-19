@@ -106,6 +106,13 @@ namespace CBProject.Repositories
         {
             return await _context.Categories.ToListAsync();
         }
+        public IQueryable<Category> GetAllQueryable()
+        {
+            return this._context.Categories
+                .Include(c => c.CategoriesToCategories)
+                .Include(c => c.Videos)
+                .Include(c => c.Ebooks);
+        }
         public async Task<Category> GetAsync(int? id)
         {
             if (id == null)

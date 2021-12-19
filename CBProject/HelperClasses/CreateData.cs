@@ -53,6 +53,7 @@ namespace CBProject.HelperClasses
 
                 var user_1 = new ApplicationUser()
                 {
+                    Id = "1",
                     BirthDate = DateTime.Today.AddYears(-30),
                     FirstName = "Alexandros_1",
                     LastName = "Platanios_1",
@@ -71,6 +72,7 @@ namespace CBProject.HelperClasses
                 };
                 var user_2 = new ApplicationUser()
                 {
+                    Id = "2",
                     BirthDate = DateTime.Today.AddYears(-30),
                     FirstName = "Alexandros_2",
                     LastName = "Platanios_2",
@@ -89,6 +91,7 @@ namespace CBProject.HelperClasses
                 };
                 var user_3 = new ApplicationUser()
                 {
+                    Id = "3",
                     BirthDate = DateTime.Today.AddYears(-30),
                     FirstName = "Alexandros_3",
                     LastName = "Platanios_3",
@@ -107,6 +110,7 @@ namespace CBProject.HelperClasses
                 };
                 var user_4 = new ApplicationUser()
                 {
+                    Id = "4",
                     BirthDate = DateTime.Today.AddYears(-30),
                     FirstName = "Alexandros_4",
                     LastName = "Platanios_4",
@@ -125,6 +129,7 @@ namespace CBProject.HelperClasses
                 };
                 var user_5 = new ApplicationUser()
                 {
+                    Id = "5",
                     BirthDate = DateTime.Today.AddYears(-30),
                     FirstName = "Alexandros_5",
                     LastName = "Platanios_5",
@@ -143,6 +148,7 @@ namespace CBProject.HelperClasses
                 };
                 var user_6 = new ApplicationUser()
                 {
+                    Id = "6",
                     BirthDate = DateTime.Today.AddYears(-30),
                     FirstName = "Antonis",
                     LastName = "Ploumis",
@@ -525,12 +531,118 @@ namespace CBProject.HelperClasses
         {
             try
             {
-                // TODO: Create Ebooks
                 Ebook ebook1 = new Ebook()
                 {
-                    // TODO: Create Ebbooks
+                    ID = 1,
+                    Title = "C# 2010",
+                    Description = "FIFTH EDITION",
+                    Thumbnail = "Thubnail",
+                    EbookImagePath = StaticImfo.EbooksImagesPath + "ebook_1.jpg",
+                    EbookFilePath = StaticImfo.EbooksFilesPath + "ebook_1",
+                    Url = "url",
+                    UploadDate = DateTime.Today,
+                    Creator = context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
+                    Category = context.Categories.FirstOrDefault(c => c.Name.Equals(".NET"))
                 };
-                // TODO: Add all ebooks
+                Ebook ebook2 = new Ebook()
+                {
+                    ID = 2,
+                    Title = "WPF",
+                    Description = "User Interface Framework",
+                    Thumbnail = "Thubnail",
+                    EbookImagePath = StaticImfo.EbooksImagesPath + "ebook_2.jpg",
+                    EbookFilePath = StaticImfo.EbooksFilesPath + "ebook_2",
+                    Url = "url",
+                    UploadDate = DateTime.Today,
+                    Creator = context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
+                    Category = context.Categories.FirstOrDefault(c => c.Name.Equals("CORE"))
+                };
+                Ebook ebook3 = new Ebook()
+                {
+                    ID = 3,
+                    Title = "XAMARIN",
+                    Description = "Cros Platform Framework. (Windows, Linux, Mac, IOS)",
+                    Thumbnail = "Thubnail",
+                    EbookImagePath = StaticImfo.EbooksImagesPath + "ebook_3.jpg",
+                    EbookFilePath = StaticImfo.EbooksFilesPath + "ebook_3",
+                    Url = "url",
+                    UploadDate = DateTime.Today,
+                    Creator = context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
+                    Category = context.Categories.FirstOrDefault(c => c.Name.Equals("CORE"))
+                };
+                Ebook ebook4 = new Ebook()
+                {
+                    ID = 4,
+                    Title = "C++",
+                    Description = "FIFTH EDITION",
+                    Thumbnail = "Thubnail",
+                    EbookImagePath = StaticImfo.EbooksImagesPath + "ebook_4.jpg",
+                    EbookFilePath = StaticImfo.EbooksFilesPath + "ebook_4",
+                    Url = "url",
+                    UploadDate = DateTime.Today,
+                    Creator = context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
+                    Category = context.Categories.FirstOrDefault(c => c.Name.Equals(".NET"))
+                };
+                Ebook ebook5 = new Ebook()
+                {
+                    ID = 5,
+                    Title = "MVC",
+                    Description = "User Interface Framework",
+                    Thumbnail = "Thubnail",
+                    EbookImagePath = StaticImfo.EbooksImagesPath + "ebook_5.jpg",
+                    EbookFilePath = StaticImfo.EbooksFilesPath + "ebook_5",
+                    Url = "url",
+                    UploadDate = DateTime.Today,
+                    Creator = context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
+                    Category = context.Categories.FirstOrDefault(c => c.Name.Equals("CORE"))
+                };
+                Ebook ebook6 = new Ebook()
+                {
+                    ID = 6,
+                    Title = "MVC",
+                    Description = "Cros Platform Framework. (Windows, Linux, Mac, IOS)",
+                    Thumbnail = "Thubnail",
+                    EbookImagePath = StaticImfo.EbooksImagesPath + "ebook_6.jpg",
+                    EbookFilePath = StaticImfo.EbooksFilesPath + "ebook_6",
+                    Url = "url",
+                    UploadDate = DateTime.Today,
+                    Creator = context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
+                    Category = context.Categories.FirstOrDefault(c => c.Name.Equals("FRAMEWORK"))
+                };
+                Ebook ebook7 = new Ebook()
+                {
+                    ID = 7,
+                    Title = "EntityFramework",
+                    Description = "User Interface Framework",
+                    Thumbnail = "Thubnail",
+                    EbookImagePath = StaticImfo.EbooksImagesPath + "ebook_7.jpg",
+                    EbookFilePath = StaticImfo.EbooksFilesPath + "ebook_7",
+                    Url = "url",
+                    UploadDate = DateTime.Today,
+                    Creator = context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
+                    Category = context.Categories.FirstOrDefault(c => c.Name.Equals("CORE"))
+                };
+                Ebook ebook8 = new Ebook()
+                {
+                    ID = 8,
+                    Title = "EntityFramework",
+                    Description = "Cros Platform Framework. (Windows, Linux, Mac, IOS)",
+                    Thumbnail = "Thubnail",
+                    EbookImagePath = StaticImfo.EbooksImagesPath + "ebook_8.jpg",
+                    EbookFilePath = StaticImfo.EbooksFilesPath + "ebook_8",
+                    Url = "url",
+                    UploadDate = DateTime.Today,
+                    Creator = context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
+                    Category = context.Categories.FirstOrDefault(c => c.Name.Equals("FRAMEWORK"))
+                };
+                context.Ebooks.Add(ebook1);
+                context.Ebooks.Add(ebook2);
+                context.Ebooks.Add(ebook3);
+                context.Ebooks.Add(ebook4);
+                context.Ebooks.Add(ebook5);
+                context.Ebooks.Add(ebook6);
+                context.Ebooks.Add(ebook7);
+                context.Ebooks.Add(ebook8);
                 context.SaveChanges();
             } catch (Exception ex)
             {
@@ -541,7 +653,851 @@ namespace CBProject.HelperClasses
         {
             try
             {
-                // Todo: Create Video
+                var video_1 = new Video()
+                {
+                    ID = 1,
+                    Title = "MVC_EP_1",
+                    Thumbnail = "mvc_ep_1",
+                    VideoImagePath = StaticImfo.VideoImagePath + "video_1.jpg",
+                    VideoPath = StaticImfo.VideoPath + "video.mp4",
+                    Description = "mvc_ep_1",
+                    UploadDate = DateTime.Today,
+                    Creator = context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
+                    Category = context.Categories.FirstOrDefault(cat => cat.Name.Equals("FRAMEWORK")),
+                    Url = "www.mvc_ep_1.com"
+                };
+                var video_2 = new Video()
+                {
+                    ID = 2,
+                    Title = "MVC_EP_2",
+                    Thumbnail = "mvc_ep_2",
+                    VideoImagePath = StaticImfo.VideoImagePath + "video_2.jpg",
+                    VideoPath = StaticImfo.VideoPath + "video.mp4",
+                    Description = "mvc_ep_2",
+                    UploadDate = DateTime.Today,
+                    Creator = context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
+                    Category = context.Categories.FirstOrDefault(cat => cat.Name.Equals("FRAMEWORK")),
+                    Url = "www.mvc_ep_2.com"
+                };
+                var video_3 = new Video()
+                {
+                    ID = 3,
+                    Title = "MVC_EP_3",
+                    Thumbnail = "mvc_ep_",
+                    VideoImagePath = StaticImfo.VideoImagePath + "video_3.jpg",
+                    VideoPath = StaticImfo.VideoPath + "video.mp4",
+                    Description = "mvc_ep_",
+                    UploadDate = DateTime.Today,
+                    Creator = context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
+                    Category = context.Categories.FirstOrDefault(cat => cat.Name.Equals("FRAMEWORK")),
+                    Url = "www.mvc_ep_3.com"
+                };
+                var video_4 = new Video()
+                {
+                    ID = 4,
+                    Title = "XAMARIN_EP_1",
+                    Thumbnail = "xamarin_ep_1",
+                    VideoImagePath = StaticImfo.VideoImagePath + "video_4.jpg",
+                    VideoPath = StaticImfo.VideoPath + "video.mp4",
+                    Description = "xamarin_ep_1",
+                    UploadDate = DateTime.Today,
+                    Creator = context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
+                    Category = context.Categories.FirstOrDefault(cat => cat.Name.Equals("CORE")),
+                    Url = "www.xamarin_ep_1.com"
+                };
+                var video_5 = new Video()
+                {
+                    ID = 5,
+                    Title = "XAMARIN_EP_2",
+                    Thumbnail = "xamarin_ep_2",
+                    VideoImagePath = StaticImfo.VideoImagePath + "video_5.jpg",
+                    VideoPath = StaticImfo.VideoPath + "video.mp4",
+                    Description = "xamarin_ep_2",
+                    UploadDate = DateTime.Today,
+                    Creator = context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
+                    Category = context.Categories.FirstOrDefault(cat => cat.Name.Equals("CORE")),
+                    Url = "www.xamarin_ep_2.com"
+                };
+                var video_6 = new Video()
+                {
+                    ID = 6,
+                    Title = "XAMARIN_EP_3",
+                    Thumbnail = "xamarin_ep_3",
+                    VideoImagePath = StaticImfo.VideoImagePath + "video_6.png",
+                    VideoPath = StaticImfo.VideoPath + "video.mp4",
+                    Description = "xamarin_ep_3",
+                    UploadDate = DateTime.Today,
+                    Creator = context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
+                    Category = context.Categories.FirstOrDefault(cat => cat.Name.Equals("CORE")),
+                    Url = "www.xamarin_ep_3.com"
+                };
+                var video_7 = new Video()
+                {
+                    ID = 7,
+                    Title = "WPF_EP_1",
+                    Thumbnail = "wpf_ep_1",
+                    VideoImagePath = StaticImfo.VideoImagePath + "video_7.jpg",
+                    VideoPath = StaticImfo.VideoPath + "video.mp4",
+                    Description = "wpf_ep_1",
+                    UploadDate = DateTime.Today,
+                    Creator = context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
+                    Category = context.Categories.FirstOrDefault(cat => cat.Name.Equals("CORE")),
+                    Url = "www.wpf_ep_1.com"
+                };
+                var video_8 = new Video()
+                {
+                    ID = 8,
+                    Title = "WPF_EP_2",
+                    Thumbnail = "wpf_ep_2",
+                    VideoImagePath = StaticImfo.VideoImagePath + "video_8.jpg",
+                    VideoPath = StaticImfo.VideoPath + "video.mp4",
+                    Description = "wpf_ep_2",
+                    UploadDate = DateTime.Today,
+                    Creator = context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
+                    Category = context.Categories.FirstOrDefault(cat => cat.Name.Equals("CORE")),
+                    Url = "www.wpf_ep_2.com"
+                };
+                var video_9 = new Video()
+                {
+                    ID = 9,
+                    Title = "WPF_EP_3",
+                    Thumbnail = "wpf_ep_3",
+                    VideoImagePath = StaticImfo.VideoImagePath + "video_9.jpg",
+                    VideoPath = StaticImfo.VideoPath + "video.mp4",
+                    Description = "wpf_ep_3",
+                    UploadDate = DateTime.Today,
+                    Creator = context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
+                    Category = context.Categories.FirstOrDefault(cat => cat.Name.Equals("CORE")),
+                    Url = "wpf_ep_3"
+                };
+                var video_10 = new Video()
+                {
+                    ID = 10,
+                    Title = "C++",
+                    Thumbnail = "C++",
+                    VideoImagePath = StaticImfo.VideoImagePath + "video_10.jpg",
+                    VideoPath = StaticImfo.VideoPath + "video.mp4",
+                    Description = "C++",
+                    UploadDate = DateTime.Today,
+                    Creator = context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
+                    Category = context.Categories.FirstOrDefault(cat => cat.Name.Equals(".NET")),
+                    Url = "www.c++.com"
+                };
+                var video_11 = new Video()
+                {
+                    ID = 11,
+                    Title = "C#",
+                    Thumbnail = "C#",
+                    VideoImagePath = StaticImfo.VideoImagePath + "video_11.jpg",
+                    VideoPath = StaticImfo.VideoPath + "video.mp4",
+                    Description = "C#",
+                    UploadDate = DateTime.Today,
+                    Creator = context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
+                    Category = context.Categories.FirstOrDefault(cat => cat.Name.Equals(".NET")),
+                    Url = "www.c#.com"
+                };
+                var video_12 = new Video()
+                {
+                    ID = 12,
+                    Title = "Visual Basic",
+                    Thumbnail = "visualbasic",
+                    VideoImagePath = StaticImfo.VideoImagePath + "video_12.jpg",
+                    VideoPath = StaticImfo.VideoPath + "video.mp4",
+                    Description = "visual basic",
+                    UploadDate = DateTime.Today,
+                    Creator = context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
+                    Category = context.Categories.FirstOrDefault(cat => cat.Name.Equals(".NET")),
+                    Url = "www.visulabasic.com"
+                };
+                context.Videos.Add(video_1);
+                context.Videos.Add(video_2);
+                context.Videos.Add(video_3);
+                context.Videos.Add(video_4);
+                context.Videos.Add(video_5);
+                context.Videos.Add(video_6);
+                context.Videos.Add(video_7);
+                context.Videos.Add(video_8);
+                context.Videos.Add(video_9);
+                context.Videos.Add(video_10);
+                context.Videos.Add(video_11);
+                context.Videos.Add(video_12);
+                context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public static void CreateTags(ApplicationDbContext context)
+        {
+            try
+            {
+                // Ebooks Tags
+                context.Tags.Add(new Tag()
+                {
+                    ID = 1,
+                    Title = "Ebook_1_Tag_1"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 2,
+                    Title = "Ebook_1_Tag_2"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 3,
+                    Title = "Ebook_1_Tag_3"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 4,
+                    Title = "Ebook_2_Tag_4"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 5,
+                    Title = "Ebook_2_Tag_5"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 6,
+                    Title = "Ebook_2_Tag_6"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 7,
+                    Title = "Ebook_3_Tag_7"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 8,
+                    Title = "Ebook_3_Tag_8"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 9,
+                    Title = "Ebook_3_Tag_9"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 10,
+                    Title = "Ebook_4_Tag_10"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 11,
+                    Title = "Ebook_4_Tag_11"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 12,
+                    Title = "Ebook_4_Tag_12"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 13,
+                    Title = "Ebook_5_Tag_13"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 14,
+                    Title = "Ebook_5_Tag_14"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 15,
+                    Title = "Ebook_5_Tag_15"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 16,
+                    Title = "Ebook_6_Tag_16"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 17,
+                    Title = "Ebook_6_Tag_17"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 18,
+                    Title = "Ebook_6_Tag_18"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 19,
+                    Title = "Ebook_7_Tag_19"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 20,
+                    Title = "Ebook_7_Tag_20"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 21,
+                    Title = "Ebook_7_Tag_21"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 22,
+                    Title = "Ebook_8_Tag_22"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 23,
+                    Title = "Ebook_8_Tag_23"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 24,
+                    Title = "Ebook_8_Tag_24"
+                });
+                // Videos Tags
+                context.Tags.Add(new Tag()
+                {
+                    ID = 25,
+                    Title = "Video_1_Tag_25"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 26,
+                    Title = "Video_1_Tag_26"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 27,
+                    Title = "Video_1_Tag_27"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 28,
+                    Title = "Video_2_Tag_28"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 29,
+                    Title = "Video_2_Tag_29"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 30,
+                    Title = "Video_2_Tag_30"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 31,
+                    Title = "Video_3_Tag_31"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 32,
+                    Title = "Video_3_Tag_32"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 33,
+                    Title = "Video_3_Tag_33"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 34,
+                    Title = "Video_4_Tag_34"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 35,
+                    Title = "Video_4_Tag_35"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 36,
+                    Title = "Video_4_Tag_36"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 37,
+                    Title = "Video_5_Tag_37"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 38,
+                    Title = "Video_5_Tag_38"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 39,
+                    Title = "Video_5_Tag_39"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 40,
+                    Title = "Video_6_Tag_40"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 41,
+                    Title = "Video_6_Tag_41"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 42,
+                    Title = "Video_6_Tag_42"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 43,
+                    Title = "Video_7_Tag_43"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 44,
+                    Title = "Video_7_Tag_44"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 45,
+                    Title = "Video_7_Tag_45"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 46,
+                    Title = "Video_8_Tag_46"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 47,
+                    Title = "Video_8_Tag_47"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 48,
+                    Title = "Video_8_Tag_48"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 49,
+                    Title = "Video_9_Tag_49"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 50,
+                    Title = "Video_9_Tag_50"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 51,
+                    Title = "Video_9_Tag_51"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 52,
+                    Title = "Video_10_Tag_52"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 53,
+                    Title = "Video_10_Tag_53"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 54,
+                    Title = "Video_10_Tag_54"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 55,
+                    Title = "Video_11_Tag_55"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 56,
+                    Title = "Video_11_Tag_56"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 57,
+                    Title = "Video_11_Tag_57"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 58,
+                    Title = "Video_12_Tag_58"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 59,
+                    Title = "Video_12_Tag_59"
+                });
+                context.Tags.Add(new Tag()
+                {
+                    ID = 60,
+                    Title = "Video_12_Tag_60"
+                });
+                context.SaveChanges();
+                // Ebooks 8
+                context.TagsToEbooks.Add(new TagToEbook()
+                {
+                    ID = 1,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 1),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 1)
+                });
+                context.TagsToEbooks.Add(new TagToEbook()
+                {
+                    ID = 2,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 2),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 1)
+                });
+                context.TagsToEbooks.Add(new TagToEbook()
+                {
+                    ID = 3,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 3),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 1)
+                });
+                context.TagsToEbooks.Add(new TagToEbook()
+                {
+                    ID = 4,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 4),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 2)
+                });
+                context.TagsToEbooks.Add(new TagToEbook()
+                {
+                    ID = 5,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 5),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 2)
+                });
+                context.TagsToEbooks.Add(new TagToEbook()
+                {
+                    ID = 6,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 6),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 2)
+                });
+                context.TagsToEbooks.Add(new TagToEbook()
+                {
+                    ID = 7,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 7),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 3)
+                });
+                context.TagsToEbooks.Add(new TagToEbook()
+                {
+                    ID = 8,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 8),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 3)
+                });
+                context.TagsToEbooks.Add(new TagToEbook()
+                {
+                    ID = 9,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 9),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 3)
+                });
+                context.TagsToEbooks.Add(new TagToEbook()
+                {
+                    ID = 10,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 10),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 4)
+                });
+                context.TagsToEbooks.Add(new TagToEbook()
+                {
+                    ID = 11,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 11),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 4)
+                });
+                context.TagsToEbooks.Add(new TagToEbook()
+                {
+                    ID = 12,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 12),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 4)
+                });
+                context.TagsToEbooks.Add(new TagToEbook()
+                {
+                    ID = 13,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 13),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 5)
+                });
+                context.TagsToEbooks.Add(new TagToEbook()
+                {
+                    ID = 14,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 14),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 5)
+                });
+                context.TagsToEbooks.Add(new TagToEbook()
+                {
+                    ID = 15,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 15),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 5)
+                });
+                context.TagsToEbooks.Add(new TagToEbook()
+                {
+                    ID = 16,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 16),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 6)
+                });
+                context.TagsToEbooks.Add(new TagToEbook()
+                {
+                    ID = 17,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 17),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 6)
+                });
+                context.TagsToEbooks.Add(new TagToEbook()
+                {
+                    ID = 18,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 18),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 6)
+                });
+                context.TagsToEbooks.Add(new TagToEbook()
+                {
+                    ID = 19,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 19),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 7)
+                });
+                context.TagsToEbooks.Add(new TagToEbook()
+                {
+                    ID = 20,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 20),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 7)
+                });
+                context.TagsToEbooks.Add(new TagToEbook()
+                {
+                    ID = 21,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 21),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 7)
+                });
+                context.TagsToEbooks.Add(new TagToEbook()
+                {
+                    ID = 22,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 22),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 8)
+                });
+                context.TagsToEbooks.Add(new TagToEbook()
+                {
+                    ID = 23,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 23),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 8)
+                });
+                context.TagsToEbooks.Add(new TagToEbook()
+                {
+                    ID = 24,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 24),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 8)
+                });
+                // Videos 12
+                context.TagsToVideos.Add(new TagToVideo()
+                {
+                    ID = 1,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 25),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 1)
+                });
+                context.TagsToVideos.Add(new TagToVideo()
+                {
+                    ID = 2,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 26),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 1)
+                });
+                context.TagsToVideos.Add(new TagToVideo()
+                {
+                    ID = 3,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 27),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 1)
+                });
+                context.TagsToVideos.Add(new TagToVideo()
+                {
+                    ID = 4,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 28),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 2)
+                });
+                context.TagsToVideos.Add(new TagToVideo()
+                {
+                    ID = 5,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 29),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 2)
+                });
+                context.TagsToVideos.Add(new TagToVideo()
+                {
+                    ID = 6,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 30),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 2)
+                });
+                context.TagsToVideos.Add(new TagToVideo()
+                {
+                    ID = 7,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 31),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 3)
+                });
+                context.TagsToVideos.Add(new TagToVideo()
+                {
+                    ID = 8,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 32),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 3)
+                });
+                context.TagsToVideos.Add(new TagToVideo()
+                {
+                    ID = 9,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 33),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 3)
+                });
+                context.TagsToVideos.Add(new TagToVideo()
+                {
+                    ID = 10,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 34),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 4)
+                });
+                context.TagsToVideos.Add(new TagToVideo()
+                {
+                    ID = 11,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 35),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 4)
+                });
+                context.TagsToVideos.Add(new TagToVideo()
+                {
+                    ID = 12,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 36),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 4)
+                });
+                context.TagsToVideos.Add(new TagToVideo()
+                {
+                    ID = 13,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 37),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 5)
+                });
+                context.TagsToVideos.Add(new TagToVideo()
+                {
+                    ID = 14,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 38),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 5)
+                });
+                context.TagsToVideos.Add(new TagToVideo()
+                {
+                    ID = 15,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 39),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 5)
+                });
+                context.TagsToVideos.Add(new TagToVideo()
+                {
+                    ID = 16,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 40),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 6)
+                });
+                context.TagsToVideos.Add(new TagToVideo()
+                {
+                    ID = 17,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 41),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 6)
+                });
+                context.TagsToVideos.Add(new TagToVideo()
+                {
+                    ID = 18,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 42),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 6)
+                });
+                context.TagsToVideos.Add(new TagToVideo()
+                {
+                    ID = 19,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 43),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 7)
+                });
+                context.TagsToVideos.Add(new TagToVideo()
+                {
+                    ID = 20,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 44),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 7)
+                });
+                context.TagsToVideos.Add(new TagToVideo()
+                {
+                    ID = 21,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 45),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 7)
+                });
+                context.TagsToVideos.Add(new TagToVideo()
+                {
+                    ID = 22,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 46),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 8)
+                });
+                context.TagsToVideos.Add(new TagToVideo()
+                {
+                    ID = 23,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 47),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 8)
+                });
+                context.TagsToVideos.Add(new TagToVideo()
+                {
+                    ID = 24,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 48),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 8)
+                });
+                context.TagsToVideos.Add(new TagToVideo()
+                {
+                    ID = 25,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 49),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 9)
+                });
+                context.TagsToVideos.Add(new TagToVideo()
+                {
+                    ID = 26,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 50),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 9)
+                });
+                context.TagsToVideos.Add(new TagToVideo()
+                {
+                    ID = 27,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 51),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 9)
+                });
+                context.TagsToVideos.Add(new TagToVideo()
+                {
+                    ID = 28,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 52),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 10)
+                });
+                context.TagsToVideos.Add(new TagToVideo()
+                {
+                    ID = 29,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 53),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 10)
+                });
+                context.TagsToVideos.Add(new TagToVideo()
+                {
+                    ID = 30,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 54),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 10)
+                });
+                context.TagsToVideos.Add(new TagToVideo()
+                {
+                    ID = 31,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 55),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 11)
+                });
+                context.TagsToVideos.Add(new TagToVideo()
+                {
+                    ID = 32,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 56),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 11)
+                });
+                context.TagsToVideos.Add(new TagToVideo()
+                {
+                    ID = 33,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 57),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 11)
+                });
+                context.TagsToVideos.Add(new TagToVideo()
+                {
+                    ID = 34,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 58),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 12)
+                });
+                context.TagsToVideos.Add(new TagToVideo()
+                {
+                    ID = 35,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 59),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 12)
+                });
+                context.TagsToVideos.Add(new TagToVideo()
+                {
+                    ID = 36,
+                    Tag = context.Tags.FirstOrDefault(t => t.ID == 60),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 12)
+                });
+                context.SaveChanges();
             }
             catch (Exception ex)
             {

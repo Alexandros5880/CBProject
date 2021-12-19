@@ -18,7 +18,11 @@ namespace CBProject.Migrations
             CreateData.CreatePayments(context);
             CreateData.CreateSubscriptionPackages(context);
             CreateData.CreateRating(context);
-            // TODO: SEED /Migrations/Configuration.cs  Create Ebook, Rating, Review, Video Data
+            CreateData.CreateEbook(context);
+            CreateData.CreateVideo(context);
+            CreateData.CreateTags(context);
+            CreateData.CreateRating(context);
+            CreateData.CreateReview(context);
         }
     }
 }

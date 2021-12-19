@@ -5,6 +5,8 @@ using CBProject.Models;
 using CBProject.Models.EntityModels;
 using CBProject.Models.ViewModels;
 using CBProject.Repositories;
+using CBProject.Repositories.IdentityRepos;
+using CBProject.Repositories.IdentityRepos.Interfaces;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
@@ -25,7 +27,8 @@ namespace CBProject.Controllers
         private RatingsRepository _ratingsRepository;
         private ReviewsRepository _reviewsRepository;
         private ApplicationDbContext _context;
-        public EbooksController(IUnitOfWork unitOfWork)
+        private UsersRepo _usersRepo;
+        public EbooksController(IUnitOfWork unitOfWork, IUsersRepo usersRepo)
         {
             this._ebooksRepository = unitOfWork.Ebooks;
             this._categoriesRepository = unitOfWork.Categories;
@@ -33,6 +36,7 @@ namespace CBProject.Controllers
             this._ratingsRepository = unitOfWork.Ratings;
             this._reviewsRepository = unitOfWork.Reviews;
             this._context = unitOfWork.Context;
+            this._usersRepo = (UsersRepo)usersRepo;
 
         }
         public async Task<ActionResult> Index()
@@ -45,6 +49,8 @@ namespace CBProject.Controllers
             {
                 var viewModel = Mapper.Map<Ebook, EbookViewModel>(ebook);
                 viewModel.Categories = new SelectList(categories, "ID", "Name");
+                var users = await this._usersRepo.GetAllAsync();
+                viewModel.Users = new SelectList(users, "Id", "FullName");
                 viewModel.MyTags = await this._tagsRepository.GetAllFromEbookAsync(ebook);
                 viewModel.MyReviews = await this._reviewsRepository.GetAllFromEbookAsync(ebook);
                 viewModel.MyRatings = await this._ratingsRepository.GetAllFromEbookAsync(ebook);
@@ -72,16 +78,14 @@ namespace CBProject.Controllers
             viewModel.MyRatings = await this._ratingsRepository.GetAllFromEbookAsync(ebook);
             return View(viewModel);
         }
-
-    
-
-
         [Authorize(Roles = "Admin, ContentCreator")]
         public async Task<ActionResult> Create()
         {
             var userId = User.Identity.GetUserId();
             EbookViewModel viewModel = new EbookViewModel();
             var categories = await this._categoriesRepository.GetAllAsync();
+            var users = await this._usersRepo.GetAllAsync();
+            viewModel.Users = new SelectList(users, "Id", "FullName");
             viewModel.OtherTags = await this._tagsRepository.GetAllAsync();
             viewModel.OtherReviews = await this._reviewsRepository.GetAllAsync();
             viewModel.OtherRatings = await this._ratingsRepository.GetAllAsync();
@@ -137,6 +141,8 @@ namespace CBProject.Controllers
             EbookViewModel viewModel = Mapper.Map<Ebook, EbookViewModel>(ebook);
             var categories = await this._categoriesRepository.GetAllAsync();
             viewModel.Categories = new SelectList(categories, "ID", "Name");
+            var users = await this._usersRepo.GetAllAsync();
+            viewModel.Users = new SelectList(users, "Id", "FullName");
             viewModel.OtherTags = await this._tagsRepository.GetAllOtherFromEbookAsync(ebook);
             viewModel.OtherReviews = await this._reviewsRepository.GetAllOtherFromEbookAsync(ebook);
             viewModel.OtherRatings = await this._ratingsRepository.GetAllOtherFromEbookAsync(ebook);
@@ -243,6 +249,7 @@ namespace CBProject.Controllers
                 this._ratingsRepository.Dispose();
                 this._reviewsRepository.Dispose();
                 this._context.Dispose();
+                this._usersRepo.Dispose();
             }
             base.Dispose(disposing);
         }

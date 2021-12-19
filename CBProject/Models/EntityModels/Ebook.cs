@@ -20,11 +20,10 @@ namespace CBProject.Models.EntityModels
         [DataType(DataType.Date)]
         public DateTime UploadDate { get; set; }
         public string CreatorId { get; set; }
-        public ApplicationUser ContentCreator { get; set; }
+        public ApplicationUser Creator { get; set; }
         [ForeignKey("Category")]
         public int CategoryId { get; set; }  
         public Category Category { get; set; }
-        public ICollection<Tag> Tags { get; set; }
         public ICollection<Review> Reviews { get; set; }
         public ICollection<Rating> Ratings { get; set; }
     }

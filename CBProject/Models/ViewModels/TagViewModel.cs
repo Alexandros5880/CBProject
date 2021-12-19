@@ -10,5 +10,6 @@ namespace CBProject.Models.ViewModels
         public int VideoId { get; set; }
         public SelectList Ebooks { get; set; }
         public int EbookId { get; set; }
+        public EbookViewModel Ebook { get; set; }
     }
 }

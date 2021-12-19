@@ -22,6 +22,9 @@ namespace CBProject.Models.ViewModels
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime UploadDate { get; set; }
         public int CategoryId { get; set;  }
+        public string CreatorId { get; set; }
+        public ApplicationUser Creator { get; set; }
+        public SelectList Users { get; set; }
         public Category Category { get; set; }
         public SelectList Categories { get; set; }
 

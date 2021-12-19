@@ -14,12 +14,6 @@
         <th>
             @Html.DisplayNameFor(model => model.Title)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.VideoId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EbookId)
-        </th>
         <th></th>
     </tr>
 
@@ -27,12 +21,6 @@
 <tr>
     <td>
         @Html.DisplayFor(modelItem => item.Title)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.VideoId)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.EbookId)
     </td>
     <td>
         @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |

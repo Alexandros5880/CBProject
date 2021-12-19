@@ -46,7 +46,6 @@ namespace CBProject.Repositories
             return this._context.Videos
                 .Include(v=>v.Reviews)
                 .Include(v => v.Ratings)
-                .Include(v => v.Tags)
                 .Include(v => v.Category)
                 .Include(v => v.Creator)
                 .SingleOrDefault(v => v.ID == id);
@@ -56,7 +55,6 @@ namespace CBProject.Repositories
             return this._context.Videos
                 .Include(v => v.Reviews)
                 .Include(v => v.Ratings)
-                .Include(v => v.Tags)
                 .Include(v => v.Category)
                 .Include(v => v.Creator)
                 .ToList();
@@ -82,7 +80,6 @@ namespace CBProject.Repositories
             return _context.Videos
                 .Include(v => v.Reviews)
                 .Include(v => v.Ratings)
-                .Include(v => v.Tags)
                 .Where(v => !category.Videos.Contains(v))
                 .ToList();
         }
@@ -96,7 +93,6 @@ namespace CBProject.Repositories
             return _context.Videos
                 .Include(v => v.Reviews)
                 .Include(v => v.Ratings)
-                .Include(v => v.Tags)
                 .Where(v => category.Videos.Contains(v))
                 .ToList();
         }
@@ -115,7 +111,6 @@ namespace CBProject.Repositories
             return await this._context.Videos
                 .Include(v => v.Reviews)
                 .Include(v => v.Ratings)
-                .Include(v => v.Tags)
                 .Include(v => v.Category)
                 .Include(v => v.Creator)
                 .SingleOrDefaultAsync(v => v.ID == id);
@@ -130,7 +125,6 @@ namespace CBProject.Repositories
             return await this._context.Videos
                 .Include(v => v.Reviews)
                 .Include(v => v.Ratings)
-                .Include(v => v.Tags)
                 .Include(v => v.Category)
                 .Include(v => v.Creator)
                 .ToListAsync();
@@ -150,7 +144,6 @@ namespace CBProject.Repositories
             return await _context.Videos
                 .Include(v => v.Reviews)
                 .Include(v => v.Ratings)
-                .Include(v => v.Tags)
                 .Where(v => !category.Videos.Contains(v))
                 .ToListAsync();
         }
@@ -164,7 +157,6 @@ namespace CBProject.Repositories
             return await _context.Videos
                 .Include(v => v.Reviews)
                 .Include(v => v.Ratings)
-                .Include(v => v.Tags)
                 .Where(v => category.Videos.Contains(v))
                 .ToListAsync();
         }

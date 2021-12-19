@@ -90,7 +90,7 @@
             @Html.DisplayNameFor(model => model.Thumbnail)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.VideoPath)
+            @Html.DisplayNameFor(model => model.VideoFile)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Description)
@@ -120,13 +120,20 @@
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td>
-                <img alt="Cover Foto" src="@item.VideoImagePath" style="height:77px;" />
+                <img alt="Cover Foto" src="@item.VideoImagePath" style="height:150px;" />
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Thumbnail)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.VideoPath)
+                @{ var path = @item.VideoPath; }
+                <video controls preload="metadata">
+                    @*poster="@item.VideoImagePath"*@
+                    <source src="@path" type="video/mp4">
+                    <source src="@path" type="video/webm" />
+                    <source src="@path" type="video/ogg" />
+                    Your browser does not support HTML5 video.
+                </video>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
@@ -256,9 +263,14 @@
                     <button type="button" data-id="@item.ID" class="btn btn-success " data-toggle="modal" data-target="#editModalV">Edit</button>
                     <button type="button" data-id="@item.ID" class='btn btn-danger btn-delete' data-toggle="modal">Delete</button>
                 }
+                <style>
+                    button {
+                        margin: 5px;
+                    }
+                </style>
                 @*@Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.ID })*@
+                    @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })*@
             </td>
         </tr>
     }

@@ -93,6 +93,9 @@
                 @Html.DisplayNameFor(model => model.UploadDate)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Creator)
+            </th>
+            <th>
                 Cover
             </th>
             <th>
@@ -128,10 +131,13 @@
                 @Html.DisplayFor(modelItem => item.UploadDate)
             </td>
             <td>
-                <img alt="Cover Foto" src="@item.EbookImagePath" style="height:77px;" />
+                <img alt="Cover Foto" src="@item.EbookImagePath" style="height:100px;" />
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Category.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Creator.FullName)
             </td>
             <td>
                 @{
