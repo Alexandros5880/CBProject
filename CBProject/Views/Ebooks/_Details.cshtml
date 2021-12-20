@@ -73,17 +73,7 @@
         </dt>
 
         <dd>
-            <ul>
-                @if (Model.MyTags != null && Model.MyTags.Count > 0)
-                {
-                    foreach (var tag in Model.MyTags)
-                    {
-                        <li>
-                            Html.DisplayFor(model => tag.Title)
-                        </li>
-                    }
-                }
-            </ul>
+            Tags
         </dd>
 
         <dt>
@@ -91,17 +81,7 @@
         </dt>
 
         <dd>
-            <ul>
-                @if (Model.MyReviews != null && Model.MyReviews.Count > 0)
-                {
-                    foreach (var review in Model.MyReviews)
-                    {
-                        <li>
-                            Html.DisplayFor(model => review.Comment)
-                        </li>
-                    }
-                }
-            </ul>
+            Reviews
         </dd>
 
         <dt>
@@ -109,17 +89,7 @@
         </dt>
 
         <dd>
-            <ul>
-                @if (Model.MyRatings != null && Model.MyRatings.Count > 0)
-                {
-                    foreach (var rating in Model.MyRatings)
-                    {
-                        <li>
-                            @Html.DisplayFor(model => rating.Rate)
-                        </li>
-                    }
-                }
-            </ul>
+            Ratings
         </dd>
 
     </dl>

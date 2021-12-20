@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace CBProject.Controllers
 {
+    [Authorize]
     public class RolesController : Controller
     {
         private readonly RolesRepo _rolesRepo;
@@ -21,7 +22,6 @@ namespace CBProject.Controllers
             this._rolesRepo = (RolesRepo) rolesRepo;
             this._userRepo = (UsersRepo) usersRepo;
         }
-
         public async Task<ActionResult> Index()
         {
             ICollection<ApplicationRole> roles = await this._rolesRepo.GetAllAsync();
@@ -29,7 +29,6 @@ namespace CBProject.Controllers
             //    Mapper.Map<ICollection<ApplicationRole>, ICollection<ApplicationRoleViewModel>>(roles);
             return View(roles);
         }
-
         public async Task<ActionResult> Details(string id)
         {
             if (id == null)
@@ -40,12 +39,10 @@ namespace CBProject.Controllers
             var viewModel = Mapper.Map<ApplicationRole, IdentityRoleViewModel>(role);
             return View(viewModel);
         }
-
         public ActionResult Create()
         {
             return View();
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(IdentityRoleViewModel model)
@@ -69,7 +66,6 @@ namespace CBProject.Controllers
                 return View();
             }
         }
-
         public async Task<ActionResult> Edit(string id)
         {
             if (id == null)
@@ -80,7 +76,6 @@ namespace CBProject.Controllers
             var viewModel = Mapper.Map<ApplicationRole, IdentityRoleViewModel>(role);
             return View(viewModel);
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(IdentityRoleViewModel model)
@@ -93,7 +88,6 @@ namespace CBProject.Controllers
             await _rolesRepo.UpdateAsync(role);
             return RedirectToAction("Index");
         }
-
         public async Task<ActionResult> Delete(string id)
         {
             if (id == null)
@@ -104,7 +98,6 @@ namespace CBProject.Controllers
             var viewModel = Mapper.Map<ApplicationRole, IdentityRoleViewModel>(role);
             return View(viewModel);
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Delete(IdentityRoleViewModel model)

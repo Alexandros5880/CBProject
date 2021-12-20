@@ -6,6 +6,7 @@ using CBProject.Models.ViewModels;
 using CBProject.Repositories;
 using CBProject.Repositories.IdentityRepos;
 using CBProject.Repositories.IdentityRepos.Interfaces;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,6 +17,7 @@ using System.Web.Mvc;
 
 namespace CBProject.Controllers
 {
+    [Authorize]
     public class VideosController : Controller
     {
         private readonly VideosRepository _videoRepo;
@@ -42,12 +44,7 @@ namespace CBProject.Controllers
             {
                 var viewModel = Mapper.Map<Video, VideoViewModel>(video);
                 viewModel.OtherCategory = categories;
-                viewModel.MyTags = await this._tagsRepo.GetAllFromVideoAsync(video);
-                viewModel.MyReviews = await this._reviewRepo.GetAllFromVideoAsync(video);
-                viewModel.MyRatings = await this._ratingsRepo.GetAllFromVideoAsync(video);
-                viewModel.OtherTags = await this._tagsRepo.GetAllOtherFromVideoAsync(video);
-                viewModel.OtherReviews = await this._reviewRepo.GetAllOtherFromVideoAsync(video);
-                viewModel.OtherRatings = await this._ratingsRepo.GetAllOtherFromVideoAsync(video);
+                viewModel.Rate = await this._videoRepo.GetRatingsAverageAsync(video.ID);
                 viewModels.Add(viewModel);
             }
             return View(viewModels);
@@ -64,17 +61,11 @@ namespace CBProject.Controllers
                 return HttpNotFound();
             }
             var viewModel = Mapper.Map<Video, VideoViewModel>(video);
-            viewModel.MyTags = await this._tagsRepo.GetAllFromVideoAsync(video);
-            viewModel.MyReviews = await this._reviewRepo.GetAllFromVideoAsync(video);
-            viewModel.MyRatings = await this._ratingsRepo.GetAllFromVideoAsync(video);
             return View(viewModel);
         }
         public async Task<ActionResult> Create()
         {
             var viewModel = new VideoViewModel();
-            viewModel.OtherTags = await this._tagsRepo.GetAllAsync();
-            viewModel.OtherReviews = await this._reviewRepo.GetAllAsync();
-            viewModel.OtherRatings = await this._ratingsRepo.GetAllAsync();
             viewModel.OtherUsers = await this._usersRepo.GetAllAsync();
             viewModel.OtherCategory = await this._categoriesRepo.GetAllAsync();
             viewModel.UploadDate = DateTime.Today;
@@ -125,9 +116,6 @@ namespace CBProject.Controllers
                 return HttpNotFound();
             }
             var viewModel = Mapper.Map<Video, VideoViewModel>(video);
-            viewModel.OtherTags = await this._tagsRepo.GetAllOtherFromVideoAsync(video);
-            viewModel.OtherReviews = await this._reviewRepo.GetAllOtherFromVideoAsync(video);
-            viewModel.OtherRatings = await this._ratingsRepo.GetAllOtherFromVideoAsync(video);
             viewModel.OtherUsers = await this._usersRepo.GetAllAsync();
             viewModel.OtherCategory = await this._categoriesRepo.GetAllAsync();
             return View(viewModel);
@@ -219,6 +207,24 @@ namespace CBProject.Controllers
             }
             this._videoRepo.Delete(id);
             await this._videoRepo.SaveAsync();
+            return RedirectToAction("Index");
+        }
+        [HttpPost]
+        public async Task<ActionResult> AddReview(int videoId, string comment)
+        {
+            await this._videoRepo.AddReviewAsync(videoId, User.Identity.GetUserId(), comment);
+            return RedirectToAction("Index");
+        }
+        [HttpPost]
+        public async Task<ActionResult> AddTag(int videoId, string title)
+        {
+            await this._videoRepo.AddTagAsync(videoId, title);
+            return RedirectToAction("Index");
+        }
+        [HttpPost]
+        public async Task<ActionResult> AddRate(int videoId, float rate)
+        {
+            await this._videoRepo.AddRatingAsync(videoId, User.Identity.GetUserId(), rate);
             return RedirectToAction("Index");
         }
         protected override void Dispose(bool disposing)

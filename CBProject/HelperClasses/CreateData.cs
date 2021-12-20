@@ -1508,7 +1508,733 @@ namespace CBProject.HelperClasses
         {
             try
             {
-                // TODO: Create Rating
+                Random rnd = new Random();
+                // Ebooks 
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 1,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 2,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 3,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 4,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 5,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 6,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 7,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 8,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 9,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 10,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 11,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 12,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 13,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 14,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 15,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 16,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 17,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 18,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 19,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 20,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 21,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 22,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 23,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 24,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                // Videos
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 25,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 26,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 27,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 28,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 29,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 30,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 31,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 32,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 33,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 34,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 35,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 36,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 37,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 38,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 39,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 40,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 41,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 42,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 43,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 44,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 45,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 46,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 47,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 48,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 49,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 50,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 51,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 52,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 53,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 54,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 55,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 56,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 57,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 58,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 59,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.Ratings.Add(new Rating()
+                {
+                    ID = 60,
+                    Rate = rnd.Next(0, 6),
+                    Rater = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3"))
+                });
+                context.SaveChanges();
+                // Ratings To Ebboks
+                context.RatingsToEbooks.Add(new RatingToEbook()
+                {
+                    ID = 1,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 1),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 1)
+                });
+                context.RatingsToEbooks.Add(new RatingToEbook()
+                {
+                    ID = 2,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 2),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 1)
+                });
+                context.RatingsToEbooks.Add(new RatingToEbook()
+                {
+                    ID = 3,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 3),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 1)
+                });
+                context.RatingsToEbooks.Add(new RatingToEbook()
+                {
+                    ID = 4,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 4),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 2)
+                });
+                context.RatingsToEbooks.Add(new RatingToEbook()
+                {
+                    ID = 5,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 5),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 2)
+                });
+                context.RatingsToEbooks.Add(new RatingToEbook()
+                {
+                    ID = 6,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 6),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 2)
+                });
+                context.RatingsToEbooks.Add(new RatingToEbook()
+                {
+                    ID = 7,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 7),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 3)
+                });
+                context.RatingsToEbooks.Add(new RatingToEbook()
+                {
+                    ID = 8,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 8),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 3)
+                });
+                context.RatingsToEbooks.Add(new RatingToEbook()
+                {
+                    ID = 9,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 9),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 3)
+                });
+                context.RatingsToEbooks.Add(new RatingToEbook()
+                {
+                    ID = 10,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 10),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 4)
+                });
+                context.RatingsToEbooks.Add(new RatingToEbook()
+                {
+                    ID = 11,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 11),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 4)
+                });
+                context.RatingsToEbooks.Add(new RatingToEbook()
+                {
+                    ID = 12,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 12),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 4)
+                });
+                context.RatingsToEbooks.Add(new RatingToEbook()
+                {
+                    ID = 13,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 13),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 5)
+                });
+                context.RatingsToEbooks.Add(new RatingToEbook()
+                {
+                    ID = 14,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 14),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 5)
+                });
+                context.RatingsToEbooks.Add(new RatingToEbook()
+                {
+                    ID = 15,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 15),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 5)
+                });
+                context.RatingsToEbooks.Add(new RatingToEbook()
+                {
+                    ID = 16,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 16),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 6)
+                });
+                context.RatingsToEbooks.Add(new RatingToEbook()
+                {
+                    ID = 17,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 17),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 6)
+                });
+                context.RatingsToEbooks.Add(new RatingToEbook()
+                {
+                    ID = 18,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 18),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 6)
+                });
+                context.RatingsToEbooks.Add(new RatingToEbook()
+                {
+                    ID = 19,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 19),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 7)
+                });
+                context.RatingsToEbooks.Add(new RatingToEbook()
+                {
+                    ID = 20,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 20),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 7)
+                });
+                context.RatingsToEbooks.Add(new RatingToEbook()
+                {
+                    ID = 21,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 21),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 7)
+                });
+                context.RatingsToEbooks.Add(new RatingToEbook()
+                {
+                    ID = 22,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 22),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 8)
+                });
+                context.RatingsToEbooks.Add(new RatingToEbook()
+                {
+                    ID = 23,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 23),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 8)
+                });
+                context.RatingsToEbooks.Add(new RatingToEbook()
+                {
+                    ID = 24,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 24),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 8)
+                });
+                // Ratings To Videos
+                context.RatingsToVideos.Add(new RatingToVideo()
+                {
+                    ID = 1,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 25),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 1)
+                });
+                context.RatingsToVideos.Add(new RatingToVideo()
+                {
+                    ID = 2,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 26),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 1)
+                });
+                context.RatingsToVideos.Add(new RatingToVideo()
+                {
+                    ID = 3,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 27),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 1)
+                });
+                context.RatingsToVideos.Add(new RatingToVideo()
+                {
+                    ID = 4,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 28),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 2)
+                });
+                context.RatingsToVideos.Add(new RatingToVideo()
+                {
+                    ID = 5,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 29),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 2)
+                });
+                context.RatingsToVideos.Add(new RatingToVideo()
+                {
+                    ID = 6,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 30),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 2)
+                });
+                context.RatingsToVideos.Add(new RatingToVideo()
+                {
+                    ID = 7,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 31),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 3)
+                });
+                context.RatingsToVideos.Add(new RatingToVideo()
+                {
+                    ID = 8,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 32),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 3)
+                });
+                context.RatingsToVideos.Add(new RatingToVideo()
+                {
+                    ID = 9,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 33),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 3)
+                });
+                context.RatingsToVideos.Add(new RatingToVideo()
+                {
+                    ID = 10,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 34),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 4)
+                });
+                context.RatingsToVideos.Add(new RatingToVideo()
+                {
+                    ID = 11,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 35),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 4)
+                });
+                context.RatingsToVideos.Add(new RatingToVideo()
+                {
+                    ID = 12,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 36),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 4)
+                });
+                context.RatingsToVideos.Add(new RatingToVideo()
+                {
+                    ID = 13,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 37),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 5)
+                });
+                context.RatingsToVideos.Add(new RatingToVideo()
+                {
+                    ID = 14,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 38),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 5)
+                });
+                context.RatingsToVideos.Add(new RatingToVideo()
+                {
+                    ID = 15,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 39),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 5)
+                });
+                context.RatingsToVideos.Add(new RatingToVideo()
+                {
+                    ID = 16,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 40),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 6)
+                });
+                context.RatingsToVideos.Add(new RatingToVideo()
+                {
+                    ID = 17,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 41),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 6)
+                });
+                context.RatingsToVideos.Add(new RatingToVideo()
+                {
+                    ID = 18,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 42),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 6)
+                });
+                context.RatingsToVideos.Add(new RatingToVideo()
+                {
+                    ID = 19,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 43),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 7)
+                });
+                context.RatingsToVideos.Add(new RatingToVideo()
+                {
+                    ID = 20,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 44),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 7)
+                });
+                context.RatingsToVideos.Add(new RatingToVideo()
+                {
+                    ID = 21,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 45),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 7)
+                });
+                context.RatingsToVideos.Add(new RatingToVideo()
+                {
+                    ID = 22,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 46),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 8)
+                });
+                context.RatingsToVideos.Add(new RatingToVideo()
+                {
+                    ID = 23,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 47),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 8)
+                });
+                context.RatingsToVideos.Add(new RatingToVideo()
+                {
+                    ID = 24,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 48),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 8)
+                });
+                context.RatingsToVideos.Add(new RatingToVideo()
+                {
+                    ID = 25,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 49),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 9)
+                });
+                context.RatingsToVideos.Add(new RatingToVideo()
+                {
+                    ID = 26,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 50),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 9)
+                });
+                context.RatingsToVideos.Add(new RatingToVideo()
+                {
+                    ID = 27,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 51),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 9)
+                });
+                context.RatingsToVideos.Add(new RatingToVideo()
+                {
+                    ID = 28,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 52),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 10)
+                });
+                context.RatingsToVideos.Add(new RatingToVideo()
+                {
+                    ID = 29,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 53),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 10)
+                });
+                context.RatingsToVideos.Add(new RatingToVideo()
+                {
+                    ID = 30,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 54),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 10)
+                });
+                context.RatingsToVideos.Add(new RatingToVideo()
+                {
+                    ID = 31,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 55),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 11)
+                });
+                context.RatingsToVideos.Add(new RatingToVideo()
+                {
+                    ID = 32,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 56),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 11)
+                });
+                context.RatingsToVideos.Add(new RatingToVideo()
+                {
+                    ID = 33,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 57),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 11)
+                });
+                context.RatingsToVideos.Add(new RatingToVideo()
+                {
+                    ID = 34,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 58),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 12)
+                });
+                context.RatingsToVideos.Add(new RatingToVideo()
+                {
+                    ID = 35,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 59),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 12)
+                });
+                context.RatingsToVideos.Add(new RatingToVideo()
+                {
+                    ID = 36,
+                    Rating = context.Ratings.FirstOrDefault(r => r.ID == 60),
+                    Video = context.Videos.FirstOrDefault(v => v.ID == 12)
+                });
+                context.SaveChanges();
             }
             catch (Exception ex)
             {
@@ -1519,7 +2245,732 @@ namespace CBProject.HelperClasses
         {
             try
             {
-                // TODO: Create Review
+                // Ebooks 
+                context.Reviews.Add(new Review()
+                {
+                    ID = 1,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 2,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 3,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 4,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 5,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 6,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 7,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 8,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 9,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 10,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 11,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 12,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 13,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 14,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 15,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 16,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 17,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 18,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 19,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 20,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 21,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 22,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 23,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 24,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                // Videos
+                context.Reviews.Add(new Review()
+                {
+                    ID = 25,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 26,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 27,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 28,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 29,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 30,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 31,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 32,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 33,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 34,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 35,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 36,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 37,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 38,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 39,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 40,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 41,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 42,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 43,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 44,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 45,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 46,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 47,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 48,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 49,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 50,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 51,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 52,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 53,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 54,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 55,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 56,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 57,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 58,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 59,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.Reviews.Add(new Review()
+                {
+                    ID = 60,
+                    Reviewer = context.Users.FirstOrDefault(u => u.FirstName.Equals("Alexandros_3")),
+                    Comment = "Comment."
+                });
+                context.SaveChanges();
+                // Reviews To Ebooks
+                context.ReviewsToEbooks.Add(new ReviewToEbook()
+                {
+                    ID = 1,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 1),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 1)
+                });
+                context.ReviewsToEbooks.Add(new ReviewToEbook()
+                {
+                    ID = 2,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 2),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 1)
+                });
+                context.ReviewsToEbooks.Add(new ReviewToEbook()
+                {
+                    ID = 3,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 3),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 1)
+                });
+                context.ReviewsToEbooks.Add(new ReviewToEbook()
+                {
+                    ID = 4,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 4),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 2)
+                });
+                context.ReviewsToEbooks.Add(new ReviewToEbook()
+                {
+                    ID = 5,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 5),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 2)
+                });
+                context.ReviewsToEbooks.Add(new ReviewToEbook()
+                {
+                    ID = 6,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 6),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 2)
+                });
+                context.ReviewsToEbooks.Add(new ReviewToEbook()
+                {
+                    ID = 7,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 7),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 3)
+                });
+                context.ReviewsToEbooks.Add(new ReviewToEbook()
+                {
+                    ID = 8,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 8),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 3)
+                });
+                context.ReviewsToEbooks.Add(new ReviewToEbook()
+                {
+                    ID = 9,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 9),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 3)
+                });
+                context.ReviewsToEbooks.Add(new ReviewToEbook()
+                {
+                    ID = 10,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 10),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 4)
+                });
+                context.ReviewsToEbooks.Add(new ReviewToEbook()
+                {
+                    ID = 11,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 11),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 4)
+                });
+                context.ReviewsToEbooks.Add(new ReviewToEbook()
+                {
+                    ID = 12,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 12),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 4)
+                });
+                context.ReviewsToEbooks.Add(new ReviewToEbook()
+                {
+                    ID = 13,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 13),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 5)
+                });
+                context.ReviewsToEbooks.Add(new ReviewToEbook()
+                {
+                    ID = 14,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 14),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 5)
+                });
+                context.ReviewsToEbooks.Add(new ReviewToEbook()
+                {
+                    ID = 15,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 15),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 5)
+                });
+                context.ReviewsToEbooks.Add(new ReviewToEbook()
+                {
+                    ID = 16,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 16),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 6)
+                });
+                context.ReviewsToEbooks.Add(new ReviewToEbook()
+                {
+                    ID = 17,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 17),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 6)
+                });
+                context.ReviewsToEbooks.Add(new ReviewToEbook()
+                {
+                    ID = 18,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 18),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 6)
+                });
+                context.ReviewsToEbooks.Add(new ReviewToEbook()
+                {
+                    ID = 19,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 19),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 7)
+                });
+                context.ReviewsToEbooks.Add(new ReviewToEbook()
+                {
+                    ID = 20,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 20),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 7)
+                });
+                context.ReviewsToEbooks.Add(new ReviewToEbook()
+                {
+                    ID = 21,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 21),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 7)
+                });
+                context.ReviewsToEbooks.Add(new ReviewToEbook()
+                {
+                    ID = 22,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 22),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 8)
+                });
+                context.ReviewsToEbooks.Add(new ReviewToEbook()
+                {
+                    ID = 23,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 23),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 8)
+                });
+                context.ReviewsToEbooks.Add(new ReviewToEbook()
+                {
+                    ID = 24,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 24),
+                    Ebook = context.Ebooks.FirstOrDefault(e => e.ID == 8)
+                });
+                // Reviews To Viewos
+                context.ReviewsToVideos.Add(new ReviewToVideo()
+                {
+                    ID = 1,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 25),
+                    Video = context.Videos.FirstOrDefault(e => e.ID == 1)
+                });
+                context.ReviewsToVideos.Add(new ReviewToVideo()
+                {
+                    ID = 2,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 26),
+                    Video = context.Videos.FirstOrDefault(e => e.ID == 1)
+                });
+                context.ReviewsToVideos.Add(new ReviewToVideo()
+                {
+                    ID = 3,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 27),
+                    Video = context.Videos.FirstOrDefault(e => e.ID == 1)
+                });
+                context.ReviewsToVideos.Add(new ReviewToVideo()
+                {
+                    ID = 4,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 28),
+                    Video = context.Videos.FirstOrDefault(e => e.ID == 2)
+                });
+                context.ReviewsToVideos.Add(new ReviewToVideo()
+                {
+                    ID = 5,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 29),
+                    Video = context.Videos.FirstOrDefault(e => e.ID == 2)
+                });
+                context.ReviewsToVideos.Add(new ReviewToVideo()
+                {
+                    ID = 6,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 30),
+                    Video = context.Videos.FirstOrDefault(e => e.ID == 2)
+                });
+                context.ReviewsToVideos.Add(new ReviewToVideo()
+                {
+                    ID = 7,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 31),
+                    Video = context.Videos.FirstOrDefault(e => e.ID == 3)
+                });
+                context.ReviewsToVideos.Add(new ReviewToVideo()
+                {
+                    ID = 8,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 32),
+                    Video = context.Videos.FirstOrDefault(e => e.ID == 3)
+                });
+                context.ReviewsToVideos.Add(new ReviewToVideo()
+                {
+                    ID = 9,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 33),
+                    Video = context.Videos.FirstOrDefault(e => e.ID == 3)
+                });
+                context.ReviewsToVideos.Add(new ReviewToVideo()
+                {
+                    ID = 10,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 34),
+                    Video = context.Videos.FirstOrDefault(e => e.ID == 4)
+                });
+                context.ReviewsToVideos.Add(new ReviewToVideo()
+                {
+                    ID = 11,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 35),
+                    Video = context.Videos.FirstOrDefault(e => e.ID == 4)
+                });
+                context.ReviewsToVideos.Add(new ReviewToVideo()
+                {
+                    ID = 12,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 36),
+                    Video = context.Videos.FirstOrDefault(e => e.ID == 4)
+                });
+                context.ReviewsToVideos.Add(new ReviewToVideo()
+                {
+                    ID = 13,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 37),
+                    Video = context.Videos.FirstOrDefault(e => e.ID == 5)
+                });
+                context.ReviewsToVideos.Add(new ReviewToVideo()
+                {
+                    ID = 14,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 38),
+                    Video = context.Videos.FirstOrDefault(e => e.ID == 5)
+                });
+                context.ReviewsToVideos.Add(new ReviewToVideo()
+                {
+                    ID = 15,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 39),
+                    Video = context.Videos.FirstOrDefault(e => e.ID == 5)
+                });
+                context.ReviewsToVideos.Add(new ReviewToVideo()
+                {
+                    ID = 16,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 40),
+                    Video = context.Videos.FirstOrDefault(e => e.ID == 6)
+                });
+                context.ReviewsToVideos.Add(new ReviewToVideo()
+                {
+                    ID = 17,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 41),
+                    Video = context.Videos.FirstOrDefault(e => e.ID == 6)
+                });
+                context.ReviewsToVideos.Add(new ReviewToVideo()
+                {
+                    ID = 18,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 42),
+                    Video = context.Videos.FirstOrDefault(e => e.ID == 6)
+                });
+                context.ReviewsToVideos.Add(new ReviewToVideo()
+                {
+                    ID = 19,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 43),
+                    Video = context.Videos.FirstOrDefault(e => e.ID == 7)
+                });
+                context.ReviewsToVideos.Add(new ReviewToVideo()
+                {
+                    ID = 20,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 44),
+                    Video = context.Videos.FirstOrDefault(e => e.ID == 7)
+                });
+                context.ReviewsToVideos.Add(new ReviewToVideo()
+                {
+                    ID = 21,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 45),
+                    Video = context.Videos.FirstOrDefault(e => e.ID == 7)
+                });
+                context.ReviewsToVideos.Add(new ReviewToVideo()
+                {
+                    ID = 22,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 46),
+                    Video = context.Videos.FirstOrDefault(e => e.ID == 8)
+                });
+                context.ReviewsToVideos.Add(new ReviewToVideo()
+                {
+                    ID = 23,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 47),
+                    Video = context.Videos.FirstOrDefault(e => e.ID == 8)
+                });
+                context.ReviewsToVideos.Add(new ReviewToVideo()
+                {
+                    ID = 24,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 48),
+                    Video = context.Videos.FirstOrDefault(e => e.ID == 8)
+                });
+                context.ReviewsToVideos.Add(new ReviewToVideo()
+                {
+                    ID = 25,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 49),
+                    Video = context.Videos.FirstOrDefault(e => e.ID == 9)
+                });
+                context.ReviewsToVideos.Add(new ReviewToVideo()
+                {
+                    ID = 26,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 50),
+                    Video = context.Videos.FirstOrDefault(e => e.ID == 9)
+                });
+                context.ReviewsToVideos.Add(new ReviewToVideo()
+                {
+                    ID = 27,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 51),
+                    Video = context.Videos.FirstOrDefault(e => e.ID == 9)
+                });
+                context.ReviewsToVideos.Add(new ReviewToVideo()
+                {
+                    ID = 28,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 52),
+                    Video = context.Videos.FirstOrDefault(e => e.ID == 10)
+                });
+                context.ReviewsToVideos.Add(new ReviewToVideo()
+                {
+                    ID = 29,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 53),
+                    Video = context.Videos.FirstOrDefault(e => e.ID == 10)
+                });
+                context.ReviewsToVideos.Add(new ReviewToVideo()
+                {
+                    ID = 30,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 54),
+                    Video = context.Videos.FirstOrDefault(e => e.ID == 10)
+                });
+                context.ReviewsToVideos.Add(new ReviewToVideo()
+                {
+                    ID = 31,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 55),
+                    Video = context.Videos.FirstOrDefault(e => e.ID == 11)
+                });
+                context.ReviewsToVideos.Add(new ReviewToVideo()
+                {
+                    ID = 32,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 56),
+                    Video = context.Videos.FirstOrDefault(e => e.ID == 11)
+                });
+                context.ReviewsToVideos.Add(new ReviewToVideo()
+                {
+                    ID = 33,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 57),
+                    Video = context.Videos.FirstOrDefault(e => e.ID == 11)
+                });
+                context.ReviewsToVideos.Add(new ReviewToVideo()
+                {
+                    ID = 34,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 58),
+                    Video = context.Videos.FirstOrDefault(e => e.ID == 12)
+                });
+                context.ReviewsToVideos.Add(new ReviewToVideo()
+                {
+                    ID = 35,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 59),
+                    Video = context.Videos.FirstOrDefault(e => e.ID == 12)
+                });
+                context.ReviewsToVideos.Add(new ReviewToVideo()
+                {
+                    ID = 36,
+                    Review = context.Reviews.FirstOrDefault(r => r.ID == 60),
+                    Video = context.Videos.FirstOrDefault(e => e.ID == 12)
+                });
+                context.SaveChanges();
             }
             catch (Exception ex)
             {

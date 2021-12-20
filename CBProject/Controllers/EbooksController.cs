@@ -19,6 +19,7 @@ using System.Web.Mvc;
 
 namespace CBProject.Controllers
 {
+    [Authorize]
     public class EbooksController : Controller
     {
         private EbooksRepository _ebooksRepository;
@@ -51,12 +52,9 @@ namespace CBProject.Controllers
                 viewModel.Categories = new SelectList(categories, "ID", "Name");
                 var users = await this._usersRepo.GetAllAsync();
                 viewModel.Users = new SelectList(users, "Id", "FullName");
-                viewModel.MyTags = await this._tagsRepository.GetAllFromEbookAsync(ebook);
-                viewModel.MyReviews = await this._reviewsRepository.GetAllFromEbookAsync(ebook);
-                viewModel.MyRatings = await this._ratingsRepository.GetAllFromEbookAsync(ebook);
-                viewModel.OtherTags = await this._tagsRepository.GetAllOtherFromEbookAsync(ebook);
-                viewModel.OtherReviews = await this._reviewsRepository.GetAllOtherFromEbookAsync(ebook);
-                viewModel.OtherRatings = await this._ratingsRepository.GetAllOtherFromEbookAsync(ebook);
+                viewModel.Category = ebook.Category;
+                viewModel.Creator = ebook.Creator;
+                viewModel.Rate = await this._ebooksRepository.GetRatingsAverageAsync(ebook.ID);
                 viewModels.Add(viewModel);
             }
             return View(viewModels);
@@ -73,9 +71,6 @@ namespace CBProject.Controllers
                 return HttpNotFound();
             }
             var viewModel = Mapper.Map<Ebook, EbookViewModel>(ebook);
-            viewModel.MyTags = await this._tagsRepository.GetAllFromEbookAsync(ebook);
-            viewModel.MyReviews = await this._reviewsRepository.GetAllFromEbookAsync(ebook);
-            viewModel.MyRatings = await this._ratingsRepository.GetAllFromEbookAsync(ebook);
             return View(viewModel);
         }
         [Authorize(Roles = "Admin, ContentCreator")]
@@ -86,9 +81,6 @@ namespace CBProject.Controllers
             var categories = await this._categoriesRepository.GetAllAsync();
             var users = await this._usersRepo.GetAllAsync();
             viewModel.Users = new SelectList(users, "Id", "FullName");
-            viewModel.OtherTags = await this._tagsRepository.GetAllAsync();
-            viewModel.OtherReviews = await this._reviewsRepository.GetAllAsync();
-            viewModel.OtherRatings = await this._ratingsRepository.GetAllAsync();
             viewModel.Categories = new SelectList(categories, "ID", "Name");
             viewModel.UploadDate = DateTime.Today;
             return View(viewModel);
@@ -143,9 +135,6 @@ namespace CBProject.Controllers
             viewModel.Categories = new SelectList(categories, "ID", "Name");
             var users = await this._usersRepo.GetAllAsync();
             viewModel.Users = new SelectList(users, "Id", "FullName");
-            viewModel.OtherTags = await this._tagsRepository.GetAllOtherFromEbookAsync(ebook);
-            viewModel.OtherReviews = await this._reviewsRepository.GetAllOtherFromEbookAsync(ebook);
-            viewModel.OtherRatings = await this._ratingsRepository.GetAllOtherFromEbookAsync(ebook);
             return View(viewModel);
          
         }
@@ -237,6 +226,24 @@ namespace CBProject.Controllers
             }
             _ebooksRepository.Delete(id);
             await _ebooksRepository.SaveAsync();
+            return RedirectToAction("Index");
+        }
+        [HttpPost]
+        public async Task<ActionResult> AddReview(int ebookId, string comment)
+        {
+            await this._ebooksRepository.AddReviewAsync(ebookId, User.Identity.GetUserId(), comment);
+            return RedirectToAction("Index");
+        }
+        [HttpPost]
+        public async Task<ActionResult> AddTag(int ebookId, string title)
+        {
+            await this._ebooksRepository.AddTagAsync(ebookId, title);
+            return RedirectToAction("Index");
+        }
+        [HttpPost]
+        public async Task<ActionResult> AddRate(int ebookId, float rate)
+        {
+            await this._ebooksRepository.AddRatingAsync(ebookId, User.Identity.GetUserId(), rate);
             return RedirectToAction("Index");
         }
         protected override void Dispose(bool disposing)

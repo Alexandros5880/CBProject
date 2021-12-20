@@ -19,12 +19,14 @@ namespace CBProject.Models.EntityModels
         public string Url { get; set; }
         [DataType(DataType.Date)]
         public DateTime UploadDate { get; set; }
+        [ForeignKey("Creator")]
         public string CreatorId { get; set; }
         public ApplicationUser Creator { get; set; }
         [ForeignKey("Category")]
         public int CategoryId { get; set; }  
         public Category Category { get; set; }
-        public ICollection<Review> Reviews { get; set; }
-        public ICollection<Rating> Ratings { get; set; }
+        public ICollection<TagToEbook> TagsToEbooks { get; set; }
+        public ICollection<RatingToEbook> RatingsToEbooks { get; set; }
+        public ICollection<ReviewToEbook> ReviewsToEbooks { get; set; }
     }
 }
