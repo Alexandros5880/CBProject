@@ -120,7 +120,7 @@
         {
             if (float.IsNaN(item.Rate))
             {
-                item.Rate = 0.0f;
+                item.Rate = 0.1f;
             }
             <tr>
                 <td>
@@ -165,7 +165,7 @@
                     @Html.DisplayFor(modelItem => item.UploadDate)
                 </td>
                 <td>
-                    @item.Rate
+                    @Html.DisplayFor(modelItem => item.Rate)
                     @using (Html.BeginForm("AddRate", "Videos", new { videoId = item.ID }, FormMethod.Post, new { id = "video-rating-form" }))
                     {
                         @Html.AntiForgeryToken()
@@ -177,8 +177,9 @@
                                data-min="0"
                                data-max="5"
                                data-step="0.1"
-                               value="@item.Rate"
-                               onchange="exceVideoRateForm()">
+                               value="@item.Rate"> <!-- onchange="$('#video-rating-form').submit()" -->
+
+                        <input type="submit" value="Submit" />
                     }
                 </td>
                 <td>
@@ -240,43 +241,6 @@
                             </div>
                         </div>
                     </div>
-                    <div id="myModalVR" class="modal fade" role="dialog">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">Add Ratings</h4>
-                                </div>
-                                <div class="modal-body">
-
-                                    @using (Html.BeginForm("AddRate", "Videos", new { videoId = item.ID }, FormMethod.Post, new { id="video-rating-form" }))
-                                    {
-                                        @Html.AntiForgeryToken()
-                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                        @Html.HiddenFor(model => item.ID)
-
-                                        <div style="margin: 7px;">
-                                            <i class="fas fa-pencil-alt prefix" style="margin-left: 11%;"></i>
-                                            <input id="input-1" 
-                                                   name="rate" 
-                                                   class="rating rating-loading" 
-                                                   data-min="0" 
-                                                   data-max="5" 
-                                                   data-step="0.1" 
-                                                   value="@item.Rate"
-                                                   onchange="exceVideoRateForm()">
-
-                                            <input type="submit" value="Save" class="btn btn-default" style="margin-left: 80%; margin-top: 11px;" />
-                                        </div>
-                                    }
-
-                                </div>
-                                <div class="modal-footer">
-                                    @*<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>*@
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <div id="myModalV" class="modal fade" role="dialog">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -314,7 +278,6 @@
                         <button type="button" data-id="@item.ID" class="btn btn-dark" data-toggle="modal" data-target="#myModalVT">Tag</button>
                         <button type="button" data-id="@item.ID" class="btn btn-primary" data-toggle="modal" data-target="#myModalVC">Comment</button>
                         <button type="button" data-id="@item.ID" class="btn btn-info " data-toggle="modal" data-target="#myModalV">Details</button>
-                        @*<button type="button" data-id="@item.ID" class="btn btn-warning" data-toggle="modal" data-target="#myModalVR">Youre Rate</button>*@
                         <button type="button" data-id="@item.ID" class="btn btn-success " data-toggle="modal" data-target="#editModalV">Edit</button>
                         <button type="button" data-id="@item.ID" class='btn btn-danger btn-delete' data-toggle="modal">Delete</button>
                     }
@@ -323,7 +286,6 @@
                         @*<button type="button" data-id="@item.ID" class="btn btn-dark" data-toggle="modal" data-target="#myModalVT">Tag</button>*@
                         <button type="button" data-id="@item.ID" class="btn btn-primary" data-toggle="modal" data-target="#myModalVC">Comment</button>
                         <button type="button" data-id="@item.ID" class="btn btn-info " data-toggle="modal" data-target="#myModalV">Details</button>
-                        @*<button type="button" data-id="@item.ID" class="btn btn-warning" data-toggle="modal" data-target="#myModalVR">Youre Rate</button>*@
                         @*<button type="button" data-id="@item.ID" class="btn btn-success " data-toggle="modal" data-target="#editModalV">Edit</button>*@
                         <button type="button" data-id="@item.ID" class='btn btn-danger btn-delete' data-toggle="modal">Delete</button>
                     }
@@ -332,7 +294,6 @@
                         @*<button type="button" data-id="@item.ID" class="btn btn-dark" data-toggle="modal" data-target="#myModalVT">Tag</button>*@
                         @*<button type="button" data-id="@item.ID" class="btn btn-primary" data-toggle="modal" data-target="#myModalVC">Comment</button>*@
                         <button type="button" data-id="@item.ID" class="btn btn-info " data-toggle="modal" data-target="#myModalV">Details</button>
-                        @*<button type="button" data-id="@item.ID" class="btn btn-warning" data-toggle="modal" data-target="#myModalVR">Youre Rate</button>*@
                         <button type="button" data-id="@item.ID" class="btn btn-success " data-toggle="modal" data-target="#editModalV">Edit</button>
                         <button type="button" data-id="@item.ID" class='btn btn-danger btn-delete' data-toggle="modal">Delete</button>
                     }
@@ -350,7 +311,6 @@
                         @*<button type="button" data-id="@item.ID" class="btn btn-dark" data-toggle="modal" data-target="#myModalVT">Tag</button>*@
                         <button type="button" data-id="@item.ID" class="btn btn-primary" data-toggle="modal" data-target="#myModalVC">Comment</button>
                         @*<button type="button" data-id="@item.ID" class="btn btn-info " data-toggle="modal" data-target="#myModalV">Details</button>*@
-                        <button type="button" data-id="@item.ID" class="btn btn-warning" data-toggle="modal" data-target="#myModalVR">Youre Rate</button>
                         @*<button type="button" data-id="@item.ID" class="btn btn-success " data-toggle="modal" data-target="#editModalV">Edit</button>
                             <button type="button" data-id="@item.ID" class='btn btn-danger btn-delete' data-toggle="modal">Delete</button>*@
                     }
@@ -426,10 +386,6 @@
                 $("#deletemodalV").hide(300);
             }
         });
-
-        function exceVideoRateForm() {
-            $("#video-rating-form").submit();
-        }
     </script>
 
     <script src="~/Scripts/Ratting.js"></script>

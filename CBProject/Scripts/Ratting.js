@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    $('#rateMe').mdbRate();
+    $('.rateMe').mdbRate();
 });
 
 
