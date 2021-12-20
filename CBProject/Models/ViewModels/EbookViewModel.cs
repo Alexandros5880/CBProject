@@ -1,6 +1,5 @@
 ﻿using CBProject.Models.EntityModels;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web;
 using System.Web.Mvc;
@@ -27,20 +26,5 @@ namespace CBProject.Models.ViewModels
         public SelectList Users { get; set; }
         public Category Category { get; set; }
         public SelectList Categories { get; set; }
-
-        public ICollection<Tag> OtherTags { get; set; }
-        public ICollection<Tag> MyTags { get; set; }
-        public ICollection<int> AddTags { get; set; }
-        public ICollection<int> RemoveTags { get; set; }
-
-        public ICollection<Review> OtherReviews { get; set; }
-        public ICollection<Review> MyReviews { get; set; }
-        public ICollection<int> AddReviews { get; set; }
-        public ICollection<int> RemoveReviews { get; set; }
-
-        public ICollection<Rating> OtherRatings { get; set; }
-        public ICollection<Rating> MyRatings { get; set; }
-        public ICollection<int> AddRatings { get; set; }
-        public ICollection<int> RemoveRatings { get; set; }
     }
 }

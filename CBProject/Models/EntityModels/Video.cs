@@ -28,7 +28,8 @@ namespace CBProject.Models
         public int CategoryId { get; set; }
         public Category Category { get; set; }
         public string Url { get; set; }
-        public ICollection<Review> Reviews { get; set; }
-        public ICollection<Rating> Ratings { get; set; }
+        public ICollection<TagToVideo> TagsToVideos { get; set; }
+        public ICollection<RatingToVideo> RatingsToVideos { get; set; }
+        public ICollection<ReviewToVideo> ReviewToVideos { get; set; }
     }
 }

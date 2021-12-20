@@ -51,12 +51,6 @@ namespace CBProject.Controllers
                 viewModel.Categories = new SelectList(categories, "ID", "Name");
                 var users = await this._usersRepo.GetAllAsync();
                 viewModel.Users = new SelectList(users, "Id", "FullName");
-                viewModel.MyTags = await this._tagsRepository.GetAllFromEbookAsync(ebook);
-                viewModel.MyReviews = await this._reviewsRepository.GetAllFromEbookAsync(ebook);
-                viewModel.MyRatings = await this._ratingsRepository.GetAllFromEbookAsync(ebook);
-                viewModel.OtherTags = await this._tagsRepository.GetAllOtherFromEbookAsync(ebook);
-                viewModel.OtherReviews = await this._reviewsRepository.GetAllOtherFromEbookAsync(ebook);
-                viewModel.OtherRatings = await this._ratingsRepository.GetAllOtherFromEbookAsync(ebook);
                 viewModels.Add(viewModel);
             }
             return View(viewModels);
@@ -73,9 +67,6 @@ namespace CBProject.Controllers
                 return HttpNotFound();
             }
             var viewModel = Mapper.Map<Ebook, EbookViewModel>(ebook);
-            viewModel.MyTags = await this._tagsRepository.GetAllFromEbookAsync(ebook);
-            viewModel.MyReviews = await this._reviewsRepository.GetAllFromEbookAsync(ebook);
-            viewModel.MyRatings = await this._ratingsRepository.GetAllFromEbookAsync(ebook);
             return View(viewModel);
         }
         [Authorize(Roles = "Admin, ContentCreator")]
@@ -86,9 +77,6 @@ namespace CBProject.Controllers
             var categories = await this._categoriesRepository.GetAllAsync();
             var users = await this._usersRepo.GetAllAsync();
             viewModel.Users = new SelectList(users, "Id", "FullName");
-            viewModel.OtherTags = await this._tagsRepository.GetAllAsync();
-            viewModel.OtherReviews = await this._reviewsRepository.GetAllAsync();
-            viewModel.OtherRatings = await this._ratingsRepository.GetAllAsync();
             viewModel.Categories = new SelectList(categories, "ID", "Name");
             viewModel.UploadDate = DateTime.Today;
             return View(viewModel);
@@ -143,9 +131,6 @@ namespace CBProject.Controllers
             viewModel.Categories = new SelectList(categories, "ID", "Name");
             var users = await this._usersRepo.GetAllAsync();
             viewModel.Users = new SelectList(users, "Id", "FullName");
-            viewModel.OtherTags = await this._tagsRepository.GetAllOtherFromEbookAsync(ebook);
-            viewModel.OtherReviews = await this._reviewsRepository.GetAllOtherFromEbookAsync(ebook);
-            viewModel.OtherRatings = await this._ratingsRepository.GetAllOtherFromEbookAsync(ebook);
             return View(viewModel);
          
         }

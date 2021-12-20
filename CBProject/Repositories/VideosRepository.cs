@@ -44,8 +44,6 @@ namespace CBProject.Repositories
         public Video Get(int? id)
         {
             return this._context.Videos
-                .Include(v=>v.Reviews)
-                .Include(v => v.Ratings)
                 .Include(v => v.Category)
                 .Include(v => v.Creator)
                 .SingleOrDefault(v => v.ID == id);
@@ -53,8 +51,6 @@ namespace CBProject.Repositories
         public ICollection<Video> GetAll()
         {
             return this._context.Videos
-                .Include(v => v.Reviews)
-                .Include(v => v.Ratings)
                 .Include(v => v.Category)
                 .Include(v => v.Creator)
                 .ToList();
@@ -78,8 +74,6 @@ namespace CBProject.Repositories
             if (category == null)
                 throw new ArgumentNullException(nameof(category));
             return _context.Videos
-                .Include(v => v.Reviews)
-                .Include(v => v.Ratings)
                 .Where(v => !category.Videos.Contains(v))
                 .ToList();
         }
@@ -91,8 +85,6 @@ namespace CBProject.Repositories
             if (category == null)
                 throw new ArgumentNullException(nameof(category));
             return _context.Videos
-                .Include(v => v.Reviews)
-                .Include(v => v.Ratings)
                 .Where(v => category.Videos.Contains(v))
                 .ToList();
         }
@@ -109,8 +101,6 @@ namespace CBProject.Repositories
         public async Task<Video> GetAsync(int? id)
         {
             return await this._context.Videos
-                .Include(v => v.Reviews)
-                .Include(v => v.Ratings)
                 .Include(v => v.Category)
                 .Include(v => v.Creator)
                 .SingleOrDefaultAsync(v => v.ID == id);
@@ -123,8 +113,6 @@ namespace CBProject.Repositories
         public async Task<ICollection<Video>> GetAllAsync()
         {
             return await this._context.Videos
-                .Include(v => v.Reviews)
-                .Include(v => v.Ratings)
                 .Include(v => v.Category)
                 .Include(v => v.Creator)
                 .ToListAsync();
@@ -142,8 +130,6 @@ namespace CBProject.Repositories
             if (category == null)
                 throw new ArgumentNullException(nameof(category));
             return await _context.Videos
-                .Include(v => v.Reviews)
-                .Include(v => v.Ratings)
                 .Where(v => !category.Videos.Contains(v))
                 .ToListAsync();
         }
@@ -155,8 +141,6 @@ namespace CBProject.Repositories
             if (category == null)
                 throw new ArgumentNullException(nameof(category));
             return await _context.Videos
-                .Include(v => v.Reviews)
-                .Include(v => v.Ratings)
                 .Where(v => category.Videos.Contains(v))
                 .ToListAsync();
         }

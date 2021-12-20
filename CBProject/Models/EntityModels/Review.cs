@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using CBProject.Models.EntityModels;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CBProject.Models
@@ -13,6 +15,8 @@ namespace CBProject.Models
         public ApplicationUser Reviewer { get; set; }
         [MaxLength]
         [Required]
-        public string Comment { get; set; }  
+        public string Comment { get; set; }
+        public ICollection<ReviewToEbook> ReviewsToEbooks { get; set; }
+        public ICollection<ReviewToVideo> ReviewToVideos { get; set; }
     }
 }
