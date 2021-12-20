@@ -126,14 +126,14 @@
                 @Html.DisplayFor(modelItem => item.Thumbnail)
             </td>
             <td>
-                @{ var path = @item.VideoPath; }
-                <video controls preload="metadata">
+                <video controls preload="metadata" height="200">
                     @*poster="@item.VideoImagePath"*@
-                    <source src="@path" type="video/mp4">
-                    <source src="@path" type="video/webm" />
-                    <source src="@path" type="video/ogg" />
+                    <source src="@item.VideoPath" type="video/mp4">
+                    <source src="@item.VideoPath" type="video/webm" />
+                    <source src="@item.VideoPath" type="video/ogg" />
                     Your browser does not support HTML5 video.
                 </video>
+                @*<iframe width="200" height="300" src="@Html.DisplayFor(model => item.VideoPath)" allowfullscreen></iframe>*@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
@@ -143,20 +143,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Url)
-            </td>
-            <td>
-                @{
-                    decimal sum = 0;
-                    if (item.MyRatings.Count > 0)
-                    {
-                        foreach (var rate in item.MyRatings)
-                        {
-                            sum += rate.Rate;
-                        }
-                        sum = sum / item.MyRatings.Count;
-                    }
-                }
-                @Html.DisplayFor(modelItem => @sum)
             </td>
             <td>
                 <div id="myModalVC" class="modal fade" role="dialog">
