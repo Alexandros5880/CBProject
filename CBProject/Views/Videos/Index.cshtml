@@ -1,5 +1,13 @@
 ﻿@model IEnumerable<CBProject.Models.ViewModels.VideoViewModel>
 
+
+
+
+
+<link rel="stylesheet" href="~/Content/Ratting.css">
+
+
+
 @using Microsoft.AspNet.Identity
 @using Microsoft.AspNet.Identity.EntityFramework
 @using CBProject.Models
@@ -111,210 +119,225 @@
 
         @foreach (var item in Model)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Creator.FullName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                <img alt="Cover Foto" src="@item.VideoImagePath" style="height:150px;" />
-            </td>
-            @if (access == RoleLevel.FULL || access == RoleLevel.PLUSSFULL)
-            {
+            <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Thumbnail)
+                    @Html.DisplayFor(modelItem => item.Category.Name)
                 </td>
-            }
-            <td>
-                @{
-                    var path = item.VideoPath;
-                    if (item.VideoPath == null || item.VideoPath == "")
+                <td>
+                    @Html.DisplayFor(modelItem => item.Creator.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    <img alt="Cover Foto" src="@item.VideoImagePath" style="height:150px;" />
+                </td>
+                @if (access == RoleLevel.FULL || access == RoleLevel.PLUSSFULL)
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Thumbnail)
+                    </td>
+                }
+                <td>
+                    @{
+                        var path = item.VideoPath;
+                        if (item.VideoPath == null || item.VideoPath == "")
+                        {
+                            path = item.Url;
+                        }
+                    }
+                    <video controls preload="metadata" height="200">
+                        @*poster="@item.VideoImagePath"*@
+                        <source src="@path" type="video/mp4">
+                        <source src="@path" type="video/webm" />
+                        <source src="@path" type="video/ogg" />
+                        Your browser does not support HTML5 video.
+                    </video>
+                    @*<iframe width="200" height="300" src="@path" allowfullscreen></iframe>*@
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UploadDate)
+                </td>
+                <td>
+                    <div id="myModalVT" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Add Tag</h4>
+                                </div>
+                                <div class="modal-body">
+
+                                    @using (Html.BeginForm("AddTag", "Videos", new { videoId = item.ID }, FormMethod.Post))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                        @Html.HiddenFor(model => item.ID)
+
+                                        <div style="margin: 7px;">
+                                            <i class="fas fa-pencil-alt prefix" style="margin-left: 11%;"></i>
+                                            <textarea class="md-textarea form-control" rows="3" name="title" style="margin: 0 auto;"></textarea>
+                                            <input type="submit" value="Save" class="btn btn-default" style="margin-left: 80%; margin-top: 11px;" />
+                                        </div>
+                                    }
+
+                                </div>
+                                <div class="modal-footer">
+                                    @*<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="myModalVC" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Add Comment</h4>
+                                </div>
+                                <div class="modal-body">
+
+                                    @using (Html.BeginForm("AddReview", "Videos", new { videoId = item.ID }, FormMethod.Post))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                        @Html.HiddenFor(model => item.ID)
+
+                                        <div style="margin: 7px;">
+                                            <i class="fas fa-pencil-alt prefix" style="margin-left: 11%;"></i>
+                                            <textarea class="md-textarea form-control" rows="3" name="comment" style="margin: 0 auto;"></textarea>
+                                            <input type="submit" value="Save" class="btn btn-default" style="margin-left: 80%; margin-top: 11px;" />
+                                        </div>
+                                    }
+
+                                </div>
+                                <div class="modal-footer">
+                                    @*<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="myModalVR" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Add Ratings</h4>
+                                </div>
+                                <div class="modal-body">
+
+                                    @using (Html.BeginForm("AddRate", "Videos", new { videoId = item.ID }, FormMethod.Post))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                        @Html.HiddenFor(model => item.ID)
+
+                                        <div style="margin: 7px;">
+                                            <i class="fas fa-pencil-alt prefix" style="margin-left: 11%;"></i>
+                                            @*<input name="rate" style="margin: 0 auto;" type="number" min="0" max="5"></input>*@
+                                            <input id="input-1" name="rate" class="rating rating-loading" data-min="0" data-max="5" data-step="0.1" value="2">
+
+                                            <input type="submit" value="Save" class="btn btn-default" style="margin-left: 80%; margin-top: 11px;" />
+                                        </div>
+                                    }
+
+                                </div>
+                                <div class="modal-footer">
+                                    @*<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="myModalV" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Modal Header</h4>
+                                </div>
+                                <div class="modal-body">
+                                    @{ Html.RenderPartial("_Details", item); }
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="editModalV" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Modal Header</h4>
+                                </div>
+                                <div class="modal-body">
+                                    @{ Html.RenderPartial("_Edit", item); }
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @if (access == RoleLevel.FULL)
                     {
-                        path = item.Url;
+                        <button type="button" data-id="@item.ID" class="btn btn-dark" data-toggle="modal" data-target="#myModalVT">Tag</button>
+                        <button type="button" data-id="@item.ID" class="btn btn-primary" data-toggle="modal" data-target="#myModalVC">Comment</button>
+                        <button type="button" data-id="@item.ID" class="btn btn-info " data-toggle="modal" data-target="#myModalV">Details</button>
+                        <button type="button" data-id="@item.ID" class="btn btn-warning" data-toggle="modal" data-target="#myModalVR">Youre Rate</button>
+                        <button type="button" data-id="@item.ID" class="btn btn-success " data-toggle="modal" data-target="#editModalV">Edit</button>
+                        <button type="button" data-id="@item.ID" class='btn btn-danger btn-delete' data-toggle="modal">Delete</button>
                     }
-                }
-                <video controls preload="metadata" height="200">
-                    @*poster="@item.VideoImagePath"*@
-                    <source src="@path" type="video/mp4">
-                    <source src="@path" type="video/webm" />
-                    <source src="@path" type="video/ogg" />
-                    Your browser does not support HTML5 video.
-                </video>
-                @*<iframe width="200" height="300" src="@path" allowfullscreen></iframe>*@
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UploadDate)
-            </td>
-            <td>
-                <div id="myModalVT" class="modal fade" role="dialog">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">Add Tag</h4>
-                            </div>
-                            <div class="modal-body">
-
-                                @using (Html.BeginForm("AddTag", "Videos", new { videoId = item.ID }, FormMethod.Post))
-                                {
-                                    @Html.AntiForgeryToken()
-                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                    @Html.HiddenFor(model => item.ID)
-
-                                    <div style="margin: 7px;">
-                                        <i class="fas fa-pencil-alt prefix" style="margin-left: 11%;"></i>
-                                        <textarea class="md-textarea form-control" rows="3" name="title" style="margin: 0 auto;"></textarea>
-                                        <input type="submit" value="Save" class="btn btn-default" style="margin-left: 80%; margin-top: 11px;" />
-                                    </div>
-                                }
-
-                            </div>
-                            <div class="modal-footer">
-                                @*<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>*@
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="myModalVC" class="modal fade" role="dialog">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">Add Comment</h4>
-                            </div>
-                            <div class="modal-body">
-
-                                @using (Html.BeginForm("AddReview", "Videos", new { videoId = item.ID }, FormMethod.Post))
-                                {
-                                    @Html.AntiForgeryToken()
-                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                    @Html.HiddenFor(model => item.ID)
-
-                                    <div style="margin: 7px;">
-                                        <i class="fas fa-pencil-alt prefix" style="margin-left: 11%;"></i>
-                                        <textarea class="md-textarea form-control" rows="3" name="comment" style="margin: 0 auto;"></textarea>
-                                        <input type="submit" value="Save" class="btn btn-default" style="margin-left: 80%; margin-top: 11px;" />
-                                    </div>
-                                }
-
-                            </div>
-                            <div class="modal-footer">
-                                @*<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>*@
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="myModalVR" class="modal fade" role="dialog">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">Add Ratings</h4>
-                            </div>
-                            <div class="modal-body">
-                                Ratings Here
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="myModalV" class="modal fade" role="dialog">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">Modal Header</h4>
-                            </div>
-                            <div class="modal-body">
-                                @{ Html.RenderPartial("_Details", item); }
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="editModalV" class="modal fade" role="dialog">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">Modal Header</h4>
-                            </div>
-                            <div class="modal-body">
-                                @{ Html.RenderPartial("_Edit", item); }
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                @if (access == RoleLevel.FULL)
-                {
-                    <button type="button" data-id="@item.ID" class="btn btn-dark" data-toggle="modal" data-target="#myModalVT">Tag</button>
-                    <button type="button" data-id="@item.ID" class="btn btn-primary" data-toggle="modal" data-target="#myModalVC">Comment</button>
-                    <button type="button" data-id="@item.ID" class="btn btn-info " data-toggle="modal" data-target="#myModalV">Details</button>
-                    <button type="button" data-id="@item.ID" class="btn btn-warning" data-toggle="modal" data-target="#myModalVR">Youre Rate</button>
-                    <button type="button" data-id="@item.ID" class="btn btn-success " data-toggle="modal" data-target="#editModalV">Edit</button>
-                    <button type="button" data-id="@item.ID" class='btn btn-danger btn-delete' data-toggle="modal">Delete</button>
-                }
-                else if (access == RoleLevel.PLUSSFULL)
-                {
-                    @*<button type="button" data-id="@item.ID" class="btn btn-dark" data-toggle="modal" data-target="#myModalVT">Tag</button>*@
-                    <button type="button" data-id="@item.ID" class="btn btn-primary" data-toggle="modal" data-target="#myModalVC">Comment</button>
-                    <button type="button" data-id="@item.ID" class="btn btn-info " data-toggle="modal" data-target="#myModalV">Details</button>
-                    <button type="button" data-id="@item.ID" class="btn btn-warning" data-toggle="modal" data-target="#myModalVR">Youre Rate</button>
-                    @*<button type="button" data-id="@item.ID" class="btn btn-success " data-toggle="modal" data-target="#editModalV">Edit</button>*@
-                    <button type="button" data-id="@item.ID" class='btn btn-danger btn-delete' data-toggle="modal">Delete</button>
-                }
-                else if (access == RoleLevel.MIDDLE)
-                {
-                    @*<button type="button" data-id="@item.ID" class="btn btn-dark" data-toggle="modal" data-target="#myModalVT">Tag</button>*@
-                    @*<button type="button" data-id="@item.ID" class="btn btn-primary" data-toggle="modal" data-target="#myModalVC">Comment</button>*@
-                    <button type="button" data-id="@item.ID" class="btn btn-info " data-toggle="modal" data-target="#myModalV">Details</button>
-                    @*<button type="button" data-id="@item.ID" class="btn btn-warning" data-toggle="modal" data-target="#myModalVR">Youre Rate</button>*@
-                    <button type="button" data-id="@item.ID" class="btn btn-success " data-toggle="modal" data-target="#editModalV">Edit</button>
-                    <button type="button" data-id="@item.ID" class='btn btn-danger btn-delete' data-toggle="modal">Delete</button>
-                }
-                else if (access == RoleLevel.LOW)
-                {
-                    @*<button type="button" data-id="@item.ID" class="btn btn-dark" data-toggle="modal" data-target="#myModalVT">Tag</button>*@
-                    <button type="button" data-id="@item.ID" class="btn btn-primary" data-toggle="modal" data-target="#myModalVC">Comment</button>
-                    @*<button type="button" data-id="@item.ID" class="btn btn-info " data-toggle="modal" data-target="#myModalV">Details</button>*@
-                    <button type="button" data-id="@item.ID" class="btn btn-warning" data-toggle="modal" data-target="#myModalVR">Youre Rate</button>
-                    @*<button type="button" data-id="@item.ID" class="btn btn-success " data-toggle="modal" data-target="#editModalV">Edit</button>
-            <button type="button" data-id="@item.ID" class='btn btn-danger btn-delete' data-toggle="modal">Delete</button>*@
-                }
-                else if (access == RoleLevel.SUPERLOW)
-                {
-                    @*<button type="button" data-id="@item.ID" class="btn btn-dark" data-toggle="modal" data-target="#myModalVT">Tag</button>*@
-                    <button type="button" data-id="@item.ID" class="btn btn-primary" data-toggle="modal" data-target="#myModalVC">Comment</button>
-                    @*<button type="button" data-id="@item.ID" class="btn btn-info " data-toggle="modal" data-target="#myModalV">Details</button>*@
-                    <button type="button" data-id="@item.ID" class="btn btn-warning" data-toggle="modal" data-target="#myModalVR">Youre Rate</button>
-                    @*<button type="button" data-id="@item.ID" class="btn btn-success " data-toggle="modal" data-target="#editModalV">Edit</button>
-            <button type="button" data-id="@item.ID" class='btn btn-danger btn-delete' data-toggle="modal">Delete</button>*@
-                }
-                <style>
-                    button {
-                        margin: 5px;
+                    else if (access == RoleLevel.PLUSSFULL)
+                    {
+                        @*<button type="button" data-id="@item.ID" class="btn btn-dark" data-toggle="modal" data-target="#myModalVT">Tag</button>*@
+                        <button type="button" data-id="@item.ID" class="btn btn-primary" data-toggle="modal" data-target="#myModalVC">Comment</button>
+                        <button type="button" data-id="@item.ID" class="btn btn-info " data-toggle="modal" data-target="#myModalV">Details</button>
+                        <button type="button" data-id="@item.ID" class="btn btn-warning" data-toggle="modal" data-target="#myModalVR">Youre Rate</button>
+                        @*<button type="button" data-id="@item.ID" class="btn btn-success " data-toggle="modal" data-target="#editModalV">Edit</button>*@
+                        <button type="button" data-id="@item.ID" class='btn btn-danger btn-delete' data-toggle="modal">Delete</button>
                     }
-                </style>
-                @*@Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-        @Html.ActionLink("Delete", "Delete", new { id = item.ID })*@
-            </td>
-        </tr>
+                    else if (access == RoleLevel.MIDDLE)
+                    {
+                        @*<button type="button" data-id="@item.ID" class="btn btn-dark" data-toggle="modal" data-target="#myModalVT">Tag</button>*@
+                        @*<button type="button" data-id="@item.ID" class="btn btn-primary" data-toggle="modal" data-target="#myModalVC">Comment</button>*@
+                        <button type="button" data-id="@item.ID" class="btn btn-info " data-toggle="modal" data-target="#myModalV">Details</button>
+                        @*<button type="button" data-id="@item.ID" class="btn btn-warning" data-toggle="modal" data-target="#myModalVR">Youre Rate</button>*@
+                        <button type="button" data-id="@item.ID" class="btn btn-success " data-toggle="modal" data-target="#editModalV">Edit</button>
+                        <button type="button" data-id="@item.ID" class='btn btn-danger btn-delete' data-toggle="modal">Delete</button>
+                    }
+                    else if (access == RoleLevel.LOW)
+                    {
+                        @*<button type="button" data-id="@item.ID" class="btn btn-dark" data-toggle="modal" data-target="#myModalVT">Tag</button>*@
+                        <button type="button" data-id="@item.ID" class="btn btn-primary" data-toggle="modal" data-target="#myModalVC">Comment</button>
+                        @*<button type="button" data-id="@item.ID" class="btn btn-info " data-toggle="modal" data-target="#myModalV">Details</button>*@
+                        <button type="button" data-id="@item.ID" class="btn btn-warning" data-toggle="modal" data-target="#myModalVR">Youre Rate</button>
+                        @*<button type="button" data-id="@item.ID" class="btn btn-success " data-toggle="modal" data-target="#editModalV">Edit</button>
+                            <button type="button" data-id="@item.ID" class='btn btn-danger btn-delete' data-toggle="modal">Delete</button>*@
+                    }
+                    else if (access == RoleLevel.SUPERLOW)
+                    {
+                        @*<button type="button" data-id="@item.ID" class="btn btn-dark" data-toggle="modal" data-target="#myModalVT">Tag</button>*@
+                        <button type="button" data-id="@item.ID" class="btn btn-primary" data-toggle="modal" data-target="#myModalVC">Comment</button>
+                        @*<button type="button" data-id="@item.ID" class="btn btn-info " data-toggle="modal" data-target="#myModalV">Details</button>*@
+                        <button type="button" data-id="@item.ID" class="btn btn-warning" data-toggle="modal" data-target="#myModalVR">Youre Rate</button>
+                        @*<button type="button" data-id="@item.ID" class="btn btn-success " data-toggle="modal" data-target="#editModalV">Edit</button>
+                            <button type="button" data-id="@item.ID" class='btn btn-danger btn-delete' data-toggle="modal">Delete</button>*@
+                    }
+                    <style>
+                        button {
+                            margin: 5px;
+                        }
+                    </style>
+                    @*@Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })*@
+                </td>
+            </tr>
         }
 
     </table>
@@ -378,4 +401,7 @@
             }
         });
     </script>
+
+    <script src="~/Scripts/Ratting.js"></script>
+    
 }

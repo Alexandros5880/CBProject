@@ -238,6 +238,13 @@ namespace CBProject.Controllers
             await this._ebooksRepository.AddTagAsync(ebookId, title);
             return RedirectToAction("Index");
         }
+        [HttpPost]
+        public async Task<ActionResult> AddRate(int ebookId, float rate)
+        {
+            //await this._ebooksRepository.AddRatingAsync(ebookId, User.Identity.GetUserId(), rate);
+            return Content($"Video: {ebookId}, Rate: {rate}");
+            return RedirectToAction("Index");
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

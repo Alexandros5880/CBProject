@@ -219,6 +219,13 @@ namespace CBProject.Controllers
             await this._videoRepo.AddTagAsync(videoId, title);
             return RedirectToAction("Index");
         }
+        [HttpPost]
+        public async Task<ActionResult> AddRate(int videoId, float rate)
+        {
+            //await this._videoRepo.AddRatingAsync(videoId, User.Identity.GetUserId(), rate);
+            return Content($"Video: {videoId}, Rate: {rate}");
+            return RedirectToAction("Index");
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)
