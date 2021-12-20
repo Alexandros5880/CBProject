@@ -133,21 +133,15 @@ namespace CBProject.Repositories
                 Rate = rate,
                 Rater = rater
             };
-            if (!this._context.Ratings.Contains(myRate))
-            {
-                this._context.Ratings.Add(myRate);
-                await this._context.SaveChangesAsync();
-            }
+            this._context.Ratings.Add(myRate);
+            await this._context.SaveChangesAsync();
             var rateToEbook = new RatingToEbook()
             {
                 Rating = await this._context.Ratings.FirstOrDefaultAsync(r => r.Rate == rate && r.Rater.Id.Equals(rater.Id)),
                 Ebook = await this._context.Ebooks.FirstOrDefaultAsync(e => e.ID == ebookId)
             };
-            if (!this._context.RatingsToEbooks.Contains(rateToEbook))
-            {
-                this._context.RatingsToEbooks.Add(rateToEbook);
-                await this._context.SaveChangesAsync();
-            }
+            this._context.RatingsToEbooks.Add(rateToEbook);
+            await this._context.SaveChangesAsync();
         }
         public async Task RemoveRatingAsync(int ebookId, string userId, int rate)
         {
@@ -184,21 +178,15 @@ namespace CBProject.Repositories
                 Reviewer = reviewer,
                 Comment = comment
             };
-            if (this._context.Reviews.Contains(review))
-            {
-                this._context.Reviews.Add(review);
-                await this._context.SaveChangesAsync();
-            }
+            this._context.Reviews.Add(review);
+            await this._context.SaveChangesAsync();
             var reviewToEbook = new ReviewToEbook()
             {
                 Review = await this._context.Reviews.FirstOrDefaultAsync(r => r.Reviewer.Id.Equals(userId) && r.Comment.Equals(comment)),
                 Ebook = await this._context.Ebooks.FirstOrDefaultAsync(e => e.ID == ebookId)
             };
-            if (!this._context.ReviewsToEbooks.Contains(reviewToEbook))
-            {
-                this._context.ReviewsToEbooks.Add(reviewToEbook);
-                await this._context.SaveChangesAsync();
-            }
+            this._context.ReviewsToEbooks.Add(reviewToEbook);
+            await this._context.SaveChangesAsync();
         }
         public async Task RemoveReviewAsync(int ebookId, string userId, string comment)
         {
@@ -231,21 +219,15 @@ namespace CBProject.Repositories
             {
                 Title = title
             };
-            if (!this._context.Tags.Contains(tag))
-            {
-                this._context.Tags.Add(tag);
-                await this._context.SaveChangesAsync();
-            }
+            this._context.Tags.Add(tag);
+            await this._context.SaveChangesAsync();
             var TagToEbook = new TagToEbook()
             {
                 Ebook = await this._context.Ebooks.FirstOrDefaultAsync(e => e.ID == ebookId),
                 Tag = await this._context.Tags.FirstOrDefaultAsync(t => t.Title.Equals(title))
             };
-            if (!this._context.TagsToEbooks.Contains(TagToEbook))
-            {
-                this._context.TagsToEbooks.Add(TagToEbook);
-                await this._context.SaveChangesAsync();
-            }
+            this._context.TagsToEbooks.Add(TagToEbook);
+            await this._context.SaveChangesAsync();
         }
         public async Task RemoveTagAsync(int ebookId, string title)
         {

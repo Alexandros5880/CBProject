@@ -232,6 +232,12 @@ namespace CBProject.Controllers
             await this._ebooksRepository.AddReviewAsync(ebookId, User.Identity.GetUserId(), comment);
             return RedirectToAction("Index");
         }
+        [HttpPost]
+        public async Task<ActionResult> AddTag(int ebookId, string title)
+        {
+            await this._ebooksRepository.AddTagAsync(ebookId, title);
+            return RedirectToAction("Index");
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

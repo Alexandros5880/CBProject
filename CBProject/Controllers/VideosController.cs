@@ -213,6 +213,12 @@ namespace CBProject.Controllers
             await this._videoRepo.AddReviewAsync(videoId, User.Identity.GetUserId(), comment);
             return RedirectToAction("Index");
         }
+        [HttpPost]
+        public async Task<ActionResult> AddTag(int videoId, string title)
+        {
+            await this._videoRepo.AddTagAsync(videoId, title);
+            return RedirectToAction("Index");
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

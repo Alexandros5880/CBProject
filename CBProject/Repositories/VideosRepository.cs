@@ -177,21 +177,15 @@ namespace CBProject.Repositories
                 Rate = rate,
                 Rater = rater
             };
-            if (!this._context.Ratings.Contains(myRate))
-            {
-                this._context.Ratings.Add(myRate);
-                await this._context.SaveChangesAsync();
-            }
+            this._context.Ratings.Add(myRate);
+            await this._context.SaveChangesAsync();
             var rateToVideo = new RatingToVideo()
             {
                 Rating = await this._context.Ratings.FirstOrDefaultAsync(r => r.Rate == rate && r.Rater.Id.Equals(rater.Id)),
                 Video = await this._context.Videos.FirstOrDefaultAsync(e => e.ID == videoId)
             };
-            if (!this._context.RatingsToVideos.Contains(rateToVideo))
-            {
-                this._context.RatingsToVideos.Add(rateToVideo);
-                await this._context.SaveChangesAsync();
-            }
+            this._context.RatingsToVideos.Add(rateToVideo);
+            await this._context.SaveChangesAsync();
         }
         public async Task RemoveRatingAsync(int videoId, string userId, int rate)
         {
@@ -228,21 +222,15 @@ namespace CBProject.Repositories
                 Reviewer = reviewer,
                 Comment = comment
             };
-            if (this._context.Reviews.Contains(review))
-            {
-                this._context.Reviews.Add(review);
-                await this._context.SaveChangesAsync();
-            }
+            this._context.Reviews.Add(review);
+            await this._context.SaveChangesAsync();
             var reviewToVideo = new ReviewToVideo()
             {
                 Review = await this._context.Reviews.FirstOrDefaultAsync(r => r.Reviewer.Id.Equals(userId) && r.Comment.Equals(comment)),
                 Video = await this._context.Videos.FirstOrDefaultAsync(e => e.ID == videoId)
             };
-            if (!this._context.ReviewsToVideos.Contains(reviewToVideo))
-            {
-                this._context.ReviewsToVideos.Add(reviewToVideo);
-                await this._context.SaveChangesAsync();
-            }
+            this._context.ReviewsToVideos.Add(reviewToVideo);
+            await this._context.SaveChangesAsync();
         }
         public async Task RemoveReviewAsync(int videoId, string userId, string comment)
         {
@@ -275,21 +263,15 @@ namespace CBProject.Repositories
             {
                 Title = title
             };
-            if (!this._context.Tags.Contains(tag))
-            {
-                this._context.Tags.Add(tag);
-                await this._context.SaveChangesAsync();
-            }
+            this._context.Tags.Add(tag);
+            await this._context.SaveChangesAsync();
             var TagToVideo = new TagToVideo()
             {
                 Video = await this._context.Videos.FirstOrDefaultAsync(e => e.ID == videoId),
                 Tag = await this._context.Tags.FirstOrDefaultAsync(t => t.Title.Equals(title))
             };
-            if (!this._context.TagsToVideos.Contains(TagToVideo))
-            {
-                this._context.TagsToVideos.Add(TagToVideo);
-                await this._context.SaveChangesAsync();
-            }
+            this._context.TagsToVideos.Add(TagToVideo);
+            await this._context.SaveChangesAsync();
         }
         public async Task RemoveTagAsync(int videoId, string title)
         {
