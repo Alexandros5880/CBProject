@@ -140,18 +140,7 @@
                 @Html.DisplayFor(modelItem => item.Creator.FullName)
             </td>
             <td>
-                @{
-                    decimal sum = 0;
-                    if (item.MyRatings.Count > 0)
-                    {
-                        foreach (var rate in item.MyRatings)
-                        {
-                            sum += rate.Rate;
-                        }
-                        sum = sum / item.MyRatings.Count;
-                    }
-                }
-                @Html.DisplayFor(modelItem => @sum)
+                Sum Of Rating
             </td>
             <td>
                 <div id="myModalEC" class="modal fade" role="dialog">
