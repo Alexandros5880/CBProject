@@ -53,6 +53,7 @@ namespace CBProject.Controllers
                 viewModel.Users = new SelectList(users, "Id", "FullName");
                 viewModel.Category = ebook.Category;
                 viewModel.Creator = ebook.Creator;
+                viewModel.Rate = await this._ebooksRepository.GetRatingsAverageAsync(ebook.ID);
                 viewModels.Add(viewModel);
             }
             return View(viewModels);
@@ -241,8 +242,7 @@ namespace CBProject.Controllers
         [HttpPost]
         public async Task<ActionResult> AddRate(int ebookId, float rate)
         {
-            //await this._ebooksRepository.AddRatingAsync(ebookId, User.Identity.GetUserId(), rate);
-            return Content($"Ebook: {ebookId}, Rate: {rate}");
+            await this._ebooksRepository.AddRatingAsync(ebookId, User.Identity.GetUserId(), rate);
             return RedirectToAction("Index");
         }
         protected override void Dispose(bool disposing)

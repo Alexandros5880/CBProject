@@ -43,6 +43,7 @@ namespace CBProject.Controllers
             {
                 var viewModel = Mapper.Map<Video, VideoViewModel>(video);
                 viewModel.OtherCategory = categories;
+                viewModel.Rate = await this._videoRepo.GetRatingsAverageAsync(video.ID);
                 viewModels.Add(viewModel);
             }
             return View(viewModels);
@@ -222,8 +223,7 @@ namespace CBProject.Controllers
         [HttpPost]
         public async Task<ActionResult> AddRate(int videoId, float rate)
         {
-            //await this._videoRepo.AddRatingAsync(videoId, User.Identity.GetUserId(), rate);
-            return Content($"Video: {videoId}, Rate: {rate}");
+            await this._videoRepo.AddRatingAsync(videoId, User.Identity.GetUserId(), rate);
             return RedirectToAction("Index");
         }
         protected override void Dispose(bool disposing)

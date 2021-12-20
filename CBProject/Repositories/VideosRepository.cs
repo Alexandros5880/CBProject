@@ -147,10 +147,10 @@ namespace CBProject.Repositories
         }
 
 
-        public async Task<int> GetRatingsAverageAsync(int videoId)
+        public async Task<float> GetRatingsAverageAsync(int videoId)
         {
             var ratings = await this.GetRetingsAsync(videoId);
-            var sum = 0;
+            float sum = 0;
             foreach (var rate in ratings)
             {
                 sum += rate.Rate;
@@ -167,7 +167,7 @@ namespace CBProject.Repositories
                 .Where(r => ratingsToVideos.Contains(r.ID))
                 .ToListAsync();
         }
-        public async Task AddRatingAsync(int videoId, string userId, int rate)
+        public async Task AddRatingAsync(int videoId, string userId, float rate)
         {
             var rater = await this._context.Users.FirstOrDefaultAsync(u => u.Id.Equals(userId));
             if (rater == null)
@@ -187,7 +187,7 @@ namespace CBProject.Repositories
             this._context.RatingsToVideos.Add(rateToVideo);
             await this._context.SaveChangesAsync();
         }
-        public async Task RemoveRatingAsync(int videoId, string userId, int rate)
+        public async Task RemoveRatingAsync(int videoId, string userId, float rate)
         {
             var myRate = await this._context.Ratings
                             .FirstOrDefaultAsync(r => r.Rater.Id.Equals(userId) && r.Rate == rate);

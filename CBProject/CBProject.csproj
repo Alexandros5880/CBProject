@@ -233,6 +233,10 @@
     <Compile Include="Migrations\202112201419189_Initial.Designer.cs">
       <DependentUpon>202112201419189_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202112201728120_UpdateRae.cs" />
+    <Compile Include="Migrations\202112201728120_UpdateRae.Designer.cs">
+      <DependentUpon>202112201728120_UpdateRae.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\EntityModels\Category.cs" />
@@ -1918,6 +1922,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202112201419189_Initial.resx">
       <DependentUpon>202112201419189_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112201728120_UpdateRae.resx">
+      <DependentUpon>202112201728120_UpdateRae.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

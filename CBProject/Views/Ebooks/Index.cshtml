@@ -160,18 +160,14 @@
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         @Html.HiddenFor(model => item.ID)
 
-                        <div style="margin: 7px;">
-                            <input id="input-1"
-                                   name="rate"
-                                   class="rating rating-loading"
-                                   data-min="0"
-                                   data-max="5"
-                                   data-step="0.1"
-                                   value="2"
-                                   onchange="exceEbookRateForm()">
-
-                            <input type="submit" value="Save" class="btn btn-default" style="margin-left: 80%; margin-top: 11px;" />
-                        </div>
+                        <input id="input-1"
+                               name="rate"
+                               class="rating rating-loading"
+                               data-min="0"
+                               data-max="5"
+                               data-step="0.1"
+                               value="@item.Rate"
+                               onchange="exceEbookRateForm()">
                     }
                 </td>
                 <td>
@@ -250,13 +246,12 @@
 
                                         <div style="margin: 7px;">
                                             <i class="fas fa-pencil-alt prefix" style="margin-left: 11%;"></i>
-                                            <input id="input-1" 
-                                                   name="rate" 
+                                            <input name="rate" 
                                                    class="rating rating-loading" 
                                                    data-min="0" 
                                                    data-max="5" 
                                                    data-step="0.1" 
-                                                   value="2"
+                                                   value="@item.Rate"
                                                    onchange="exceEbookRateForm()">
 
                                             <input type="submit" value="Save" class="btn btn-default" style="margin-left: 80%; margin-top: 11px;" />

@@ -16,6 +16,7 @@ namespace CBProject.Models.ViewModels
         public HttpPostedFileBase VideoFile { get; set; }
         public string VideoPath { get; set; }
         public string Description { get; set; }
+        public float Rate { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime UploadDate { get; set; }

@@ -11,7 +11,7 @@ namespace CBProject.Models
         public int ID { get; set; }
         [Required]
         [Range(0, 10)]
-        public int Rate { get; set; }
+        public float Rate { get; set; }
         [ForeignKey("Rater")]
         [Required]
         public string RaterId { get; set; }
