@@ -51,6 +51,8 @@ namespace CBProject.Controllers
                 viewModel.Categories = new SelectList(categories, "ID", "Name");
                 var users = await this._usersRepo.GetAllAsync();
                 viewModel.Users = new SelectList(users, "Id", "FullName");
+                viewModel.Category = ebook.Category;
+                viewModel.Creator = ebook.Creator;
                 viewModels.Add(viewModel);
             }
             return View(viewModels);

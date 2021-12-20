@@ -332,6 +332,7 @@ namespace CBProject.Migrations
             DropForeignKey("dbo.AspNetUsers", "SubscriptionPackage_ID", "dbo.SubscriptionPackages");
             DropForeignKey("dbo.SubscriptionPackages", "ContentType_ID", "dbo.ContentTypes");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
+            DropForeignKey("dbo.Ebooks", "CreatorId", "dbo.AspNetUsers");
             DropForeignKey("dbo.TagToVideos", "VideoId", "dbo.Videos");
             DropForeignKey("dbo.TagToVideos", "TagId", "dbo.Tags");
             DropForeignKey("dbo.TagToEbooks", "TagId", "dbo.Tags");
@@ -351,7 +352,6 @@ namespace CBProject.Migrations
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Payments", "User_Id", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.Ebooks", "CreatorId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Ebooks", "CategoryId", "dbo.Categories");
             DropForeignKey("dbo.CategoryToCategories", "Category_ID", "dbo.Categories");

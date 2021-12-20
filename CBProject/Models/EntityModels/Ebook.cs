@@ -19,6 +19,7 @@ namespace CBProject.Models.EntityModels
         public string Url { get; set; }
         [DataType(DataType.Date)]
         public DateTime UploadDate { get; set; }
+        [ForeignKey("Creator")]
         public string CreatorId { get; set; }
         public ApplicationUser Creator { get; set; }
         [ForeignKey("Category")]

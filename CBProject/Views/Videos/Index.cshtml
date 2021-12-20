@@ -72,43 +72,45 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table" id="videos">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Category.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Creator.FirstName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            Cover
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Thumbnail)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.VideoFile)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UploadDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Url)
-        </th>
-        <th>
-            Rating
-        </th>
-        <th></th>
-    </tr>
 
-    @foreach (var item in Model)
-    {
+<div class="table-responsive">
+    <table class="table" id="videos">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Category.Name)
+            </th>
+            <th>
+                @Html.DisplayName("Creator")
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                Cover
+            </th>
+            @if (access == RoleLevel.FULL || access == RoleLevel.PLUSSFULL)
+            {
+                <th>
+                    @Html.DisplayNameFor(model => model.Thumbnail)
+                </th>
+            }
+            <th>
+                @Html.DisplayNameFor(model => model.VideoFile)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UploadDate)
+            </th>
+            <th>
+                Rating
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Category.Name)
@@ -122,27 +124,34 @@
             <td>
                 <img alt="Cover Foto" src="@item.VideoImagePath" style="height:150px;" />
             </td>
+            @if (access == RoleLevel.FULL || access == RoleLevel.PLUSSFULL)
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.Thumbnail)
+                </td>
+            }
             <td>
-                @Html.DisplayFor(modelItem => item.Thumbnail)
-            </td>
-            <td>
+                @{
+                    var path = item.VideoPath;
+                    if (item.VideoPath == null || item.VideoPath == "")
+                    {
+                        path = item.Url;
+                    }
+                }
                 <video controls preload="metadata" height="200">
                     @*poster="@item.VideoImagePath"*@
-                    <source src="@item.VideoPath" type="video/mp4">
-                    <source src="@item.VideoPath" type="video/webm" />
-                    <source src="@item.VideoPath" type="video/ogg" />
+                    <source src="@path" type="video/mp4">
+                    <source src="@path" type="video/webm" />
+                    <source src="@path" type="video/ogg" />
                     Your browser does not support HTML5 video.
                 </video>
-                @*<iframe width="200" height="300" src="@Html.DisplayFor(model => item.VideoPath)" allowfullscreen></iframe>*@
+                @*<iframe width="200" height="300" src="@path" allowfullscreen></iframe>*@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.UploadDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Url)
             </td>
             <td>
                 <div id="myModalVC" class="modal fade" role="dialog">
@@ -227,27 +236,27 @@
                 }
                 else if (access == RoleLevel.MIDDLE)
                 {
-                    <button type="button" data-id="@item.ID" class="btn btn-primary" data-toggle="modal" data-target="#myModalVC">Comment</button>
+                    @*<button type="button" data-id="@item.ID" class="btn btn-primary" data-toggle="modal" data-target="#myModalVC">Comment</button>*@
                     <button type="button" data-id="@item.ID" class="btn btn-info " data-toggle="modal" data-target="#myModalV">Details</button>
-                    <button type="button" data-id="@item.ID" class="btn btn-warning" data-toggle="modal" data-target="#myModalVR">Youre Rate</button>
+                    @*<button type="button" data-id="@item.ID" class="btn btn-warning" data-toggle="modal" data-target="#myModalVR">Youre Rate</button>*@
                     <button type="button" data-id="@item.ID" class="btn btn-success " data-toggle="modal" data-target="#editModalV">Edit</button>
                     <button type="button" data-id="@item.ID" class='btn btn-danger btn-delete' data-toggle="modal">Delete</button>
                 }
                 else if (access == RoleLevel.LOW)
                 {
                     <button type="button" data-id="@item.ID" class="btn btn-primary" data-toggle="modal" data-target="#myModalVC">Comment</button>
-                    <button type="button" data-id="@item.ID" class="btn btn-info " data-toggle="modal" data-target="#myModalV">Details</button>
+                    @*<button type="button" data-id="@item.ID" class="btn btn-info " data-toggle="modal" data-target="#myModalV">Details</button>*@
                     <button type="button" data-id="@item.ID" class="btn btn-warning" data-toggle="modal" data-target="#myModalVR">Youre Rate</button>
-                    <button type="button" data-id="@item.ID" class="btn btn-success " data-toggle="modal" data-target="#editModalV">Edit</button>
-                    <button type="button" data-id="@item.ID" class='btn btn-danger btn-delete' data-toggle="modal">Delete</button>
+                    @*<button type="button" data-id="@item.ID" class="btn btn-success " data-toggle="modal" data-target="#editModalV">Edit</button>
+                    <button type="button" data-id="@item.ID" class='btn btn-danger btn-delete' data-toggle="modal">Delete</button>*@
                 }
                 else if (access == RoleLevel.SUPERLOW)
                 {
                     <button type="button" data-id="@item.ID" class="btn btn-primary" data-toggle="modal" data-target="#myModalVC">Comment</button>
-                    <button type="button" data-id="@item.ID" class="btn btn-info " data-toggle="modal" data-target="#myModalV">Details</button>
+                    @*<button type="button" data-id="@item.ID" class="btn btn-info " data-toggle="modal" data-target="#myModalV">Details</button>*@
                     <button type="button" data-id="@item.ID" class="btn btn-warning" data-toggle="modal" data-target="#myModalVR">Youre Rate</button>
-                    <button type="button" data-id="@item.ID" class="btn btn-success " data-toggle="modal" data-target="#editModalV">Edit</button>
-                    <button type="button" data-id="@item.ID" class='btn btn-danger btn-delete' data-toggle="modal">Delete</button>
+                    @*<button type="button" data-id="@item.ID" class="btn btn-success " data-toggle="modal" data-target="#editModalV">Edit</button>
+                    <button type="button" data-id="@item.ID" class='btn btn-danger btn-delete' data-toggle="modal">Delete</button>*@
                 }
                 <style>
                     button {
@@ -255,14 +264,14 @@
                     }
                 </style>
                 @*@Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })*@
+                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })*@
             </td>
         </tr>
-    }
+        }
 
-</table>
-
+    </table>
+</div>
 
 
 
