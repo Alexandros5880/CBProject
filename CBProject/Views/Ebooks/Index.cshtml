@@ -157,7 +157,6 @@
                     @Html.DisplayFor(modelItem => item.Category.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Rate)
                     @using (Html.BeginForm("AddRate", "Ebooks", new { ebookId = item.ID }, FormMethod.Post, new { id = "ebook-rating-form" }))
                     {
                         @Html.AntiForgeryToken()

@@ -165,7 +165,6 @@
                     @Html.DisplayFor(modelItem => item.UploadDate)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Rate)
                     @using (Html.BeginForm("AddRate", "Videos", new { videoId = item.ID }, FormMethod.Post, new { id = "video-rating-form" }))
                     {
                         @Html.AntiForgeryToken()

@@ -163,35 +163,35 @@
     <br />
 </div>
 
-@section Scripts {
-  @*<script>
+@*@section Scripts {
+      <script>
 
-      $(document).ready(function () {
-          $('.filter-tab li a').click(function () {
-              var value = $(this).attr("data-id");
-              var $ourHolder = $('#ourHolder');
+          $(document).ready(function () {
+              $('.filter-tab li a').click(function () {
+                  var value = $(this).attr("data-id");
+                  var $ourHolder = $('#ourHolder');
 
-              $('.filter-tab li').removeClass("active");
-              $(this).parent.addClass("active");
+                  $('.filter-tab li').removeClass("active");
+                  $(this).parent.addClass("active");
 
 
 
-              if (value === "all") {
+                  if (value === "all") {
+                      alert("hello")
+                  } else {
+                      //$('.item').not('.' + value).hide();
+                      //$('.item').filter('.' + value).show();
+
+
+                  }
                   alert("hello")
-              } else {
-                  //$('.item').not('.' + value).hide();
-                  //$('.item').filter('.' + value).show();
-                 
-      
-              }
-              alert("hello")
-              return false;
-              //if (category == item) {
-              //    $(item).show();
-              //}
-          });
+                  return false;
+                  //if (category == item) {
+                  //    $(item).show();
+                  //}
+              });
 
-     
-      })
-    </script>
-}*@
+
+          })
+        </script>
+    }*@
