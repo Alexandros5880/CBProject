@@ -17,7 +17,6 @@
     //var user_image = ((System.Security.Claims.ClaimsIdentity)User.Identity).FindFirst("ImagePath");
 
 
-
     var context = new ApplicationDbContext();
     var userStore = new UserStore<ApplicationUser, ApplicationRole, string, IdentityUserLogin, IdentityUserRole, IdentityUserClaim>(context);
     var userManager = new CBProject.ApplicationUserManager(userStore);
@@ -119,6 +118,10 @@
 
         @foreach (var item in Model)
         {
+            if (float.IsNaN(item.Rate))
+            {
+                item.Rate = 0.0f;
+            }
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Category.Name)
@@ -162,6 +165,7 @@
                     @Html.DisplayFor(modelItem => item.UploadDate)
                 </td>
                 <td>
+                    @item.Rate
                     @using (Html.BeginForm("AddRate", "Videos", new { videoId = item.ID }, FormMethod.Post, new { id = "video-rating-form" }))
                     {
                         @Html.AntiForgeryToken()

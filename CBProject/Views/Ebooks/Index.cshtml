@@ -20,7 +20,6 @@
     //var user_image = ((System.Security.Claims.ClaimsIdentity)User.Identity).FindFirst("ImagePath");
 
 
-
     var context = new ApplicationDbContext();
     var userStore = new UserStore<ApplicationUser, ApplicationRole, string, IdentityUserLogin, IdentityUserRole, IdentityUserClaim>(context);
     var userManager = new CBProject.ApplicationUserManager(userStore);
@@ -127,6 +126,10 @@
 
         @foreach (var item in Model)
         {
+            if (float.IsNaN(item.Rate))
+            {
+                item.Rate = 0.0f;
+            }
             <tr>
 
                 <td>
