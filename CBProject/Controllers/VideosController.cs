@@ -6,6 +6,7 @@ using CBProject.Models.ViewModels;
 using CBProject.Repositories;
 using CBProject.Repositories.IdentityRepos;
 using CBProject.Repositories.IdentityRepos.Interfaces;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -204,6 +205,12 @@ namespace CBProject.Controllers
             }
             this._videoRepo.Delete(id);
             await this._videoRepo.SaveAsync();
+            return RedirectToAction("Index");
+        }
+        [HttpPost]
+        public async Task<ActionResult> AddReview(int videoId, string comment)
+        {
+            await this._videoRepo.AddReviewAsync(videoId, User.Identity.GetUserId(), comment);
             return RedirectToAction("Index");
         }
         protected override void Dispose(bool disposing)

@@ -162,10 +162,23 @@
                                 <h4 class="modal-title">Add Comment</h4>
                             </div>
                             <div class="modal-body">
-                                Comments Here
+
+                                @using (Html.BeginForm("AddReview", "Videos", new { videoId = item.ID }, FormMethod.Post))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                    @Html.HiddenFor(model => item.ID)
+
+                                    <div style="margin: 7px;">
+                                        <i class="fas fa-pencil-alt prefix"  style="margin-left: 11%;"></i>
+                                        <textarea class="md-textarea form-control" rows="3" name="comment" style="margin: 0 auto;"></textarea>
+                                        <input type="submit" value="Save" class="btn btn-default" style="margin-left: 80%; margin-top: 11px;"/>
+                                    </div>
+                                }
+
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                @*<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>*@
                             </div>
                         </div>
                     </div>
