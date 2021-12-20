@@ -17,6 +17,7 @@ using System.Web.Mvc;
 
 namespace CBProject.Controllers
 {
+    [Authorize]
     public class VideosController : Controller
     {
         private readonly VideosRepository _videoRepo;

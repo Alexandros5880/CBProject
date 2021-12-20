@@ -19,6 +19,7 @@ using System.Web.Mvc;
 
 namespace CBProject.Controllers
 {
+    [Authorize]
     public class EbooksController : Controller
     {
         private EbooksRepository _ebooksRepository;

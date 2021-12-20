@@ -15,6 +15,7 @@ using System.Web.Mvc;
 
 namespace CBProject.Controllers
 {
+    [Authorize]
     public class UsersController : Controller
     {
         private readonly RolesRepo _rolesRepo;
