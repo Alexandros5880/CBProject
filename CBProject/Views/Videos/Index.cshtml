@@ -162,6 +162,27 @@
                     @Html.DisplayFor(modelItem => item.UploadDate)
                 </td>
                 <td>
+                    @using (Html.BeginForm("AddRate", "Videos", new { videoId = item.ID }, FormMethod.Post, new { id = "video-rating-form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => item.ID)
+
+                        <div style="margin: 7px;">
+                            <input id="input-1"
+                                   name="rate"
+                                   class="rating rating-loading"
+                                   data-min="0"
+                                   data-max="5"
+                                   data-step="0.1"
+                                   value="2"
+                                   onchange="exceVideoRateForm()">
+
+                            <input type="submit" value="Save" class="btn btn-default" style="margin-left: 80%; margin-top: 11px;" />
+                        </div>
+                    }
+                </td>
+                <td>
                     <div id="myModalVT" class="modal fade" role="dialog">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -229,7 +250,7 @@
                                 </div>
                                 <div class="modal-body">
 
-                                    @using (Html.BeginForm("AddRate", "Videos", new { videoId = item.ID }, FormMethod.Post))
+                                    @using (Html.BeginForm("AddRate", "Videos", new { videoId = item.ID }, FormMethod.Post, new { id="video-rating-form" }))
                                     {
                                         @Html.AntiForgeryToken()
                                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -237,8 +258,14 @@
 
                                         <div style="margin: 7px;">
                                             <i class="fas fa-pencil-alt prefix" style="margin-left: 11%;"></i>
-                                            @*<input name="rate" style="margin: 0 auto;" type="number" min="0" max="5"></input>*@
-                                            <input id="input-1" name="rate" class="rating rating-loading" data-min="0" data-max="5" data-step="0.1" value="2">
+                                            <input id="input-1" 
+                                                   name="rate" 
+                                                   class="rating rating-loading" 
+                                                   data-min="0" 
+                                                   data-max="5" 
+                                                   data-step="0.1" 
+                                                   value="2"
+                                                   onchange="exceVideoRateForm()">
 
                                             <input type="submit" value="Save" class="btn btn-default" style="margin-left: 80%; margin-top: 11px;" />
                                         </div>
@@ -288,7 +315,7 @@
                         <button type="button" data-id="@item.ID" class="btn btn-dark" data-toggle="modal" data-target="#myModalVT">Tag</button>
                         <button type="button" data-id="@item.ID" class="btn btn-primary" data-toggle="modal" data-target="#myModalVC">Comment</button>
                         <button type="button" data-id="@item.ID" class="btn btn-info " data-toggle="modal" data-target="#myModalV">Details</button>
-                        <button type="button" data-id="@item.ID" class="btn btn-warning" data-toggle="modal" data-target="#myModalVR">Youre Rate</button>
+                        @*<button type="button" data-id="@item.ID" class="btn btn-warning" data-toggle="modal" data-target="#myModalVR">Youre Rate</button>*@
                         <button type="button" data-id="@item.ID" class="btn btn-success " data-toggle="modal" data-target="#editModalV">Edit</button>
                         <button type="button" data-id="@item.ID" class='btn btn-danger btn-delete' data-toggle="modal">Delete</button>
                     }
@@ -297,7 +324,7 @@
                         @*<button type="button" data-id="@item.ID" class="btn btn-dark" data-toggle="modal" data-target="#myModalVT">Tag</button>*@
                         <button type="button" data-id="@item.ID" class="btn btn-primary" data-toggle="modal" data-target="#myModalVC">Comment</button>
                         <button type="button" data-id="@item.ID" class="btn btn-info " data-toggle="modal" data-target="#myModalV">Details</button>
-                        <button type="button" data-id="@item.ID" class="btn btn-warning" data-toggle="modal" data-target="#myModalVR">Youre Rate</button>
+                        @*<button type="button" data-id="@item.ID" class="btn btn-warning" data-toggle="modal" data-target="#myModalVR">Youre Rate</button>*@
                         @*<button type="button" data-id="@item.ID" class="btn btn-success " data-toggle="modal" data-target="#editModalV">Edit</button>*@
                         <button type="button" data-id="@item.ID" class='btn btn-danger btn-delete' data-toggle="modal">Delete</button>
                     }
@@ -400,6 +427,10 @@
                 $("#deletemodalV").hide(300);
             }
         });
+
+        function exceVideoRateForm() {
+            $("#video-rating-form").submit();
+        }
     </script>
 
     <script src="~/Scripts/Ratting.js"></script>

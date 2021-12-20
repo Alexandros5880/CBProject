@@ -154,7 +154,25 @@
                     @Html.DisplayFor(modelItem => item.Category.Name)
                 </td>
                 <td>
-                    Sum Of Rating
+                    @using (Html.BeginForm("AddRate", "Ebooks", new { ebookId = item.ID }, FormMethod.Post, new { id = "ebook-rating-form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => item.ID)
+
+                        <div style="margin: 7px;">
+                            <input id="input-1"
+                                   name="rate"
+                                   class="rating rating-loading"
+                                   data-min="0"
+                                   data-max="5"
+                                   data-step="0.1"
+                                   value="2"
+                                   onchange="exceEbookRateForm()">
+
+                            <input type="submit" value="Save" class="btn btn-default" style="margin-left: 80%; margin-top: 11px;" />
+                        </div>
+                    }
                 </td>
                 <td>
                     <div id="myModalET" class="modal fade" role="dialog">
@@ -224,7 +242,7 @@
                                 </div>
                                 <div class="modal-body">
 
-                                    @using (Html.BeginForm("AddRate", "Videos", new { videoId = item.ID }, FormMethod.Post))
+                                    @using (Html.BeginForm("AddRate", "Ebooks", new { videoId = item.ID }, FormMethod.Post, new { id= "ebook-rating-form" }))
                                     {
                                         @Html.AntiForgeryToken()
                                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -232,8 +250,14 @@
 
                                         <div style="margin: 7px;">
                                             <i class="fas fa-pencil-alt prefix" style="margin-left: 11%;"></i>
-                                            @*<input name="rate" style="margin: 0 auto;" type="number" min="0" max="5"></input>*@
-                                            <input id="input-1" name="rate" class="rating rating-loading" data-min="0" data-max="5" data-step="0.1" value="2">
+                                            <input id="input-1" 
+                                                   name="rate" 
+                                                   class="rating rating-loading" 
+                                                   data-min="0" 
+                                                   data-max="5" 
+                                                   data-step="0.1" 
+                                                   value="2"
+                                                   onchange="exceEbookRateForm()">
 
                                             <input type="submit" value="Save" class="btn btn-default" style="margin-left: 80%; margin-top: 11px;" />
                                         </div>
@@ -283,7 +307,7 @@
                         <button type="button" data-id="@item.ID" class="btn btn-dark" data-toggle="modal" data-target="#myModalET">Tag</button>
                         <button type="button" data - id="@item.ID" class="btn btn-primary" data-toggle="modal" data-target="#myModalEC">Comment</button>
                         <button type="button" data-id="@item.ID" class="btn btn-info" data-toggle="modal" data-target="#myModal">Details</button>
-                        <button type="button" data-id="@item.ID" class="btn btn-warning" data-toggle="modal" data-target="#myModalER">Youre Rate</button>
+                        @*<button type="button" data-id="@item.ID" class="btn btn-warning" data-toggle="modal" data-target="#myModalER">Youre Rate</button>*@
                         <button type="button" data-id="@item.ID" class="btn btn-success" data-toggle="modal" data-target="#editModal">Edit</button>
                         <button type="button" data-id="@item.ID" class='btn btn-danger btn-delete' data-toggle="modal">Delete</button>
                     }
@@ -292,7 +316,7 @@
                         @*<button type="button" data-id="@item.ID" class="btn btn-dark" data-toggle="modal" data-target="#myModalET">Tag</button>*@
                         <button type="button" data - id="@item.ID" class="btn btn-primary" data-toggle="modal" data-target="#myModalEC">Comment</button>
                         <button type="button" data-id="@item.ID" class="btn btn-info" data-toggle="modal" data-target="#myModal">Details</button>
-                        <button type="button" data-id="@item.ID" class="btn btn-warning" data-toggle="modal" data-target="#myModalER">Youre Rate</button>
+                        @*<button type="button" data-id="@item.ID" class="btn btn-warning" data-toggle="modal" data-target="#myModalER">Youre Rate</button>*@
                         @*<button type="button" data-id="@item.ID" class="btn btn-success" data-toggle="modal" data-target="#editModal">Edit</button>*@
                         <button type="button" data-id="@item.ID" class='btn btn-danger btn-delete' data-toggle="modal">Delete</button>
                     }
@@ -390,6 +414,10 @@
                 $("#deletemodal").hide(300);
             }
         });
+
+        function exceEbookRateForm() {
+            $("#ebook-rating-form").submit();
+        }
     </script>
 
     <script src="~/Scripts/Ratting.js"></script>
