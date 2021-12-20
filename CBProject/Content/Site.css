@@ -134,6 +134,9 @@ textarea {
     border: 1px solid #cfcfcf;
     background-color: white;
 }
+#card-video{
+    margin-bottom:3%;
+}
 
 .card-body {
     padding: 15px 10px 15px 10px;

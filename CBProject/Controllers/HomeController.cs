@@ -15,12 +15,13 @@ namespace CBProject.Controllers
         private EbooksRepository _ebooksRepository;
         private UsersRepo _usersRepo;
         private CategoriesRepository _categoriesRepo;
-        //private IRepository<Video> _videosRepository;
+       private VideosRepository _videosRepository;
        // private IRepository<Plans> _plansRepository;
         public HomeController(IUnitOfWork unitOfWork, IUsersRepo usersRepo)
         {
             this._ebooksRepository = unitOfWork.Ebooks;
             this._categoriesRepo = unitOfWork.Categories;
+            this._videosRepository = unitOfWork.Videos;
             this._usersRepo = (UsersRepo)usersRepo;
         }
         public async Task<ActionResult> Index()
@@ -32,6 +33,7 @@ namespace CBProject.Controllers
                                         //.Where(c => c.Videos.Count > 0)
                                         //.Where(c => c.Ebooks.Count > 0)
                                         .ToListAsync();
+            viewModel.Videos = await this._videosRepository.GetAllAsync();
             return View(viewModel);
         }
         public ActionResult About()

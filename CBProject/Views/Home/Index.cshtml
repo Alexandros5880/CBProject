@@ -24,9 +24,9 @@
             </div>
         </div>
         <div class="col-md-4 col-sm-4 bigImage">
-            <img src="~/assets/images/home/codeme_bigImg1_index2-half.jpg" class="img-fluid" alt="Responsive image" style="width:100%" >
-            </div>
+            <img src="~/assets/images/home/codeme_bigImg1_index2-half.jpg" class="img-fluid" alt="Responsive image" style="width:100%">
         </div>
+    </div>
 }
 
 
@@ -38,188 +38,41 @@
         <div class="row">
             <div class="col-md-12">
                 <h2>Lessons</h2><br />
-                <ul class="nav nav-tabs tabs-index">
+                <ul class="nav nav-tabs tabs-index" id="filter-tab">
                     @foreach (var cat in Model.Categories)
                     {
                         <li>
-                            <a class="nav-link active" aria-current="page" href="#">@cat.Name</a>
+                            <a class="nav-link active" data-id="@cat.Name" aria-current="page" href="#">@cat.Name</a>
                         </li>
                     }
-                    @*<li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Active</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                    </li>*@
                 </ul>
             </div>
         </div>
         <br />
 
         <div class="row">
-            <div class="col-md-3 ">
-                <div class="card">
-                    <img class="card-img-top" style="width:100%" src="~/img/image.jpg" alt="Card image cap">
-                    <div class="card-body">
-                        <h4>Angular 9</h4>
-                        <p class="card-text"><img class="img-icon-index" src="~/img/icons-person.png" alt="person" /> Programming with mosh </p>
-                        <p class="card-text"><img class="img-icon-index" src="~/img/icon-video.png" alt="video" /> 22 hours on-demand video  </p>
-                        <br />
-                        <a href="#" class="btn btn-card">More</a>
+            @foreach (var video in Model.Videos.Take(8))
+            {
+                <div class="col-md-3 " id="ourHolder" data-item="@video.Category">
+                    <div class="card item" id="card-video">
+                        <img alt="Cover Foto" src="@video.VideoImagePath" style="height:150px;" />
+                        @*<img class="card-img-top" style="width:100%" src="~/img/@Url.Content(video.Thumbnail)" alt="Card image cap">*@
+                        <div class="card-body">
+                            <h4>@video.Title</h4>
+                            <p class="card-text"><img class="img-icon-index" src="~/img/icons-person.png" alt="person" /> Programming with mosh </p>
+                            <p class="card-text"><img class="img-icon-index" src="~/img/icon-video.png" alt="video" /> 22 hours on-demand video  </p>
+                            <br />
+                            <a href="#" class="btn btn-card">More</a>
 
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <img class="card-img-top" style="width:100%" src="~/img/image.jpg" alt="Card image cap">
-                    <div class="card-body">
-                        <h4>Angular 9</h4>
-                        <p class="card-text"><img class="img-icon-index" src="~/img/icons-person.png" alt="person" /> Programming with mosh </p>
-                        <p class="card-text"><img class="img-icon-index" src="~/img/icon-video.png" alt="video" /> 22 hours on-demand video  </p>
-                        <br />
-                        <a href="#" class="btn btn-card">More</a>
 
-                    </div>
                 </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <img class="card-img-top" style="width:100%" src="~/img/image.jpg" alt="Card image cap">
-                    <div class="card-body">
-                        <h4>Angular 9</h4>
-                        <p class="card-text"><img class="img-icon-index" src="~/img/icons-person.png" alt="person" /> Programming with mosh </p>
-                        <p class="card-text"><img class="img-icon-index" src="~/img/icon-video.png" alt="video" /> 22 hours on-demand video  </p>
-                        <br />
-                        <a href="#" class="btn btn-card">More</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <img class="card-img-top" style="width:100%" src="~/img/image.jpg" alt="Card image cap">
-                    <div class="card-body">
-                        <h4>Angular 9</h4>
-                        <p class="card-text"><img class="img-icon-index" src="~/img/icons-person.png" alt="person" /> Programming with mosh </p>
-                        <p class="card-text"><img class="img-icon-index" src="~/img/icon-video.png" alt="video" /> 22 hours on-demand video  </p>
-                        <br />
-                        <a href="#" class="btn btn-card">More</a>
-                    </div>
-                </div>
-            </div>
+
+            }
         </div>
         <br />
 
-
-        @*<div class="row">
-            <div class="col-md-3 ">
-                <div class="card">
-                    <img class="card-img-top" style="width:100%" src="~/img/image.jpg" alt="Card image cap">
-                    <div class="card-body">
-                        <h4>Angular 9</h4>
-                        <p class="card-text"><img class="img-icon-index" src="~/img/icons-person.png" alt="person" /> Programming with mosh </p>
-                        <p class="card-text"><img class="img-icon-index" src="~/img/icon-video.png" alt="video" /> 22 hours on-demand video  </p>
-                        <br />
-                        <a href="#" class="btn btn-card">More</a>
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <img class="card-img-top" style="width:100%" src="~/img/image.jpg" alt="Card image cap">
-                    <div class="card-body">
-                        <h4>Angular 9</h4>
-                        <p class="card-text"><img class="img-icon-index" src="~/img/icons-person.png" alt="person" /> Programming with mosh </p>
-                        <p class="card-text"><img class="img-icon-index" src="~/img/icon-video.png" alt="video" /> 22 hours on-demand video  </p>
-                        <br />
-                        <a href="#" class="btn btn-card">More</a>
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <img class="card-img-top" style="width:100%" src="~/img/image.jpg" alt="Card image cap">
-                    <div class="card-body">
-                        <h4>Angular 9</h4>
-                        <p class="card-text"><img class="img-icon-index" src="~/img/icons-person.png" alt="person" /> Programming with mosh </p>
-                        <p class="card-text"><img class="img-icon-index" src="~/img/icon-video.png" alt="video" /> 22 hours on-demand video  </p>
-                        <br />
-                        <a href="#" class="btn btn-card">More</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <img class="card-img-top" style="width:100%" src="~/img/image.jpg" alt="Card image cap">
-                    <div class="card-body">
-                        <h4>Angular 9</h4>
-                        <p class="card-text"><img class="img-icon-index" src="~/img/icons-person.png" alt="person" /> Programming with mosh </p>
-                        <p class="card-text"><img class="img-icon-index" src="~/img/icon-video.png" alt="video" /> 22 hours on-demand video  </p>
-                        <br />
-                        <a href="#" class="btn btn-card">More</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <br />
-        <div class="row">
-            <div class="col-md-3">
-                <div class="card">
-                    <img class="card-img-top" style="width:100%" src="~/img/image.jpg" alt="Card image cap">
-                    <div class="card-body">
-                        <h4>Angular 9</h4>
-                        <p class="card-text"><img class="img-icon-index" src="~/img/icons-person.png" alt="person" /> Programming with mosh </p>
-                        <p class="card-text"><img class="img-icon-index" src="~/img/icon-video.png" alt="video" /> 22 hours on-demand video  </p>
-                        <br />
-                        <a href="#" class="btn btn-card">More</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <img class="card-img-top" style="width:100%" src="~/img/image.jpg" alt="Card image cap">
-                    <div class="card-body">
-                        <h4>Angular 9</h4>
-                        <p class="card-text"><img class="img-icon-index" src="~/img/icons-person.png" alt="person" /> Programming with mosh </p>
-                        <p class="card-text"><img class="img-icon-index" src="~/img/icon-video.png" alt="video" /> 22 hours on-demand video  </p>
-                        <br />
-                        <a href="#" class="btn btn-card">More</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <img class="card-img-top" style="width:100%" src="~/img/image.jpg" alt="Card image cap">
-                    <div class="card-body">
-                        <h4>Angular 9</h4>
-                        <p class="card-text"><img class="img-icon-index" src="~/img/icons-person.png" alt="person" /> Programming with mosh </p>
-                        <p class="card-text"><img class="img-icon-index" src="~/img/icon-video.png" alt="video" /> 22 hours on-demand video  </p>
-                        <br />
-                        <a href="#" class="btn btn-card">More</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <img class="card-img-top" style="width:100%" src="~/img/image.jpg" alt="Card image cap">
-                    <div class="card-body">
-                        <h4>Angular 9</h4>
-                        <p class="card-text"><img class="img-icon-index" src="~/img/icons-person.png" alt="person" /> Programming with mosh </p>
-                        <p class="card-text"><img class="img-icon-index" src="~/img/icon-video.png" alt="video" /> 22 hours on-demand video  </p>
-                        <br />
-                        <a href="#" class="btn btn-card">More</a>
-                    </div>
-                </div>
-            </div>
-        </div>*@
     </div>
     <br />
     <br /><br />
@@ -230,7 +83,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-4 col-sm-4  order-sm-1 order-first quote-img">
-            <img src="~/assets/images/home/codeme_bigImg2_index.jpg"  style="width:100%"  class="img-fluid" alt="Responsive image">
+            <img src="~/assets/images/home/codeme_bigImg2_index.jpg" style="width:100%" class="img-fluid" alt="Responsive image">
         </div>
         <div class="col-md-4  col-md-offset-3 col-sm-5 col-sm-offset-2  order-last">
             <p id="quote">
@@ -309,3 +162,36 @@
     <br />
     <br />
 </div>
+
+@section Scripts {
+  @*<script>
+
+      $(document).ready(function () {
+          $('.filter-tab li a').click(function () {
+              var value = $(this).attr("data-id");
+              var $ourHolder = $('#ourHolder');
+
+              $('.filter-tab li').removeClass("active");
+              $(this).parent.addClass("active");
+
+
+
+              if (value === "all") {
+                  alert("hello")
+              } else {
+                  //$('.item').not('.' + value).hide();
+                  //$('.item').filter('.' + value).show();
+                 
+      
+              }
+              alert("hello")
+              return false;
+              //if (category == item) {
+              //    $(item).show();
+              //}
+          });
+
+     
+      })
+    </script>
+}*@
