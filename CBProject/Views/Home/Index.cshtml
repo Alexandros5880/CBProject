@@ -1,4 +1,5 @@
 ﻿@model CBProject.Models.ViewModels.HomeViewModel
+@using CBProject.HelperClasses
 
 
 @{
@@ -42,7 +43,12 @@
                     @foreach (var cat in Model.Categories)
                     {
                         <li>
-                            <a class="nav-link active" data-id="@cat.Name" aria-current="page" href="#">@cat.Name</a>
+                            <a class="nav-link active" 
+                               data-id="@cat.Name" 
+                               aria-current="page" 
+                               href="@Url.Action("Index","Home", new { name=cat.Name })">
+                                @cat.Name
+                            </a>
                         </li>
                     }
                 </ul>
@@ -51,19 +57,23 @@
         <br />
 
         <div class="row">
+
+
             @foreach (var video in Model.Videos.Take(8))
             {
                 <div class="col-md-3 " id="ourHolder" data-item="@video.Category">
                     <div class="card item" id="card-video">
-                        <img alt="Cover Foto" src="@video.VideoImagePath" style="height:150px;" />
+                        <div style="width:100%; text-align:center; margin-top: 5%;">
+                            <img alt="Cover Foto" src="@video.VideoImagePath" style="height:150px;"/>
+                            <h4 style="margin-top: 5%;">@video.Title</h4>
+                        </div>
+                        
                         @*<img class="card-img-top" style="width:100%" src="~/img/@Url.Content(video.Thumbnail)" alt="Card image cap">*@
                         <div class="card-body">
-                            <h4>@video.Title</h4>
                             <p class="card-text"><img class="img-icon-index" src="~/img/icons-person.png" alt="person" /> Programming with mosh </p>
                             <p class="card-text"><img class="img-icon-index" src="~/img/icon-video.png" alt="video" /> 22 hours on-demand video  </p>
                             <br />
                             <a href="#" class="btn btn-card">More</a>
-
                         </div>
                     </div>
 
@@ -163,35 +173,42 @@
     <br />
 </div>
 
-@*@section Scripts {
+@section Scripts {
       <script>
 
           $(document).ready(function () {
-              $('.filter-tab li a').click(function () {
-                  var value = $(this).attr("data-id");
-                  var $ourHolder = $('#ourHolder');
-
-                  $('.filter-tab li').removeClass("active");
-                  $(this).parent.addClass("active");
 
 
-
-                  if (value === "all") {
-                      alert("hello")
-                  } else {
-                      //$('.item').not('.' + value).hide();
-                      //$('.item').filter('.' + value).show();
+              function tabFunction(name) {
+                  alert(name);
+              }
 
 
-                  }
-                  alert("hello")
-                  return false;
-                  //if (category == item) {
-                  //    $(item).show();
-                  //}
-              });
+              //$('.filter-tab li a').click(function () {
+              //    var value = $(this).attr("data-id");
+              //    var $ourHolder = $('#ourHolder');
+
+              //    $('.filter-tab li').removeClass("active");
+              //    $(this).parent.addClass("active");
+
+
+
+              //    if (value === "all") {
+              //        alert("hello")
+              //    } else {
+              //        //$('.item').not('.' + value).hide();
+              //        //$('.item').filter('.' + value).show();
+
+
+              //    }
+              //    alert("hello")
+              //    return false;
+              //    //if (category == item) {
+              //    //    $(item).show();
+              //    //}
+              //});
 
 
           })
         </script>
-    }*@
+    }
