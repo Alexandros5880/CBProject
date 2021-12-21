@@ -2,6 +2,7 @@
 @using CBProject.HelperClasses
 
 
+
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -43,10 +44,10 @@
                     @foreach (var cat in Model.Categories)
                     {
                         <li>
-                            <a class="nav-link active" 
-                               data-id="@cat.Name" 
-                               aria-current="page" 
-                               href="@Url.Action("Index","Home", new { name=cat.Name })">
+                            <a class="nav-link active"
+                               onclick="selectCategory('@cat.Name');"
+                               data-id="@cat.Name"
+                               aria-current="page">
                                 @cat.Name
                             </a>
                         </li>
@@ -56,31 +57,129 @@
         </div>
         <br />
 
-        <div class="row">
+
+        <script>
+            function selectCategory(val) {
+                $.ajax({    //create an ajax request to display.php
+                    type: "GET",
+                    url: "/api/Products?search=" + val,
+                    success: function (response) {
+                        var data = response
+                        //console.log(data.videos);
+                        if (data) {
+                            $("#videos-home").empty();
+                            $("#ebooks-home").empty();
+
+                            data.videos.forEach(video => {
+                                console.log(video);
+                                $("#videos-home").append(
+                                    `
+                                    <div class="col-md-3 " id="ourHolder" data-item="${video.category}">
+                                        <div class="card item" id="card-video">
+                                            <div style="width:100%; text-align:center; margin-top: 5%;">
+                                                <img alt="Cover Foto" src="${video.videoImagePath}" style="height:150px;" />
+                                                <h4 style="margin-top: 5%;">${video.title}</h4>
+                                            </div>
+                                            <div class="card-body text-center">
+                                                <p class="card-text"> ${video.description} </p>
+                                                <p class="card-text"> ${video.title}  </p>
+                                                <br />
+                                                <a href="#" class="btn btn-card">More</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    `
+                                );
+                            });
+
+                            data.ebooks.forEach(ebook => {
+                                console.log(ebook);
+                                $("#ebooks-home").append(
+                                    `
+                                    <div class="col-md-3 " id="ourHolder" data-item="${ebook.category}">
+                                        <div class="card item" id="card-ebook">
+                                            <div style="width:100%; text-align:center; margin-top: 5%;">
+                                                <img alt="Cover Foto" src="${ebook.ebookImagePath}" style="height:150px;" />
+                                                <h4 style="margin-top: 5%;">${ebook.title}</h4>
+                                            </div>
+                                            <div class="card-body text-center">
+                                                <p class="card-text"> ${ebook.ebookImagePath} </p>
+                                                <p class="card-text"> ${ebook.title}  </p>
+                                                <br />
+                                                <a href="#" class="btn btn-card">More</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    `
+                                );
+                            });
 
 
+
+
+
+
+                            /*$("#card-ebook").append();*/
+                        }
+                    }
+                });
+
+            };
+        </script>
+
+        <h3>Videos</h3>
+
+        <div class="row" id="videos-home">
             @foreach (var video in Model.Videos.Take(8))
             {
                 <div class="col-md-3 " id="ourHolder" data-item="@video.Category">
                     <div class="card item" id="card-video">
                         <div style="width:100%; text-align:center; margin-top: 5%;">
-                            <img alt="Cover Foto" src="@video.VideoImagePath" style="height:150px;"/>
+                            <img alt="Cover Foto" src="@video.VideoImagePath" style="height:150px;" />
                             <h4 style="margin-top: 5%;">@video.Title</h4>
                         </div>
-                        
+
                         @*<img class="card-img-top" style="width:100%" src="~/img/@Url.Content(video.Thumbnail)" alt="Card image cap">*@
-                        <div class="card-body">
-                            <p class="card-text"><img class="img-icon-index" src="~/img/icons-person.png" alt="person" /> Programming with mosh </p>
-                            <p class="card-text"><img class="img-icon-index" src="~/img/icon-video.png" alt="video" /> 22 hours on-demand video  </p>
+                        <div class="card-body text-center">
+                            <p class="card-text"> @video.Description </p>
+                            <p class="card-text"> @video.Creator.FullName  </p>
                             <br />
                             <a href="#" class="btn btn-card">More</a>
                         </div>
                     </div>
-
                 </div>
-
             }
         </div>
+
+        <h3>Ebooks</h3>
+
+        <div class="row" id="ebooks-home">
+            @foreach (var ebook in Model.Ebooks.Take(8))
+            {
+                <div class="col-md-3 " id="ourHolder" data-item="@ebook.Category">
+                    <div class="card item" id="card-ebook">
+                        <div style="width:100%; text-align:center; margin-top: 5%;">
+                            <img alt="Cover Foto" src="@ebook.EbookImagePath" style="height:150px;" />
+                            <h4 style="margin-top: 5%;">@ebook.Title</h4>
+                        </div>
+
+                        @*<img class="card-img-top" style="width:100%" src="~/img/@Url.Content(ebook.Thumbnail)" alt="Card image cap">*@
+                        <div class="card-body text-center">
+                            <p class="card-text"> @ebook.Description </p>
+                            <p class="card-text"> @ebook.Creator.FullName  </p>
+                            <br />
+                            <a href="#" class="btn btn-card">More</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+
+
+
+
+
         <br />
 
     </div>
@@ -173,42 +272,42 @@
     <br />
 </div>
 
-@section Scripts {
-      <script>
+@section scripts {
+    <script>
 
-          $(document).ready(function () {
+        $(document).ready(function () {
 
-
-              function tabFunction(name) {
-                  alert(name);
-              }
-
-
-              //$('.filter-tab li a').click(function () {
-              //    var value = $(this).attr("data-id");
-              //    var $ourHolder = $('#ourHolder');
-
-              //    $('.filter-tab li').removeClass("active");
-              //    $(this).parent.addClass("active");
+            function selectCategory(val) {
+                console.log(val);
+            };
 
 
 
-              //    if (value === "all") {
-              //        alert("hello")
-              //    } else {
-              //        //$('.item').not('.' + value).hide();
-              //        //$('.item').filter('.' + value).show();
+            //$('.filter-tab li a').click(function () {
+            //    var value = $(this).attr("data-id");
+            //    var $ourHolder = $('#ourHolder');
+
+            //    $('.filter-tab li').removeClass("active");
+            //    $(this).parent.addClass("active");
 
 
-              //    }
-              //    alert("hello")
-              //    return false;
-              //    //if (category == item) {
-              //    //    $(item).show();
-              //    //}
-              //});
+
+            //    if (value === "all") {
+            //        alert("hello")
+            //    } else {
+            //        //$('.item').not('.' + value).hide();
+            //        //$('.item').filter('.' + value).show();
 
 
-          })
-        </script>
-    }
+            //    }
+            //    alert("hello")
+            //    return false;
+            //    //if (category == item) {
+            //    //    $(item).show();
+            //    //}
+            //});
+
+
+        })
+    </script>
+}

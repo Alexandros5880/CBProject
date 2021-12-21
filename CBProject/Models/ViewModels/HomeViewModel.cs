@@ -9,5 +9,6 @@ namespace CBProject.Models.ViewModels
         public ICollection<Video> Videos { get; set; }
         public ICollection<Category> Categories { get; set; }
         //public ICollection<Plan> Plans { get; set; }
+        public string Search { get; set; }
     }
 }

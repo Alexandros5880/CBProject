@@ -61,6 +61,10 @@ namespace CBProject.Repositories
             return await _context.Ebooks
                 .Include(c => c.Category).ToListAsync();
         }
+        public IQueryable<Ebook> GetAllQuerable()
+        {
+            return this._context.Ebooks;
+        }
         public async Task<ICollection<Ebook>> GetAllByCategoryNameAsync(string name)
         {
             return await _context.Ebooks
