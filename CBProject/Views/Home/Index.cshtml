@@ -55,7 +55,8 @@
             {
                 <div class="col-md-3 " id="ourHolder" data-item="@video.Category">
                     <div class="card item" id="card-video">
-                        <img alt="Cover Foto" src="@video.VideoImagePath" style="height:150px;" />
+                        <iframe width="100%" src="@video.VideoPath" frameborder="0" allowfullscreen></iframe>
+                        @*<img alt="Cover Foto" src="@video.VideoPath" style="height:150px;" />*@
                         @*<img class="card-img-top" style="width:100%" src="~/img/@Url.Content(video.Thumbnail)" alt="Card image cap">*@
                         <div class="card-body">
                             <h4>@video.Title</h4>
@@ -193,5 +194,5 @@
 
      
       })
-    </script>
-}*@
+    </script>*@
+}

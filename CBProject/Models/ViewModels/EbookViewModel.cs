@@ -27,5 +27,7 @@ namespace CBProject.Models.ViewModels
         public SelectList Users { get; set; }
         public Category Category { get; set; }
         public SelectList Categories { get; set; }
+
+        public string SearchTerm { get; set; }
     }
 }
