@@ -118,6 +118,14 @@ namespace CBProject.Repositories
                 .Include(v => v.Creator)
                 .ToListAsync();
         }
+        public async Task<ICollection<Video>> GetAllByCategoryNameAsync(string name)
+        {
+            return await this._context.Videos
+                .Include(v => v.Category)
+                .Include(v => v.Creator)
+                .Where(v => v.Category.Name.Equals(name))
+                .ToListAsync();
+        }
         public async Task<ICollection<Video>> GetAllEmptyAsync()
         {
             return await this._context.Videos

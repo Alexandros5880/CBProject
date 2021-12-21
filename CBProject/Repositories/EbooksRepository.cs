@@ -61,6 +61,14 @@ namespace CBProject.Repositories
             return await _context.Ebooks
                 .Include(c => c.Category).ToListAsync();
         }
+        public async Task<ICollection<Ebook>> GetAllByCategoryNameAsync(string name)
+        {
+            return await _context.Ebooks
+                .Include(e => e.Creator)
+                .Include(e => e.Category)
+                .Where(e => e.Category.Name.Equals(name))
+                .ToListAsync();
+        }
         public ICollection<Ebook> GetAllEmpty()
         {
             return _context.Ebooks.ToList();

@@ -1,7 +1,10 @@
 ﻿@using Microsoft.AspNet.Identity
+
+
 <header id="page-topbar">
-    <div class="navbar-header">
-        <div class="d-flex">
+    <div class="navbar-header" style="width: 100%; background-color: #2a3042;">
+
+        <div class="d-flex" style="margin-right: auto;">
             <!-- LOGO -->
             <div class="navbar-brand-box">
                 <a href=@Url.Action("Index", "Dashboard") class="logo logo-dark">
@@ -27,7 +30,8 @@
                 <i class="fa fa-fw fa-bars"></i>
             </button>
 
-            <!-- App Search-->
+
+            <!-- SearchBar & Button-->
             <form class="app-search d-none d-lg-block">
                 <div class="position-relative">
                     <input type="text" class="form-control" placeholder="Search...">
@@ -35,7 +39,8 @@
                 </div>
             </form>
 
-            <div class="dropdown dropdown-mega d-none d-lg-block ms-2">
+            <!-- Mega Menu -->
+            <div class="dropdown dropdown-mega d-none d-lg-block ms-2 my-mega-menu" style="display: none !important;">
                 <button type="button" class="btn header-item waves-effect" data-bs-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
                     <span key="t-megamenu">Mega Menu</span>
                     <i class="mdi mdi-chevron-down"></i>
@@ -43,7 +48,6 @@
                 <div class="dropdown-menu dropdown-megamenu">
                     <div class="row">
                         <div class="col-sm-8">
-
                             <div class="row">
                                 <div class="col-md-4">
                                     <h5 class="font-size-14" key="t-ui-components">UI Components</h5>
@@ -120,7 +124,6 @@
                                         <li>
                                             <a href="javascript:void(0);" key="t-faqs">FAQs</a>
                                         </li>
-
                                     </ul>
                                 </div>
                             </div>
@@ -167,9 +170,9 @@
             </div>
         </div>
 
-        <div class="d-flex">
+        <div class="d-flex" style="margin-right: 1%;">
 
-            <div class="dropdown d-inline-block d-lg-none ms-2">
+            @*<div class="dropdown d-inline-block d-lg-none ms-2">
                 <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-search-dropdown"
                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="mdi mdi-magnify"></i>
@@ -187,8 +190,9 @@
                         </div>
                     </form>
                 </div>
-            </div>
+            </div>*@
 
+            <!-- Flags -->
             <div class="dropdown d-inline-block">
                 <button type="button" class="btn header-item waves-effect"
                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -222,6 +226,7 @@
                 </div>
             </div>
 
+            <!-- Sosial Menu -->
             <div class="dropdown d-none d-lg-inline-block ms-1">
                 <button type="button" class="btn header-item noti-icon waves-effect"
                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -274,12 +279,14 @@
                 </div>
             </div>
 
+            <!-- Fullscreen -->
             <div class="dropdown d-none d-lg-inline-block ms-1">
                 <button type="button" class="btn header-item noti-icon waves-effect" data-bs-toggle="fullscreen">
                     <i class="bx bx-fullscreen"></i>
                 </button>
             </div>
 
+            <!-- Messages -->
             <div class="dropdown d-inline-block">
                 <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-notifications-dropdown"
                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -398,13 +405,14 @@
                 }
             }
 
-
-            <div class="dropdown d-inline-block">
+            <!-- Layout Settings Button -->
+            <div class="dropdown d-inline-block" style="display:none !important;">
                 <button type="button" class="btn header-item noti-icon right-bar-toggle waves-effect">
                     <i class="bx bx-cog bx-spin"></i>
                 </button>
             </div>
 
         </div>
+
     </div>
 </header>

@@ -24,16 +24,25 @@ namespace CBProject.Controllers
             this._videosRepository = unitOfWork.Videos;
             this._usersRepo = (UsersRepo)usersRepo;
         }
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(string name)
         {
             HomeViewModel viewModel = new HomeViewModel();
             viewModel.Categories = await this._categoriesRepo
                                         .GetAllQueryable()
                                         .Where(c => c.Master == true)
-                                        //.Where(c => c.Videos.Count > 0)
-                                        //.Where(c => c.Ebooks.Count > 0)
+                                        .Where(c => c.Videos.Count > 0)
+                                        .Where(c => c.Ebooks.Count > 0)
                                         .ToListAsync();
-            viewModel.Videos = await this._videosRepository.GetAllAsync();
+            if (name == null)
+            {
+                viewModel.Videos = await this._videosRepository.GetAllAsync();
+                viewModel.Ebooks = await this._ebooksRepository.GetAllAsync();
+            }
+            else
+            {
+                viewModel.Videos = await this._videosRepository.GetAllByCategoryNameAsync(name);
+                viewModel.Ebooks = await this._ebooksRepository.GetAllByCategoryNameAsync(name);
+            }
             return View(viewModel);
         }
         public ActionResult About()
