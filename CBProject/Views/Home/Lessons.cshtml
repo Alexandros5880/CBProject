@@ -70,9 +70,6 @@
         }
     }
 
-
-
-
 }
 
 
@@ -99,24 +96,33 @@
         var tag = $("#category-search-button").val();
         var title = $("#title-search-button").val();
         var teacher = $("#teacher-search-button").val();
-        var message =
-                        `
-                            Ebooks: ${ebooks}
-                            Videos: ${videos}
-                            Category: ${category}
-                            Tag: ${tag}
-                            Title: ${title}
-                            Teacher: ${teacher}
-                        `;
-        alert(message);
-    }
-    function selectEbook() {
-        ebook = true;
-        video = false;
-    }
-    function selectVideo() {
-        ebook = false;
-        video = true;
+
+
+        var sendData = {
+            EbooksName: ebooks,
+            VideosName: videos,
+            CategoryName: category,
+            TagName: tag,
+            TitleName: title,
+            TeacherName: teacher
+        };
+
+        console.log("Send Data");
+
+        $.ajax({
+            type: "POST",
+            url: "/api/products/search/filters",
+            data: sendData,
+            success: function (data) {
+                if (data) {
+                    // Generate Html WWith Data
+                    console.log(data);
+                }
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
     }
 </script>
 

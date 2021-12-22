@@ -293,7 +293,7 @@ namespace CBProject.Repositories.IdentityRepos
             user.PasswordHash = _manager.UserManager.PasswordHasher.HashPassword(newPassword);
             return Task.CompletedTask;
         }
-        public IQueryable<ApplicationUser> GetAllEnumerable()
+        public IQueryable<ApplicationUser> GetAllQuerable()
         {
             return this._manager.UserManager.Users;
         }

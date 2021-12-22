@@ -191,6 +191,10 @@ namespace CBProject.Repositories
                         .Where(t => tagsIds.Contains(t.ID))
                         .ToListAsync();
         }
+        public IQueryable<Tag> GetAllQueryable()
+        {
+            return this._context.Tags;
+        }
         protected virtual void Dispose(bool disposing)
         {
             if (!disposedValue)

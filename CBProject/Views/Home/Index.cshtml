@@ -29,9 +29,7 @@
                         $.ajax({    //create an ajax request to display.php
                             type: "GET",
                             url: "/api/Products?search=" + searchValue,
-                            success: function (response) {
-                                var data = response
-                                //console.log(data.videos);
+                            success: function (data) {
                                 if (data) {
                                     $("#videos-home").empty();
                                     $("#ebooks-home").empty();
@@ -80,6 +78,9 @@
                                         );
                                     });
                                 }
+                            },
+                            error: function (error) {
+                                console.log(error);
                             }
                         });
                     }
@@ -124,9 +125,7 @@
                 $.ajax({    //create an ajax request to display.php
                     type: "GET",
                     url: "/api/Products?search=" + val,
-                    success: function (response) {
-                        var data = response
-                        //console.log(data.videos);
+                    success: function (data) {
                         if (data) {
                             $("#videos-home").empty();
                             $("#videos-home").append("<h3>Videos</h3>");
@@ -176,17 +175,12 @@
                                     `
                                 );
                             });
-
-
-
-
-
-
-                            /*$("#card-ebook").append();*/
+                        },
+                        error: function (error) {
+                            console.log(error);
                         }
                     }
                 });
-
             };
         </script>
 

@@ -262,6 +262,7 @@
     <Compile Include="Models\ViewModels\CategoryViewModel.cs" />
     <Compile Include="Models\ViewModels\ContentTypeViewModel.cs" />
     <Compile Include="Models\ViewModels\EbookViewModel.cs" />
+    <Compile Include="Models\ViewModels\FilterPageViewModel.cs" />
     <Compile Include="Models\ViewModels\HomeViewModel.cs" />
     <Compile Include="Models\ViewModels\IdentityRoleViewModel.cs" />
     <Compile Include="Models\ViewModels\PaymentViewModel.cs" />

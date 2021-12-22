@@ -1,5 +1,8 @@
 ﻿using CBProject.HelperClasses.Interfaces;
+using CBProject.Models.ViewModels;
 using CBProject.Repositories;
+using CBProject.Repositories.IdentityRepos;
+using CBProject.Repositories.IdentityRepos.Interfaces;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,12 +15,16 @@ namespace CBProject.Controllers.API
         private readonly VideosRepository _videosRepository;
         private readonly EbooksRepository _ebooksReposotory;
         private readonly CategoriesRepository _categoriesRepository;
+        private readonly TagsRepository _tagRepsitory;
+        private readonly UsersRepo _usersRepo;
 
-        public ProductsController(IUnitOfWork unitOfWork)
+        public ProductsController(IUnitOfWork unitOfWork, IUsersRepo usersRepo)
         {
             this._videosRepository = unitOfWork.Videos;
             this._ebooksReposotory = unitOfWork.Ebooks;
             this._categoriesRepository = unitOfWork.Categories;
+            this._tagRepsitory = unitOfWork.Tags;
+            this._usersRepo = (UsersRepo)usersRepo;
         }
 
         // GET api/<controller>
@@ -58,20 +65,52 @@ namespace CBProject.Controllers.API
             return Ok(products);
         }
 
-        [Route("api/products/pagination")]
-        public async Task<IHttpActionResult> GetAllPagination(int pagesize)
+        [HttpPost]
+        [Route("api/products/search/filters")]
+        public async Task<IHttpActionResult> GetSearchByFilters(FilterPageViewModel viewModel)
         {
-            return Ok();
+            string category = "", tag = "", title = "", teacher = "";
+            if (viewModel.CategoryName != null && viewModel.CategoryName.Length > 0)
+                category = viewModel.CategoryName;
+            if (viewModel.TagName != null && viewModel.TagName.Length > 0)
+                tag = viewModel.TagName;
+            if (viewModel.TitleName != null && viewModel.TitleName.Length > 0)
+                title = viewModel.TitleName;
+            if (viewModel.TeacherName != null && viewModel.TeacherName.Length > 0)
+                teacher = viewModel.TeacherName;
+
+            var categories = await this._categoriesRepository
+                                .GetAllQueryable()
+                                .Where(c => c.Name.Contains(category))
+                                .ToListAsync();
+            var tags = await this._tagRepsitory
+                                .GetAllQueryable()
+                                .Where(t => t.Title.Contains(tag))
+                                .Select(t => t.ID)
+                                .ToListAsync();
+            var teachers = await this._usersRepo
+                                    .GetAllQuerable()
+                                    .Where(u => u.FullName.Contains(teacher) || u.Email.Contains(teacher))
+                                    .Select(t => t.Id)
+                                    .ToListAsync();
+
+
+
+            if (viewModel.Ebooks) // TODO: Products API Controller
+            {
+                //var ebooks = await this._ebooksReposotory
+                //        .GetAllQuerable()
+                //        .Include(e => e.TagsToEbooks)
+                //        .Where(e => categories.Contains(e.Category))
+                //        .Where(e => e.TagsToEbooks.Select(t => t.TagId).Intersect(tags))
+                //        .ToListAsync();
+            }
+            else if (viewModel.Videos)
+            {
+
+            }
+            return Ok(viewModel);
         }
-
-        [Route("api/products/search/pagination")]
-        public async Task<IHttpActionResult> GetSearchPagination(int pagesize, string search)
-        {
-            return Ok();
-        }
-
-
-
 
 
 

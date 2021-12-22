@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace CBProject.Repositories.Interfaces
@@ -16,6 +17,7 @@ namespace CBProject.Repositories.Interfaces
         Task<ICollection<T>> GetAllAsync();
         ICollection<T> GetAllEmpty();
         Task<ICollection<T>> GetAllEmptyAsync();
+        IQueryable<T> GetAllQueryable();
         void Save();
         Task<int> SaveAsync();
     }
