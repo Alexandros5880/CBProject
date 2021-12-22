@@ -8,10 +8,6 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 
-
-
-
-
     //var fullname = ((System.Security.Claims.ClaimsIdentity)User.Identity).FindFirst("FullName");
     //var user_image = ((System.Security.Claims.ClaimsIdentity)User.Identity).FindFirst("ImagePath");
 
@@ -22,15 +18,13 @@
     var roleStore = new RoleStore<ApplicationRole>(context);
     var roleManager = new RoleManager<ApplicationRole>(roleStore);
 
-
-    var fullName = currentUser.FullName;
-    var userImage = currentUser.ImagePath;
-
-
     RoleLevel access = RoleLevel.SUPERLOW;
 
     if (User.Identity.IsAuthenticated)
     {
+
+        var fullName = currentUser.FullName;
+        var userImage = currentUser.ImagePath;
 
         foreach (var role in currentUser.Roles)
         {
