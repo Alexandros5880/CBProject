@@ -129,7 +129,9 @@
                         //console.log(data.videos);
                         if (data) {
                             $("#videos-home").empty();
+                            $("#videos-home").append("<h3>Videos</h3>");
                             $("#ebooks-home").empty();
+                            $("#ebooks-home").append("<h3>Ebooks</h3>");
 
                             data.videos.forEach(video => {
                                 console.log(video);
@@ -188,9 +190,8 @@
             };
         </script>
 
-        <h3>Videos</h3>
-
         <div class="row" id="videos-home">
+            <h3>Videos</h3>
             @foreach (var video in Model.Videos.Take(8))
             {
                 <div class="col-md-3 " id="ourHolder" data-item="@video.Category">
@@ -212,9 +213,8 @@
             }
         </div>
 
-        <h3>Ebooks</h3>
-
         <div class="row" id="ebooks-home">
+            <h3>Ebooks</h3>
             @foreach (var ebook in Model.Ebooks.Take(8))
             {
                 <div class="col-md-3 " id="ourHolder" data-item="@ebook.Category">
