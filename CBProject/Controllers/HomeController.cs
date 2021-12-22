@@ -15,8 +15,7 @@ namespace CBProject.Controllers
         private EbooksRepository _ebooksRepository;
         private UsersRepo _usersRepo;
         private CategoriesRepository _categoriesRepo;
-       private VideosRepository _videosRepository;
-       // private IRepository<Plans> _plansRepository;
+        private VideosRepository _videosRepository;
         public HomeController(IUnitOfWork unitOfWork, IUsersRepo usersRepo)
         {
             this._ebooksRepository = unitOfWork.Ebooks;
@@ -24,7 +23,7 @@ namespace CBProject.Controllers
             this._videosRepository = unitOfWork.Videos;
             this._usersRepo = (UsersRepo)usersRepo;
         }
-        public async Task<ActionResult> Index(string name)
+        public async Task<ActionResult> Index()
         {
             HomeViewModel viewModel = new HomeViewModel();
             viewModel.Categories = await this._categoriesRepo
@@ -33,16 +32,8 @@ namespace CBProject.Controllers
                                         .Where(c => c.Videos.Count > 0)
                                         .Where(c => c.Ebooks.Count > 0)
                                         .ToListAsync();
-            if (name == null)
-            {
-                viewModel.Videos = await this._videosRepository.GetAllAsync();
-                viewModel.Ebooks = await this._ebooksRepository.GetAllAsync();
-            }
-            else
-            {
-                viewModel.Videos = await this._videosRepository.GetAllByCategoryNameAsync(name);
-                viewModel.Ebooks = await this._ebooksRepository.GetAllByCategoryNameAsync(name);
-            }
+            viewModel.Videos = await this._videosRepository.GetAllAsync();
+            viewModel.Ebooks = await this._ebooksRepository.GetAllAsync();
             return View(viewModel);
         }
         public ActionResult About()
@@ -56,11 +47,7 @@ namespace CBProject.Controllers
             ViewBag.Message = "Your contact page.";
             return View();
         }
-
-
-
-
-        public async Task<ActionResult> RenderPartial(string search)
+        public async Task<ActionResult> Lessons()
         {
             HomeViewModel viewModel = new HomeViewModel();
             viewModel.Categories = await this._categoriesRepo
@@ -69,18 +56,9 @@ namespace CBProject.Controllers
                                         .Where(c => c.Videos.Count > 0)
                                         .Where(c => c.Ebooks.Count > 0)
                                         .ToListAsync();
-            if ( search == null || search.Length == 0 )
-            {
-                viewModel.Videos = await this._videosRepository.GetAllAsync();
-                viewModel.Ebooks = await this._ebooksRepository.GetAllAsync();
-            }
-            else
-            {
-                viewModel.Videos = await this._videosRepository.GetAllByCategoryNameAsync(search);
-                viewModel.Ebooks = await this._ebooksRepository.GetAllByCategoryNameAsync(search);
-            }
+            viewModel.Videos = await this._videosRepository.GetAllAsync();
+            viewModel.Ebooks = await this._ebooksRepository.GetAllAsync();
             return View(viewModel);
-            return PartialView("_Products");
         }
     }
 }

@@ -1,0 +1,295 @@
+﻿@model CBProject.Models.ViewModels.HomeViewModel
+
+@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.EntityFramework
+@using CBProject.Models
+
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+
+
+
+
+    //var fullname = ((System.Security.Claims.ClaimsIdentity)User.Identity).FindFirst("FullName");
+    //var user_image = ((System.Security.Claims.ClaimsIdentity)User.Identity).FindFirst("ImagePath");
+
+    var context = new ApplicationDbContext();
+    var userStore = new UserStore<ApplicationUser, ApplicationRole, string, IdentityUserLogin, IdentityUserRole, IdentityUserClaim>(context);
+    var userManager = new CBProject.ApplicationUserManager(userStore);
+    var currentUser = userManager.FindById(User.Identity.GetUserId());
+    var roleStore = new RoleStore<ApplicationRole>(context);
+    var roleManager = new RoleManager<ApplicationRole>(roleStore);
+
+
+    var fullName = currentUser.FullName;
+    var userImage = currentUser.ImagePath;
+
+
+    RoleLevel access = RoleLevel.SUPERLOW;
+
+    if (User.Identity.IsAuthenticated)
+    {
+
+        foreach (var role in currentUser.Roles)
+        {
+            var myRole = roleManager.FindById(role.RoleId);
+            if (myRole.Level == RoleLevel.FULL)
+            {
+                access = myRole.Level;
+            }
+            else if (myRole.Level == RoleLevel.PLUSSFULL)
+            {
+                if (access != RoleLevel.FULL)
+                {
+                    access = myRole.Level;
+                }
+            }
+            else if (myRole.Level == RoleLevel.MIDDLE)
+            {
+                if (access != RoleLevel.FULL &&
+                    access != RoleLevel.PLUSSFULL)
+                {
+                    access = myRole.Level;
+                }
+            }
+            else if (myRole.Level == RoleLevel.LOW)
+            {
+                if (access != RoleLevel.FULL &&
+                    access != RoleLevel.PLUSSFULL &&
+                    access != RoleLevel.MIDDLE)
+                {
+                    access = myRole.Level;
+                }
+            }
+            else if (myRole.Level == RoleLevel.SUPERLOW)
+            {
+                if (access != RoleLevel.FULL &&
+                    access != RoleLevel.PLUSSFULL &&
+                    access != RoleLevel.MIDDLE &&
+                    access != RoleLevel.LOW)
+                {
+                    access = myRole.Level;
+                }
+            }
+        }
+    }
+
+
+
+
+}
+
+
+
+<style>
+    #filter-slidebar > li {
+        margin-top: 11% !important;
+        text-align: center;
+    }
+    #search-addon:hover {
+        cursor: pointer;
+    }
+    .drop-down-buttons {
+        margin-top: 5px;
+    }
+</style>
+
+
+<script>
+    function search() {
+        var ebooks = $("#ebooks-input:checked").val() ? true : false;
+        var videos = $("#videos-input:checked").val() ? true : false;;
+        var category = $("#category-search-button").val();
+        var tag = $("#category-search-button").val();
+        var title = $("#title-search-button").val();
+        var teacher = $("#teacher-search-button").val();
+        var message =
+                        `
+                            Ebooks: ${ebooks}
+                            Videos: ${videos}
+                            Category: ${category}
+                            Tag: ${tag}
+                            Title: ${title}
+                            Teacher: ${teacher}
+                        `;
+        alert(message);
+    }
+    function selectEbook() {
+        ebook = true;
+        video = false;
+    }
+    function selectVideo() {
+        ebook = false;
+        video = true;
+    }
+</script>
+
+
+
+
+
+<div class="row" style="margin-top: 50px !important; margin-bottom: 50px !important;">
+
+    <!-- Filters SlideBar -->
+    <div class="col-md-2">
+        <ul class="nav flex-column" id="filter-slidebar">
+            <li class="nav-item">
+                <fieldset id="group1">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="form-check-label" for="ebooks-input">Ebooks</label>
+                            <input type="radio" id="ebooks-input" name="group1" style="margin-right: 5%;" checked>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-check-label" for="videos-input">Videos</label>
+                            <input type="radio" id="videos-input" name="group1">
+                        </div>
+                    </div>
+                </fieldset>
+            </li>
+            <li class="nav-item">
+                <input id="category-search-button" type="search" class="form-control rounded" placeholder="Search Category" aria-label="Search"
+                       aria-describedby="search-addon" />
+            </li>
+            <li class="nav-item">
+                <input id="tag-search-button" type="search" class="form-control rounded" placeholder="Search Tag" aria-label="Search"
+                       aria-describedby="search-addon" />
+            </li>
+            <li class="nav-item">
+                <input id="title-search-button" type="search" class="form-control rounded" placeholder="Search Title" aria-label="Search"
+                       aria-describedby="search-addon" />
+            </li>
+            <li class="nav-item">
+                <input id="teacher-search-button" type="search" class="form-control rounded" placeholder="Search Teacher" aria-label="Search"
+                       aria-describedby="search-addon" />
+            </li>
+            <li>
+                <button class="btn btn-search" onclick="search();">
+                    Search
+                    <i class="fa fa-search"></i>
+                </button>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="col-md-10">
+        <div class="container">
+            Hello World
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<div class="row" id="ebooks-list">
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayName("Title")
+                </th>
+                <th>
+                    @Html.DisplayName("Category")
+                </th>
+                <th>
+                    @Html.DisplayName("Creator")
+                </th>
+                <th>
+                    @Html.DisplayName("Cover")
+                </th>
+                <th></th>
+            </tr>
+            @foreach (var item in Model.Ebooks)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Creator.FullName)
+                    </td>
+                    <td>
+                        <img src="@Html.DisplayFor(modelItem => item.EbookImagePath)" alt="Ebook cover foto." />
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+
+
+
+    <div class="row" id="videos-list">
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayName("Title")
+                </th>
+                <th>
+                    @Html.DisplayName("Category")
+                </th>
+                <th>
+                    @Html.DisplayName("Creator")
+                </th>
+                <th>
+                    @Html.DisplayName("Cover")
+                </th>
+                <th></th>
+            </tr>
+            @foreach (var item in Model.Videos)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Creator.FullName)
+                    </td>
+                    <td>
+                        <img src="@Html.DisplayFor(modelItem => item.VideoImagePath)" alt="Ebook cover foto." />
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>*@

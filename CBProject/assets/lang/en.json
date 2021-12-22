@@ -2,7 +2,8 @@
   "title": "Dashboard | Skote - Admin & Dashboard Template",
   "t-menu": "Menu",
 
-  "t-home":  "Home",
+  "t-home": "Home",
+  "t-lessons": "Lessons",
   "t-manage": "Manage",
   "t-dashboard": "Dashboard",
   "t-logout": "Log Off",

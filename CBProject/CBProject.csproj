@@ -1822,6 +1822,7 @@
     <Content Include="Views\Ebooks\PublicDetails.cshtml" />
     <Content Include="Views\Videos\_Details.cshtml" />
     <Content Include="Views\Videos\_Edit.cshtml" />
+    <Content Include="Views\Home\Lessons.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
