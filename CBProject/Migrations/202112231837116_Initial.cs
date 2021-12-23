@@ -187,7 +187,7 @@ namespace CBProject.Migrations
                 c => new
                     {
                         ID = c.Int(nullable: false, identity: true),
-                        Rate = c.Int(nullable: false),
+                        Rate = c.Single(nullable: false),
                         RaterId = c.String(nullable: false, maxLength: 128),
                     })
                 .PrimaryKey(t => t.ID)
@@ -310,7 +310,7 @@ namespace CBProject.Migrations
                 c => new
                     {
                         ID = c.Int(nullable: false, identity: true),
-                        Name = c.String(),
+                        Description = c.String(),
                         Price = c.Decimal(nullable: false, precision: 18, scale: 2),
                         Duration = c.Single(nullable: false),
                         AutoSubscription = c.Boolean(nullable: false),

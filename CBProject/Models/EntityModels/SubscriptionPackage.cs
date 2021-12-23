@@ -8,7 +8,7 @@ namespace CBProject.Models.EntityModels
     {
         [Key]
         public int ID { get; set; }
-        public string Name { get; set; }
+        public string Description { get; set; }
         public decimal Price { get; set; }
         public float Duration { get; set; }
         public ICollection<ApplicationUser> MyUsers { get; set; }

@@ -9,7 +9,7 @@ namespace CBProject.Models.ViewModels
     public class SubscriptionPackageViewModel
     {
         public int ID { get; set; }
-        public string Name { get; set; }
+        public string Description { get; set; }
         public decimal Price { get; set; }
         public float Duration { get; set; }
         public bool AutoSubscription { get; set; }

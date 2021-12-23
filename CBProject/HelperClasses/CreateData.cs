@@ -444,7 +444,7 @@ namespace CBProject.HelperClasses
                 SubscriptionPackage package1 = new SubscriptionPackage()
                 {
                     ID = 1,
-                    Name = "Basic",
+                    Description = "Basic",
                     Price = 100,
                     Duration = 23.33f,
                     MyUsers = new List<ApplicationUser>()
@@ -459,7 +459,7 @@ namespace CBProject.HelperClasses
                 SubscriptionPackage package2 = new SubscriptionPackage()
                 {
                     ID = 2,
-                    Name = "Advance",
+                    Description = "Advance",
                     Price = 100,
                     Duration = 23.33f,
                     MyUsers = new List<ApplicationUser>()
@@ -474,7 +474,7 @@ namespace CBProject.HelperClasses
                 SubscriptionPackage package3 = new SubscriptionPackage()
                 {
                     ID = 3,
-                    Name = "Premium",
+                    Description = "Premium",
                     Price = 100,
                     Duration = 23.33f,
                     MyUsers = new List<ApplicationUser>()
