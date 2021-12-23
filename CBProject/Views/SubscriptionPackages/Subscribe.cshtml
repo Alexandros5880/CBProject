@@ -1,0 +1,122 @@
+﻿@model IEnumerable<CBProject.Models.ViewModels.SubscriptionPackageViewModel>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+<style>
+    .package-card {
+        margin-top: 33px;
+    }
+    .item {
+        border-radius: 11px;
+        border-style: solid;
+    }
+    .item:hover {
+        transform: translate(0, -11px);
+    }
+    .item-header {
+        border-radius: 11px 11px 0 0;
+        background-color: darkgrey;
+        text-align: center;
+        padding: 7px;
+    }
+</style>
+
+
+
+
+<div class="container">
+    <div class="row" id="ebooks-home">
+        <br />
+        <h3>Select a Package:</h3>
+        <hr />
+        <br />
+        @foreach (var package in Model)
+        {
+            <div class="col-md-4 package-card" data-item="@package.ID">
+                <div class="card item">
+                    <div class="card-header item-header">
+                        @*<img alt="Cover Foto" src="@ebook.EbookImagePath" style="height:150px;" />*@
+                        <h4>@package.Name</h4>
+                    </div>
+                    @*<img class="card-img-top" style="width:100%" src="~/img/@Url.Content(ebook.Thumbnail)" alt="Card image cap">*@
+                    <div class="card-body text-center">
+                        <p class="card-text">@package.StartDate</p>
+                        <p class="card-text">@package.Price</p>
+                        <p class="card-text">@package.Duration</p>
+                        <br />
+                        <a href="#" class="btn btn-card">Add Package</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <br />
+    <br />
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Duration)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AutoSubscription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Duration)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AutoSubscription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StartDate)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>*@

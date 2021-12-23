@@ -1824,6 +1824,7 @@
     <Content Include="Views\Videos\_Details.cshtml" />
     <Content Include="Views\Videos\_Edit.cshtml" />
     <Content Include="Views\Home\Lessons.cshtml" />
+    <Content Include="Views\SubscriptionPackages\Subscribe.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

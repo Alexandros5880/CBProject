@@ -85,6 +85,21 @@
     .drop-down-buttons {
         margin-top: 5px;
     }
+
+    #subscription-container {
+        text-align: center;
+        margin-top: 33%;
+    }
+    .subscribe-button {
+        border-radius: 11px;
+        background-color: red;
+        color: #ffffff;
+        padding: 11px;
+    }
+    .subscribe-button:hover {
+        color: #ffffff;
+        background-color: darkred;
+    }
 </style>
 
 
@@ -214,6 +229,10 @@
                 </button>
             </li>
         </ul>
+        <br />
+        <div id="subscription-container">
+            @Html.ActionLink("Subscribe Now", "Subscribe", "SubscriptionPackages", null, new { @class = "subscribe-button" })
+        </div>
     </div>
 
     <!-- Main Content -->
