@@ -59,43 +59,40 @@
             <script type="text/javascript">
 
                 function createOrder() {
+                    var payment = {
+                        Auth: {
+                            UserName: btoa("SB-Mid-server-XhC6ozM7V3n8334ljomw2aS5"),
+                            Password: ""
+                        },
+                        TransactionDetails: {
+                            OrderId: @pack.ID,
+                            GrossAmount: @pack.Price
+                        },
+                        User: {
+                            FirstName: "Alexandros_3",
+                            LastName: "Platanios_3",
+                            Email: "alexandrosplatanios3@gmail.com"
+                        },
+                        Method: "CreaditCard",
+                        Secure: true
+                    }
 
-                    console.log(@pack.Description);
-
-                    //var payment = {
-                    //    Auth: {
-                    //        UserName: btoa("SB-Mid-server-XhC6ozM7V3n8334ljomw2aS5"),
-                    //        Password: ""
-                    //    },
-                    //    TransactionDetails: {
-                    //        OrderId: "5134363262562653",
-                    //        GrossAmount: "10000"
-                    //    },
-                    //    User: {
-                    //        FirstName: "Alexandros_3",
-                    //        LastName: "Platanios_3",
-                    //        Email: "alexandrosplatanios3@gmail.com"
-                    //    },
-                    //    Method: "CreaditCard",
-                    //    Secure: true
-                    //}
-
-                    //$.ajax({
-                    //    type: "POST",
-                    //    url: "/api/products/payment/frame",
-                    //    data: payment,
-                    //    success: function (data) {
-                    //        if (data) {
-                    //            data = JSON.parse(data);
-                    //            console.log(data.token);
-                    //            console.log(data.redirect_url);
-                    //            window.location.href = data.redirect_url;
-                    //        }
-                    //    },
-                    //    error: function (error) {
-                    //        console.log(error);
-                    //    }
-                    //});
+                    $.ajax({
+                        type: "POST",
+                        url: "/api/products/payment/frame",
+                        data: payment,
+                        success: function (data) {
+                            if (data) {
+                                data = JSON.parse(data);
+                                console.log(data.token);
+                                console.log(data.redirect_url);
+                                window.location.href = data.redirect_url;
+                            }
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    });
                 }
 
             </script>

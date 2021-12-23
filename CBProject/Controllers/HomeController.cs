@@ -3,6 +3,7 @@ using CBProject.Models.ViewModels;
 using CBProject.Repositories;
 using CBProject.Repositories.IdentityRepos;
 using CBProject.Repositories.IdentityRepos.Interfaces;
+using Microsoft.AspNet.Identity;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
@@ -58,6 +59,10 @@ namespace CBProject.Controllers
                                         .ToListAsync();
             viewModel.Videos = await this._videosRepository.GetAllAsync();
             viewModel.Ebooks = await this._ebooksRepository.GetAllAsync();
+            if (User.Identity.IsAuthenticated)
+            {
+                ViewBag.User = await this._usersRepo.GetAsync(User.Identity.GetUserId());
+            }
             return View(viewModel);
         }
     }
