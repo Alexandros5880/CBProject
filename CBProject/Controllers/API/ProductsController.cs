@@ -82,6 +82,7 @@ namespace CBProject.Controllers.API
             var categories = await this._categoriesRepository
                                 .GetAllQueryable()
                                 .Where(c => c.Name.Contains(category))
+                                .Select(c => c.ID)
                                 .ToListAsync();
             var tags = await this._tagRepsitory
                                 .GetAllQueryable()
@@ -90,26 +91,35 @@ namespace CBProject.Controllers.API
                                 .ToListAsync();
             var teachers = await this._usersRepo
                                     .GetAllQuerable()
-                                    .Where(u => u.FullName.Contains(teacher) || u.Email.Contains(teacher))
+                                    .Where(u => u.FirstName.Contains(teacher) || 
+                                                u.LastName.Contains(teacher) || 
+                                                u.Email.Contains(teacher))
                                     .Select(t => t.Id)
                                     .ToListAsync();
 
+            var ebooks = await this._ebooksReposotory
+                        .GetAllQuerable()
+                        .Where(e => categories.Any() ? categories.Contains(e.CategoryId) : true)
+                        .Where(e => tags.Any() ? e.TagsToEbooks.Select(t => t.TagId).Intersect(tags).Any() : true)
+                        .Where(e => teachers.Any() ? teachers.Contains(e.CreatorId): true)
+                        .Where(e => viewModel.TitleName.Length > 0 ? e.Title.Contains(viewModel.TitleName) : true)
+                        .ToListAsync();
 
+            var videos = await this._videosRepository
+                        .GetAllQuerable()
+                        .Where(e => categories.Any() ? categories.Contains(e.CategoryId) : true)
+                        .Where(e => tags.Any() ? e.TagsToVideos.Select(t => t.TagId).Intersect(tags).Any() : true)
+                        .Where(e => teachers.Any() ? teachers.Contains(e.CreatorId) : true)
+                        .Where(e => viewModel.TitleName.Length > 0 ? e.Title.Contains(viewModel.TitleName) : true)
+                        .ToListAsync();
 
-            if (viewModel.Ebooks) // TODO: Products API Controller
+            var products = new
             {
-                //var ebooks = await this._ebooksReposotory
-                //        .GetAllQuerable()
-                //        .Include(e => e.TagsToEbooks)
-                //        .Where(e => categories.Contains(e.Category))
-                //        .Where(e => e.TagsToEbooks.Select(t => t.TagId).Intersect(tags))
-                //        .ToListAsync();
-            }
-            else if (viewModel.Videos)
-            {
+                Videos = videos,
+                Ebooks = ebooks
+            };
 
-            }
-            return Ok(viewModel);
+            return Ok(products);
         }
 
 

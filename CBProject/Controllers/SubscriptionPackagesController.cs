@@ -90,7 +90,7 @@ namespace CBProject.Controllers
             var viewModel = Mapper.Map<SubscriptionPackage, SubscriptionPackageViewModel>(subscriptionPackage);
             viewModel.OtherUsers = await this._usersRepo.GetAllAsync();
             viewModel.MyUsers = await this._usersRepo
-                                            .GetAllEnumerable()
+                                            .GetAllQuerable()
                                             .Where(u => !subscriptionPackage.MyUsers.Contains(u))
                                             .ToListAsync();
             viewModel.OtherContentType = await this._contentTypeRepo.GetAllAsync();

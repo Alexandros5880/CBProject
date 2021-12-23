@@ -103,6 +103,10 @@ namespace CBProject.Repositories
                 throw new ArgumentNullException(nameof(obj));
             this._context.Entry(obj).State = EntityState.Modified;
         }
+        public IQueryable<SubscriptionPackage> GetAllQueryable()
+        {
+            return this._context.SubcriptionPackages;
+        }
         protected virtual void Dispose(bool disposing)
         {
             if (!disposedValue)

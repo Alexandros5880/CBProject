@@ -85,6 +85,10 @@ namespace CBProject.Repositories.IdentityRepos
             return await this._context.Payments
                 .FirstOrDefaultAsync(p => p.ID == id);
         }
+        public IQueryable<Payment> GetAllQueryable()
+        {
+            return this._context.Payments;
+        }
         public void Save()
         {
             this._context.SaveChanges();

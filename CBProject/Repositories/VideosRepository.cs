@@ -157,6 +157,10 @@ namespace CBProject.Repositories
                 .Where(v => category.Videos.Contains(v))
                 .ToListAsync();
         }
+        public IQueryable<Video> GetAllQueryable()
+        {
+            return this._context.Videos;
+        }
 
 
         public async Task<float> GetRatingsAverageAsync(int videoId)

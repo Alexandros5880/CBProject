@@ -185,6 +185,10 @@ namespace CBProject.Repositories
                                 .Where(r => ratingsIds.Contains(r.ID))
                                 .ToListAsync();
         }
+        public IQueryable<Rating> GetAllQueryable()
+        {
+            return this._context.Ratings;
+        }
         public void Save()
         {
             this._context.SaveChanges();

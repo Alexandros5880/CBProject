@@ -192,6 +192,10 @@ namespace CBProject.Repositories
                                 .Where(r => reviewsIds.Contains(r.ID))
                                 .ToListAsync();
         }
+        public IQueryable<Review> GetAllQueryable()
+        {
+            return this._context.Reviews;
+        }
         protected virtual void Dispose(bool disposing)
         {
             if (!disposedValue)

@@ -35,7 +35,6 @@
                                     $("#ebooks-home").empty();
 
                                     data.videos.forEach(video => {
-                                        console.log(video);
                                         $("#videos-home").append(
                                             `
                                             <div class="col-md-3 " id="ourHolder" data-item="${video.category}">
@@ -57,7 +56,6 @@
                                     });
 
                                     data.ebooks.forEach(ebook => {
-                                        console.log(ebook);
                                         $("#ebooks-home").append(
                                             `
                                             <div class="col-md-3 " id="ourHolder" data-item="${ebook.category}">
@@ -194,7 +192,6 @@
                             <img alt="Cover Foto" src="@video.VideoImagePath" style="height:150px;" />
                             <h4 style="margin-top: 5%;">@video.Title</h4>
                         </div>
-
                         @*<img class="card-img-top" style="width:100%" src="~/img/@Url.Content(video.Thumbnail)" alt="Card image cap">*@
                         <div class="card-body text-center">
                             <p class="card-text"> @video.Description </p>
@@ -217,7 +214,6 @@
                             <img alt="Cover Foto" src="@ebook.EbookImagePath" style="height:150px;" />
                             <h4 style="margin-top: 5%;">@ebook.Title</h4>
                         </div>
-
                         @*<img class="card-img-top" style="width:100%" src="~/img/@Url.Content(ebook.Thumbnail)" alt="Card image cap">*@
                         <div class="card-body text-center">
                             <p class="card-text"> @ebook.Description </p>

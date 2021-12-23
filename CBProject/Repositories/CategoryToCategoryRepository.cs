@@ -208,6 +208,10 @@ namespace CBProject.Repositories
             return await _context.CategoriesToCategories
                 .FirstAsync(c => c.ID == id);
         }
+        public IQueryable<CategoryToCategory> GetAllQueryable()
+        {
+            return this._context.CategoriesToCategories;
+        }
         public void Save()
         {
             this._context.SaveChanges();

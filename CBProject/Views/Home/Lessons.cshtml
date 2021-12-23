@@ -93,7 +93,7 @@
         var ebooks = $("#ebooks-input:checked").val() ? true : false;
         var videos = $("#videos-input:checked").val() ? true : false;;
         var category = $("#category-search-button").val();
-        var tag = $("#category-search-button").val();
+        var tag = $("#tag-search-button").val();
         var title = $("#title-search-button").val();
         var teacher = $("#teacher-search-button").val();
 
@@ -107,16 +107,58 @@
             TeacherName: teacher
         };
 
-        console.log("Send Data");
-
         $.ajax({
             type: "POST",
             url: "/api/products/search/filters",
             data: sendData,
             success: function (data) {
                 if (data) {
-                    // Generate Html WWith Data
-                    console.log(data);
+                    if (data.videos && videos) {
+                        $(".contents").empty();
+                        data.videos.forEach(video => {
+                            $(".contents").append(
+                                `
+                            <div class="col-md-3 " id="ourHolder" data-item="${video.category}">
+                                <div class="card item" id="card-video">
+                                    <div style="width:100%; text-align:center; margin-top: 5%;">
+                                        <img alt="Cover Foto" src="${video.videoImagePath}" style="height:150px;" />
+                                        <h4 style="margin-top: 5%;">${video.title}</h4>
+                                    </div>
+                                    <div class="card-body text-center">
+                                        <p class="card-text"> ${video.description} </p>
+                                        <p class="card-text"> ${video.title}  </p>
+                                        <br />
+                                        <a href="#" class="btn btn-card">More</a>
+                                    </div>
+                                </div>
+                            </div>
+                            `
+                            );
+                        });
+                    }
+                    if (data.ebooks && ebooks) {
+                        $(".contents").empty();
+                        data.videos.forEach(ebook => {
+                            $(".contents").append(
+                                `
+                            <div class="col-md-3 " id="ourHolder" data-item="${ebook.category}">
+                                <div class="card item" id="card-video">
+                                    <div style="width:100%; text-align:center; margin-top: 5%;">
+                                        <img alt="Cover Foto" src="${ebook.videoImagePath}" style="height:150px;" />
+                                        <h4 style="margin-top: 5%;">${ebook.title}</h4>
+                                    </div>
+                                    <div class="card-body text-center">
+                                        <p class="card-text"> ${ebook.description} </p>
+                                        <p class="card-text"> ${ebook.title}  </p>
+                                        <br />
+                                        <a href="#" class="btn btn-card">More</a>
+                                    </div>
+                                </div>
+                            </div>
+                            `
+                            );
+                        });
+                    }
                 }
             },
             error: function (error) {
@@ -176,8 +218,37 @@
 
     <!-- Main Content -->
     <div class="col-md-10">
-        <div class="container">
-            Hello World
+        <div class="container-fluid">
+            <div class="grey-row">
+                <div class="container">
+                    <br />
+                    <br />
+
+                    <div class="row contents">
+                        @foreach (var video in Model.Videos.Take(8))
+                        {
+                            <div class="col-md-3 " id="ourHolder" data-item="@video.Category">
+                                <div class="card item" id="card-video">
+                                    <div style="width:100%; text-align:center; margin-top: 5%;">
+                                        <img alt="Cover Foto" src="@video.VideoImagePath" style="height:150px;" />
+                                        <h4 style="margin-top: 5%;">@video.Title</h4>
+                                    </div>
+                                    @*<img class="card-img-top" style="width:100%" src="~/img/@Url.Content(video.Thumbnail)" alt="Card image cap">*@
+                                    <div class="card-body text-center">
+                                        <p class="card-text"> @video.Description </p>
+                                        <p class="card-text"> @video.Creator.FullName  </p>
+                                        <br />
+                                        <a href="#" class="btn btn-card">More</a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    <br />
+                    <br />
+                </div>
+            </div>
         </div>
     </div>
 

@@ -113,6 +113,10 @@ namespace CBProject.Repositories
             return ebook;
 
         }
+        public IQueryable<Ebook> GetAllQueryable()
+        {
+            return this._context.Ebooks;
+        }
 
 
         public async Task<float> GetRatingsAverageAsync(int ebookId)
