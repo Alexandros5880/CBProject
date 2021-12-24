@@ -1,9 +1,4 @@
 ﻿
-
-
-
-
-
 function getLogedUser(callback) {
     $.ajax({
         type: "GET",
@@ -77,6 +72,22 @@ function doPaynment(user, package, callback) {
         success: function (response) {
             if (response) {
                 callback(response);
+            }
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+}
+
+function getProductsByFilters(sendData, callback) {
+    $.ajax({
+        type: "POST",
+        url: "/api/products/search/filters",
+        data: sendData,
+        success: function (data) {
+            if (data) {
+                callback(data);
             }
         },
         error: function (error) {

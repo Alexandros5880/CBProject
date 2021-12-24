@@ -109,7 +109,7 @@ namespace CBProject.Controllers.API
                         .GetAllQuerable()
                         .Where(e => categories.Any() ? categories.Contains(e.CategoryId) : true)
                         .Where(e => tags.Any() ? e.TagsToEbooks.Select(t => t.TagId).Intersect(tags).Any() : true)
-                        .Where(e => teachers.Any() ? teachers.Contains(e.CreatorId): true)
+                        .Where(e => teachers.Any() && teachers.Contains(e.CreatorId)? true : false)
                         .Where(e => viewModel.TitleName.Length > 0 ? e.Title.Contains(viewModel.TitleName) : true)
                         .ToListAsync();
 
@@ -117,7 +117,7 @@ namespace CBProject.Controllers.API
                         .GetAllQuerable()
                         .Where(e => categories.Any() ? categories.Contains(e.CategoryId) : true)
                         .Where(e => tags.Any() ? e.TagsToVideos.Select(t => t.TagId).Intersect(tags).Any() : true)
-                        .Where(e => teachers.Any() ? teachers.Contains(e.CreatorId) : true)
+                        .Where(e => teachers.Any() && teachers.Contains(e.CreatorId)? true : false)
                         .Where(e => viewModel.TitleName.Length > 0 ? e.Title.Contains(viewModel.TitleName) : true)
                         .ToListAsync();
 
