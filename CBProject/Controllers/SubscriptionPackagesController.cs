@@ -5,7 +5,6 @@ using CBProject.Models.ViewModels;
 using CBProject.Repositories;
 using CBProject.Repositories.IdentityRepos;
 using CBProject.Repositories.IdentityRepos.Interfaces;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
@@ -34,14 +33,7 @@ namespace CBProject.Controllers
         }
         public async Task<ActionResult> Subscribe()
         {
-            List<SubscriptionPackageViewModel> viewModels = new List<SubscriptionPackageViewModel>();
-            foreach(var package in await this._subscriptionRepo.GetAllAsync())
-            {
-                var viewModel = Mapper.Map<SubscriptionPackage, SubscriptionPackageViewModel>(package);
-                viewModel.OtherPayments = await this._peynmentRepo.GetAllAsync();
-                viewModels.Add(viewModel);
-            }
-            return View(viewModels);
+            return View();
         }
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Details(int? id)

@@ -4,6 +4,7 @@ using CBProject.Models.ViewModels;
 using CBProject.Repositories;
 using CBProject.Repositories.IdentityRepos;
 using CBProject.Repositories.IdentityRepos.Interfaces;
+using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
 using System.Data.Entity;
 using System.Linq;
@@ -22,6 +23,7 @@ namespace CBProject.Controllers.API
         private readonly CategoriesRepository _categoriesRepository;
         private readonly TagsRepository _tagRepsitory;
         private readonly UsersRepo _usersRepo;
+        private readonly SubscriptionPackageRepository _subscriptionPackageRepository;
 
         public ProductsController(IUnitOfWork unitOfWork, IUsersRepo usersRepo)
         {
@@ -30,6 +32,7 @@ namespace CBProject.Controllers.API
             this._categoriesRepository = unitOfWork.Categories;
             this._tagRepsitory = unitOfWork.Tags;
             this._usersRepo = (UsersRepo)usersRepo;
+            this._subscriptionPackageRepository = unitOfWork.SubscriptionPackages;
         }
 
         // GET api/<controller>
@@ -150,11 +153,7 @@ namespace CBProject.Controllers.API
                     phone = payment.User.PhoneNumber
                 }
             };
-
-
             const string baseUri = "https://app.sandbox.midtrans.com/snap/v1/transactions";
-
-
             var httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", payment.Auth.UserName);
@@ -171,20 +170,42 @@ namespace CBProject.Controllers.API
             }
         }
 
-
-        // POST api/<controller>
-        public void Post([FromBody] string value)
+        [HttpGet]
+        [Route("api/products/packages")]
+        public async Task<IHttpActionResult> GetPackages()
         {
+            return Ok(await this._subscriptionPackageRepository
+                                .GetAllAsync());
         }
 
-        // PUT api/<controller>/5
-        public void Put(int id, [FromBody] string value)
+        [HttpGet]
+        [Route("api/user")]
+        public async Task<IHttpActionResult> GetUser(string userId)
         {
+            return Ok(await this._usersRepo.GetAsync(userId));
         }
 
-        // DELETE api/<controller>/5
-        public void Delete(int id)
+        [HttpGet]
+        [Route("api/logged/user")]
+        public async Task<IHttpActionResult> GetLoggedInUser()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                var userId = User.Identity.GetUserId();
+                var user = await this._usersRepo.GetAsync(userId);
+                return Ok(user);
+            }
+            else
+            {
+                return Ok("null");
+            }
+        }
+
+        [HttpGet]
+        [Route("api/packages/")]
+        public async Task<IHttpActionResult> GetSubscriptionPackage(int id)
+        {
+            return Ok(await this._subscriptionPackageRepository.GetAsync(id));
         }
     }
 }

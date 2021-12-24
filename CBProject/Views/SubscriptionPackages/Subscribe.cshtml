@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CBProject.Models.ViewModels.SubscriptionPackageViewModel>
+﻿
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -32,72 +32,13 @@
 
 
 
+
+
 <div class="container">
     <div class="row" id="ebooks-home">
-        <br />
-        <h3>Select a Package:</h3>
-        <hr />
-        <br />
-        @foreach (var pack in Model)
-        {
-        <div class="col-md-4 package-card">
-            <div class="card item">
-                <div class="card-header item-header">
-                    @*<img alt="Cover Foto" src="@ebook.EbookImagePath" style="height:150px;" />*@
-                    <h4>@pack.Description</h4>
-                </div>
-                @*<img class="card-img-top" style="width:100%" src="~/img/@Url.Content(ebook.Thumbnail)" alt="Card image cap">*@
-                <div class="card-body text-center">
-                    <p class="card-text">@pack.StartDate</p>
-                    <p class="card-text">@pack.Price</p>
-                    <p class="card-text">@pack.Duration</p>
-                    <br />
-                    <a href="#" class="btn btn-card" onclick="createOrder();">Add Package</a>
-                </div>
-            </div>
 
-            <script type="text/javascript">
 
-                function createOrder() {
-                    var payment = {
-                        Auth: {
-                            UserName: btoa("SB-Mid-server-XhC6ozM7V3n8334ljomw2aS5"),
-                            Password: ""
-                        },
-                        TransactionDetails: {
-                            OrderId: @pack.ID,
-                            GrossAmount: @pack.Price
-                        },
-                        User: {
-                            FirstName: "Alexandros_3",
-                            LastName: "Platanios_3",
-                            Email: "alexandrosplatanios3@gmail.com"
-                        },
-                        Method: "CreaditCard",
-                        Secure: true
-                    }
 
-                    $.ajax({
-                        type: "POST",
-                        url: "/api/products/payment/frame",
-                        data: payment,
-                        success: function (data) {
-                            if (data) {
-                                data = JSON.parse(data);
-                                console.log(data.token);
-                                console.log(data.redirect_url);
-                                window.location.href = data.redirect_url;
-                            }
-                        },
-                        error: function (error) {
-                            console.log(error);
-                        }
-                    });
-                }
-
-            </script>
-        </div>
-        }
     </div>
     <br />
     <br />
@@ -106,7 +47,84 @@
 
 
 @section scripts {
-    
-    
+
+
+
+    <script>
+        $(document).ready(function () {
+
+
+
+            getSubscriptionPackages(function (packages) {
+                renderPackages(packages);
+            });
+            
+
+
+            function renderPackages(packages) {
+                $("#ebooks-home").empty();
+                $("#ebooks-home").append(`
+                        <br />
+                        <h3>Select a Package:</h3>
+                        <hr />
+                        <br />
+                `);
+                packages.forEach(function (pack) {
+                    var html = `
+                        <div class="col-md-4" id="ourHolder"">
+                            <div class="card item" id="card-video">
+                                <div style="width:100%; text-align:center; margin-top: 5%;">
+                                    <h2 style="margin-top: 5%;">${pack.description}</h2>
+                                    <h4 style="margin-top: 5%;"><b>Price:</b> ${pack.price}</h4>
+                                </div>
+                                <div class="card-body text-center">
+                                    <p class="card-text"><strong>Duration:</strong> ${pack.duration}</p>
+                                    <p class="card-text"><strong>ContentType:</strong> ${pack.contentType.name}</p>
+                                    <br />
+                                    <a class="btn btn-card subscribe-button" data-value="${pack.id}">>Subscribe</a>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    $("#ebooks-home").append(html);
+                });
+                
+            }
+
+
+            
+            $(document.body).on('click', 'a', function () {
+                if (this.classList.contains("subscribe-button")) {
+                    var packageId = $(this).data('value');
+                    createOrder(packageId);
+                }
+            });
+
+
+
+            function createOrder(packageId) {
+                getSubscriptionPackage(packageId, function (package) {
+                    getLogedUser(function (user) {
+                        if (user !== "null") {
+                            doPaynment(user, package, function (response) {
+                                var data = JSON.parse(response);
+                                //console.log(data.token);
+                                //console.log(data.redirect_url);
+                                window.location.href = data.redirect_url;
+                            });
+                        } else {
+                            window.location.href = "/Account/Register";
+                        }
+                    });
+                });
+            }
+
+
+
+        });
+    </script>
+
 
 }
+
+
