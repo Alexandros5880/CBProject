@@ -1,6 +1,7 @@
 ﻿using CBProject.Models;
 using Microsoft.AspNet.Identity;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace CBProject.Repositories.IdentityRepos.Interfaces
@@ -25,5 +26,6 @@ namespace CBProject.Repositories.IdentityRepos.Interfaces
         void Update(ApplicationRole role);
         Task<IdentityResult> UpdateAsync(string oldName, string newName);
         Task<IdentityResult> UpdateAsync(ApplicationRole role);
+        IQueryable<ApplicationRole> GetAllQuerable();
     }
 }

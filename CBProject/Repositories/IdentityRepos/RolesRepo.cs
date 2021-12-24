@@ -133,6 +133,10 @@ namespace CBProject.Repositories.IdentityRepos
             //return await this._manager.Context.SaveChangesAsync();
             return await this._manager.RoleManager.UpdateAsync(role);
         }
+        public IQueryable<ApplicationRole>GetAllQuerable()
+        {
+            return this._manager.RoleManager.Roles;
+        }
         protected virtual void Dispose(bool disposing)
         {
             if (!disposedValue)
