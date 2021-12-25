@@ -100,10 +100,14 @@
         padding: 11px;
     }
 
-        .subscribe-button:hover {
-            color: #ffffff;
-            background-color: darkred;
-        }
+    .subscribe-button:hover {
+        color: #ffffff;
+        background-color: darkred;
+    }
+
+    #ourHolder:hover {
+        transform: translate(0, -7px);
+    }
 </style>
 
 
@@ -122,11 +126,11 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label class="form-check-label" for="ebooks-input">Ebooks</label>
-                            <input class="radios-selection" type="radio" id="ebooks-input" name="group1" style="margin-right: 5%;" checked>
+                            <input class="radios-selection" type="radio" id="ebooks-input" name="group1" style="margin-right: 5%;">
                         </div>
                         <div class="col-md-6">
                             <label class="form-check-label" for="videos-input">Videos</label>
-                            <input class="radios-selection" type="radio" id="videos-input" name="group1">
+                            <input class="radios-selection" type="radio" id="videos-input" name="group1" checked>
                         </div>
                     </div>
                 </fieldset>
@@ -171,7 +175,8 @@
                     <div class="row contents">
                         @foreach (var video in Model.Videos.Take(8))
                         {
-                            <div class="col-md-3 " id="ourHolder" data-item="@video.Category">
+                            <div class="col-md-4 ourHolder" id="ourHolder">
+                                <input type="hidden" id="category" name="category" value="@video.Category.ID">
                                 <div class="card item" id="card-video">
                                     <div style="width:100%; text-align:center; margin-top: 5%;">
                                         <img alt="Cover Foto" src="@video.VideoImagePath" style="height:150px;" />
@@ -182,11 +187,35 @@
                                         <p class="card-text"> @video.Description </p>
                                         <p class="card-text"> @video.Creator.FullName  </p>
                                         <br />
-                                        <a href="#" class="btn btn-card">More</a>
+                                        <button class="btn btn-card btn-lg btn-open-modal" data-toggle="modal" data-target="#modal-fullscreen-xl">
+                                            Play
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Video/Ebook Modal -->
+                            <div class="modal modal-fullscreen-xl" id="modal-fullscreen-xl" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">@video.Title</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="embed-responsive embed-responsive-16by9">
+                                                <iframe class="embed-responsive-item" src="@video.VideoPath" allowfullscreen></iframe>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         }
+
                     </div>
 
                     <br />
@@ -212,6 +241,10 @@
                 if (this.classList.contains('radios-selection')) {
                     search();
                 }
+            });
+            $(".ourHolder").on("click", function () {
+                var category = $("input[type=hidden]").val();
+                console.log(category);
             });
             function search() {
                 var ebooks = $("#ebooks-input:checked").val() ? true : false;
@@ -241,7 +274,8 @@
                     data.videos.forEach(video => {
                         $(".contents").append(
                             `
-                                <div class="col-md-3 " id="ourHolder" data-item="${video.category}">
+                                <div class="col-md-4 ourHolder" id="ourHolder">
+                                    <input type="hidden" id="category" name="category" value="${video.categoryId}">
                                     <div class="card item" id="card-video">
                                         <div style="width:100%; text-align:center; margin-top: 5%;">
                                             <img alt="Cover Foto" src="${video.videoImagePath}" style="height:150px;" />
@@ -251,7 +285,31 @@
                                             <p class="card-text"> ${video.description} </p>
                                             <p class="card-text"> ${video.title}  </p>
                                             <br />
-                                            <a href="#" class="btn btn-card">More</a>
+                                            <button class="btn btn-card btn-lg btn-open-modal" data-toggle="modal" data-target="#modal-fullscreen-xl">
+                                                Play
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Video Modal -->
+                                <div class="modal modal-fullscreen-xl" id="modal-fullscreen-xl" tabindex="-1" role="dialog" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">${video.title}</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="embed-responsive embed-responsive-16by9">
+                                                    <iframe class="embed-responsive-item" src="${video.videoPath}" allowfullscreen></iframe>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -261,27 +319,55 @@
                 }
                 if (data.ebooks && ebooks) {
                     $(".contents").empty();
-                    data.videos.forEach(ebook => {
+                    data.ebooks.forEach(ebook => {
                         $(".contents").append(
                             `
-                        <div class="col-md-3 " id="ourHolder" data-item="${ebook.category}">
-                            <div class="card item" id="card-video">
-                                <div style="width:100%; text-align:center; margin-top: 5%;">
-                                    <img alt="Cover Foto" src="${ebook.videoImagePath}" style="height:150px;" />
-                                    <h4 style="margin-top: 5%;">${ebook.title}</h4>
-                                </div>
-                                <div class="card-body text-center">
-                                    <p class="card-text"> ${ebook.description} </p>
-                                    <p class="card-text"> ${ebook.title}  </p>
-                                    <br />
-                                    <a href="#" class="btn btn-card">More</a>
+                            <div class="col-md-4 ourHolder" id="ourHolder">
+                                <input type="hidden" id="category" name="category" value="${ebook.categoryId}">
+                                <div class="card item" id="card-video">
+                                    <div style="width:100%; text-align:center; margin-top: 5%;">
+                                        <img alt="Cover Foto" src="${ebook.ebookImagePath}" style="height:150px;" />
+                                        <h4 style="margin-top: 5%;">${ebook.title}</h4>
+                                    </div>
+                                    <div class="card-body text-center">
+                                        <p class="card-text"> ${ebook.description} </p>
+                                        <p class="card-text"> ${ebook.title}  </p>
+                                        <br />
+                                        <button class="btn btn-card btn-lg btn-open-modal" data-toggle="modal" data-target="#modal-fullscreen-xl">
+                                            Read
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        `
+                            <!-- Ebook Modal -->
+                            <div class="modal modal-fullscreen-xl" id="modal-fullscreen-xl" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">${ebook.title}</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="embed-responsive embed-responsive-16by9">
+                                                <iframe height="100%" width=100% src='${ebook.ebookFilePath}></iframe>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            `
                         );
                     });
                 }
+                //$(".ourHolder").on("click", function () {
+                //    var category = $("#ourHolder").data("item");
+                //    alert(category);
+                //});
             }
         });
     </script>
