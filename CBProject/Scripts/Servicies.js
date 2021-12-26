@@ -1,5 +1,35 @@
 ﻿// Request To All Api Controllers Service
 
+function getContentsByCategoryId(categoryId, callback) {
+    $.ajax({
+        type: "GET",
+        url: "/api/products/contenst/bycategory?id=" + categoryId,
+        success: function (data) {
+            if (data) {
+                callback(data);
+            }
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+}
+
+function getContentsByCategoryName(categoryName, callback) {
+    $.ajax({
+        type: "GET",
+        url: "/api/products/contenst/bycategory?name=" + categoryName,
+        success: function (data) {
+            if (data) {
+                callback(data);
+            }
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+}
+
 function getProductsByFilters(sendData, callback) {
     $.ajax({
         type: "POST",
@@ -365,4 +395,19 @@ function getPayment(id, callback) {
             console.log(error);
         }
     });
+}
+
+
+
+
+
+
+
+
+
+
+
+// Other Functions
+function redirectToCategoriesLessons(categoryId, contentId, contentType) {
+    window.location.href = '/Categories/Details/' + categoryId;
 }

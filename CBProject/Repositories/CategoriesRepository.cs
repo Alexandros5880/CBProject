@@ -152,7 +152,7 @@ namespace CBProject.Repositories
             return _context.Categories
                  .Include(c => c.CategoriesToCategories)
                  .Include(v => v.Videos)
-                 .FirstOrDefault(c => c.Name == name);
+                 .FirstOrDefault(c => c.Name.Contains(name));
         }
         public async Task<Category> GetByNameAsync(string name)
         {
@@ -161,7 +161,7 @@ namespace CBProject.Repositories
             return await _context.Categories
                  .Include(c => c.CategoriesToCategories)
                  .Include(v => v.Videos)
-                 .FirstOrDefaultAsync(c => c.Name == name);
+                 .FirstOrDefaultAsync(c => c.Name.Contains(name));
         }
         public void AddCategory(Category parent, Category chiled)
         {

@@ -74,51 +74,6 @@
             @Html.DisplayFor(model => model.Url)
         </dd>
 
-        <dt>
-            @Html.DisplayName("Tags")
-        </dt>
-
-        <dd>
-            <ul>
-                @foreach (var tag in Model.MyTags)
-                {
-                    <li>
-                        @Html.DisplayFor(model => tag.Title)
-                    </li>
-                }
-            </ul>
-        </dd>
-
-        <dt>
-            @Html.DisplayName("Reviews")
-        </dt>
-
-        <dd>
-            <ul>
-                @foreach (var review in Model.MyReviews)
-                {
-                    <li>
-                        @Html.DisplayFor(model => review.Comment)
-                    </li>
-                }
-            </ul>
-        </dd>
-
-        <dt>
-            @Html.DisplayName("Ratings")
-        </dt>
-
-        <dd>
-            <ul>
-                @foreach (var rating in Model.MyRatings)
-                {
-                    <li>
-                        @Html.DisplayFor(model => rating.Rate)
-                    </li>
-                }
-            </ul>
-        </dd>
-
     </dl>
 </div>
 <p>

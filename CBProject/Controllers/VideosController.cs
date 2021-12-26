@@ -84,7 +84,7 @@ namespace CBProject.Controllers
                     string FileName = Path.GetFileNameWithoutExtension(viewModel.VideoImageFile.FileName);
                     string FileExtension = Path.GetExtension(viewModel.VideoImageFile.FileName);
                     FileName = viewModel.Title.Trim() + FileExtension;
-                    viewModel.VideoImagePath = (StaticImfo.VideoImagePath + " " + FileName).Trim();
+                    viewModel.VideoImagePath = (StaticImfo.VideoImagePath + FileName).Trim();
                     viewModel.VideoImageFile.SaveAs(Server.MapPath(viewModel.VideoImagePath));
                 }
                 // VideoFile
@@ -94,7 +94,7 @@ namespace CBProject.Controllers
                     string FileName = Path.GetFileNameWithoutExtension(viewModel.VideoFile.FileName);
                     string FileExtension = Path.GetExtension(viewModel.VideoFile.FileName);
                     FileName = viewModel.Title.Trim() + FileExtension;
-                    viewModel.VideoPath = (StaticImfo.VideoPath + " " + FileName).Trim();
+                    viewModel.VideoPath = (StaticImfo.VideoPath + FileName).Trim();
                     viewModel.VideoFile.SaveAs(Server.MapPath(viewModel.VideoPath));
                 }
                 var video = Mapper.Map<VideoViewModel, Video>(viewModel);
@@ -134,7 +134,7 @@ namespace CBProject.Controllers
                     string FileName = Path.GetFileNameWithoutExtension(viewModel.VideoImageFile.FileName);
                     string FileExtension = Path.GetExtension(viewModel.VideoImageFile.FileName);
                     FileName = FileName.Trim() + FileExtension;
-                    viewModel.VideoImagePath = (StaticImfo.VideoImagePath + " " + FileName).Trim();
+                    viewModel.VideoImagePath = (StaticImfo.VideoImagePath + FileName).Trim();
                     viewModel.VideoImageFile.SaveAs(Server.MapPath(viewModel.VideoImagePath));
                     imgFile = true;
                 }
@@ -146,7 +146,7 @@ namespace CBProject.Controllers
                     string FileName = Path.GetFileNameWithoutExtension(viewModel.VideoFile.FileName);
                     string FileExtension = Path.GetExtension(viewModel.VideoFile.FileName);
                     FileName = FileName.Trim() + FileExtension;
-                    viewModel.VideoPath = (viewModel.VideoPath = StaticImfo.VideoPath + " " + FileName).Trim();
+                    viewModel.VideoPath = (viewModel.VideoPath = StaticImfo.VideoPath + FileName).Trim();
                     viewModel.VideoFile.SaveAs(Server.MapPath(viewModel.VideoPath));
                     videoFile = true;
                 }

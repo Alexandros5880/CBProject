@@ -7,6 +7,19 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
+<style>
+    .item {
+        height: 400px !important;
+    }
+    .ourHolder:hover {
+        transform: translate(0, -7px);
+    }
+    a:hover {
+        cursor: pointer;
+    }
+</style>
+
 @section fullWidth{
 
     <div class="row">
@@ -21,68 +34,8 @@
                            aria-describedby="search-addon" />
                 </div>
                 <div class="col-md-4 ">
-                    <button onclick="searchClick()" type="button" class="btn btn-search ">Search</button>
+                    <button type="button" class="btn btn-search search">Search</button>
                 </div>
-                <script>
-                    function searchClick(){
-                        var searchValue = $("#search-input").val();
-                        $.ajax({    //create an ajax request to display.php
-                            type: "GET",
-                            url: "/api/Products?search=" + searchValue,
-                            success: function (data) {
-                                if (data) {
-                                    $("#videos-home").empty();
-                                    $("#ebooks-home").empty();
-
-                                    data.videos.forEach(video => {
-                                        $("#videos-home").append(
-                                            `
-                                            <div class="col-md-3 " id="ourHolder" data-item="${video.category}">
-                                                <div class="card item" id="card-video">
-                                                    <div style="width:100%; text-align:center; margin-top: 5%;">
-                                                        <img alt="Cover Foto" src="${video.videoImagePath}" style="height:150px;" />
-                                                        <h4 style="margin-top: 5%;">${video.title}</h4>
-                                                    </div>
-                                                    <div class="card-body text-center">
-                                                        <p class="card-text"> ${video.description} </p>
-                                                        <p class="card-text"> ${video.title}  </p>
-                                                        <br />
-                                                        <a href="#" class="btn btn-card">More</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            `
-                                        );
-                                    });
-
-                                    data.ebooks.forEach(ebook => {
-                                        $("#ebooks-home").append(
-                                            `
-                                            <div class="col-md-3 " id="ourHolder" data-item="${ebook.category}">
-                                                <div class="card item" id="card-ebook">
-                                                    <div style="width:100%; text-align:center; margin-top: 5%;">
-                                                        <img alt="Cover Foto" src="${ebook.ebookImagePath}" style="height:150px;" />
-                                                        <h4 style="margin-top: 5%;">${ebook.title}</h4>
-                                                    </div>
-                                                    <div class="card-body text-center">
-                                                        <p class="card-text"> ${ebook.ebookImagePath} </p>
-                                                        <p class="card-text"> ${ebook.title}  </p>
-                                                        <br />
-                                                        <a href="#" class="btn btn-card">More</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            `
-                                        );
-                                    });
-                                }
-                            },
-                            error: function (error) {
-                                console.log(error);
-                            }
-                        });
-                    }
-                </script>
             </div>
         </div>
         <div class="col-md-4 col-sm-4 bigImage">
@@ -92,7 +45,7 @@
 }
 
 
-
+<!-- Render Videow / Ebooks-->
 <div class="grey-row">
     <div class="container">
         <br />
@@ -101,135 +54,19 @@
             <div class="col-md-12">
                 <h2>Lessons</h2><br />
                 <ul class="nav nav-tabs tabs-index" id="filter-tab">
-                    @foreach (var cat in Model.Categories)
-                    {
-                        <li>
-                            <a class="nav-link active"
-                               onclick="selectCategory('@cat.Name');"
-                               data-id="@cat.Name"
-                               aria-current="page">
-                                @cat.Name
-                            </a>
-                        </li>
-                    }
+
                 </ul>
             </div>
         </div>
         <br />
 
-
-        <script>
-            function selectCategory(val) {
-                $.ajax({    //create an ajax request to display.php
-                    type: "GET",
-                    url: "/api/Products?search=" + val,
-                    success: function (data) {
-                        if (data) {
-                            $("#videos-home").empty();
-                            $("#videos-home").append("<h3>Videos</h3>");
-                            $("#ebooks-home").empty();
-                            $("#ebooks-home").append("<h3>Ebooks</h3>");
-
-                            data.videos.forEach(video => {
-                                console.log(video);
-                                $("#videos-home").append(
-                                    `
-                                    <div class="col-md-3 " id="ourHolder" data-item="${video.category}">
-                                        <div class="card item" id="card-video">
-                                            <div style="width:100%; text-align:center; margin-top: 5%;">
-                                                <img alt="Cover Foto" src="${video.videoImagePath}" style="height:150px;" />
-                                                <h4 style="margin-top: 5%;">${video.title}</h4>
-                                            </div>
-                                            <div class="card-body text-center">
-                                                <p class="card-text"> ${video.description} </p>
-                                                <p class="card-text"> ${video.title}  </p>
-                                                <br />
-                                                <a href="#" class="btn btn-card">More</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    `
-                                );
-                            });
-
-                            data.ebooks.forEach(ebook => {
-                                console.log(ebook);
-                                $("#ebooks-home").append(
-                                    `
-                                    <div class="col-md-3 " id="ourHolder" data-item="${ebook.category}">
-                                        <div class="card item" id="card-ebook">
-                                            <div style="width:100%; text-align:center; margin-top: 5%;">
-                                                <img alt="Cover Foto" src="${ebook.ebookImagePath}" style="height:150px;" />
-                                                <h4 style="margin-top: 5%;">${ebook.title}</h4>
-                                            </div>
-                                            <div class="card-body text-center">
-                                                <p class="card-text"> ${ebook.ebookImagePath} </p>
-                                                <p class="card-text"> ${ebook.title}  </p>
-                                                <br />
-                                                <a href="#" class="btn btn-card">More</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    `
-                                );
-                            });
-                        },
-                        error: function (error) {
-                            console.log(error);
-                        }
-                    }
-                });
-            };
-        </script>
-
         <div class="row" id="videos-home">
-            <h3>Videos</h3>
-            @foreach (var video in Model.Videos.Take(8))
-            {
-                <div class="col-md-3 " id="ourHolder" data-item="@video.Category">
-                    <div class="card item" id="card-video">
-                        <div style="width:100%; text-align:center; margin-top: 5%;">
-                            <img alt="Cover Foto" src="@video.VideoImagePath" style="height:150px;" />
-                            <h4 style="margin-top: 5%;">@video.Title</h4>
-                        </div>
-                        @*<img class="card-img-top" style="width:100%" src="~/img/@Url.Content(video.Thumbnail)" alt="Card image cap">*@
-                        <div class="card-body text-center">
-                            <p class="card-text"> @video.Description </p>
-                            <p class="card-text"> @video.Creator.FullName  </p>
-                            <br />
-                            <a href="#" class="btn btn-card">More</a>
-                        </div>
-                    </div>
-                </div>
-            }
+            
         </div>
 
         <div class="row" id="ebooks-home">
-            <h3>Ebooks</h3>
-            @foreach (var ebook in Model.Ebooks.Take(8))
-            {
-                <div class="col-md-3 " id="ourHolder" data-item="@ebook.Category">
-                    <div class="card item" id="card-ebook">
-                        <div style="width:100%; text-align:center; margin-top: 5%;">
-                            <img alt="Cover Foto" src="@ebook.EbookImagePath" style="height:150px;" />
-                            <h4 style="margin-top: 5%;">@ebook.Title</h4>
-                        </div>
-                        @*<img class="card-img-top" style="width:100%" src="~/img/@Url.Content(ebook.Thumbnail)" alt="Card image cap">*@
-                        <div class="card-body text-center">
-                            <p class="card-text"> @ebook.Description </p>
-                            <p class="card-text"> @ebook.Creator.FullName  </p>
-                            <br />
-                            <a href="#" class="btn btn-card">More</a>
-                        </div>
-                    </div>
-                </div>
-            }
+            
         </div>
-
-
-
-
-
 
         <br />
 
@@ -239,7 +76,7 @@
     <br />
 </div>
 
-
+<!-- Middle Section -->
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-4 col-sm-4  order-sm-1 order-first quote-img">
@@ -257,6 +94,8 @@
         </div>
     </div>
 </div>
+
+<!-- Paynment Packages -->
 <div class="grey-row">
     <br />
     <br />
@@ -328,37 +167,173 @@
 
         $(document).ready(function () {
 
-            function selectCategory(val) {
-                console.log(val);
-            };
+            getCategories(function (data) {
+                $("#filter-tab").empty();
+                data.forEach(d => {
+                    if (!d.master || true) {
+                        $("#filter-tab").append(
+                            `
+                                <li>
+                                    <a class="nav-link active category-tab" aria-current="page" data-value="${d.id}">${d.name}</a>
+                                </li>
+                            `
+                        );
+                    }
+                });
+            });
 
+            getContentsByCategoryName(".NET", function (data) {
+                render(data);
+            });
 
+            $(document.body).on('click', 'button', function () {
+                if (this.classList.contains('more')) {
 
-            //$('.filter-tab li a').click(function () {
-            //    var value = $(this).attr("data-id");
-            //    var $ourHolder = $('#ourHolder');
+                }
+            });
 
-            //    $('.filter-tab li').removeClass("active");
-            //    $(this).parent.addClass("active");
+            $(document.body).on('click', 'button', function () {
+                if (this.classList.contains('details')) {
+                    var categoryId = $(this).parent().parent().parent().find("input[type=hidden]").val();
+                    var contentId = $(this).parent().parent().parent().find("input[name=content]").val();
+                    var contentType = $(this).parent().parent().parent().find("input[name=content-type]").val();
+                    redirectToCategoriesLessons(categoryId, contentId, contentType);
+                }
+            });
 
+            $(".ourHolder").on("click", function () {
+                if (!this.classList.contains('more')) {
+                    //var categoryId = $(this).find("input[type=hidden]").val();
+                    //var contentId = $(this).find("input[name=content]").val();
+                    //var contentType = $(this).find("input[name=content-type]").val();
+                    //redirectToCategoriesLessons(categoryId, contentId, contentType);
+                }
+            });
 
+            $(document.body).on('click', 'a', function () {
+                if (this.classList.contains('category-tab')) {
+                    var categoryId = $(this).data('value');
+                    getContentsByCategoryId(categoryId, function (data) {
+                        render(data)
+                    });
+                }
+            });
 
-            //    if (value === "all") {
-            //        alert("hello")
-            //    } else {
-            //        //$('.item').not('.' + value).hide();
-            //        //$('.item').filter('.' + value).show();
-
-
-            //    }
-            //    alert("hello")
-            //    return false;
-            //    //if (category == item) {
-            //    //    $(item).show();
-            //    //}
-            //});
-
+            $(document.body).on('click', 'button', function () {
+                if (this.classList.contains('search')) {
+                    var categoryName = $("#search-input").val();
+                    getContentsByCategoryName(categoryName, function (data) {
+                        render(data);
+                    });
+                }
+            });
 
         })
+
+        function render(data) {
+            $("#videos-home").empty();
+            $("#videos-home").append("<h3>Videos</h3>");
+            $("#ebooks-home").empty();
+            $("#ebooks-home").append("<h3>Ebooks</h3>");
+            data.videos.forEach(video => {
+                // console.log(video);
+                $("#videos-home").append(
+                    `
+                    <div class="col-md-3 ourHolder" data-item="${video.category}">
+                        <input type="hidden" id="category" name="category" value="${video.category.id}">
+                        <input type="hidden" id="content" name="content" value="${video.id}">
+                        <input type="hidden" id="content-type" name="content-type" value="video">
+                        <div class="card item" id="card-video">
+                            <div style="width:100%; text-align:center; margin-top: 5%;">
+                                <img alt="Cover Foto" src="${video.videoImagePath}" style="height:150px;" />
+                                <h4 style="margin-top: 5%;">${video.title}</h4>
+                            </div>
+                            <div class="card-body text-center">
+                                <p class="card-text">${video.description}</p>
+                                <br />
+                                <button class="btn btn-card btn-lg details">Details</button>
+                                <button class="btn btn-card btn-lg btn-open-modal more" data-toggle="modal" data-target="#video-modal-fullscreen-xl">
+                                    Play
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Video Modal -->
+                    <div class="modal modal-fullscreen-xl" id="video-modal-fullscreen-xl" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">${video.title}</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="embed-responsive embed-responsive-16by9">
+                                        <iframe class="embed-responsive-item" src="${video.videoPath}" allowfullscreen></iframe>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    `
+                );
+            });
+            data.ebooks.forEach(ebook => {
+                // console.log(ebook.ebookFilePath);
+                $("#ebooks-home").append(
+                    `
+                    <div class="col-md-3 ourHolder" data-item="${ebook.category}">
+                        <input type="hidden" id="category" name="category" value="${ebook.category.id}">
+                        <input type="hidden" id="content" name="content" value="${ebook.id}">
+                        <input type="hidden" id="content-type" name="content-type" value="ebook">
+                        <div class="card item" id="card-ebook">
+                            <div style="width:100%; text-align:center; margin-top: 5%;">
+                                <img alt="Cover Foto" src="${ebook.ebookImagePath}" style="height:150px;" />
+                                <h4 style="margin-top: 5%;">${ebook.title}</h4>
+                                <label>${ebook.ebookFilePath}</label>
+                            </div>
+                            <div class="card-body text-center">
+                                <p class="card-text">${ebook.description}</p>
+                                <br />
+                                <button class="btn btn-card btn-lg details">Details</button>
+                                <button class="btn btn-card btn-lg btn-open-modal more" data-toggle="modal" data-target="#ebook-modal-fullscreen-xl">
+                                    Read
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ebook Modal -->
+                    <div class="modal modal-fullscreen-xl" id="ebook-modal-fullscreen-xl" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">${ebook.title}</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="embed-responsive embed-responsive-16by9">
+                                        <label>${ebook.ebookFilePath}</label>
+                                        <!--<iframe class="embed-responsive-item" src="${ebook.ebookFilePath}" allowfullscreen></iframe>-->
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+                );
+            });
+        }
+
     </script>
 }

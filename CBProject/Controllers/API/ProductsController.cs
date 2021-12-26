@@ -58,6 +58,44 @@ namespace CBProject.Controllers.API
             };
             return Ok(products);
         }
+        [HttpGet]
+        [Route("api/products/contenst/bycategory")]
+        public async Task<IHttpActionResult> GetContentsByCategoryId(int id)
+        {
+            var category = await this._unitOfWork.Categories
+                        .GetAsync(id);
+            var videos = await this._unitOfWork.Videos.GetAllQuerable()
+                        .Where(v => v.CategoryId == category.ID)
+                        .ToListAsync();
+            var ebooks = await this._unitOfWork.Ebooks.GetAllQuerable()
+                        .Where(v => v.CategoryId == category.ID)
+                        .ToListAsync();
+            var products = new
+            {
+                Videos = videos,
+                Ebooks = ebooks
+            };
+            return Ok(products);
+        }
+        [HttpGet]
+        [Route("api/products/contenst/bycategory")]
+        public async Task<IHttpActionResult> GetContentsByCategoryName(string name)
+        {
+            var category = await this._unitOfWork.Categories
+                        .GetByNameAsync(name);
+            var videos = await this._unitOfWork.Videos.GetAllQuerable()
+                        .Where(v => v.CategoryId == category.ID)
+                        .ToListAsync();
+            var ebooks = await this._unitOfWork.Ebooks.GetAllQuerable()
+                        .Where(v => v.CategoryId == category.ID)
+                        .ToListAsync();
+            var products = new
+            {
+                Videos = videos,
+                Ebooks = ebooks
+            };
+            return Ok(products);
+        }
         [HttpPost]
         [Route("api/products/search/filters")]
         public async Task<IHttpActionResult> GetSearchByFilters(FilterPageViewModel viewModel)
