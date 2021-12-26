@@ -98,58 +98,9 @@ namespace CBProject.Controllers.API
         }
         [HttpPost]
         [Route("api/products/search/filters")]
-        public async Task<IHttpActionResult> GetSearchByFilters(FilterPageViewModel viewModel)
+        public async Task<IHttpActionResult> GetSearchByFilters(FilterParams filters)
         {
-            string category = "", tag = "", title = "", teacher = "";
-            if (viewModel.CategoryName != null && viewModel.CategoryName.Length > 0)
-                category = viewModel.CategoryName;
-            if (viewModel.TagName != null && viewModel.TagName.Length > 0)
-                tag = viewModel.TagName;
-            if (viewModel.TitleName != null && viewModel.TitleName.Length > 0)
-                title = viewModel.TitleName;
-            if (viewModel.TeacherName != null && viewModel.TeacherName.Length > 0)
-                teacher = viewModel.TeacherName;
-
-            var categories = await this._unitOfWork.Categories
-                                .GetAllQueryable()
-                                .Where(c => c.Name.Contains(category))
-                                .Select(c => c.ID)
-                                .ToListAsync();
-            var tags = await this._unitOfWork.Tags
-                                .GetAllQueryable()
-                                .Where(t => t.Title.Contains(tag))
-                                .Select(t => t.ID)
-                                .ToListAsync();
-            var teachers = await this._usersRepo
-                                    .GetAllQuerable()
-                                    .Where(u => u.FirstName.Contains(teacher) || 
-                                                u.LastName.Contains(teacher) || 
-                                                u.Email.Contains(teacher))
-                                    .Select(t => t.Id)
-                                    .ToListAsync();
-
-            var ebooks = await this._unitOfWork.Ebooks
-                        .GetAllQuerable()
-                        .Where(e => categories.Any() ? categories.Contains(e.CategoryId) : true)
-                        .Where(e => tags.Any() ? e.TagsToEbooks.Select(t => t.TagId).Intersect(tags).Any() : true)
-                        .Where(e => teachers.Any() && teachers.Contains(e.CreatorId)? true : false)
-                        .Where(e => viewModel.TitleName.Length > 0 ? e.Title.Contains(viewModel.TitleName) : true)
-                        .ToListAsync();
-
-            var videos = await this._unitOfWork.Videos
-                        .GetAllQuerable()
-                        .Where(e => categories.Any() ? categories.Contains(e.CategoryId) : true)
-                        .Where(e => tags.Any() ? e.TagsToVideos.Select(t => t.TagId).Intersect(tags).Any() : true)
-                        .Where(e => teachers.Any() && teachers.Contains(e.CreatorId)? true : false)
-                        .Where(e => viewModel.TitleName.Length > 0 ? e.Title.Contains(viewModel.TitleName) : true)
-                        .ToListAsync();
-
-            var products = new
-            {
-                Videos = videos,
-                Ebooks = ebooks
-            };
-
+            var products = await this._unitOfWork.Categories.GetSearchByFiltersAsync(filters);
             return Ok(products);
         }
         [HttpPost]

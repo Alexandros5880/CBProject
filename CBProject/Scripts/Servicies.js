@@ -408,6 +408,28 @@ function getPayment(id, callback) {
 
 
 // Other Functions
-function redirectToCategoriesLessons(categoryId, contentId, contentType) {
-    window.location.href = '/Categories/Details/' + categoryId;
+function redirectToGuestDetails(categoryId, contentId, contentType) {
+    console.log(contentType);
+    if (contentType === "ebook") {
+        window.location.href = '/Ebooks/PublicDetails/' + contentId;
+    } else if (contentType === "video") {
+        window.location.href = '/Videos/PublicDetails/' + contentId;
+    }
+}
+
+function createOrder(packageId) {
+    getSubscriptionPackage(packageId, function (package) {
+        getLogedUser(function (user) {
+            if (user !== "null") {
+                doPaynment(user, package, function (response) {
+                    var data = JSON.parse(response);
+                    //console.log(data.token);
+                    //console.log(data.redirect_url);
+                    window.location.href = data.redirect_url;
+                });
+            } else {
+                window.location.href = "/Account/Register";
+            }
+        });
+    });
 }

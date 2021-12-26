@@ -47,12 +47,41 @@ namespace CBProject.Repositories
         }
         public void Delete(int? id)
         {
-           
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
             var ebook = Get(id);
             if(ebook == null)
                 throw new ArgumentNullException(nameof(id));
+            _context.Ebooks.Remove(ebook);
+        }
+        public async Task DeleteAllAsync(int? id)
+        {
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
+            var ebook = Get(id);
+            if (ebook == null)
+                throw new ArgumentNullException(nameof(id));
+            var tagsToEbooks = await this._context.TagsToEbooks
+                                    .Where(t => t.EbookId == id)
+                                    .ToListAsync();
+            var ratingsToEbooks = await this._context.RatingsToEbooks
+                                    .Where(t => t.EbookId == id)
+                                    .ToListAsync();
+            var reviewToEbooks = await this._context.ReviewsToEbooks
+                                    .Where(r => r.EbookId == id)
+                                    .ToListAsync();
+            foreach(var tag in tagsToEbooks)
+            {
+                this._context.TagsToEbooks.Remove(tag);
+            }
+            foreach (var rating in ratingsToEbooks)
+            {
+                this._context.RatingsToEbooks.Remove(rating);
+            }
+            foreach (var review in reviewToEbooks)
+            {
+                this._context.ReviewsToEbooks.Remove(review);
+            }
             _context.Ebooks.Remove(ebook);
         }
         public async Task<ICollection<Ebook>> GetAllAsync()

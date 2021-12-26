@@ -1,11 +1,7 @@
 using CBProject.HelperClasses.Interfaces;
-using CBProject.Models.ViewModels;
 using CBProject.Repositories;
 using CBProject.Repositories.IdentityRepos;
 using CBProject.Repositories.IdentityRepos.Interfaces;
-using Microsoft.AspNet.Identity;
-using System.Data.Entity;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -26,44 +22,19 @@ namespace CBProject.Controllers
         }
         public async Task<ActionResult> Index()
         {
-            HomeViewModel viewModel = new HomeViewModel();
-            viewModel.Categories = await this._categoriesRepo
-                                        .GetAllQueryable()
-                                        .Where(c => c.Master == true)
-                                        .Where(c => c.Videos.Count > 0)
-                                        .Where(c => c.Ebooks.Count > 0)
-                                        .ToListAsync();
-            viewModel.Videos = await this._videosRepository.GetAllAsync();
-            viewModel.Ebooks = await this._ebooksRepository.GetAllAsync();
-            return View(viewModel);
-        }
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
-        public ActionResult Contact()
+        public async Task<ActionResult> About()
         {
-            ViewBag.Message = "Your contact page.";
+            return View();
+        }
+        public async Task<ActionResult> Contact()
+        {
             return View();
         }
         public async Task<ActionResult> Lessons()
         {
-            HomeViewModel viewModel = new HomeViewModel();
-            viewModel.Categories = await this._categoriesRepo
-                                        .GetAllQueryable()
-                                        .Where(c => c.Master == true)
-                                        .Where(c => c.Videos.Count > 0)
-                                        .Where(c => c.Ebooks.Count > 0)
-                                        .ToListAsync();
-            viewModel.Videos = await this._videosRepository.GetAllAsync();
-            viewModel.Ebooks = await this._ebooksRepository.GetAllAsync();
-            if (User.Identity.IsAuthenticated)
-            {
-                ViewBag.User = await this._usersRepo.GetAsync(User.Identity.GetUserId());
-            }
-            return View(viewModel);
+            return View();
         }
     }
 }

@@ -42,6 +42,36 @@ namespace CBProject.Repositories
                 throw new ArgumentNullException(nameof(video));
             this._context.Videos.Remove(video);
         }
+        public async Task DeleteAllAsync(int? id)
+        {
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
+            var video = Get(id);
+            if (video == null)
+                throw new ArgumentNullException(nameof(id));
+            var tagsToVideos = await this._context.TagsToVideos
+                                    .Where(t => t.VideoId == id)
+                                    .ToListAsync();
+            var ratingsToVideos = await this._context.RatingsToVideos
+                                    .Where(t => t.VideoId == id)
+                                    .ToListAsync();
+            var reviewToVideos = await this._context.ReviewsToVideos
+                                    .Where(r => r.VideoId == id)
+                                    .ToListAsync();
+            foreach (var tag in tagsToVideos)
+            {
+                this._context.TagsToVideos.Remove(tag);
+            }
+            foreach (var rating in ratingsToVideos)
+            {
+                this._context.RatingsToVideos.Remove(rating);
+            }
+            foreach (var review in reviewToVideos)
+            {
+                this._context.ReviewsToVideos.Remove(review);
+            }
+            _context.Videos.Remove(video);
+        }
         public Video Get(int? id)
         {
             return this._context.Videos

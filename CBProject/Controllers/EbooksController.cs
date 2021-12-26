@@ -10,6 +10,7 @@ using CBProject.Repositories.IdentityRepos.Interfaces;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
@@ -18,7 +19,6 @@ using System.Web.Mvc;
 
 namespace CBProject.Controllers
 {
-    [Authorize]
     public class EbooksController : Controller
     {
         private EbooksRepository _ebooksRepository;
@@ -39,6 +39,7 @@ namespace CBProject.Controllers
             this._usersRepo = (UsersRepo)usersRepo;
 
         }
+        [Authorize]
         public async Task<ActionResult> Index()
         {
             var ebooks = await this._ebooksRepository.GetAllAsync();
@@ -58,6 +59,17 @@ namespace CBProject.Controllers
             }
             return View(viewModels);
         }
+        public async Task<ActionResult> PublicDetails(int? id)
+        {
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
+            Ebook ebook = await this._ebooksRepository.GetAsync(id);
+            if (ebook == null)
+                throw new ArgumentNullException(nameof(ebook));
+            var viewModel = Mapper.Map<Ebook, EbookViewModel>(ebook);
+            return View("PublicDetails", viewModel);
+        }
+        [Authorize]
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
@@ -118,6 +130,7 @@ namespace CBProject.Controllers
             }
             return View(viewModel);
         }
+        [Authorize(Roles = "Admin, ContentCreator")]
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -188,16 +201,17 @@ namespace CBProject.Controllers
                     }
                 }
                 var ebookDB = Mapper.Map<EbookViewModel, Ebook>(viewModel);
-                this._ebooksRepository.Delete(ebookDB.ID);
-               //_context.Entry(ebookDB).State = EntityState.Modified;
-                await this._ebooksRepository.SaveAsync();
-                this._ebooksRepository.Add(ebookDB);
-                await this._ebooksRepository.SaveAsync();
+                _context.Entry(ebookDB).State = EntityState.Modified;
+                //this._ebooksRepository.Delete(ebookDB.ID);
+                //await this._ebooksRepository.SaveAsync();
+                //this._ebooksRepository.Add(ebookDB);
+                //await this._ebooksRepository.SaveAsync();
                 return RedirectToAction("Index");
             }
             
             return View(viewModel);
         }
+        [Authorize(Roles = "Admin, ContentCreator")]
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
@@ -230,18 +244,21 @@ namespace CBProject.Controllers
             await _ebooksRepository.SaveAsync();
             return RedirectToAction("Index");
         }
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult> AddReview(int ebookId, string comment)
         {
             await this._ebooksRepository.AddReviewAsync(ebookId, User.Identity.GetUserId(), comment);
             return RedirectToAction("Index");
         }
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult> AddTag(int ebookId, string title)
         {
             await this._ebooksRepository.AddTagAsync(ebookId, title);
             return RedirectToAction("Index");
         }
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult> AddRate(int ebookId, float rate)
         {

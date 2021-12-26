@@ -1,6 +1,6 @@
 ﻿namespace CBProject.Models.ViewModels
 {
-    public class FilterPageViewModel
+    public class FilterParams
     {
         public bool Ebooks { get; set; }
         public bool Videos { get; set; }

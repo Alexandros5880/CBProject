@@ -77,5 +77,19 @@
     @RenderSection("scripts", required: false)
     <script type="text/javascript" src="~/Scripts/Servicies.js"></script>
 
+    <script>
+        $(document).ready(function () {
+
+            // When Buton Buy Clicks
+            $(document.body).on('click', 'a', function () {
+                if (this.classList.contains("buy-button")) {
+                    var packageId = $(this).data('value');
+                    createOrder(packageId);
+                }
+            });
+
+        });
+    </script>
+
 </body>
 </html>

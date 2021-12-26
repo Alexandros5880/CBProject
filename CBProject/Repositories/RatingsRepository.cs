@@ -39,6 +39,29 @@ namespace CBProject.Repositories
                 throw new ArgumentNullException(nameof(rating));
             this._context.Ratings.Remove(rating);
         }
+        public async Task DeleteAllAsync(int? id)
+        {
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
+            var rating = this.Get(id);
+            if (rating == null)
+                throw new Exception("Tag Not Found");
+            var ratingsToEbooks = await this._context.RatingsToEbooks
+                                .Where(t => t.RatingId == id)
+                                .ToListAsync();
+            var ratingsToVideos = await this._context.RatingsToVideos
+                                .Where(t => t.RatingId == id)
+                                .ToListAsync();
+            foreach (var record in ratingsToEbooks)
+            {
+                this._context.RatingsToEbooks.Remove(record);
+            }
+            foreach (var record in ratingsToVideos)
+            {
+                this._context.RatingsToVideos.Remove(record);
+            }
+            this._context.Ratings.Remove(rating);
+        }
         public Rating Get(int? id)
         {
             if (id == null)

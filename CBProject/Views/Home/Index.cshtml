@@ -1,5 +1,4 @@
-﻿@model CBProject.Models.ViewModels.HomeViewModel
-@using CBProject.HelperClasses
+﻿@using CBProject.HelperClasses
 
 
 
@@ -45,7 +44,7 @@
 }
 
 
-<!-- Render Videow / Ebooks-->
+<!-- Render Videos / Ebooks-->
 <div class="grey-row">
     <div class="container">
         <br />
@@ -105,55 +104,8 @@
                 <h2>Plans</h2><br />
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-3">
-                <div class="card card-plan text-center">
-                    <div class="card-body">
-                        <h5 class="card-title">Basic</h5>
-                        <hr />
-                        <h4 class="price">199€ <small>/ year</small> </h4>
-                        <br />
-                        <p class="card-text"><img class="img-icon-tik" src="~/img/icons-tik.png" alt="tik" /> With supporting text below </p>
-                        <p class="card-text"><img class="img-icon-tik" src="~/img/icons-tik.png" alt="tik" /> With supporting text below </p>
-                        <p class="card-text"><img class="img-icon-tik" src="~/img/icons-tik.png" alt="tik" />With supporting text below </p>
-                        <p class="card-text"><img class="img-icon-tik" src="~/img/icons-tik.png" alt="tik" /> With supporting text below </p>
-                        <br />
-                        <a href="#" class="btn btn-card-plan">Buy</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-md-offset-1">
-                <div class="card card-plan text-center">
-                    <div class="card-body">
-                        <h5 class="card-title">Advance</h5>
-                        <hr />
-                        <h4 class="price">250€ <small>/ year</small> </h4>
-                        <br />
-                        <p class="card-text"><img class="img-icon-tik" src="~/img/icons-tik.png" alt="tik" /> With supporting text below </p>
-                        <p class="card-text"><img class="img-icon-tik" src="~/img/icons-tik.png" alt="tik" /> With supporting text below </p>
-                        <p class="card-text"><img class="img-icon-tik" src="~/img/icons-tik.png" alt="tik" />With supporting text below </p>
-                        <p class="card-text"><img class="img-icon-tik" src="~/img/icons-tik.png" alt="tik" /> With supporting text below </p>
-                        <br />
-                        <a href="#" class="btn btn-card-plan">Buy</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-md-offset-1">
-                <div class="card card-plan text-center">
-                    <div class="card-body">
-                        <h5 class="card-title">Premium</h5>
-                        <hr />
-                        <h4 class="price">350€ <small>/ year</small> </h4>
-                        <br />
-                        <p class="card-text"><img class="img-icon-tik" src="~/img/icons-tik.png" alt="tik" /> With supporting text below </p>
-                        <p class="card-text"><img class="img-icon-tik" src="~/img/icons-tik.png" alt="tik" /> With supporting text below </p>
-                        <p class="card-text"><img class="img-icon-tik" src="~/img/icons-tik.png" alt="tik" />With supporting text below </p>
-                        <p class="card-text"><img class="img-icon-tik" src="~/img/icons-tik.png" alt="tik" /> With supporting text below </p>
-                        <br />
-                        <a href="#" class="btn btn-card-plan">Buy</a>
-                    </div>
-                </div>
-            </div>
+        <div class="row plans">
+
         </div>
     </div>
     <br />
@@ -167,10 +119,11 @@
 
         $(document).ready(function () {
 
+            // Load Categories
             getCategories(function (data) {
                 $("#filter-tab").empty();
                 data.forEach(d => {
-                    if (!d.master || true) {
+                    if (d.master) {
                         $("#filter-tab").append(
                             `
                                 <li>
@@ -182,25 +135,47 @@
                 });
             });
 
+            // Load Subscription Packages (Plans)
+            getSubscriptionPackages(function (data) {
+                $(".plans").empty();
+                data.forEach(d => {
+                    $(".plans").append(
+                        `
+                            <div class="col-md-4">
+                                <div class="card card-plan text-center">
+                                    <div class="card-body">
+                                        <h5 class="card-title">${d.description}</h5>
+                                        <hr />
+                                        <h4 class="price">${d.price}€<small> / year</small> </h4>
+                                        <br />
+                                        <p class="card-text"><img class="img-icon-tik" src="/img/icons-tik.png" alt="tik" /> Duration: ${d.duration} </p>
+                                        <p class="card-text"><img class="img-icon-tik" src="/img/icons-tik.png" alt="tik" /> Started: ${d.startDate} </p>
+                                        <br />
+                                        <a class="btn btn-card-plan buy-button" data-value="${d.id}">Buy</a>
+                                    </div>
+                                </div>
+                            </div>
+                        `
+                    );
+                });
+            });
+
+            // Get Videos And Ebooks With Category '.NET'
             getContentsByCategoryName(".NET", function (data) {
                 render(data);
             });
 
-            $(document.body).on('click', 'button', function () {
-                if (this.classList.contains('more')) {
-
-                }
-            });
-
+            // When Details Button Clicked
             $(document.body).on('click', 'button', function () {
                 if (this.classList.contains('details')) {
                     var categoryId = $(this).parent().parent().parent().find("input[type=hidden]").val();
                     var contentId = $(this).parent().parent().parent().find("input[name=content]").val();
                     var contentType = $(this).parent().parent().parent().find("input[name=content-type]").val();
-                    redirectToCategoriesLessons(categoryId, contentId, contentType);
+                    redirectToGuestDetails(categoryId, contentId, contentType);
                 }
             });
 
+            // When Card Item Of Every Video Or Ebook Cliked
             $(".ourHolder").on("click", function () {
                 if (!this.classList.contains('more')) {
                     //var categoryId = $(this).find("input[type=hidden]").val();
@@ -210,6 +185,7 @@
                 }
             });
 
+            // When Category Tab Clicked
             $(document.body).on('click', 'a', function () {
                 if (this.classList.contains('category-tab')) {
                     var categoryId = $(this).data('value');
@@ -219,6 +195,7 @@
                 }
             });
 
+            // When Search Button Clicked
             $(document.body).on('click', 'button', function () {
                 if (this.classList.contains('search')) {
                     var categoryName = $("#search-input").val();
@@ -230,6 +207,7 @@
 
         })
 
+        // Render UI Function
         function render(data) {
             $("#videos-home").empty();
             $("#videos-home").append("<h3>Videos</h3>");

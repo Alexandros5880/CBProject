@@ -17,7 +17,6 @@ using System.Web.Mvc;
 
 namespace CBProject.Controllers
 {
-    [Authorize]
     public class VideosController : Controller
     {
         private readonly VideosRepository _videoRepo;
@@ -35,6 +34,7 @@ namespace CBProject.Controllers
             this._reviewRepo = unitOfWork.Reviews;
             this._ratingsRepo = unitOfWork.Ratings;
         }
+        [Authorize]
         public async Task<ActionResult> Index()
         {
             var videos = await this._videoRepo.GetAllAsync();
@@ -49,6 +49,17 @@ namespace CBProject.Controllers
             }
             return View(viewModels);
         }
+        public async Task<ActionResult> PublicDetails(int? id)
+        {
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
+            Video video = await this._videoRepo.GetAsync(id);
+            if (video == null)
+                throw new ArgumentNullException(nameof(video));
+            var viewModel = Mapper.Map<Video, VideoViewModel>(video);
+            return View("PublicDetails", viewModel);
+        }
+        [Authorize]
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
@@ -63,6 +74,7 @@ namespace CBProject.Controllers
             var viewModel = Mapper.Map<Video, VideoViewModel>(video);
             return View(viewModel);
         }
+        [Authorize(Roles = "Admin, ContentCreator")]
         public async Task<ActionResult> Create()
         {
             var viewModel = new VideoViewModel();
@@ -104,6 +116,7 @@ namespace CBProject.Controllers
             }
             return View(viewModel);
         }
+        [Authorize(Roles = "Admin, ContentCreator")]
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -172,11 +185,12 @@ namespace CBProject.Controllers
                 }
                 var video = Mapper.Map<VideoViewModel, Video>(viewModel);
                 this._videoRepo.Update(video);
-                await this._videoRepo.SaveAsync();
+                //await this._videoRepo.SaveAsync();
                 return RedirectToAction("Index");
             }
             return View(viewModel);
         }
+        [Authorize(Roles = "Admin, ContentCreator")]
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
@@ -209,18 +223,21 @@ namespace CBProject.Controllers
             await this._videoRepo.SaveAsync();
             return RedirectToAction("Index");
         }
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult> AddReview(int videoId, string comment)
         {
             await this._videoRepo.AddReviewAsync(videoId, User.Identity.GetUserId(), comment);
             return RedirectToAction("Index");
         }
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult> AddTag(int videoId, string title)
         {
             await this._videoRepo.AddTagAsync(videoId, title);
             return RedirectToAction("Index");
         }
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult> AddRate(int videoId, float rate)
         {

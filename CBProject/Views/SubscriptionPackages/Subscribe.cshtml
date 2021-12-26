@@ -35,13 +35,40 @@
 
 
 <div class="container">
-    <div class="row" id="ebooks-home">
+
+    <br />
+    <br />
+
+    <h2>Subscribe Now</h2>
+
+    <br />
+    <br />
+    <br />
+    <br />
+
+    <div class="row plans">
 
 
 
     </div>
+
     <br />
     <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+
 </div>
 
 
@@ -53,73 +80,30 @@
     <script>
         $(document).ready(function () {
 
-
-
-            getSubscriptionPackages(function (packages) {
-                renderPackages(packages);
-            });
-            
-
-
-            function renderPackages(packages) {
-                $("#ebooks-home").empty();
-                $("#ebooks-home").append(`
-                        <br />
-                        <h3>Select a Package:</h3>
-                        <hr />
-                        <br />
-                `);
-                packages.forEach(function (pack) {
-                    var html = `
-                        <div class="col-md-4" id="ourHolder"">
-                            <div class="card item" id="card-video">
-                                <div style="width:100%; text-align:center; margin-top: 5%;">
-                                    <h2 style="margin-top: 5%;">${pack.description}</h2>
-                                    <h4 style="margin-top: 5%;"><b>Price:</b> ${pack.price}</h4>
-                                </div>
-                                <div class="card-body text-center">
-                                    <p class="card-text"><strong>Duration:</strong> ${pack.duration}</p>
-                                    <p class="card-text"><strong>ContentType:</strong> ${pack.contentType.name}</p>
-                                    <br />
-                                    <a class="btn btn-card subscribe-button" data-value="${pack.id}">>Subscribe</a>
+            // Load Subscription Packages (Plans)
+            getSubscriptionPackages(function (data) {
+                $(".plans").empty();
+                data.forEach(d => {
+                    $(".plans").append(
+                        `
+                            <div class="col-md-4">
+                                <div class="card card-plan text-center">
+                                    <div class="card-body">
+                                        <h5 class="card-title">${d.description}</h5>
+                                        <hr />
+                                        <h4 class="price">${d.price}€<small> / year</small> </h4>
+                                        <br />
+                                        <p class="card-text"><img class="img-icon-tik" src="/img/icons-tik.png" alt="tik" /> Duration: ${d.duration} </p>
+                                        <p class="card-text"><img class="img-icon-tik" src="/img/icons-tik.png" alt="tik" /> Started: ${d.startDate} </p>
+                                        <br />
+                                        <a class="btn btn-card-plan buy-button" data-value="${d.id}">Buy</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    `;
-                    $("#ebooks-home").append(html);
+                        `
+                    );
                 });
-                
-            }
-
-
-            
-            $(document.body).on('click', 'a', function () {
-                if (this.classList.contains("subscribe-button")) {
-                    var packageId = $(this).data('value');
-                    createOrder(packageId);
-                }
             });
-
-
-
-            function createOrder(packageId) {
-                getSubscriptionPackage(packageId, function (package) {
-                    getLogedUser(function (user) {
-                        if (user !== "null") {
-                            doPaynment(user, package, function (response) {
-                                var data = JSON.parse(response);
-                                //console.log(data.token);
-                                //console.log(data.redirect_url);
-                                window.location.href = data.redirect_url;
-                            });
-                        } else {
-                            window.location.href = "/Account/Register";
-                        }
-                    });
-                });
-            }
-
-
 
         });
     </script>

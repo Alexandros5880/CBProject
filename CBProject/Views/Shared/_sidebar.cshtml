@@ -18,14 +18,16 @@
     var roleManager = new RoleManager<ApplicationRole>(roleStore);
 
 
-    var fullName = currentUser.FullName;
-    var userImage = currentUser.ImagePath;
+
 
 
     RoleLevel access = RoleLevel.SUPERLOW;
 
     if (User.Identity.IsAuthenticated)
     {
+
+        var fullName = currentUser.FullName;
+        var userImage = currentUser.ImagePath;
 
         foreach (var role in currentUser.Roles)
         {

@@ -254,6 +254,7 @@
     <Compile Include="Models\EntityModels\SubscriptionPackage.cs" />
     <Compile Include="Models\EntityModels\TagToEbook.cs" />
     <Compile Include="Models\EntityModels\TagToVideo.cs" />
+    <Compile Include="Models\HelperModels\Products.cs" />
     <Compile Include="Models\Interfaces\IApplicationDbContext.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -265,7 +266,7 @@
     <Compile Include="Models\ViewModels\CategoryViewModel.cs" />
     <Compile Include="Models\ViewModels\ContentTypeViewModel.cs" />
     <Compile Include="Models\ViewModels\EbookViewModel.cs" />
-    <Compile Include="Models\ViewModels\FilterPageViewModel.cs" />
+    <Compile Include="Models\HelperModels\FilterPageViewModel.cs" />
     <Compile Include="Models\ViewModels\HomeViewModel.cs" />
     <Compile Include="Models\ViewModels\IdentityRoleViewModel.cs" />
     <Compile Include="Models\ViewModels\PaymentViewModel.cs" />
@@ -1829,6 +1830,7 @@
     <Content Include="Views\Videos\_Edit.cshtml" />
     <Content Include="Views\Home\Lessons.cshtml" />
     <Content Include="Views\SubscriptionPackages\Subscribe.cshtml" />
+    <Content Include="Views\Videos\PublicDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
