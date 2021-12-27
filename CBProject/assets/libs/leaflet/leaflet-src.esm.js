@@ -1319,8 +1319,6 @@ LatLngBounds.prototype = {
 	}
 };
 
-// TODO International date line?
-
 // @factory L.latLngBounds(corner1: LatLng, corner2: LatLng)
 // Creates a `LatLngBounds` object by defining two diagonally opposite corners of the rectangle.
 
@@ -3143,7 +3141,6 @@ var Map = Evented.extend({
 		this._initContainer(id);
 		this._initLayout();
 
-		// hack for https://github.com/Leaflet/Leaflet/issues/1980
 		this._onResize = bind(this._onResize, this);
 
 		this._initEvents();
@@ -3736,7 +3733,6 @@ var Map = Evented.extend({
 		this.fire('locationfound', data);
 	},
 
-	// TODO Appropriate docs section?
 	// @section Other Methods
 	// @method addHandler(name: String, HandlerClass: Function): this
 	// Adds a new `Handler` to the map, given its name and constructor function.
@@ -3926,7 +3922,6 @@ var Map = Evented.extend({
 		return new Bounds(topLeftPoint, topLeftPoint.add(this.getSize()));
 	},
 
-	// TODO: Check semantics - isn't the pixel origin the 0,0 coord relative to
 	// the map pane? "left point of the map layer" can be confusing, specially
 	// since there can be negative offsets.
 	// @method getPixelOrigin(): Point
@@ -3972,7 +3967,6 @@ var Map = Evented.extend({
 	// Returns the scale factor to be applied to a map transition from zoom level
 	// `fromZoom` to `toZoom`. Used internally to help with zoom animations.
 	getZoomScale: function (toZoom, fromZoom) {
-		// TODO replace with universal implementation after refactoring projections
 		var crs = this.options.crs;
 		fromZoom = fromZoom === undefined ? this._zoom : fromZoom;
 		return crs.scale(toZoom) / crs.scale(fromZoom);
@@ -5624,7 +5618,6 @@ var Attribution = Control.extend({
 		this._container = create$1('div', 'leaflet-control-attribution');
 		disableClickPropagation(this._container);
 
-		// TODO ugly, refactor
 		for (var i in map._layers) {
 			if (map._layers[i].getAttribution) {
 				this.addAttribution(map._layers[i].getAttribution());
@@ -12383,8 +12376,6 @@ var Canvas = Renderer.extend({
 		}
 
 		this._fillStroke(ctx, layer);
-
-		// TODO optimization: 1 fill/stroke for all features with equal style instead of 1 for each feature
 	},
 
 	_updateCircle: function (layer) {
@@ -13262,7 +13253,6 @@ Map.mergeOptions({
 	// @option easeLinearity: Number = 0.2
 	easeLinearity: 0.2,
 
-	// TODO refactor, move to CRS
 	// @option worldCopyJump: Boolean = false
 	// With this option enabled, the map tracks when you pan to another "copy"
 	// of the world and seamlessly jumps to the original one so that all overlays
@@ -13396,7 +13386,6 @@ var Drag = Handler.extend({
 	},
 
 	_onPreDragWrap: function () {
-		// TODO refactor to be able to adjust map pane position after zoom
 		var worldWidth = this._worldWidth,
 		    halfWidth = Math.round(worldWidth / 2),
 		    dx = this._initialWorldOffset,
