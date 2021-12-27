@@ -7,7 +7,6 @@ using CBProject.Repositories.IdentityRepos;
 using CBProject.Repositories.IdentityRepos.Interfaces;
 using System.Data.Entity;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -32,12 +31,16 @@ namespace CBProject.Controllers
         {
             return View(await this._subscriptionRepo.GetAllAsync());
         }
+        public async Task<ActionResult> Subscribe()
+        {
+            return View();
+        }
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return HttpNotFound();
             }
             SubscriptionPackage subscriptionPackage = await this._subscriptionRepo.GetAsync(id);
             if (subscriptionPackage == null)
@@ -52,7 +55,7 @@ namespace CBProject.Controllers
             var viewModel = new SubscriptionPackageViewModel();
             viewModel.OtherUsers = await this._usersRepo.GetAllAsync();
             viewModel.OtherContentType = await this._contentTypeRepo.GetAllAsync();
-            viewModel.OtherPayment = await this._peynmentRepo.GetAllAsync();
+            viewModel.OtherPayments = await this._peynmentRepo.GetAllAsync();
             return View(viewModel);
         }
         [HttpPost]
@@ -80,7 +83,7 @@ namespace CBProject.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return HttpNotFound();
             }
             SubscriptionPackage subscriptionPackage = await this._subscriptionRepo.GetAsync(id);
             if (subscriptionPackage == null)
@@ -90,11 +93,11 @@ namespace CBProject.Controllers
             var viewModel = Mapper.Map<SubscriptionPackage, SubscriptionPackageViewModel>(subscriptionPackage);
             viewModel.OtherUsers = await this._usersRepo.GetAllAsync();
             viewModel.MyUsers = await this._usersRepo
-                                            .GetAllEnumerable()
+                                            .GetAllQuerable()
                                             .Where(u => !subscriptionPackage.MyUsers.Contains(u))
                                             .ToListAsync();
             viewModel.OtherContentType = await this._contentTypeRepo.GetAllAsync();
-            viewModel.OtherPayment = await this._peynmentRepo.GetAllAsync();
+            viewModel.OtherPayments = await this._peynmentRepo.GetAllAsync();
             return View(viewModel);
         }
         [HttpPost]
@@ -129,7 +132,7 @@ namespace CBProject.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return HttpNotFound();
             }
             SubscriptionPackage subscriptionPackage = await this._subscriptionRepo.GetAsync(id);
             if (subscriptionPackage == null)

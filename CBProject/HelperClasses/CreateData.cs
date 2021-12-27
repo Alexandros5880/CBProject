@@ -444,7 +444,7 @@ namespace CBProject.HelperClasses
                 SubscriptionPackage package1 = new SubscriptionPackage()
                 {
                     ID = 1,
-                    Name = "PACKAGE 1",
+                    Description = "Basic",
                     Price = 100,
                     Duration = 23.33f,
                     MyUsers = new List<ApplicationUser>()
@@ -459,7 +459,7 @@ namespace CBProject.HelperClasses
                 SubscriptionPackage package2 = new SubscriptionPackage()
                 {
                     ID = 2,
-                    Name = "PACKAGE 2",
+                    Description = "Advance",
                     Price = 100,
                     Duration = 23.33f,
                     MyUsers = new List<ApplicationUser>()
@@ -474,7 +474,7 @@ namespace CBProject.HelperClasses
                 SubscriptionPackage package3 = new SubscriptionPackage()
                 {
                     ID = 3,
-                    Name = "PACKAGE 3",
+                    Description = "Premium",
                     Price = 100,
                     Duration = 23.33f,
                     MyUsers = new List<ApplicationUser>()
@@ -486,41 +486,9 @@ namespace CBProject.HelperClasses
                     StartDate = DateTime.Today,
                     Payment = context.Payments.FirstOrDefault(p => p.ID == 3)
                 };
-                SubscriptionPackage package4 = new SubscriptionPackage()
-                {
-                    ID = 4,
-                    Name = "PACKAGE 4",
-                    Price = 100,
-                    Duration = 23.33f,
-                    MyUsers = new List<ApplicationUser>()
-                    {
-                        context.Users.FirstOrDefault()
-                    },
-                    ContentType = context.ContentTypes.FirstOrDefault(c => c.ID == 4),
-                    AutoSubscription = true,
-                    StartDate = DateTime.Today,
-                    Payment = context.Payments.FirstOrDefault(p => p.ID == 4)
-                };
-                SubscriptionPackage package5 = new SubscriptionPackage()
-                {
-                    ID = 5,
-                    Name = "PACKAGE 5",
-                    Price = 100,
-                    Duration = 23.33f,
-                    MyUsers = new List<ApplicationUser>()
-                    {
-                        context.Users.FirstOrDefault()
-                    },
-                    ContentType = context.ContentTypes.FirstOrDefault(c => c.ID == 5),
-                    AutoSubscription = true,
-                    StartDate = DateTime.Today,
-                    Payment = context.Payments.FirstOrDefault(p => p.ID == 5)
-                };
                 context.SubcriptionPackages.Add(package1);
                 context.SubcriptionPackages.Add(package2);
                 context.SubcriptionPackages.Add(package3);
-                context.SubcriptionPackages.Add(package4);
-                context.SubcriptionPackages.Add(package5);
                 context.SaveChanges();
             } catch (Exception ex)
             {

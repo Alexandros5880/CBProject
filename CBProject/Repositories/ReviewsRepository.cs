@@ -33,6 +33,29 @@ namespace CBProject.Repositories
                 throw new ArgumentNullException(nameof(review));
             this._context.Reviews.Remove(review);
         }
+        public async Task DeleteAllAsync(int? id)
+        {
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
+            var review = this.Get(id);
+            if (review == null)
+                throw new Exception("Tag Not Found");
+            var reviewsToEbooks = await this._context.ReviewsToEbooks
+                                .Where(t => t.ReviewId == id)
+                                .ToListAsync();
+            var reviewsToVideos = await this._context.ReviewsToVideos
+                                .Where(t => t.ReviewId == id)
+                                .ToListAsync();
+            foreach (var record in reviewsToEbooks)
+            {
+                this._context.ReviewsToEbooks.Remove(record);
+            }
+            foreach (var record in reviewsToVideos)
+            {
+                this._context.ReviewsToVideos.Remove(record);
+            }
+            this._context.Reviews.Remove(review);
+        }
         public Review Get(int? id)
         {
             if (id == null)
@@ -191,6 +214,10 @@ namespace CBProject.Repositories
             return await this._context.Reviews
                                 .Where(r => reviewsIds.Contains(r.ID))
                                 .ToListAsync();
+        }
+        public IQueryable<Review> GetAllQueryable()
+        {
+            return this._context.Reviews;
         }
         protected virtual void Dispose(bool disposing)
         {

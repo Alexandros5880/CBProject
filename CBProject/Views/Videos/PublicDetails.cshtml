@@ -1,0 +1,103 @@
+﻿@model CBProject.Models.ViewModels.VideoViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="main-details-row">
+    <div class="row ">
+        <div class="col-md-5">
+           
+        </div>
+        <div class="col-md-7">
+            <p class="product-title"> @Html.DisplayFor(model => model.Title)</p>
+
+            <br />
+            <p class="product-description"> @Html.DisplayFor(model => model.Description)</p>
+            <div class="row">
+                <div class="col-md-2 raiting" >
+
+                    <p id="raiting">Rating</p>
+                </div>
+                <div class="col-md-10">
+                    <span class="fa fa-star checked "></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                </div>
+
+            </div>
+            
+        </div>
+    </div>
+</div>
+<div>
+    <h4>Ebook</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            <p class="product-title"> book </p>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Thumbnail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Thumbnail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Url)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Url)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UploadDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UploadDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Creator)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Creator)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Category)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Category)
+        </dd>
+
+    </dl>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

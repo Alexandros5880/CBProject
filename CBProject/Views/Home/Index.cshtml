@@ -1,11 +1,24 @@
-﻿@model CBProject.Models.ViewModels.HomeViewModel
-@using CBProject.HelperClasses
+﻿@using CBProject.HelperClasses
+
 
 
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+
+<style>
+    .item {
+        height: 400px !important;
+    }
+    .ourHolder:hover {
+        transform: translate(0, -7px);
+    }
+    a:hover {
+        cursor: pointer;
+    }
+</style>
 
 @section fullWidth{
 
@@ -17,11 +30,11 @@
             <br />
             <div class="row">
                 <div class="col-md-6 col-sm-7 col-xs-8 home-search-bar">
-                    <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
+                    <input id="search-input" type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
                            aria-describedby="search-addon" />
                 </div>
                 <div class="col-md-4 ">
-                    <button type="button" class="btn btn-search ">Search</button>
+                    <button type="button" class="btn btn-search search">Search</button>
                 </div>
             </div>
         </div>
@@ -32,7 +45,7 @@
 }
 
 
-
+<!-- Render Videos / Ebooks-->
 <div class="grey-row">
     <div class="container">
         <br />
@@ -41,6 +54,7 @@
             <div class="col-md-12">
                 <h2>Lessons</h2><br />
                 <ul class="nav nav-tabs tabs-index" id="filter-tab">
+
                     @foreach (var cat in Model.Categories)
                     {
                         <li>
@@ -52,6 +66,7 @@
                             </a>
                         </li>
                     }
+
                 </ul>
             </div>
         </div>
@@ -177,7 +192,13 @@
 
 
 
+        <div class="row" id="videos-home">
+            
+        </div>
 
+        <div class="row" id="ebooks-home">
+            
+        </div>
 
 
         <br />
@@ -188,7 +209,7 @@
     <br />
 </div>
 
-
+<!-- Middle Section -->
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-4 col-sm-4  order-sm-1 order-first quote-img">
@@ -206,6 +227,8 @@
         </div>
     </div>
 </div>
+
+<!-- Paynment Packages -->
 <div class="grey-row">
     <br />
     <br />
@@ -215,55 +238,8 @@
                 <h2>Plans</h2><br />
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-3">
-                <div class="card card-plan text-center">
-                    <div class="card-body">
-                        <h5 class="card-title">Basic</h5>
-                        <hr />
-                        <h4 class="price">199€ <small>/ year</small> </h4>
-                        <br />
-                        <p class="card-text"><img class="img-icon-tik" src="~/img/icons-tik.png" alt="tik" /> With supporting text below </p>
-                        <p class="card-text"><img class="img-icon-tik" src="~/img/icons-tik.png" alt="tik" /> With supporting text below </p>
-                        <p class="card-text"><img class="img-icon-tik" src="~/img/icons-tik.png" alt="tik" />With supporting text below </p>
-                        <p class="card-text"><img class="img-icon-tik" src="~/img/icons-tik.png" alt="tik" /> With supporting text below </p>
-                        <br />
-                        <a href="#" class="btn btn-card-plan">Buy</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-md-offset-1">
-                <div class="card card-plan text-center">
-                    <div class="card-body">
-                        <h5 class="card-title">Advance</h5>
-                        <hr />
-                        <h4 class="price">250€ <small>/ year</small> </h4>
-                        <br />
-                        <p class="card-text"><img class="img-icon-tik" src="~/img/icons-tik.png" alt="tik" /> With supporting text below </p>
-                        <p class="card-text"><img class="img-icon-tik" src="~/img/icons-tik.png" alt="tik" /> With supporting text below </p>
-                        <p class="card-text"><img class="img-icon-tik" src="~/img/icons-tik.png" alt="tik" />With supporting text below </p>
-                        <p class="card-text"><img class="img-icon-tik" src="~/img/icons-tik.png" alt="tik" /> With supporting text below </p>
-                        <br />
-                        <a href="#" class="btn btn-card-plan">Buy</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-md-offset-1">
-                <div class="card card-plan text-center">
-                    <div class="card-body">
-                        <h5 class="card-title">Premium</h5>
-                        <hr />
-                        <h4 class="price">350€ <small>/ year</small> </h4>
-                        <br />
-                        <p class="card-text"><img class="img-icon-tik" src="~/img/icons-tik.png" alt="tik" /> With supporting text below </p>
-                        <p class="card-text"><img class="img-icon-tik" src="~/img/icons-tik.png" alt="tik" /> With supporting text below </p>
-                        <p class="card-text"><img class="img-icon-tik" src="~/img/icons-tik.png" alt="tik" />With supporting text below </p>
-                        <p class="card-text"><img class="img-icon-tik" src="~/img/icons-tik.png" alt="tik" /> With supporting text below </p>
-                        <br />
-                        <a href="#" class="btn btn-card-plan">Buy</a>
-                    </div>
-                </div>
-            </div>
+        <div class="row plans">
+
         </div>
     </div>
     <br />
@@ -277,10 +253,56 @@
 
         $(document).ready(function () {
 
+
             function selectCategory(val) {
                 console.log(val);
             };
+            // Load Categories
+            getCategories(function (data) {
+                $("#filter-tab").empty();
+                data.forEach(d => {
+                    if (d.master) {
+                        $("#filter-tab").append(
+                            `
+                                <li>
+                                    <a class="nav-link active category-tab" aria-current="page" data-value="${d.id}">${d.name}</a>
+                                </li>
+                            `
+                        );
+                    }
+                });
+            });
 
+            // Load Subscription Packages (Plans)
+            getSubscriptionPackages(function (data) {
+                $(".plans").empty();
+                data.forEach(d => {
+                    $(".plans").append(
+                        `
+                            <div class="col-md-4">
+                                <div class="card card-plan text-center">
+                                    <div class="card-body">
+                                        <h5 class="card-title">${d.description}</h5>
+                                        <hr />
+                                        <h4 class="price">${d.price}€<small> / year</small> </h4>
+                                        <br />
+                                        <p class="card-text"><img class="img-icon-tik" src="/img/icons-tik.png" alt="tik" /> Duration: ${d.duration} </p>
+                                        <p class="card-text"><img class="img-icon-tik" src="/img/icons-tik.png" alt="tik" /> Started: ${d.startDate} </p>
+                                        <br />
+                                        <a class="btn btn-card-plan buy-button" data-value="${d.id}">Buy</a>
+                                    </div>
+                                </div>
+                            </div>
+                        `
+                    );
+                });
+            });
+
+
+            // Get Videos And Ebooks With Category '.NET'
+            getContentsByCategoryName(".NET", function (data) {
+                render(data);
+            });
 
 
             //$('.filter-tab li a').click(function () {
@@ -288,26 +310,156 @@
             //    var $ourHolder = $('#ourHolder');
 
             //    $('.filter-tab li').removeClass("active");
-            //    $(this).parent.addClass("active");
+
+            // When Details Button Clicked
+            $(document.body).on('click', 'button', function () {
+                if (this.classList.contains('details')) {
+                    var categoryId = $(this).parent().parent().parent().find("input[type=hidden]").val();
+                    var contentId = $(this).parent().parent().parent().find("input[name=content]").val();
+                    var contentType = $(this).parent().parent().parent().find("input[name=content-type]").val();
+                    redirectToGuestDetails(categoryId, contentId, contentType);
+                }
+            });
+
+            // When Card Item Of Every Video Or Ebook Cliked
+            $(".ourHolder").on("click", function () {
+                if (!this.classList.contains('more')) {
+                    //var categoryId = $(this).find("input[type=hidden]").val();
+                    //var contentId = $(this).find("input[name=content]").val();
+                    //var contentType = $(this).find("input[name=content-type]").val();
+                    //redirectToCategoriesLessons(categoryId, contentId, contentType);
+                }
+            });
+
+
+            // When Category Tab Clicked
+            $(document.body).on('click', 'a', function () {
+                if (this.classList.contains('category-tab')) {
+                    var categoryId = $(this).data('value');
+                    getContentsByCategoryId(categoryId, function (data) {
+                        render(data)
+                    });
+                }
+            });
+
+            // When Search Button Clicked
+            $(document.body).on('click', 'button', function () {
+                if (this.classList.contains('search')) {
+                    var categoryName = $("#search-input").val();
+                    getContentsByCategoryName(categoryName, function (data) {
+                        render(data);
+                    });
+                }
+            });
 
 
 
-            //    if (value === "all") {
-            //        alert("hello")
-            //    } else {
-            //        //$('.item').not('.' + value).hide();
-            //        //$('.item').filter('.' + value).show();
+        // Render UI Function
+        function render(data) {
+            $("#videos-home").empty();
+            $("#videos-home").append("<h3>Videos</h3>");
+            $("#ebooks-home").empty();
+            $("#ebooks-home").append("<h3>Ebooks</h3>");
+            data.videos.forEach(video => {
+                // console.log(video);
+                $("#videos-home").append(
+                    `
+                    <div class="col-md-3 ourHolder" data-item="${video.category}">
+                        <input type="hidden" id="category" name="category" value="${video.category.id}">
+                        <input type="hidden" id="content" name="content" value="${video.id}">
+                        <input type="hidden" id="content-type" name="content-type" value="video">
+                        <div class="card item" id="card-video">
+                            <div style="width:100%; text-align:center; margin-top: 5%;">
+                                <img alt="Cover Foto" src="${video.videoImagePath}" style="height:150px;" />
+                                <h4 style="margin-top: 5%;">${video.title}</h4>
+                            </div>
+                            <div class="card-body text-center">
+                                <p class="card-text">${video.description}</p>
+                                <br />
+                                <button class="btn btn-card btn-lg details">Details</button>
+                                <button class="btn btn-card btn-lg btn-open-modal more" data-toggle="modal" data-target="#video-modal-fullscreen-xl">
+                                    Play
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Video Modal -->
+                    <div class="modal modal-fullscreen-xl" id="video-modal-fullscreen-xl" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">${video.title}</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="embed-responsive embed-responsive-16by9">
+                                        <iframe class="embed-responsive-item" src="${video.videoPath}" allowfullscreen></iframe>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    `
+                );
+            });
+            data.ebooks.forEach(ebook => {
+                // console.log(ebook.ebookFilePath);
+                $("#ebooks-home").append(
+                    `
+                    <div class="col-md-3 ourHolder" data-item="${ebook.category}">
+                        <input type="hidden" id="category" name="category" value="${ebook.category.id}">
+                        <input type="hidden" id="content" name="content" value="${ebook.id}">
+                        <input type="hidden" id="content-type" name="content-type" value="ebook">
+                        <div class="card item" id="card-ebook">
+                            <div style="width:100%; text-align:center; margin-top: 5%;">
+                                <img alt="Cover Foto" src="${ebook.ebookImagePath}" style="height:150px;" />
+                                <h4 style="margin-top: 5%;">${ebook.title}</h4>
+                                <label>${ebook.ebookFilePath}</label>
+                            </div>
+                            <div class="card-body text-center">
+                                <p class="card-text">${ebook.description}</p>
+                                <br />
+                                <button class="btn btn-card btn-lg details">Details</button>
+                                <button class="btn btn-card btn-lg btn-open-modal more" data-toggle="modal" data-target="#ebook-modal-fullscreen-xl">
+                                    Read
+                                </button>
+                            </div>
+                        </div>
+                    </div>
 
 
-            //    }
-            //    alert("hello")
-            //    return false;
-            //    //if (category == item) {
-            //    //    $(item).show();
-            //    //}
-            //});
+                    <!-- Ebook Modal -->
+                    <div class="modal modal-fullscreen-xl" id="ebook-modal-fullscreen-xl" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">${ebook.title}</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="embed-responsive embed-responsive-16by9">
+                                        <label>${ebook.ebookFilePath}</label>
+                                        <!--<iframe class="embed-responsive-item" src="${ebook.ebookFilePath}" allowfullscreen></iframe>-->
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+                );
+            });
+        }
 
-
-          })
-        </script>
-    }
+    </script>
+}

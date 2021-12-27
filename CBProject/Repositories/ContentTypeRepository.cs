@@ -91,6 +91,10 @@ namespace CBProject.Repositories
         {
             return await this._context.ContentTypes.ToListAsync();
         }
+        public IQueryable<ContentType> GetAllQueryable()
+        {
+            return this._context.ContentTypes;
+        }
         public void Save()
         {
             this._context.SaveChanges();

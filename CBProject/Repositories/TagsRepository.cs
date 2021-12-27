@@ -33,6 +33,29 @@ namespace CBProject.Repositories
                 throw new Exception("Tag Not Found");
             this._context.Tags.Remove(tag);
         }
+        public async Task DeleteAllAsync(int? id)
+        {
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
+            var tag = this.Get(id);
+            if (tag == null)
+                throw new Exception("Tag Not Found");
+            var tagsToEbooks = await this._context.TagsToEbooks
+                                .Where(t => t.TagId == id)
+                                .ToListAsync();
+            var tagsToVideos = await this._context.TagsToVideos
+                                .Where(t => t.TagId == id)
+                                .ToListAsync();
+            foreach(var record in tagsToEbooks)
+            {
+                this._context.TagsToEbooks.Remove(record);
+            }
+            foreach(var record in tagsToVideos)
+            {
+                this._context.TagsToVideos.Remove(record);
+            }
+            this._context.Tags.Remove(tag);
+        }
         public Tag Get(int? id)
         {
             if (id == null)
@@ -190,6 +213,10 @@ namespace CBProject.Repositories
             return await this._context.Tags
                         .Where(t => tagsIds.Contains(t.ID))
                         .ToListAsync();
+        }
+        public IQueryable<Tag> GetAllQueryable()
+        {
+            return this._context.Tags;
         }
         protected virtual void Dispose(bool disposing)
         {

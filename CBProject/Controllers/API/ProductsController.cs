@@ -1,7 +1,15 @@
 ﻿using CBProject.HelperClasses.Interfaces;
-using CBProject.Repositories;
+using CBProject.Models.EntityModels;
+using CBProject.Models.ViewModels;
+using CBProject.Repositories.IdentityRepos;
+using CBProject.Repositories.IdentityRepos.Interfaces;
+using Microsoft.AspNet.Identity;
+using Newtonsoft.Json;
 using System.Data.Entity;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -9,23 +17,22 @@ namespace CBProject.Controllers.API
 {
     public class ProductsController : ApiController
     {
-        private readonly VideosRepository _videosRepository;
-        private readonly EbooksRepository _ebooksReposotory;
-        private readonly CategoriesRepository _categoriesRepository;
-
-        public ProductsController(IUnitOfWork unitOfWork)
+        private readonly UsersRepo _usersRepo;
+        private readonly RolesRepo _rolesRepo;
+        private readonly IUnitOfWork _unitOfWork;
+        public ProductsController(IUnitOfWork unitOfWork, IUsersRepo usersRepo, IRolesRepo rolesRepo)
         {
-            this._videosRepository = unitOfWork.Videos;
-            this._ebooksReposotory = unitOfWork.Ebooks;
-            this._categoriesRepository = unitOfWork.Categories;
+            this._usersRepo = (UsersRepo)usersRepo;
+            this._rolesRepo = (RolesRepo)rolesRepo;
+            this._unitOfWork = unitOfWork;
         }
 
         // GET api/<controller>
         public async Task<IHttpActionResult> Get()
         {
-            var videos = await this._videosRepository.GetAllQuerable()
+            var videos = await this._unitOfWork.Videos.GetAllQuerable()
                         .ToListAsync();
-            var ebooks = await this._ebooksReposotory.GetAllQuerable()
+            var ebooks = await this._unitOfWork.Ebooks.GetAllQuerable()
                         .ToListAsync();
 
             var products = new
@@ -40,12 +47,12 @@ namespace CBProject.Controllers.API
         // GET api/<controller>/5
         public async Task<IHttpActionResult> Get(string search)
         {
-            var category = await this._categoriesRepository
+            var category = await this._unitOfWork.Categories
                         .GetByNameAsync(search);
-            var videos = await this._videosRepository.GetAllQuerable()
+            var videos = await this._unitOfWork.Videos.GetAllQuerable()
                         .Where(v => v.CategoryId == category.ID)
                         .ToListAsync();
-            var ebooks = await this._ebooksReposotory.GetAllQuerable()
+            var ebooks = await this._unitOfWork.Ebooks.GetAllQuerable()
                         .Where(v => v.CategoryId == category.ID)
                         .ToListAsync();
 
@@ -57,38 +64,249 @@ namespace CBProject.Controllers.API
 
             return Ok(products);
         }
-
-        [Route("api/products/pagination")]
-        public async Task<IHttpActionResult> GetAllPagination(int pagesize)
+        [HttpGet]
+        [Route("api/products/contenst/bycategory")]
+        public async Task<IHttpActionResult> GetContentsByCategoryId(int id)
         {
-            return Ok();
+            var category = await this._unitOfWork.Categories
+                        .GetAsync(id);
+            var videos = await this._unitOfWork.Videos.GetAllQuerable()
+                        .Where(v => v.CategoryId == category.ID)
+                        .ToListAsync();
+            var ebooks = await this._unitOfWork.Ebooks.GetAllQuerable()
+                        .Where(v => v.CategoryId == category.ID)
+                        .ToListAsync();
+            var products = new
+            {
+                Videos = videos,
+                Ebooks = ebooks
+            };
+            return Ok(products);
         }
-
-        [Route("api/products/search/pagination")]
-        public async Task<IHttpActionResult> GetSearchPagination(int pagesize, string search)
+        [HttpGet]
+        [Route("api/products/contenst/bycategory")]
+        public async Task<IHttpActionResult> GetContentsByCategoryName(string name)
         {
-            return Ok();
+            var category = await this._unitOfWork.Categories
+                        .GetByNameAsync(name);
+            var videos = await this._unitOfWork.Videos.GetAllQuerable()
+                        .Where(v => v.CategoryId == category.ID)
+                        .ToListAsync();
+            var ebooks = await this._unitOfWork.Ebooks.GetAllQuerable()
+                        .Where(v => v.CategoryId == category.ID)
+                        .ToListAsync();
+            var products = new
+            {
+                Videos = videos,
+                Ebooks = ebooks
+            };
+            return Ok(products);
         }
-
-
-
-
-
-
-
-        // POST api/<controller>
-        public void Post([FromBody] string value)
+        [HttpPost]
+        [Route("api/products/search/filters")]
+        public async Task<IHttpActionResult> GetSearchByFilters(FilterParams filters)
         {
+            var products = await this._unitOfWork.Categories.GetSearchByFiltersAsync(filters);
+            return Ok(products);
         }
-
-        // PUT api/<controller>/5
-        public void Put(int id, [FromBody] string value)
+        [HttpPost]
+        [Route("api/products/payment/frame")]
+        public async Task<IHttpActionResult> GetPaynmentFrame(MyPayment payment)
         {
+            var myPayment = new
+            {
+                transaction_details = new
+                {
+                    order_id = payment.TransactionDetails.OrderId,
+                    gross_amount = payment.TransactionDetails.GrossAmount
+                },
+                credit_card = new
+                {
+                    secure = payment.Secure
+                },
+                customer_details = new
+                {
+                    first_name = payment.User.FirstName,
+                    last_name = payment.User.LastName,
+                    email = payment.User.Email,
+                    phone = payment.User.PhoneNumber
+                }
+            };
+            const string baseUri = "https://app.sandbox.midtrans.com/snap/v1/transactions";
+            var httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", payment.Auth.UserName);
+            var json = JsonConvert.SerializeObject(myPayment);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var result = await httpClient.PostAsync(baseUri, content);
+            if (result.IsSuccessStatusCode)
+            {
+                return Ok(await result.Content.ReadAsStringAsync());
+            }
+            else
+            {
+                return Ok("Error");
+            }
         }
-
-        // DELETE api/<controller>/5
-        public void Delete(int id)
+        [HttpGet]
+        [Route("api/products/packages")]
+        public async Task<IHttpActionResult> GetSubscriptionPackages()
         {
+            return Ok(await this._unitOfWork.SubscriptionPackages
+                                .GetAllAsync());
+        }
+        [HttpGet]
+        [Route("api/packages/")]
+        public async Task<IHttpActionResult> GetSubscriptionPackage(int id)
+        {
+            return Ok(await this._unitOfWork.SubscriptionPackages.GetAsync(id));
+        }
+        [HttpGet]
+        [Route("api/user")]
+        public async Task<IHttpActionResult> GetUser(string userId)
+        {
+            return Ok(await this._usersRepo.GetAsync(userId));
+        }
+        [HttpGet]
+        [Route("api/logged/user")]
+        public async Task<IHttpActionResult> GetLoggedInUser()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var userId = User.Identity.GetUserId();
+                var user = await this._usersRepo.GetAsync(userId);
+                return Ok(user);
+            }
+            else
+            {
+                return Ok("null");
+            }
+        }
+        [HttpGet]
+        [Route("api/categories")]
+        public async Task<IHttpActionResult> GetCategories()
+        {
+            var categories = await this._unitOfWork.Categories
+                                                .GetAllAsync();
+            return Ok(categories);
+        }
+        [HttpGet]
+        [Route("api/category")]
+        public async Task<IHttpActionResult> GetCategory(int id)
+        {
+            var categories = await this._unitOfWork.Categories
+                                                .GetAsync(id);
+            return Ok(categories);
+        }
+        [HttpGet]
+        [Route("api/categories/masters")]
+        public async Task<IHttpActionResult> GetCategoriesMaster()
+        {
+            var categories = await this._unitOfWork.Categories
+                                                .GetAllQueryable()
+                                                .Where(c => c.Master)
+                                                .ToListAsync();
+            return Ok(categories);
+        }
+        [HttpGet]
+        [Route("api/categories/nomasters")]
+        public async Task<IHttpActionResult> GetCategoriesNoMaster()
+        {
+            var categories = await this._unitOfWork.Categories
+                                                .GetAllQueryable()
+                                                .Where(c => !c.Master)
+                                                .ToListAsync();
+            return Ok(categories);
+        }
+        [HttpGet]
+        [Route("api/tags")]
+        public async Task<IHttpActionResult> GetTags()
+        {
+            return Ok(await this._unitOfWork.Tags.GetAllAsync());
+        }
+        [HttpGet]
+        [Route("api/tag")]
+        public async Task<IHttpActionResult> GetTag(int id)
+        {
+            return Ok(await this._unitOfWork.Tags.GetAsync(id));
+        }
+        [HttpGet]
+        [Route("api/users/role")]
+        public async Task<IHttpActionResult> GetUsersByRole(string rolename)
+        {
+            var rolesIds = await this._rolesRepo
+                                             .GetAllQuerable()
+                                             .Where(r => r.Name.Equals(rolename))
+                                             .Select(r => r.Id)
+                                             .ToListAsync();
+            var users = await this._usersRepo
+                                    .GetAllQuerable()
+                                    .Where(u => rolesIds.Any() ? u.Roles.Select(r => r.RoleId).Intersect(rolesIds).Any() : false)
+                                    .ToListAsync();
+            if (users.Count > 0)
+                return Ok(users);
+            else
+                return Ok("null");
+        }
+        [HttpGet]
+        [Route("api/reviews")]
+        public async Task<IHttpActionResult> GetReviews()
+        {
+            return Ok(await this._unitOfWork.Reviews.GetAllAsync());
+        }
+        [HttpGet]
+        [Route("api/review")]
+        public async Task<IHttpActionResult> GetReview(int id)
+        {
+            return Ok(await this._unitOfWork.Reviews.GetAsync(id));
+        }
+        [HttpGet]
+        [Route("api/ebooks")]
+        public async Task<IHttpActionResult> GetEbookss()
+        {
+            return Ok(await this._unitOfWork.Ebooks.GetAllAsync());
+        }
+        [HttpGet]
+        [Route("api/ebook")]
+        public async Task<IHttpActionResult> GetEbook(int id)
+        {
+            return Ok(await this._unitOfWork.Ebooks.GetAsync(id));
+        }
+        [HttpGet]
+        [Route("api/videos")]
+        public async Task<IHttpActionResult> GetVideos()
+        {
+            return Ok(await this._unitOfWork.Videos.GetAllAsync());
+        }
+        [HttpGet]
+        [Route("api/video")]
+        public async Task<IHttpActionResult> GetVideo(int id)
+        {
+            return Ok(await this._unitOfWork.Videos.GetAsync(id));
+        }
+        [HttpGet]
+        [Route("api/contenttypes")]
+        public async Task<IHttpActionResult> GetContentTypes()
+        {
+            return Ok(await this._unitOfWork.ContentTypes.GetAllAsync());
+        }
+        [HttpGet]
+        [Route("api/contenttype")]
+        public async Task<IHttpActionResult> GetContentType(int id)
+        {
+            return Ok(await this._unitOfWork.ContentTypes.GetAsync(id));
+        }
+        [HttpGet]
+        [Route("api/payments")]
+        public async Task<IHttpActionResult> GetPayments()
+        {
+            return Ok(await this._unitOfWork.Payments.GetAllAsync());
+        }
+        [HttpGet]
+        [Route("api/payment")]
+        public async Task<IHttpActionResult> GetPayment(int id)
+        {
+            return Ok(await this._unitOfWork.Payments.GetAsync(id));
         }
     }
 }

@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;500&family=Source+Sans+Pro&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 
@@ -21,14 +22,14 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Learn Coding", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Lessons", "Lessons", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -74,5 +75,21 @@
     @Scripts.Render("~/bundles/bootstrap")
     @*@Scripts.Render("~/Scripts/DataTables")*@
     @RenderSection("scripts", required: false)
+    <script type="text/javascript" src="~/Scripts/Servicies.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            // When Buton Buy Clicks
+            $(document.body).on('click', 'a', function () {
+                if (this.classList.contains("buy-button")) {
+                    var packageId = $(this).data('value');
+                    createOrder(packageId);
+                }
+            });
+
+        });
+    </script>
+
 </body>
 </html>

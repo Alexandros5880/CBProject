@@ -1,6 +1,8 @@
 ﻿using CBProject.HelperClasses.Interfaces;
 using CBProject.Models;
 using CBProject.Models.EntityModels;
+using CBProject.Models.HelperModels;
+using CBProject.Models.ViewModels;
 using CBProject.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -152,7 +154,7 @@ namespace CBProject.Repositories
             return _context.Categories
                  .Include(c => c.CategoriesToCategories)
                  .Include(v => v.Videos)
-                 .FirstOrDefault(c => c.Name == name);
+                 .FirstOrDefault(c => c.Name.Contains(name));
         }
         public async Task<Category> GetByNameAsync(string name)
         {
@@ -161,7 +163,87 @@ namespace CBProject.Repositories
             return await _context.Categories
                  .Include(c => c.CategoriesToCategories)
                  .Include(v => v.Videos)
-                 .FirstOrDefaultAsync(c => c.Name == name);
+                 .FirstOrDefaultAsync(c => c.Name.Contains(name));
+        }
+        public async Task<Product> GetSearchByFiltersAsync(FilterParams filters)
+        {
+            string category = "", tag = "", title = "", teacher = "";
+            if (filters.CategoryName != null && filters.CategoryName.Length > 0)
+                category = filters.CategoryName;
+            if (filters.TagName != null && filters.TagName.Length > 0)
+                tag = filters.TagName;
+            if (filters.TitleName != null && filters.TitleName.Length > 0)
+                title = filters.TitleName;
+            if (filters.TeacherName != null && filters.TeacherName.Length > 0)
+                teacher = filters.TeacherName;
+
+            List<int> categories;
+            if (category != null && category.Length > 0)
+            {
+                categories = await this._context.Categories
+                                .Where(c => c.Name.Contains(category))
+                                .Select(c => c.ID)
+                                .ToListAsync();
+            }
+            else
+            {
+                categories = await this._context.Categories
+                                .Select(c => c.ID)
+                                .ToListAsync();
+            }
+
+            List<int> tags;
+            if (tag != null && tag.Length > 0)
+            {
+                tags = await this._context.Tags
+                                .Where(t => t.Title.Contains(tag))
+                                .Select(t => t.ID)
+                                .ToListAsync();
+            }
+            else
+            {
+                tags = await this._context.Tags
+                                .Select(t => t.ID)
+                                .ToListAsync();
+            }
+
+            List<string> teachers;
+            if (teacher != null && teacher.Length > 0)
+            {
+                teachers = await this._context.Users
+                                    .Where(u => u.FirstName.Contains(teacher) ||
+                                                u.LastName.Contains(teacher) ||
+                                                u.Email.Contains(teacher))
+                                    .Select(t => t.Id)
+                                    .ToListAsync();
+            }
+            else
+            {
+                teachers = await this._context.Users
+                                    .Select(t => t.Id)
+                                    .ToListAsync();
+            }
+
+
+            var ebooks = await this._context.Ebooks
+                        .Where(e => categories.Any() ? categories.Contains(e.CategoryId) : true)
+                        .Where(e => tags.Any() ? e.TagsToEbooks.Select(t => t.TagId).Intersect(tags).Any() : true)
+                        .Where(e => teachers.Any() && teachers.Contains(e.CreatorId) ? true : false)
+                        .Where(e => filters.TitleName.Length > 0 ? e.Title.Contains(filters.TitleName) : true)
+                        .ToListAsync();
+
+            var videos = await this._context.Videos
+                        .Where(e => categories.Any() ? categories.Contains(e.CategoryId) : true)
+                        .Where(e => tags.Any() ? e.TagsToVideos.Select(t => t.TagId).Intersect(tags).Any() : true)
+                        .Where(e => teachers.Any() && teachers.Contains(e.CreatorId) ? true : false)
+                        .Where(e => filters.TitleName.Length > 0 ? e.Title.Contains(filters.TitleName) : true)
+                        .ToListAsync();
+
+            return new Product
+            {
+                Videos = videos,
+                Ebooks = ebooks
+            };
         }
         public void AddCategory(Category parent, Category chiled)
         {

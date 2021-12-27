@@ -9,7 +9,6 @@ namespace CBProject.Migrations
         {
             AutomaticMigrationsEnabled = false;
         }
-
         protected override void Seed(CBProject.Models.ApplicationDbContext context)
         {
             CreateData.CreateUsersAndRoles(context);

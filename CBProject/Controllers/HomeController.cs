@@ -15,8 +15,7 @@ namespace CBProject.Controllers
         private EbooksRepository _ebooksRepository;
         private UsersRepo _usersRepo;
         private CategoriesRepository _categoriesRepo;
-       private VideosRepository _videosRepository;
-       // private IRepository<Plans> _plansRepository;
+        private VideosRepository _videosRepository;
         public HomeController(IUnitOfWork unitOfWork, IUsersRepo usersRepo)
         {
             this._ebooksRepository = unitOfWork.Ebooks;
@@ -24,36 +23,20 @@ namespace CBProject.Controllers
             this._videosRepository = unitOfWork.Videos;
             this._usersRepo = (UsersRepo)usersRepo;
         }
-        public async Task<ActionResult> Index(string name)
+        public async Task<ActionResult> Index()
         {
-            HomeViewModel viewModel = new HomeViewModel();
-            viewModel.Categories = await this._categoriesRepo
-                                        .GetAllQueryable()
-                                        .Where(c => c.Master == true)
-                                        .Where(c => c.Videos.Count > 0)
-                                        .Where(c => c.Ebooks.Count > 0)
-                                        .ToListAsync();
-            if (name == null)
-            {
-                viewModel.Videos = await this._videosRepository.GetAllAsync();
-                viewModel.Ebooks = await this._ebooksRepository.GetAllAsync();
-            }
-            else
-            {
-                viewModel.Videos = await this._videosRepository.GetAllByCategoryNameAsync(name);
-                viewModel.Ebooks = await this._ebooksRepository.GetAllByCategoryNameAsync(name);
-            }
-            return View(viewModel);
-        }
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
-        public ActionResult Contact()
+        public async Task<ActionResult> About()
         {
-            ViewBag.Message = "Your contact page.";
+            return View();
+        }
+        public async Task<ActionResult> Contact()
+        {
+            return View();
+        }
+        public async Task<ActionResult> Lessons()
+        {
             return View();
         }
 
