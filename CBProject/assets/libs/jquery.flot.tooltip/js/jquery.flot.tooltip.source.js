@@ -179,7 +179,6 @@
                         xAfterIndex = -1;
 
                     // Our search here assumes our data is sorted via the x-axis.
-                    // TODO: Improve efficiency somehow - search smaller sets of data.
                     for (var j = 1; j < series.data.length; j++) {
                         if (series.data[j - 1][0] <= pos.x && series.data[j][0] >= pos.x) {
                             xBeforeIndex = j - 1;
@@ -379,7 +378,6 @@
         else if (typeof item.series.lines !== "undefined" && item.series.lines.steps) {
             x = item.series.datapoints.points[item.dataIndex * 2];
             y = item.series.datapoints.points[item.dataIndex * 2 + 1];
-            // TODO: where to find custom text in this variant?
             customText = "";
         } else {
             x = item.series.data[item.dataIndex][0];
