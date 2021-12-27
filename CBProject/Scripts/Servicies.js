@@ -421,12 +421,8 @@ function createOrder(packageId) {
     getSubscriptionPackage(packageId, function (package) {
         getLogedUser(function (user) {
             if (user !== "null") {
-                doPaynment(user, package, function (response) {
-                    var data = JSON.parse(response);
-                    //console.log(data.token);
-                    //console.log(data.redirect_url);
-                    window.location.href = data.redirect_url;
-                });
+                //doPayment(user, package);
+                payPayPal();
             } else {
                 window.location.href = "/Account/Register";
             }
