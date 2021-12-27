@@ -23,5 +23,6 @@ namespace CBProject.HelperClasses.Interfaces
         EbooksRepository Ebooks { get; }
         SubscriptionPackageRepository SubscriptionPackages { get; }
         PaymentsRepository Payments { get; }
+        OrdersRepository Orders { get; }
     }
 }
