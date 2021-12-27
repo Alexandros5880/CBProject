@@ -96,6 +96,17 @@
         <div class="row plans">
 
         </div>
+
+        <!-- Payment Modal -->
+        <div class="modal fade paymentModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content payment-window">
+                    <!-- Payment Container (Here loads payment UI) -->
+
+                </div>
+            </div>
+        </div>
+
     </div>
     <br />
     <br />
@@ -130,21 +141,21 @@
                 data.forEach(d => {
                     $(".plans").append(
                         `
-                                <div class="col-md-4">
-                                    <div class="card card-plan text-center">
-                                        <div class="card-body">
-                                            <h5 class="card-title">${d.description}</h5>
-                                            <hr />
-                                            <h4 class="price">${d.price}€<small> / year</small> </h4>
-                                            <br />
-                                            <p class="card-text"><img class="img-icon-tik" src="/img/icons-tik.png" alt="tik" /> Duration: ${d.duration} </p>
-                                            <p class="card-text"><img class="img-icon-tik" src="/img/icons-tik.png" alt="tik" /> Started: ${d.startDate} </p>
-                                            <br />
-                                            <a class="btn btn-card-plan buy-button" data-value="${d.id}">Buy</a>
-                                        </div>
+                            <div class="col-md-4">
+                                <div class="card card-plan text-center">
+                                    <div class="card-body">
+                                        <h5 class="card-title">${d.description}</h5>
+                                        <hr />
+                                        <h4 class="price">${d.price}€<small> / year</small> </h4>
+                                        <br />
+                                        <p class="card-text"><img class="img-icon-tik" src="/img/icons-tik.png" alt="tik" /> Duration: ${d.duration} </p>
+                                        <p class="card-text"><img class="img-icon-tik" src="/img/icons-tik.png" alt="tik" /> Started: ${d.startDate} </p>
+                                        <br />
+                                        <a class="btn btn-card-plan buy-button" data-value="${d.id}" data-toggle="modal" data-target=".paymentModal">Buy</a>
                                     </div>
                                 </div>
-                            `
+                            </div>
+                        `
                     );
                 });
             });

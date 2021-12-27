@@ -245,7 +245,6 @@
     <Compile Include="Models\EntityModels\CategoryToCategory.cs" />
     <Compile Include="Models\EntityModels\ContentType.cs" />
     <Compile Include="Models\EntityModels\Ebook.cs" />
-    <Compile Include="Models\EntityModels\MyPayment.cs" />
     <Compile Include="Models\EntityModels\Payment.cs" />
     <Compile Include="Models\EntityModels\RatingToEbook.cs" />
     <Compile Include="Models\EntityModels\RatingToVideo.cs" />
@@ -1724,6 +1723,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\Payment.js" />
     <Content Include="Scripts\Ratting.js" />
     <Content Include="Scripts\Servicies.js" />
     <Content Include="Web.config" />

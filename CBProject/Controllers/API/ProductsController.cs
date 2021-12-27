@@ -1,15 +1,10 @@
 ﻿using CBProject.HelperClasses.Interfaces;
-using CBProject.Models.EntityModels;
 using CBProject.Models.ViewModels;
 using CBProject.Repositories.IdentityRepos;
 using CBProject.Repositories.IdentityRepos.Interfaces;
 using Microsoft.AspNet.Identity;
-using Newtonsoft.Json;
 using System.Data.Entity;
 using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -108,45 +103,6 @@ namespace CBProject.Controllers.API
         {
             var products = await this._unitOfWork.Categories.GetSearchByFiltersAsync(filters);
             return Ok(products);
-        }
-        [HttpPost]
-        [Route("api/products/payment/frame")]
-        public async Task<IHttpActionResult> GetPaynmentFrame(MyPayment payment)
-        {
-            var myPayment = new
-            {
-                transaction_details = new
-                {
-                    order_id = payment.TransactionDetails.OrderId,
-                    gross_amount = payment.TransactionDetails.GrossAmount
-                },
-                credit_card = new
-                {
-                    secure = payment.Secure
-                },
-                customer_details = new
-                {
-                    first_name = payment.User.FirstName,
-                    last_name = payment.User.LastName,
-                    email = payment.User.Email,
-                    phone = payment.User.PhoneNumber
-                }
-            };
-            const string baseUri = "https://app.sandbox.midtrans.com/snap/v1/transactions";
-            var httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", payment.Auth.UserName);
-            var json = JsonConvert.SerializeObject(myPayment);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var result = await httpClient.PostAsync(baseUri, content);
-            if (result.IsSuccessStatusCode)
-            {
-                return Ok(await result.Content.ReadAsStringAsync());
-            }
-            else
-            {
-                return Ok("Error");
-            }
         }
         [HttpGet]
         [Route("api/products/packages")]
