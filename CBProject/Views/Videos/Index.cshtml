@@ -170,14 +170,12 @@
                         @Html.AntiForgeryToken()
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         @Html.HiddenFor(model => item.ID)
-
                         <input name="rate"
                                class="rating rating-loading"
                                data-min="0"
                                data-max="5"
                                data-step="0.1"
                                value="@item.Rate"> <!-- onchange="$('#video-rating-form').submit()" -->
-
                         <input type="submit" value="Submit" />
                     }
                 </td>

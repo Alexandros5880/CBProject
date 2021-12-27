@@ -4,10 +4,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<link rel="stylesheet" href="~/Content/Ratting.css">
+
 <div class="main-details-row">
     <div class="row ">
         <div class="col-md-5">
-           
+
         </div>
         <div class="col-md-7">
             <p class="product-title"> @Html.DisplayFor(model => model.Title)</p>
@@ -18,11 +20,41 @@
                     <p id="raiting"><b>Rating</b></p>
                 </div>
                 <div class="col-md-10" id="stars">
-                    <span class="fa fa-star checked "></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        using (Html.BeginForm("AddRate", "Ebooks", new { ebookId = Model.ID }, FormMethod.Post, new { id = "ebook-rating-form" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            @Html.HiddenFor(model => Model.ID)
+
+                            <input id="input-rate-ebooks"
+                                   name="rate"
+                                   class="rating rating-loading"
+                                   data-min="0"
+                                   data-max="5"
+                                   data-step="0.1"
+                                   value="@Model.Rate">
+
+                            <input type="submit" value="Submit" />
+                        }
+                    }
+                    else
+                    {
+                        <input id="input-rate-ebooks"
+                               name="rate"
+                               class="rating rating-loading"
+                               data-min="0"
+                               data-max="5"
+                               data-step="0.1"
+                               value="@Model.Rate"
+                               disabled="disabled">
+                    }
+                    @*<span class="fa fa-star checked "></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star"></span>
+        <span class="fa fa-star"></span>*@
                 </div>
             </div>
             <button type="button" class="btn justify-content-end btn-subscribe">Subscribe Now</button>
@@ -46,7 +78,6 @@
         <h5><b>REQUIREMENTS</b></h5>
         <ul>
             <li>Nulla sagittis, turpis et molestie gravida</li>
-
             <li>Nulla sagittis, turpis et molestie gravida</li>
             <li>Nulla sagittis, turpis et molestie gravida</li>
             <li>Nulla sagittis, turpis et molestie gravida</li>
@@ -103,20 +134,20 @@
                 </div>
             </div>
         </div>
-       
-        </div>
-    </div>
-    
-<p>
 
+    </div>
+</div>
+
+@*<p>
     @Html.ActionLink("Back to List", "Index")
-</p>
+</p>*@
 
 
 
 
 @section scripts {
     <script>
+
         $(document).ready(function () {
 
             // Whene Subscribe Button Clicks
@@ -126,6 +157,10 @@
                 }
             });
 
+            $(".rating").addClass("already_set");
+
         });
-    </script>    
+    </script>
+
+    <script src="~/Scripts/Ratting.js"></script>
 }

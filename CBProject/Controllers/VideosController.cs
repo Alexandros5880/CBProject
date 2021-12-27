@@ -57,6 +57,13 @@ namespace CBProject.Controllers
             if (video == null)
                 throw new ArgumentNullException(nameof(video));
             var viewModel = Mapper.Map<Video, VideoViewModel>(video);
+            List<Rating> ratings = (List<Rating>)await this._ratingsRepo.GetAllFromVideoAsync(video);
+            float sum = 0.0f;
+            foreach (var rating in ratings)
+            {
+                sum += rating.Rate;
+            }
+            viewModel.Rate = sum / ratings.Count;
             return View("PublicDetails", viewModel);
         }
         [Authorize]

@@ -285,6 +285,7 @@
     <Compile Include="Repositories\IdentityRepos\Interfaces\IUsersRepo.cs" />
     <Compile Include="Repositories\IdentityRepos\RolesRepo.cs" />
     <Compile Include="Repositories\IdentityRepos\UsersRepo.cs" />
+    <Compile Include="Repositories\OrdersRepository.cs" />
     <Compile Include="Repositories\PaymentsRepository.cs" />
     <Compile Include="Repositories\RatingsRepository.cs" />
     <Compile Include="Repositories\ReviewsRepository.cs" />
@@ -1412,6 +1413,7 @@
     <Content Include="img\icon-video.png" />
     <Content Include="img\icons-person.png" />
     <Content Include="img\icons-calendar.png" />
+    <Content Include="img\loading.gif" />
     <Content Include="img\login_register.png" />
     <Content Include="img\tg.jpg" />
     <Content Include="Scripts\bootbox.js" />

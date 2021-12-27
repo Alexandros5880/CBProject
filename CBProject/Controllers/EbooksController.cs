@@ -67,6 +67,13 @@ namespace CBProject.Controllers
             if (ebook == null)
                 throw new ArgumentNullException(nameof(ebook));
             var viewModel = Mapper.Map<Ebook, EbookViewModel>(ebook);
+            List<Rating> ratings = (List<Rating>)await this._ratingsRepository.GetAllFromEbookAsync(ebook);
+            float sum = 0.0f;
+            foreach(var rating in ratings)
+            {
+                sum += rating.Rate;
+            }
+            viewModel.Rate = sum / ratings.Count;
             return View("PublicDetails", viewModel);
         }
         [Authorize]
