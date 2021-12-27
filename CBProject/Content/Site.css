@@ -83,6 +83,13 @@ textarea {
 
 
 /*-------Index---------*/
+.ourHolder:hover {
+    transform: translate(0, -7px);
+}
+
+a:hover {
+    cursor: pointer;
+}
 .bigImage {
     position: relative;
     display: inline-block;
@@ -142,7 +149,7 @@ textarea {
 }
 
 .card-body {
-    padding: 15px 10px 15px 10px;
+    padding: 0px 10px 15px 10px;
 }
 
     .card-body a {
@@ -153,13 +160,21 @@ textarea {
     background-color: white;
     color: #5B65E8;
     border: 2px solid #5B65E8;
+    font-size: 15px;
+    padding: 8px 16px;
 }
 
     .btn-card:hover {
         background-color: #5B65E8;
         color: white;
     }
-
+#card-video iframe {
+    width: 100%;
+}
+#card-video p{
+   margin-left:10px;
+    
+}
 #quote {
     margin-top: 20%;
     font-size: 45px;

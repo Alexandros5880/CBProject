@@ -18,9 +18,13 @@
    
 }
 
+.raiting{
+    font-size:16px;
+}
+
 .raiting, #stars{
     padding:0px !important;
-    margin:3% 0 3% 0;
+    margin:1% 0 2% 0;
 }
 
 .checked {
@@ -41,7 +45,7 @@
     }
 .details-bar {
     background-color: #ececec;
-    margin-top: -17%;
+    margin-top: -13%;
     border-radius: 10px;
 }
 
@@ -60,4 +64,8 @@
 .details-bar h5{
     margin-top:8%;
    
+}
+
+#accordion{
+    margin-top:5%;
 }

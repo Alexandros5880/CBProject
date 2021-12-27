@@ -15,11 +15,11 @@
             <br />
             <p class="product-description"> @Html.DisplayFor(model => model.Description)</p>
             <div class="row">
-                <div class="col-md-2 raiting" >
+                <div class="col-md-1 raiting">
 
-                    <p id="raiting">Rating</p>
+                    <p id="raiting"><b>Rating</b></p>
                 </div>
-                <div class="col-md-10">
+                <div class="col-md-10" id="stars">
                     <span class="fa fa-star checked "></span>
                     <span class="fa fa-star checked"></span>
                     <span class="fa fa-star checked"></span>
@@ -28,76 +28,90 @@
                 </div>
 
             </div>
-            
+            <button type="button" class="btn justify-content-end btn-subscribe">Subscribe Now</button>
+
         </div>
     </div>
 </div>
-<div>
-    <h4>Ebook</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            <p class="product-title"> book </p>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
+<div class="row">
+    <div class="col-md-3 col-md-offset-1 details-bar">
+        <img alt="Cover Foto" src=" @Html.DisplayFor(model => model.EbookImagePath)" style="width:50%;margin-top:5%;" alt="Card image cap" />
 
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
+        <h5><b>INCLUDES</b></h5>
+        <p><img class="img-icon-index" src="~/img/icons-person.png" alt="person" /> Programming with <b>@Html.DisplayFor(model => model.Creator.FullName)</b>  </p>
+        <p><img class="img-icon-index" src="~/img/icon-book.png" alt="video" /> 250 pages  </p>
+        <p><img class="img-icon-index" src="~/img/icons-calendar.png" alt="person" /> Upload Date <b>@Html.DisplayFor(model => model.UploadDate)</b> </p>
+        <p><img class="img-icon-index" src="~/img/icon-category.png" alt="video" /> Book category: @Html.DisplayFor(model => model.Category.Name) </p>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Thumbnail)
-        </dt>
+        <hr />
 
-        <dd>
-            @Html.DisplayFor(model => model.Thumbnail)
-        </dd>
+        <h5><b>REQUIREMENTS</b></h5>
+        <ul>
+            <li>Nulla sagittis, turpis et molestie gravida</li>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Url)
-        </dt>
+            <li>Nulla sagittis, turpis et molestie gravida</li>
+            <li>Nulla sagittis, turpis et molestie gravida</li>
+            <li>Nulla sagittis, turpis et molestie gravida</li>
+            <li>Nulla sagittis, turpis et molestie gravida</li>
+            <li>Nulla sagittis, turpis et molestie gravida</li>
+            <li>Nulla sagittis, turpis et molestie gravida</li>
+        </ul>
 
-        <dd>
-            @Html.DisplayFor(model => model.Url)
-        </dd>
+        <br />
+    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.UploadDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UploadDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Creator)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Creator)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Category)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Category)
-        </dd>
-
-    </dl>
-
-    </dl>
-</div>
+    <div class="col-md-5">
+        <div id="accordion">
+            <div class="card">
+                <div class="card-header" id="headingTwo">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            Collapsible Group Item #2
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                    <div class="card-body">
+                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="headingTwo">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            Collapsible Group Item #2
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                    <div class="card-body">
+                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="headingThree">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            Collapsible Group Item #3
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                    <div class="card-body">
+                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+        </div>
+    </div>
+    
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+
     @Html.ActionLink("Back to List", "Index")
 </p>

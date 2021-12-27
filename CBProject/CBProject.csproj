@@ -357,6 +357,8 @@
     <Content Include="assets\images\flags\us.jpg" />
     <Content Include="assets\images\home\codeme_bigImg1_index2-half.jpg" />
     <Content Include="assets\images\home\codeme_bigImg2_index.jpg" />
+    <Content Include="assets\images\icon-video.png" />
+    <Content Include="assets\images\icons-person.png" />
     <Content Include="assets\images\laptop-img.png" />
     <Content Include="assets\images\layouts\layout-1.jpg" />
     <Content Include="assets\images\layouts\layout-2.jpg" />
@@ -1404,6 +1406,12 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="assets\images\codeme_bigImg2_index.jpg" />
+    <Content Include="img\icon-book.png" />
+    <Content Include="img\icon-book_.png" />
+    <Content Include="img\icon-category.png" />
+    <Content Include="img\icon-video.png" />
+    <Content Include="img\icons-person.png" />
+    <Content Include="img\icons-calendar.png" />
     <Content Include="img\login_register.png" />
     <Content Include="img\tg.jpg" />
     <Content Include="Scripts\bootbox.js" />
