@@ -17,9 +17,9 @@
         border-style: solid;
     }
 
-        .item:hover {
-            transform: translate(0, -11px);
-        }
+    .item:hover {
+        transform: translate(0, -11px);
+    }
 
     .item-header {
         border-radius: 11px 11px 0 0;
@@ -53,9 +53,9 @@
 
 
     <!-- Payment Modal -->
-    <div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade paymentModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <div class="modal-content payment-window">
+            <div class="modal-content payment-window"> <!-- Payment Container (Here loads payment UI) -->
                 
             </div>
         </div>
@@ -104,7 +104,7 @@
                                     <p class="card-text"><img class="img-icon-tik" src="/img/icons-tik.png" alt="tik" /> Duration: ${d.duration} </p>
                                     <p class="card-text"><img class="img-icon-tik" src="/img/icons-tik.png" alt="tik" /> Started: ${d.startDate} </p>
                                     <br />
-                                    <a class="btn btn-card-plan buy-button" data-value="${d.id}" data-toggle="modal" data-target="#paymentModal">Buy</a>
+                                    <a class="btn btn-card-plan buy-button" data-value="${d.id}" data-toggle="modal" data-target=".paymentModal">Buy</a>
                                 </div>
                             </div>
                         </div>

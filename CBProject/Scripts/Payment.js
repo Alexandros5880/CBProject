@@ -1,13 +1,7 @@
 ﻿
 
-
-
-
-
-
-
-
-function payPayPal() {
+// PayPal
+function payPayPal(user, package) {
     function loadScript(url, callback) {
         const el = document.querySelector(`script[src="${url}"]`);
         if (!el) {
@@ -24,7 +18,7 @@ function payPayPal() {
                 return actions.order.create({
                     purchase_units: [{
                         amount: {
-                            value: '0.01',
+                            value: package.price,
                         },
                     }],
                 });
@@ -43,14 +37,6 @@ function payPayPal() {
 }
 
 
-function doPayment(user, package) {
-    doPaynment(user, package, function (response) {
-        var data = JSON.parse(response);
-        //console.log(data.token);
-        //console.log(data.redirect_url);
-        window.location.href = data.redirect_url;
-    });
-}
 
 
 

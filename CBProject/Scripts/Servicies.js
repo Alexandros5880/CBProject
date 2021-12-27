@@ -46,40 +46,6 @@ function getProductsByFilters(sendData, callback) {
     });
 }
 
-function doPaynment(user, package, callback) {
-    var payment = {
-        Auth: {
-            UserName: btoa("SB-Mid-server-XhC6ozM7V3n8334ljomw2aS5"),
-            Password: ""
-        },
-        TransactionDetails: {
-            OrderId: package.id,
-            GrossAmount: package.price
-        },
-        User: {
-            FirstName: user.firstName,
-            LastName: user.lastName,
-            Email: user.email
-        },
-        Method: "CreaditCard",
-        Secure: true
-    }
-
-    $.ajax({
-        type: "POST",
-        url: "/api/products/payment/frame",
-        data: payment,
-        success: function (response) {
-            if (response) {
-                callback(response);
-            }
-        },
-        error: function (error) {
-            console.log(error);
-        }
-    });
-}
-
 function getSubscriptionPackages(callback) {
     $.ajax({
         type: "GET",
@@ -422,7 +388,7 @@ function createOrder(packageId) {
         getLogedUser(function (user) {
             if (user !== "null") {
                 //doPayment(user, package);
-                payPayPal();
+                payPayPal(user, package);
             } else {
                 window.location.href = "/Account/Register";
             }
