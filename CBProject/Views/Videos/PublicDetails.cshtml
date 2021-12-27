@@ -42,9 +42,9 @@
             <div class="modal-header">
                 <div class="row">
                     <div class="col-md-6">
-                        <h3 class="modal-title">@Html.DisplayFor(model=> model.Title)</h3>
+                        <h3 class="modal-title">@Html.DisplayFor(model => model.Title)</h3>
                     </div>
-                  
+
                     <div class="col-md-1">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
@@ -65,7 +65,7 @@
 
 <div class="row">
     <div class="col-md-3 col-md-offset-1 details-bar">
-      
+
         <iframe class="embed-responsive-item" src="@Html.DisplayFor(model => model.VideoPath)" style="width:100%;height:250px;margin-top:5%;" allowfullscreen></iframe>
         @*<img alt="Cover Foto" src=" @Html.DisplayFor(model => model.Url)" style="width:50%;margin-top:5%;" alt="Card image cap" />*@
 
@@ -145,3 +145,27 @@
 
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+
+
+
+
+
+
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+
+            // Whene Subscribe Button Clicks
+            $(document.body).on('click', 'button', function () {
+                if (this.classList.contains('btn-subscribe')) {
+                    window.location.href = '/SubscriptionPackages/Subscribe';
+                }
+            });
+
+        });
+    </script>
+}
+
+

@@ -93,25 +93,25 @@
         margin-top: 33%;
     }
 
-    .subscribe-button {
+    /*.subscribe-button {
         border-radius: 11px;
         background-color: red;
         color: #ffffff;
         padding: 11px;
-    }
+    }*/
 
-    .subscribe-button:hover {
+/*    .subscribe-button:hover {
         color: #ffffff;
         background-color: darkred;
-    }
+    }*/
 
     a:hover {
         cursor: pointer;
     }
 
-    .item {
+    /*.item {
         height: 400px !important;
-    }
+    }*/
 
     #ourHolder:hover {
         transform: translate(0, -7px);
@@ -203,24 +203,23 @@
             getVideos(function (data) {
                 console.log(data);
                 $(".contents").empty();
-                data.forEach(video => {
+                data.slice(0, 8).forEach(video => {
                     $(".contents").append(
                         `
-                        <div class="col-md-4 ourHolder" id="ourHolder">
-                            <input type="hidden" id="category" name="category" value="${video.categoryId}">
+                        <div class="col-md-3 ourHolder" ">
+                            <input type="hidden" id="category" name="category" value="${video.category.id}">
                             <input type="hidden" id="content" name="content" value="${video.id}">
                             <input type="hidden" id="content-type" name="content-type" value="video">
                             <div class="card item" id="card-video">
-                                <div style="width:100%; text-align:center; margin-top: 5%;">
-                                    <img alt="Cover Foto" src="${video.videoImagePath}" style="height:150px;" />
-                                    <h4 style="margin-top: 5%;">${video.title}</h4>
-                                </div>
-                                <div class="card-body text-center">
-                                    <p class="card-text"> ${video.description} </p>
-                                    <p class="card-text"> ${video.title}  </p>
+                                <iframe class="embed-responsive-item" src="${video.videoPath}" allowfullscreen></iframe>
+                                <!--<img alt="Cover Foto" src="${video.videoImagePath}" style="width:100%;" />-->
+                                <p><b>${video.title}</b></p>
+                                <div class="card-body">
+                                    <p><img class="img-icon-index" src="../assets/images/icons-person.png" alt="person" /> Programming with  </p>
+                                    <p><img class="img-icon-index" src="../assets/images/icon-video.png" alt="video" /> hours on-demand video  </p>
                                     <br />
                                     <button class="btn btn-card btn-lg details">Details</button>
-                                    <button class="btn btn-card btn-lg btn-open-modal" data-toggle="modal" data-target="#modal-fullscreen-xl">
+                                    <button class="btn btn-card btn-lg btn-open-modal more" data-toggle="modal" data-target="#modal-fullscreen-xl">
                                         Play
                                     </button>
                                 </div>
@@ -317,49 +316,48 @@
                     data.videos.forEach(video => {
                         $(".contents").append(
                             `
-                                <div class="col-md-4 ourHolder" id="ourHolder">
-                                    <input type="hidden" id="category" name="category" value="${video.categoryId}">
-                                    <input type="hidden" id="content" name="content" value="${video.id}">
-                                    <input type="hidden" id="content-type" name="content-type" value="video">
-                                    <div class="card item" id="card-video">
-                                        <div style="width:100%; text-align:center; margin-top: 5%;">
-                                            <img alt="Cover Foto" src="${video.videoImagePath}" style="height:150px;" />
-                                            <h4 style="margin-top: 5%;">${video.title}</h4>
-                                        </div>
-                                        <div class="card-body text-center">
-                                            <p class="card-text"> ${video.description} </p>
-                                            <p class="card-text"> ${video.title}  </p>
-                                            <br />
-                                            <button class="btn btn-card btn-lg details">Details</button>
-                                            <button class="btn btn-card btn-lg btn-open-modal" data-toggle="modal" data-target="#modal-fullscreen-xl">
-                                                Play
+                            <div class="col-md-3 ourHolder" ">
+                                <input type="hidden" id="category" name="category" value="${video.categoryId}">
+                                <input type="hidden" id="content" name="content" value="${video.id}">
+                                <input type="hidden" id="content-type" name="content-type" value="video">
+                                <div class="card item" id="card-video">
+                                    <iframe class="embed-responsive-item" src="${video.videoPath}" allowfullscreen></iframe>
+                                    <!--<img alt="Cover Foto" src="${video.videoImagePath}" style="width:100%;" />-->
+                                    <p><b>${video.title}</b></p>
+                                    <div class="card-body">
+                                        <p><img class="img-icon-index" src="../assets/images/icons-person.png" alt="person" /> Programming with  </p>
+                                        <p><img class="img-icon-index" src="../assets/images/icon-video.png" alt="video" /> hours on-demand video  </p>
+                                        <br />
+                                        <button class="btn btn-card btn-lg details">Details</button>
+                                        <button class="btn btn-card btn-lg btn-open-modal more" data-toggle="modal" data-target="#modal-fullscreen-xl">
+                                            Play
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Video Modal -->
+                            <div class="modal modal-fullscreen-xl" id="modal-fullscreen-xl" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">${video.title}</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                    </div>
-                                </div>
-
-                                <!-- Video Modal -->
-                                <div class="modal modal-fullscreen-xl" id="modal-fullscreen-xl" tabindex="-1" role="dialog" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title">${video.title}</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
+                                        <div class="modal-body">
+                                            <div class="embed-responsive embed-responsive-16by9">
+                                                <iframe class="embed-responsive-item" src="${video.videoPath}" allowfullscreen></iframe>
                                             </div>
-                                            <div class="modal-body">
-                                                <div class="embed-responsive embed-responsive-16by9">
-                                                    <iframe class="embed-responsive-item" src="${video.videoPath}" allowfullscreen></iframe>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                         </div>
                                     </div>
                                 </div>
-                                `
+                            </div>
+                            `
                         );
                     });
                 }
