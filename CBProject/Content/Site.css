@@ -83,9 +83,7 @@ textarea {
 
 
 /*-------Index---------*/
-.ourHolder:hover {
-    transform: translate(0, -7px);
-}
+
 
 a:hover {
     cursor: pointer;
@@ -154,6 +152,7 @@ a:hover {
 
     .card-body a {
         font-weight: bold;
+        width: 25%;
     }
 
 .btn-card {
@@ -161,8 +160,20 @@ a:hover {
     color: #5B65E8;
     border: 2px solid #5B65E8;
     font-size: 15px;
-    padding: 8px 16px;
+    padding: 5px 10px;
 }
+.btn-card-play {
+    background-color: white;
+    color: #2FB8A9;
+    border: 2px solid #2FB8A9;
+    font-size: 15px;
+    padding: 5px 10px;
+}
+    .btn-card-play:hover {
+        background-color: #2FB8A9;
+        color:white;
+    }
+
 
     .btn-card:hover {
         background-color: #5B65E8;
@@ -173,6 +184,7 @@ a:hover {
 }
 #card-video p{
    margin-left:10px;
+ 
     
 }
 #quote {
@@ -180,9 +192,38 @@ a:hover {
     font-size: 45px;
     font-weight: bold;
 }
-.quote-img{
-    padding: 0px;
+
+#best-sellers{
+    margin-top:8%;
 }
+#card-ebook img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top:10px;
+}
+.ourHolder:hover {
+    transform: translate(0, -7px);
+    
+}
+.ourHolder{
+    margin-bottom:7%;
+}
+.ebook-card a {
+    padding: 7px 15px;
+    color: #5B65E8;
+    border: 2px solid #5B65E8;
+    border-radius: 5px;
+    
+}
+    .ebook-card a:hover {
+        color: white;
+        background-color: #5B65E8;
+        text-decoration:none;
+    }
+.quote-img {
+     padding: 0px;
+ }
 .card-title {
     color: #5B65E8;
     font-size: 22px;
@@ -199,13 +240,15 @@ a:hover {
 }
 
 .btn-card-plan {
-    background-color: #5B65E8;
+    background-color: #52d2c4;
     color: white;
 }
 
     .btn-card-plan:hover {
         background-color: #2FB8A9;
         color: white;
+        border-bottom: 3px solid #26978a;
+        border-right: 3px solid #26978a;
     }
 
 .card-plan:hover {

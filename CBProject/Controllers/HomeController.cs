@@ -1,4 +1,5 @@
 using CBProject.HelperClasses.Interfaces;
+using CBProject.Models.ViewModels;
 using CBProject.Repositories;
 using CBProject.Repositories.IdentityRepos;
 using CBProject.Repositories.IdentityRepos.Interfaces;
@@ -22,7 +23,10 @@ namespace CBProject.Controllers
         }
         public async Task<ActionResult> Index()
         {
-            return View();
+            var viewModel = new HomeViewModel();
+            viewModel.Ebooks = await this._ebooksRepository.GetAllAsync();
+           
+            return View(viewModel);
         }
         public async Task<ActionResult> About()
         {
