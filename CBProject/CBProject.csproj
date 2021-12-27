@@ -235,9 +235,9 @@
     <Compile Include="HelperClasses\UnitOfWork.cs" />
     <Compile Include="HelperClasses\Interfaces\IUnitOfWork.cs" />
     <Compile Include="HelperClasses\StaticImfo.cs" />
-    <Compile Include="Migrations\202112231837116_Initial.cs" />
-    <Compile Include="Migrations\202112231837116_Initial.Designer.cs">
-      <DependentUpon>202112231837116_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\202112271529561_Initial.cs" />
+    <Compile Include="Migrations\202112271529561_Initial.Designer.cs">
+      <DependentUpon>202112271529561_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -245,6 +245,7 @@
     <Compile Include="Models\EntityModels\CategoryToCategory.cs" />
     <Compile Include="Models\EntityModels\ContentType.cs" />
     <Compile Include="Models\EntityModels\Ebook.cs" />
+    <Compile Include="Models\EntityModels\Order.cs" />
     <Compile Include="Models\EntityModels\Payment.cs" />
     <Compile Include="Models\EntityModels\RatingToEbook.cs" />
     <Compile Include="Models\EntityModels\RatingToVideo.cs" />
@@ -1937,8 +1938,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202112231837116_Initial.resx">
-      <DependentUpon>202112231837116_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202112271529561_Initial.resx">
+      <DependentUpon>202112271529561_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

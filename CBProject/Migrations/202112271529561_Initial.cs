@@ -295,15 +295,21 @@ namespace CBProject.Migrations
                 .PrimaryKey(t => t.ID);
             
             CreateTable(
-                "dbo.AspNetRoles",
+                "dbo.Orders",
                 c => new
                     {
-                        Id = c.String(nullable: false, maxLength: 128),
-                        Level = c.Int(nullable: false),
-                        Name = c.String(nullable: false, maxLength: 256),
+                        ID = c.Int(nullable: false, identity: true),
+                        IsClose = c.Boolean(nullable: false),
+                        CreatedDate = c.DateTime(nullable: false),
+                        LastUpdatedDate = c.DateTime(nullable: false),
+                        SubscriptionPackage_ID = c.Int(nullable: false),
+                        User_Id = c.String(nullable: false, maxLength: 128),
                     })
-                .PrimaryKey(t => t.Id)
-                .Index(t => t.Name, unique: true, name: "RoleNameIndex");
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.SubscriptionPackages", t => t.SubscriptionPackage_ID, cascadeDelete: true)
+                .ForeignKey("dbo.AspNetUsers", t => t.User_Id, cascadeDelete: true)
+                .Index(t => t.SubscriptionPackage_ID)
+                .Index(t => t.User_Id);
             
             CreateTable(
                 "dbo.SubscriptionPackages",
@@ -324,14 +330,27 @@ namespace CBProject.Migrations
                 .Index(t => t.ContentType_ID)
                 .Index(t => t.Payment_ID);
             
+            CreateTable(
+                "dbo.AspNetRoles",
+                c => new
+                    {
+                        Id = c.String(nullable: false, maxLength: 128),
+                        Level = c.Int(nullable: false),
+                        Name = c.String(nullable: false, maxLength: 256),
+                    })
+                .PrimaryKey(t => t.Id)
+                .Index(t => t.Name, unique: true, name: "RoleNameIndex");
+            
         }
         
         public override void Down()
         {
+            DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
+            DropForeignKey("dbo.Orders", "User_Id", "dbo.AspNetUsers");
+            DropForeignKey("dbo.Orders", "SubscriptionPackage_ID", "dbo.SubscriptionPackages");
             DropForeignKey("dbo.SubscriptionPackages", "Payment_ID", "dbo.Payments");
             DropForeignKey("dbo.AspNetUsers", "SubscriptionPackage_ID", "dbo.SubscriptionPackages");
             DropForeignKey("dbo.SubscriptionPackages", "ContentType_ID", "dbo.ContentTypes");
-            DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
             DropForeignKey("dbo.Ebooks", "CreatorId", "dbo.AspNetUsers");
             DropForeignKey("dbo.TagToVideos", "VideoId", "dbo.Videos");
             DropForeignKey("dbo.TagToVideos", "TagId", "dbo.Tags");
@@ -357,9 +376,11 @@ namespace CBProject.Migrations
             DropForeignKey("dbo.CategoryToCategories", "Category_ID", "dbo.Categories");
             DropForeignKey("dbo.CategoryToCategories", "MasterCategoryId", "dbo.Categories");
             DropForeignKey("dbo.CategoryToCategories", "ChiledCategoryId", "dbo.Categories");
+            DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropIndex("dbo.SubscriptionPackages", new[] { "Payment_ID" });
             DropIndex("dbo.SubscriptionPackages", new[] { "ContentType_ID" });
-            DropIndex("dbo.AspNetRoles", "RoleNameIndex");
+            DropIndex("dbo.Orders", new[] { "User_Id" });
+            DropIndex("dbo.Orders", new[] { "SubscriptionPackage_ID" });
             DropIndex("dbo.TagToEbooks", new[] { "EbookId" });
             DropIndex("dbo.TagToEbooks", new[] { "TagId" });
             DropIndex("dbo.TagToVideos", new[] { "VideoId" });
@@ -388,8 +409,9 @@ namespace CBProject.Migrations
             DropIndex("dbo.CategoryToCategories", new[] { "Category_ID" });
             DropIndex("dbo.CategoryToCategories", new[] { "ChiledCategoryId" });
             DropIndex("dbo.CategoryToCategories", new[] { "MasterCategoryId" });
-            DropTable("dbo.SubscriptionPackages");
             DropTable("dbo.AspNetRoles");
+            DropTable("dbo.SubscriptionPackages");
+            DropTable("dbo.Orders");
             DropTable("dbo.ContentTypes");
             DropTable("dbo.TagToEbooks");
             DropTable("dbo.Tags");
