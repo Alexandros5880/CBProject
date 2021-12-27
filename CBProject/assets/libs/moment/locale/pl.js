@@ -38,7 +38,6 @@
             if (!momentToFormat) {
                 return monthsNominative;
             } else if (format === '') {
-                // Hack: if format empty we know this is used to generate
                 // RegExp by moment. Give then back both valid forms of months
                 // in RegExp ready format.
                 return '(' + monthsSubjective[momentToFormat.month()] + '|' + monthsNominative[momentToFormat.month()] + ')';
