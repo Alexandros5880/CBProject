@@ -56,6 +56,10 @@ namespace CBProject.Repositories
                 .Include(v => v.Creator)
                 .ToList();
         }
+        public IQueryable<Video> GetAllQuerable()
+        {
+            return this._context.Videos;
+        }
         public ICollection<Video> GetAllEmpty()
         {
             
