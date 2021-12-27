@@ -92,6 +92,7 @@ namespace CBProject.Models
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<Payment> Payments { get; set; }
+        public DbSet<Order> Orders { get; set; }
         public DbSet<TagToVideo> TagsToVideos { get; set; }
         public DbSet<TagToEbook> TagsToEbooks { get; set; }
         public DbSet<RatingToEbook> RatingsToEbooks { get; set; }
