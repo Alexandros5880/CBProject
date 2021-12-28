@@ -2,6 +2,10 @@
   "title": "Dashboard | Skote - Admin & Dashboard Vorlage",
   "t-menu": "Speisekarte",
 
+  "t-orders": "Aufträge",
+  "t-wallet": "Brieftasche",
+  "t-related": "Verwandt",
+  "t-requirements": "Anforderungen",
   "t-home": "Heim",
   "t-lessons": "Unterricht",
   "t-manage": "Verwalten",
@@ -11,7 +15,6 @@
   "t-users": "Benutzer",
   "t-roles": "Rollen",
   "t-deleted-users": "Gelöschte Benutzer",
-  "t-actions": "Aktionen",
   "t-categories": "Kategorien",
   "t-content-types": "ContentTypes",
   "t-payments": "Inhaltstypen",

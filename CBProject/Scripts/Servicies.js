@@ -395,3 +395,9 @@ function createOrder(packageId) {
         });
     });
 }
+
+function addRequirements(modelId, content, type) {
+    console.log(modelId)
+    console.log(`ContentType: ${type}`);
+    console.log(`Content: ${content}`);
+}
