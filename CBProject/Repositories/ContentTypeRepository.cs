@@ -39,6 +39,14 @@ namespace CBProject.Repositories
                 throw new ArgumentNullException(nameof(contentType));
             this._context.ContentTypes.Remove(contentType);
         }
+        public async Task DeleteAsync(int? id)
+        {
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
+            var content = await this._context.ContentTypes
+                                    .FirstOrDefaultAsync(c => c.ID == id);
+            this._context.ContentTypes.Remove(content);
+        }
         public ContentType Get(int? id)
         {
             if (id == null)

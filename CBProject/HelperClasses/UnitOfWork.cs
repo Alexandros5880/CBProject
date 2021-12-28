@@ -27,6 +27,7 @@ namespace CBProject.HelperClasses
         public SubscriptionPackageRepository SubscriptionPackages { get; protected set; }
         public PaymentsRepository Payments { get; protected set; }
         public OrdersRepository Orders { get; protected set; }
+        public RequirementsRepository Requirements { get; protected set; }
         public UnitOfWork(IApplicationDbContext context)
         {
             this.Context = (ApplicationDbContext)context;
@@ -45,6 +46,7 @@ namespace CBProject.HelperClasses
             this.SubscriptionPackages = new SubscriptionPackageRepository(this);
             this.Payments = new PaymentsRepository(this);
             this.Orders = new OrdersRepository(this);
+            this.Requirements = new RequirementsRepository(this);
         }
         protected virtual void Dispose(bool disposing)
         {
@@ -67,6 +69,7 @@ namespace CBProject.HelperClasses
                     this.Ebooks.Dispose();
                     this.Payments.Dispose();
                     this.Orders.Dispose();
+                    this.Requirements.Dispose();
                 }
                 disposedValue = true;
             }

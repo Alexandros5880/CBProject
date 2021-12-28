@@ -24,5 +24,6 @@ namespace CBProject.HelperClasses.Interfaces
         SubscriptionPackageRepository SubscriptionPackages { get; }
         PaymentsRepository Payments { get; }
         OrdersRepository Orders { get; }
+        RequirementsRepository Requirements { get; }
     }
 }

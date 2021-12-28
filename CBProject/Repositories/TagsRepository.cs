@@ -33,6 +33,14 @@ namespace CBProject.Repositories
                 throw new Exception("Tag Not Found");
             this._context.Tags.Remove(tag);
         }
+        public async Task DeleteAsync(int? id)
+        {
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
+            var tag = await this._context.Tags
+                                .FirstOrDefaultAsync(t => t.ID == id);
+            this._context.Tags.Remove(tag);
+        }
         public async Task DeleteAllAsync(int? id)
         {
             if (id == null)

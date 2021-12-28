@@ -9,6 +9,7 @@ namespace CBProject.Repositories.Interfaces
         void Add(T obj);
         void Update(T obj);
         void Delete(int? id);
+        Task DeleteAsync(int? id);
         T Get(int? id);
         Task<T> GetAsync(int? id);
         T GetEmpty(int? id);

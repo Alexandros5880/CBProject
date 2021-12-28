@@ -33,6 +33,14 @@ namespace CBProject.Repositories
                 throw new ArgumentNullException(nameof(review));
             this._context.Reviews.Remove(review);
         }
+        public async Task DeleteAsync(int? id)
+        {
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
+            var review = await this._context.Reviews
+                                            .FirstOrDefaultAsync(r => r.ID == id);
+            this._context.Reviews.Remove(review);
+        }
         public async Task DeleteAllAsync(int? id)
         {
             if (id == null)

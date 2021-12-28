@@ -2945,5 +2945,65 @@ namespace CBProject.HelperClasses
                 throw new Exception(ex.Message);
             }
         }
+        public static void CreateRequiremenets(ApplicationDbContext context)
+        {
+            context.Requirements.Add(
+                    new Requirement()
+                    {
+                        ID = 1,
+                        Content = "Requirements 1"
+                    }
+                );
+            context.Requirements.Add(
+                    new Requirement()
+                    {
+                        ID = 2,
+                        Content = "Requirements 2"
+                    }
+                );
+            context.Requirements.Add(
+                    new Requirement()
+                    {
+                        ID = 3,
+                        Content = "Requirements 3"
+                    }
+                );
+            context.SaveChanges();
+            int counter = 1;
+            var ebooks = context.Ebooks.ToList();
+            foreach (var ebook in ebooks)
+            {
+                context.RequirementsToEbooks.Add(
+                        new RequirementToEbook()
+                        {
+                            ID = ebook.ID,
+                            Requirement = context.Requirements.FirstOrDefault(r => r.ID == counter),
+                            Ebook = ebook
+                        }
+                    );
+                if (counter < 3)
+                    counter++;
+                else
+                    counter = 1;
+            }
+            counter = 1;
+            var videos = context.Videos.ToList();
+            foreach (var video in videos)
+            {
+                context.RequirementsToVideos.Add(
+                        new RequirementToVideo()
+                        {
+                            ID = video.ID,
+                            Requirement = context.Requirements.FirstOrDefault(r => r.ID == counter),
+                            Video = video
+                        }
+                    );
+                if (counter < 3)
+                    counter++;
+                else
+                    counter = 1;
+            }
+            context.SaveChanges();
+        }
     }
 }

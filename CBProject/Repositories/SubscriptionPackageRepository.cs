@@ -33,6 +33,14 @@ namespace CBProject.Repositories
                 throw new ArgumentNullException(nameof(obj));
             this._context.SubcriptionPackages.Remove(obj);
         }
+        public async Task DeleteAsync(int? id)
+        {
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
+            var sub = await this._context.SubcriptionPackages
+                                .FirstOrDefaultAsync(s => s.ID == id);
+            this._context.SubcriptionPackages.Remove(sub);
+        }
         public SubscriptionPackage Get(int? id)
         {
             if (id == null)

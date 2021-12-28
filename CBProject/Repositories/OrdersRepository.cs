@@ -34,6 +34,14 @@ namespace CBProject.Repositories
                 throw new ArgumentNullException(nameof(order));
             this._context.Orders.Remove(order);
         }
+        public async Task DeleteAsync(int? id)
+        {
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
+            var order = await this._context.Orders
+                        .FirstOrDefaultAsync(o => o.ID == id);
+            this._context.Orders.Remove(order);
+        }
         public Order Get(int? id)
         {
             if (id == null)

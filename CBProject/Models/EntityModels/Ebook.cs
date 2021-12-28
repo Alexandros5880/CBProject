@@ -17,6 +17,7 @@ namespace CBProject.Models.EntityModels
         public string EbookImagePath { get; set; }
         public string EbookFilePath { get; set; }
         public string Url { get; set; }
+        public string Content { get; set; }
         [DataType(DataType.Date)]
         public DateTime UploadDate { get; set; }
         [ForeignKey("Creator")]

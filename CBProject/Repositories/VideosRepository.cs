@@ -42,6 +42,14 @@ namespace CBProject.Repositories
                 throw new ArgumentNullException(nameof(video));
             this._context.Videos.Remove(video);
         }
+        public async Task DeleteAsync(int? id)
+        {
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
+            var video = await this._context.Videos
+                                    .FirstOrDefaultAsync(v => v.ID == id);
+            this._context.Videos.Remove(video);
+        }
         public async Task DeleteAllAsync(int? id)
         {
             if (id == null)

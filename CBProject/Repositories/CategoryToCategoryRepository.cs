@@ -106,6 +106,14 @@ namespace CBProject.Repositories
                 throw new ArgumentNullException(nameof(categoryToCategory));
             this._context.CategoriesToCategories.Remove(categoryToCategory);
         }
+        public async Task DeleteAsync(int? id)
+        {
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
+            var catToCat = await this._context.CategoriesToCategories
+                .FirstOrDefaultAsync(c => c.ID == id);
+            this._context.CategoriesToCategories.Remove(catToCat);
+        }
         public CategoryToCategory Get(int? id)
         {
             if (id == null)
