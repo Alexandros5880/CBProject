@@ -16,6 +16,7 @@ namespace CBProject.Models
         public string Thumbnail { get; set; }
         public string VideoImagePath { get; set; }
         public string VideoPath { get; set; }
+        public string Content { get; set; }
         [MaxLength]
         [Required]
         public string Description { get; set; }
@@ -31,5 +32,7 @@ namespace CBProject.Models
         public ICollection<TagToVideo> TagsToVideos { get; set; }
         public ICollection<RatingToVideo> RatingsToVideos { get; set; }
         public ICollection<ReviewToVideo> ReviewToVideos { get; set; }
+        public ICollection<RequirementToEbook> RequirementsToEbooks { get; set; }
+        public ICollection<RequirementToEbook> RequirementsToVideos { get; set; }
     }
 }

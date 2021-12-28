@@ -235,9 +235,9 @@
     <Compile Include="HelperClasses\UnitOfWork.cs" />
     <Compile Include="HelperClasses\Interfaces\IUnitOfWork.cs" />
     <Compile Include="HelperClasses\StaticImfo.cs" />
-    <Compile Include="Migrations\202112271529561_Initial.cs" />
-    <Compile Include="Migrations\202112271529561_Initial.Designer.cs">
-      <DependentUpon>202112271529561_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\202112281144544_Initial.cs" />
+    <Compile Include="Migrations\202112281144544_Initial.Designer.cs">
+      <DependentUpon>202112281144544_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -249,6 +249,9 @@
     <Compile Include="Models\EntityModels\Payment.cs" />
     <Compile Include="Models\EntityModels\RatingToEbook.cs" />
     <Compile Include="Models\EntityModels\RatingToVideo.cs" />
+    <Compile Include="Models\EntityModels\Requirement.cs" />
+    <Compile Include="Models\EntityModels\RequirementToEbook.cs" />
+    <Compile Include="Models\EntityModels\RequirementToVideo.cs" />
     <Compile Include="Models\EntityModels\ReviewToEbook.cs" />
     <Compile Include="Models\EntityModels\ReviewToVideo.cs" />
     <Compile Include="Models\EntityModels\SubscriptionPackage.cs" />
@@ -1940,8 +1943,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202112271529561_Initial.resx">
-      <DependentUpon>202112271529561_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202112281144544_Initial.resx">
+      <DependentUpon>202112281144544_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

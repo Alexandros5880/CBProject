@@ -93,12 +93,15 @@ namespace CBProject.Models
         public DbSet<Tag> Tags { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<Requirement> Requirements { get; set; }
         public DbSet<TagToVideo> TagsToVideos { get; set; }
         public DbSet<TagToEbook> TagsToEbooks { get; set; }
         public DbSet<RatingToEbook> RatingsToEbooks { get; set; }
         public DbSet<RatingToVideo> RatingsToVideos { get; set; }
         public DbSet<ReviewToVideo> ReviewsToVideos { get; set; }
         public DbSet<ReviewToEbook> ReviewsToEbooks { get; set; }
+        public DbSet<RequirementToEbook> RequirementsToEbooks { get; set; }
+        public DbSet<RequirementToVideo> RequirementsToVideos { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection")
@@ -116,6 +119,11 @@ namespace CBProject.Models
             //modelBuilder.Configurations.Add(new TagConfig());
             //modelBuilder.Configurations.Add(new VideoConfig());
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<CategoryToCategory>()
+                        .HasRequired<Category>(c => c.ChiledCategory)
+                        .WithMany()
+                        .WillCascadeOnDelete(false);
 
         }
     }

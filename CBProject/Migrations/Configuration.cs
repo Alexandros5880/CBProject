@@ -22,6 +22,7 @@ namespace CBProject.Migrations
             CreateData.CreateTags(context);
             CreateData.CreateRating(context);
             CreateData.CreateReview(context);
+            CreateData.CreateRequiremenets(context);
         }
     }
 }
