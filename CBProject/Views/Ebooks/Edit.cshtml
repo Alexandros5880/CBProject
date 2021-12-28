@@ -97,18 +97,32 @@
     </div>
 }
 
-<div class="form-group">
-    @Html.Label("Add Requrement", htmlAttributes: new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        <div style="margin:5%;">
-            <div class="form-group">
-                <textarea class="form-control rounded-0" id="add-requirement-textarea-Ebook" rows="5"></textarea>
-                <br />
-                <button class="btn btn-dark" onclick="addRequirements(@Model.ID, $('#add-requirement-textarea-Ebook').val(), 'ebook');">Add</button>
-            </div>
+<div class="form-horizontal">
+
+    <div class="form-group">
+        @Html.Label("Add Requrement", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <textarea class="form-control rounded-0" id="add-requirement-textarea-Ebook" rows="2"></textarea>
+            <br />
+            <button class="btn btn-dark" onclick="addRequirements(@Model.ID, $('#add-requirement-textarea-Ebook').val(), 'ebook');">Add</button>
+        </div>
+    </div>
+    <br/>
+    <div class="form-group">
+        @Html.Label("Remove Requirement", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <select class="form-control" id="remove-requirement-textarea-Ebook">
+                @foreach (var req in Model.Requirements)
+                {
+                    <option value="@req.ID">@req.Content</option>
+                }
+            </select>
+            <br />
+            <button class="btn btn-dark" onclick="RemoveRequirements(@Model.ID, $('#remove-requirement-textarea-Ebook option:selected').val(), 'ebook');">Remove</button>
         </div>
     </div>
 </div>
+
 
 <div>
     @Html.ActionLink("Back to List", "Index")
@@ -116,5 +130,5 @@
 
 @section Scripts {
 
-    
+
 }

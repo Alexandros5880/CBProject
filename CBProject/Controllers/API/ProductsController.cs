@@ -264,5 +264,31 @@ namespace CBProject.Controllers.API
         {
             return Ok(await this._unitOfWork.Payments.GetAsync(id));
         }
+
+        // TODO: Fix Requirements API Controller Functions in ProductsController.cs
+        [HttpPost]
+        [Route("api/ebook/requarements/add")]
+        public async Task<IHttpActionResult> AddEbookRequarement(int id)
+        {
+            return Ok(await this._unitOfWork.Payments.GetAsync(id));
+        }
+        [HttpDelete]
+        [Route("api/ebook/requarements/remove")]
+        public async Task<IHttpActionResult> RemoveEbookRequarement(int id)
+        {
+            return Ok(await this._unitOfWork.Payments.GetAsync(id));
+        }
+        [HttpPost]
+        [Route("api/video/requarements/add")]
+        public async Task<IHttpActionResult> AddVideoRequarement(int id)
+        {
+            return Ok(await this._unitOfWork.Payments.GetAsync(id));
+        }
+        [HttpDelete]
+        [Route("api/video/requarements/remove")]
+        public async Task<IHttpActionResult> RemoveVideoRequarement(int id)
+        {
+            return Ok(await this._unitOfWork.Payments.GetAsync(id));
+        }
     }
 }

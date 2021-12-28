@@ -97,15 +97,27 @@
     </div>
 }
 
-<div class="form-group">
-    @Html.Label("Add Requrement", htmlAttributes: new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        <div style="margin:5%;">
-            <div class="form-group">
-                <textarea class="form-control rounded-0" id="add-requirement-textarea-Video" rows="5"></textarea>
-                <br />
-                <button class="btn btn-dark" onclick="addRequirements(@Model.ID, $('#add-requirement-textarea-Video').val(), 'video');">Add</button>
-            </div>
+<div class=" class=" form-horizontal"">
+    <div class="form-group">
+        @Html.Label("Add Requrement", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <textarea class="form-control rounded-0" id="add-requirement-textarea-Video" rows="2"></textarea>
+            <br />
+            <button class="btn btn-dark" onclick="addRequirements(@Model.ID, $('#add-requirement-textarea-Video').val(), 'video');">Add</button>
+        </div>
+    </div>
+    <br />
+    <div class="form-group">
+        @Html.Label("Remove Requirement", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <select class="form-control" id="remove-requirement-textarea-Video">
+                @foreach (var req in Model.Requirements)
+                {
+                    <option value="@req.ID">@req.Content</option>
+                }
+            </select>
+            <br />
+            <button class="btn btn-dark" onclick="RemoveRequirements(@Model.ID, $('#remove-requirement-textarea-Video option:selected').val(), 'video');">Remove</button>
         </div>
     </div>
 </div>

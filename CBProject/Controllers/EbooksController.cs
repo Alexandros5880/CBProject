@@ -157,6 +157,7 @@ namespace CBProject.Controllers
             viewModel.Categories = new SelectList(categories, "ID", "Name");
             var users = await this._usersRepo.GetAllAsync();
             viewModel.Users = new SelectList(users, "Id", "FullName");
+            viewModel.Requirements = await this._ebooksRepository.GetRequirementsAsync(ebook.ID);
             return View(viewModel);
          
         }

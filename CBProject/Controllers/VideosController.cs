@@ -141,6 +141,7 @@ namespace CBProject.Controllers
             var viewModel = Mapper.Map<Video, VideoViewModel>(video);
             viewModel.OtherUsers = await this._usersRepo.GetAllAsync();
             viewModel.OtherCategory = await this._categoriesRepo.GetAllAsync();
+            viewModel.Requirements = await this._videoRepo.GetRequirementsAsync(video.ID);
             return View(viewModel);
         }
         [HttpPost]
