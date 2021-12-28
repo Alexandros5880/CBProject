@@ -17,6 +17,7 @@ namespace CBProject.Models.ViewModels
         public string VideoPath { get; set; }
         public string Description { get; set; }
         public float Rate { get; set; }
+        public string Content { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime UploadDate { get; set; }
@@ -27,5 +28,6 @@ namespace CBProject.Models.ViewModels
         public string Url { get; set; }
         public ICollection<ApplicationUser> OtherUsers { get; set; }
         public ICollection<Category> OtherCategory { get; set; }
+        public ICollection<Requirement> Requirements { get; set; }
     }
 }

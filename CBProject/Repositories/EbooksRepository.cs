@@ -155,8 +155,7 @@ namespace CBProject.Repositories
             return this._context.Ebooks;
         }
 
-
-        public async Task<float> GetRatingsAverageAsync(int ebookId)
+        public async Task<float> GetRatingsAverageAsync(int? ebookId)
         {
             var ratings = await this.GetRetingsAsync(ebookId);
             float sum = 0;
@@ -166,7 +165,7 @@ namespace CBProject.Repositories
             }
             return sum / ratings.Count;
         }
-        public async Task<ICollection<Rating>> GetRetingsAsync(int ebookId)
+        public async Task<ICollection<Rating>> GetRetingsAsync(int? ebookId)
         {
             var ratingsToEbooks = await this._context.RatingsToEbooks
                 .Where(r => r.EbookId == ebookId)
@@ -176,7 +175,7 @@ namespace CBProject.Repositories
                 .Where(r => ratingsToEbooks.Contains(r.ID))
                 .ToListAsync();
         }
-        public async Task AddRatingAsync(int ebookId, string userId, float rate)
+        public async Task AddRatingAsync(int? ebookId, string userId, float rate)
         {
             var rater = await this._context.Users.FirstOrDefaultAsync(u => u.Id.Equals(userId));
             if (rater == null)
@@ -196,7 +195,7 @@ namespace CBProject.Repositories
             this._context.RatingsToEbooks.Add(rateToEbook);
             await this._context.SaveChangesAsync();
         }
-        public async Task RemoveRatingAsync(int ebookId, string userId, float rate)
+        public async Task RemoveRatingAsync(int? ebookId, string userId, float rate)
         {
             var myRate = await this._context.Ratings
                 .FirstOrDefaultAsync(r => r.Rater.Id.Equals(userId) && r.Rate == rate);
@@ -211,7 +210,7 @@ namespace CBProject.Repositories
             await this._context.SaveChangesAsync();
         }
 
-        public async Task<ICollection<Review>> GetReviewsAsync(int ebookId)
+        public async Task<ICollection<Review>> GetReviewsAsync(int? ebookId)
         {
             var reviewsToEbooks = await this._context.ReviewsToEbooks
                 .Where(r => r.EbookId == ebookId)
@@ -221,7 +220,7 @@ namespace CBProject.Repositories
                 .Where(r => reviewsToEbooks.Contains(r.ID))
                 .ToListAsync();
         }
-        public async Task AddReviewAsync(int ebookId, string userId, string comment)
+        public async Task AddReviewAsync(int? ebookId, string userId, string comment)
         {
             var reviewer = await this._context.Users.FirstOrDefaultAsync(u => u.Id.Equals(userId));
             if (reviewer == null)
@@ -241,7 +240,7 @@ namespace CBProject.Repositories
             this._context.ReviewsToEbooks.Add(reviewToEbook);
             await this._context.SaveChangesAsync();
         }
-        public async Task RemoveReviewAsync(int ebookId, string userId, string comment)
+        public async Task RemoveReviewAsync(int? ebookId, string userId, string comment)
         {
             var review = await this._context.Reviews
                 .FirstOrDefaultAsync(r => r.Comment.Equals(comment) && r.Reviewer.Id.Equals(userId));
@@ -256,7 +255,7 @@ namespace CBProject.Repositories
             await this._context.SaveChangesAsync();
         }
 
-        public async Task<ICollection<Tag>> GetTagsAsync(int ebookId)
+        public async Task<ICollection<Tag>> GetTagsAsync(int? ebookId)
         {
             var tagsToEbooks = await this._context.TagsToEbooks
                 .Where(t => t.EbookId == ebookId)
@@ -266,7 +265,7 @@ namespace CBProject.Repositories
                 .Where(t => tagsToEbooks.Contains(t.ID))
                 .ToListAsync();
         }
-        public async Task AddTagAsync(int ebookId, string title)
+        public async Task AddTagAsync(int? ebookId, string title)
         {
             var tag = new Tag()
             {
@@ -282,7 +281,7 @@ namespace CBProject.Repositories
             this._context.TagsToEbooks.Add(TagToEbook);
             await this._context.SaveChangesAsync();
         }
-        public async Task RemoveTagAsync(int ebookId, string title)
+        public async Task RemoveTagAsync(int? ebookId, string title)
         {
             var tag = await this._context.Tags.FirstOrDefaultAsync(t => t.Title.Equals(title));
             if (tag == null)
@@ -296,6 +295,54 @@ namespace CBProject.Repositories
             await this._context.SaveChangesAsync();
         }
 
+        public async Task<ICollection<Requirement>> GetRequirementsAsync(int? ebookId)
+        {
+            if (ebookId == null)
+                throw new ArgumentNullException(nameof(ebookId));
+            var reqTreq = await this._context.RequirementsToEbooks
+                                            .Where(r => r.EbookId == ebookId)
+                                            .Select(r => r.RequirementId)
+                                            .ToListAsync();
+            return await this._context.Requirements
+                        .Where(r => reqTreq.Contains(r.ID))
+                        .ToListAsync();
+        }
+        public async Task AddRequirementAsync(int? ebookId, string content)
+        {
+            if (ebookId == null)
+                throw new ArgumentNullException(nameof(ebookId));
+            this._context.Requirements.Add(
+                new Requirement()
+                {
+                    Content = content
+                }
+            );
+            await this._context.SaveChangesAsync();
+            this._context.RequirementsToEbooks.Add(
+                new RequirementToEbook()
+                {
+                    Requirement = await this._context.Requirements.FirstOrDefaultAsync(r => r.Content.Equals(content)),
+                    Ebook = await this._context.Ebooks.FirstOrDefaultAsync(e => e.ID == ebookId)
+                }
+            );
+            await this._context.SaveChangesAsync();
+        }
+        public async Task RemoveRequirementAsync(int? ebookId, string content)
+        {
+            if (ebookId == null)
+                throw new ArgumentNullException(nameof(ebookId));
+            var requirement = await this._context.Requirements
+                                                .FirstOrDefaultAsync(r => r.Content.Equals(content));
+            if (requirement == null)
+                throw new ArgumentNullException(nameof(requirement));
+            var requirementToEbook = await this._context.RequirementsToEbooks
+                                                .FirstOrDefaultAsync(r => r.RequirementId == requirement.ID);
+            if (requirementToEbook == null)
+                throw new ArgumentNullException(nameof(requirementToEbook));
+            this._context.RequirementsToEbooks.Remove(requirementToEbook);
+            this._context.Requirements.Remove(requirement);
+            await this._context.SaveChangesAsync();
+        }
 
         public async Task<int> SaveAsync()
         {

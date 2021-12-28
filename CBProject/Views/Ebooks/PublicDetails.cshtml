@@ -51,10 +51,10 @@
                                disabled="disabled">
                     }
                     @*<span class="fa fa-star checked "></span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star"></span>
-        <span class="fa fa-star"></span>*@
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>*@
                 </div>
             </div>
             <button type="button" class="btn justify-content-end btn-subscribe">Subscribe Now</button>
@@ -77,13 +77,10 @@
 
         <h5><b>REQUIREMENTS</b></h5>
         <ul>
-            <li>Nulla sagittis, turpis et molestie gravida</li>
-            <li>Nulla sagittis, turpis et molestie gravida</li>
-            <li>Nulla sagittis, turpis et molestie gravida</li>
-            <li>Nulla sagittis, turpis et molestie gravida</li>
-            <li>Nulla sagittis, turpis et molestie gravida</li>
-            <li>Nulla sagittis, turpis et molestie gravida</li>
-            <li>Nulla sagittis, turpis et molestie gravida</li>
+            @foreach (var req in Model.Requirements)
+            {
+                <li><p>@req.Content</p></li>
+            }
         </ul>
 
         <br />

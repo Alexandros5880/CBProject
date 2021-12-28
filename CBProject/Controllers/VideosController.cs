@@ -25,6 +25,7 @@ namespace CBProject.Controllers
         private readonly TagsRepository _tagsRepo;
         private readonly ReviewsRepository _reviewRepo;
         private readonly RatingsRepository _ratingsRepo;
+        private RequirementsRepository _requirementsRepo;
         public VideosController(IUnitOfWork unitOfWork, IUsersRepo usersRepo)
         {
             this._videoRepo = unitOfWork.Videos;
@@ -33,6 +34,7 @@ namespace CBProject.Controllers
             this._tagsRepo = unitOfWork.Tags;
             this._reviewRepo = unitOfWork.Reviews;
             this._ratingsRepo = unitOfWork.Ratings;
+            this._requirementsRepo = unitOfWork.Requirements;
         }
         [Authorize]
         public async Task<ActionResult> Index()
@@ -64,6 +66,7 @@ namespace CBProject.Controllers
                 sum += rating.Rate;
             }
             viewModel.Rate = sum / ratings.Count;
+            viewModel.Requirements = await this._videoRepo.GetRequirementsAsync(id);
             return View("PublicDetails", viewModel);
         }
         [Authorize]
@@ -261,6 +264,7 @@ namespace CBProject.Controllers
                 this._tagsRepo.Dispose();
                 this._reviewRepo.Dispose();
                 this._ratingsRepo.Dispose();
+                this._requirementsRepo.Dispose();
             }
             base.Dispose(disposing);
         }

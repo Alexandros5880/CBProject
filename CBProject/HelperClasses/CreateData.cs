@@ -2969,39 +2969,36 @@ namespace CBProject.HelperClasses
                     }
                 );
             context.SaveChanges();
-            int counter = 1;
             var ebooks = context.Ebooks.ToList();
+            var videos = context.Videos.ToList();
+            var requirements = context.Requirements.ToList();
             foreach (var ebook in ebooks)
             {
-                context.RequirementsToEbooks.Add(
+                foreach(var req in requirements)
+                {
+                    context.RequirementsToEbooks.Add(
                         new RequirementToEbook()
                         {
                             ID = ebook.ID,
-                            Requirement = context.Requirements.FirstOrDefault(r => r.ID == counter),
+                            Requirement = req,
                             Ebook = ebook
                         }
                     );
-                if (counter < 3)
-                    counter++;
-                else
-                    counter = 1;
+                }
             }
-            counter = 1;
-            var videos = context.Videos.ToList();
             foreach (var video in videos)
             {
-                context.RequirementsToVideos.Add(
+                foreach (var req in requirements)
+                {
+                    context.RequirementsToVideos.Add(
                         new RequirementToVideo()
                         {
                             ID = video.ID,
-                            Requirement = context.Requirements.FirstOrDefault(r => r.ID == counter),
+                            Requirement = req,
                             Video = video
                         }
                     );
-                if (counter < 3)
-                    counter++;
-                else
-                    counter = 1;
+                }
             }
             context.SaveChanges();
         }
