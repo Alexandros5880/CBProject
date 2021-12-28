@@ -78,10 +78,13 @@
                     data-toggle="dropdown"
                     aria-haspopup="true"
                     aria-expanded="false">
-                <img class="rounded-circle header-profile-user"
+
+                <img class="rounded-circle header-profile-user " 
+                     id="avatar"
                      src="@userImage"
                      style="height:50px;"
                      alt="Header Avatar">
+
                 <span class="d-none d-xl-inline-block ms-1">@fullName</span>
                 <i class="fa fa-arrow-down"></i>
             </button>
@@ -89,18 +92,22 @@
             <div class="dropdown-menu dropdown-menu-end">
                 <ul>
                     <li>
-                        <a href=@Url.Action("Index", "Manage", routeValues: null) key="t-manage">Manage</a>
+                        <span class="fa fa-cog"></span>
+                        <a href=@Url.Action("Index", "Manage", routeValues: null) key="t-manage"> Manage</a>
                     </li>
                     @if (access == RoleLevel.FULL ||
                         access == RoleLevel.PLUSSFULL ||
                         access == RoleLevel.MIDDLE)
                     {
                         <li>
-                            <a href=@Url.Action("Index", "Users") key="t-dashboard">Dashboard</a>
+                            <span class="fa fa-columns"></span>
+                            <a href=@Url.Action("Index", "Users") key="t-dashboard"> Dashboard</a>
                         </li>
                     }
+                   
                     <li>
-                        <a href="javascript:document.getElementById('logoutForm').submit()" key="t-logout">Log Off</a>
+                        <span class="fa fa-power-off"></span>
+                        <a href="javascript:document.getElementById('logoutForm').submit()" key="t-logout"> Log Off</a>
                     </li>
                 </ul>
 

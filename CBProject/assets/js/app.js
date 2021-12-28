@@ -18,7 +18,7 @@ File: Main Js File
     
     function setLanguage(lang) {
         const url = "https://"+window.location.host;
-        const usaUrl = url + "/assets/images/flags/us.jpg";
+        const usaUrl = url + "/assets/images/flag/us.jpg";
         const spainUrl = url + "/assets/images/flags/spain.jpg";
         const germanyUrl = url + "/assets/images/flags/germany.jpg";
         const italyUrl = url + "/assets/images/flags/italy.jpg";

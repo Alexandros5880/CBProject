@@ -80,11 +80,42 @@ textarea {
     #team-members p {
         text-align: center;
     }
+/*--------Logo---------*/
 
+.logo {
+    font-family: Impact;
+    color: #5B65E8 !important;
+    font-size: 26px;
+    margin-top: 10px;
+}
+.navbar-collapse{
+    margin-top: 10px;
+    font-size:16px;
+}
+
+/*---Drop down menu button---*/
+#dropdownMenuButton {
+    background-color: #f8f8f8;
+}
+#avatar {
+    border-radius: 50%;
+}
+.dropdown-menu ul {
+    list-style-type: none;
+}
+    .dropdown-menu ul li  {
+        margin-top:5px;
+        margin-bottom:7px;
+    }
+.dropdown-menu ul li a{
+   text-decoration:none;
+   color:black;
+}
+    .dropdown-menu ul li a:hover {
+        color: #2fb8a9;
+    }
 
 /*-------Index---------*/
-
-
 a:hover {
     cursor: pointer;
 }
@@ -256,7 +287,7 @@ a:hover {
 }
 
 footer {
-    background-color: #383838;
+    background-color: #292929;
     color: white;
 }
 
@@ -264,12 +295,23 @@ footer {
     margin: 40px 0 40px 0;
 }
 
-.footer-logo, #footer-text {
+.footer-logo, .footer-text {
     margin-top: 3%;
 }
 
-
-
+.footer-text p a{
+    text-decoration:none ;
+    color:white;
+}
+.footer-text p a:hover {
+     color: #78DACF;
+}
+#social a:hover {
+    color: aquamarine !important;
+}
+#social a img:hover {
+    filter: grayscale(64%) brightness(55%) sepia(100%) hue-rotate(128deg) saturate(80%) contrast(1.9);
+}
 /*------Buttons-------*/
 .btn-create {
     background-color: #2FB8A9;

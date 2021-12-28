@@ -358,8 +358,10 @@
     <Content Include="assets\images\flags\us.jpg" />
     <Content Include="assets\images\home\codeme_bigImg1_index2-half.jpg" />
     <Content Include="assets\images\home\codeme_bigImg2_index.jpg" />
-    <Content Include="assets\images\icon-video.png" />
-    <Content Include="assets\images\icons-person.png" />
+    <Content Include="assets\images\icons\icon-video.png" />
+    <Content Include="assets\images\icons\icons-person.png" />
+    <Content Include="assets\images\icons\icons-facebook.png" />
+    <Content Include="assets\images\icons\icons-instagram.png" />
     <Content Include="assets\images\laptop-img.png" />
     <Content Include="assets\images\layouts\layout-1.jpg" />
     <Content Include="assets\images\layouts\layout-2.jpg" />
@@ -368,6 +370,7 @@
     <Content Include="assets\images\logo-dark.png" />
     <Content Include="assets\images\logo-light.png" />
     <Content Include="assets\images\logo-light.svg" />
+    <Content Include="assets\images\logo.png" />
     <Content Include="assets\images\logo.svg" />
     <Content Include="assets\images\maintenance.svg" />
     <Content Include="assets\images\megamenu-img.png" />
