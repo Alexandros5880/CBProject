@@ -32,7 +32,6 @@ namespace CBProject.Models
         public ICollection<TagToVideo> TagsToVideos { get; set; }
         public ICollection<RatingToVideo> RatingsToVideos { get; set; }
         public ICollection<ReviewToVideo> ReviewToVideos { get; set; }
-        public ICollection<RequirementToEbook> RequirementsToEbooks { get; set; }
         public ICollection<RequirementToEbook> RequirementsToVideos { get; set; }
     }
 }

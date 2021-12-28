@@ -29,5 +29,6 @@ namespace CBProject.Models.EntityModels
         public ICollection<TagToEbook> TagsToEbooks { get; set; }
         public ICollection<RatingToEbook> RatingsToEbooks { get; set; }
         public ICollection<ReviewToEbook> ReviewsToEbooks { get; set; }
+        public ICollection<RequirementToEbook> RequirementsToEbooks { get; set; }
     }
 }

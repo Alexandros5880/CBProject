@@ -216,17 +216,14 @@ namespace CBProject.Migrations
                         RequirementId = c.Int(nullable: false),
                         EbookId = c.Int(nullable: false),
                         Video_ID = c.Int(),
-                        Video_ID1 = c.Int(),
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.Ebooks", t => t.EbookId, cascadeDelete: true)
                 .ForeignKey("dbo.Requirements", t => t.RequirementId, cascadeDelete: true)
                 .ForeignKey("dbo.Videos", t => t.Video_ID)
-                .ForeignKey("dbo.Videos", t => t.Video_ID1)
                 .Index(t => t.RequirementId)
                 .Index(t => t.EbookId)
-                .Index(t => t.Video_ID)
-                .Index(t => t.Video_ID1);
+                .Index(t => t.Video_ID);
             
             CreateTable(
                 "dbo.Requirements",
@@ -406,7 +403,6 @@ namespace CBProject.Migrations
             DropForeignKey("dbo.ReviewToEbooks", "ReviewId", "dbo.Reviews");
             DropForeignKey("dbo.ReviewToEbooks", "EbookId", "dbo.Ebooks");
             DropForeignKey("dbo.Reviews", "ReviewerId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.RequirementToEbooks", "Video_ID1", "dbo.Videos");
             DropForeignKey("dbo.RequirementToEbooks", "Video_ID", "dbo.Videos");
             DropForeignKey("dbo.RequirementToEbooks", "RequirementId", "dbo.Requirements");
             DropForeignKey("dbo.RequirementToEbooks", "EbookId", "dbo.Ebooks");
@@ -440,7 +436,6 @@ namespace CBProject.Migrations
             DropIndex("dbo.Reviews", new[] { "ReviewerId" });
             DropIndex("dbo.ReviewToVideos", new[] { "VideoId" });
             DropIndex("dbo.ReviewToVideos", new[] { "ReviewId" });
-            DropIndex("dbo.RequirementToEbooks", new[] { "Video_ID1" });
             DropIndex("dbo.RequirementToEbooks", new[] { "Video_ID" });
             DropIndex("dbo.RequirementToEbooks", new[] { "EbookId" });
             DropIndex("dbo.RequirementToEbooks", new[] { "RequirementId" });

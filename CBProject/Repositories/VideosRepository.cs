@@ -201,7 +201,7 @@ namespace CBProject.Repositories
         }
 
 
-        public async Task<float> GetRatingsAverageAsync(int videoId)
+        public async Task<float> GetRatingsAverageAsync(int? videoId)
         {
             var ratings = await this.GetRetingsAsync(videoId);
             float sum = 0;
@@ -211,7 +211,7 @@ namespace CBProject.Repositories
             }
             return sum / ratings.Count;
         }
-        public async Task<ICollection<Rating>> GetRetingsAsync(int videoId)
+        public async Task<ICollection<Rating>> GetRetingsAsync(int? videoId)
         {
             var ratingsToVideos = await this._context.RatingsToVideos
                 .Where(r => r.VideoId == videoId)
@@ -221,7 +221,7 @@ namespace CBProject.Repositories
                 .Where(r => ratingsToVideos.Contains(r.ID))
                 .ToListAsync();
         }
-        public async Task AddRatingAsync(int videoId, string userId, float rate)
+        public async Task AddRatingAsync(int? videoId, string userId, float rate)
         {
             var rater = await this._context.Users.FirstOrDefaultAsync(u => u.Id.Equals(userId));
             if (rater == null)
@@ -241,7 +241,7 @@ namespace CBProject.Repositories
             this._context.RatingsToVideos.Add(rateToVideo);
             await this._context.SaveChangesAsync();
         }
-        public async Task RemoveRatingAsync(int videoId, string userId, float rate)
+        public async Task RemoveRatingAsync(int? videoId, string userId, float rate)
         {
             var myRate = await this._context.Ratings
                             .FirstOrDefaultAsync(r => r.Rater.Id.Equals(userId) && r.Rate == rate);
@@ -256,7 +256,7 @@ namespace CBProject.Repositories
             await this._context.SaveChangesAsync();
         }
 
-        public async Task<ICollection<Review>> GetReviewsAsync(int videoId)
+        public async Task<ICollection<Review>> GetReviewsAsync(int? videoId)
         {
             var reviewsToVideos = await this._context.ReviewsToVideos
                 .Where(r => r.VideoId == videoId)
@@ -266,7 +266,7 @@ namespace CBProject.Repositories
                 .Where(r => reviewsToVideos.Contains(r.ID))
                 .ToListAsync();
         }
-        public async Task AddReviewAsync(int videoId, string userId, string comment)
+        public async Task AddReviewAsync(int? videoId, string userId, string comment)
         {
             var reviewer = await this._context.Users.FirstOrDefaultAsync(u => u.Id.Equals(userId));
             if (reviewer == null)
@@ -286,7 +286,7 @@ namespace CBProject.Repositories
             this._context.ReviewsToVideos.Add(reviewToVideo);
             await this._context.SaveChangesAsync();
         }
-        public async Task RemoveReviewAsync(int videoId, string userId, string comment)
+        public async Task RemoveReviewAsync(int? videoId, string userId, string comment)
         {
             var review = await this._context.Reviews
                 .FirstOrDefaultAsync(r => r.Comment.Equals(comment) && r.Reviewer.Id.Equals(userId));
@@ -301,7 +301,7 @@ namespace CBProject.Repositories
             await this._context.SaveChangesAsync();
         }
 
-        public async Task<ICollection<Tag>> GetTagsAsync(int videoId)
+        public async Task<ICollection<Tag>> GetTagsAsync(int? videoId)
         {
             var tagsToVideos = await this._context.TagsToVideos
                 .Where(t => t.VideoId == videoId)
@@ -311,7 +311,7 @@ namespace CBProject.Repositories
                 .Where(t => tagsToVideos.Contains(t.ID))
                 .ToListAsync();
         }
-        public async Task AddTagAsync(int videoId, string title)
+        public async Task AddTagAsync(int? videoId, string title)
         {
             var tag = new Tag()
             {
@@ -327,7 +327,7 @@ namespace CBProject.Repositories
             this._context.TagsToVideos.Add(TagToVideo);
             await this._context.SaveChangesAsync();
         }
-        public async Task RemoveTagAsync(int videoId, string title)
+        public async Task RemoveTagAsync(int? videoId, string title)
         {
             var tag = await this._context.Tags.FirstOrDefaultAsync(t => t.Title.Equals(title));
             if (tag == null)
@@ -341,6 +341,54 @@ namespace CBProject.Repositories
             await this._context.SaveChangesAsync();
         }
 
+        public async Task<ICollection<Requirement>> GetRequirementsAsync(int? videoId)
+        {
+            if (videoId == null)
+                throw new ArgumentNullException(nameof(videoId));
+            var reqTreq = await this._context.RequirementsToVideos
+                                            .Where(r => r.VideoId == videoId)
+                                            .Select(r => r.RequirementId)
+                                            .ToListAsync();
+            return await this._context.Requirements
+                        .Where(r => reqTreq.Contains(r.ID))
+                        .ToListAsync();
+        }
+        public async Task AddRequirementAsync(int? videoId, string content)
+        {
+            if (videoId == null)
+                throw new ArgumentNullException(nameof(videoId));
+            this._context.Requirements.Add(
+                new Requirement()
+                {
+                    Content = content
+                }
+            );
+            await this._context.SaveChangesAsync();
+            this._context.RequirementsToVideos.Add(
+                new RequirementToVideo()
+                {
+                    Requirement = await this._context.Requirements.FirstOrDefaultAsync(r => r.Content.Equals(content)),
+                    Video = await this._context.Videos.FirstOrDefaultAsync(e => e.ID == videoId)
+                }
+            );
+            await this._context.SaveChangesAsync();
+        }
+        public async Task RemoveRequirementAsync(int? videoId, string content)
+        {
+            if (videoId == null)
+                throw new ArgumentNullException(nameof(videoId));
+            var requirement = await this._context.Requirements
+                                                .FirstOrDefaultAsync(r => r.Content.Equals(content));
+            if (requirement == null)
+                throw new ArgumentNullException(nameof(requirement));
+            var requirementToVideo = await this._context.RequirementsToVideos
+                                                .FirstOrDefaultAsync(r => r.RequirementId == requirement.ID);
+            if (requirementToVideo == null)
+                throw new ArgumentNullException(nameof(requirementToVideo));
+            this._context.RequirementsToVideos.Remove(requirementToVideo);
+            this._context.Requirements.Remove(requirement);
+            await this._context.SaveChangesAsync();
+        }
 
         public async Task<int> SaveAsync()
         {

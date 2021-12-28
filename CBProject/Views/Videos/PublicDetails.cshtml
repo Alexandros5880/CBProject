@@ -2,6 +2,11 @@
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    if (float.IsNaN(Model.Rate))
+    {
+        Model.Rate = 0.0f;
+    }
 }
 
 <link rel="stylesheet" href="~/Content/Ratting.css">
@@ -107,14 +112,10 @@
 
         <h5><b>REQUIREMENTS</b></h5>
         <ul>
-            <li>Nulla sagittis, turpis et molestie gravida</li>
-
-            <li>Nulla sagittis, turpis et molestie gravida</li>
-            <li>Nulla sagittis, turpis et molestie gravida</li>
-            <li>Nulla sagittis, turpis et molestie gravida</li>
-            <li>Nulla sagittis, turpis et molestie gravida</li>
-            <li>Nulla sagittis, turpis et molestie gravida</li>
-            <li>Nulla sagittis, turpis et molestie gravida</li>
+            @foreach (var req in Model.Requirements)
+            {
+                <li><p>@req.Content</p></li>
+            }
         </ul>
 
         <br />

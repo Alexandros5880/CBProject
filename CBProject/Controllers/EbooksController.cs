@@ -26,6 +26,7 @@ namespace CBProject.Controllers
         private TagsRepository _tagsRepository;
         private RatingsRepository _ratingsRepository;
         private ReviewsRepository _reviewsRepository;
+        private RequirementsRepository _requirementsRepository;
         private ApplicationDbContext _context;
         private UsersRepo _usersRepo;
         public EbooksController(IUnitOfWork unitOfWork, IUsersRepo usersRepo)
@@ -37,6 +38,7 @@ namespace CBProject.Controllers
             this._reviewsRepository = unitOfWork.Reviews;
             this._context = unitOfWork.Context;
             this._usersRepo = (UsersRepo)usersRepo;
+            this._requirementsRepository = unitOfWork.Requirements;
 
         }
         [Authorize]
@@ -74,6 +76,7 @@ namespace CBProject.Controllers
                 sum += rating.Rate;
             }
             viewModel.Rate = sum / ratings.Count;
+            viewModel.Requirements = await this._ebooksRepository.GetRequirementsAsync(id);
             return View("PublicDetails", viewModel);
         }
         [Authorize]
@@ -283,6 +286,7 @@ namespace CBProject.Controllers
                 this._reviewsRepository.Dispose();
                 this._context.Dispose();
                 this._usersRepo.Dispose();
+                this._requirementsRepository.Dispose();
             }
             base.Dispose(disposing);
         }

@@ -1,5 +1,6 @@
 ﻿using CBProject.Models.EntityModels;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web;
 using System.Web.Mvc;
@@ -18,6 +19,7 @@ namespace CBProject.Models.ViewModels
         public HttpPostedFileBase EbookFile { get; set; }
         public string EbookFilePath { get; set; }
         public float Rate { get; set; }
+        public string Content { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime UploadDate { get; set; }
@@ -27,7 +29,7 @@ namespace CBProject.Models.ViewModels
         public SelectList Users { get; set; }
         public Category Category { get; set; }
         public SelectList Categories { get; set; }
-
         public string SearchTerm { get; set; }
+        public ICollection<Requirement> Requirements { get; set; }
     }
 }
