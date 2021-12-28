@@ -40,5 +40,9 @@ namespace CBProject.Controllers
         {
             return View();
         }
+        public async Task<ActionResult> Terms()
+        {
+            return View();
+        }
     }
 }

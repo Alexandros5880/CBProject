@@ -56,9 +56,10 @@
                     </div>
                     <div class="col-md-2 footer-text">
                         <p><b>Plans</b></p>
-                        <p>Basic</p>
-                        <p>Advance</p>
-                        <button type="button" class="btn btn-subscribe">Subscribe Now</button>
+                        <p>@Html.ActionLink("Basic", "Subscribe", "SubscriptionPackages")</p>
+                        <p>@Html.ActionLink("Advance", "Subscribe", "SubscriptionPackages")</p>
+                        <p>@Html.ActionLink("Premium", "Subscribe", "SubscriptionPackages")</p>
+                      
                     </div>
                     <div class="col-md-2 footer-text" id="social">
                         <p><b>Social</b></p>

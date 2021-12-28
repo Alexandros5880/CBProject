@@ -1845,6 +1845,7 @@
     <Content Include="Views\Home\Lessons.cshtml" />
     <Content Include="Views\SubscriptionPackages\Subscribe.cshtml" />
     <Content Include="Views\Videos\PublicDetails.cshtml" />
+    <Content Include="Views\Home\Terms.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
