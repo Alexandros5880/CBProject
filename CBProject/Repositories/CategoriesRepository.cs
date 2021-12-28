@@ -37,6 +37,13 @@ namespace CBProject.Repositories
                 throw new ArgumentNullException(nameof(category));
             _context.Categories.Remove(category);
         }
+        public async Task DeleteAsync(int? id)
+        {
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
+            var category = await this._context.Categories.FirstOrDefaultAsync(c => c.ID == id);
+            this._context.Categories.Remove(category);
+        }
         public ICollection<Category> GetAll()
         {
             return _context.Categories

@@ -39,6 +39,14 @@ namespace CBProject.Repositories
                 throw new ArgumentNullException(nameof(id));
             this._context.Requirements.Remove(requirement);
         }
+        public async Task DeleteAsync(int? id)
+        {
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
+            var requirement = await this._context.Requirements
+                                            .FirstOrDefaultAsync(r => r.ID == id);
+            this._context.Requirements.Remove(requirement);
+        }
         public Requirement Get(int? id)
         {
             if (id == null)

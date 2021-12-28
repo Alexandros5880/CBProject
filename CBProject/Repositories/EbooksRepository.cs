@@ -54,6 +54,14 @@ namespace CBProject.Repositories
                 throw new ArgumentNullException(nameof(id));
             _context.Ebooks.Remove(ebook);
         }
+        public async Task DeleteAsync(int? id)
+        {
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
+            var ebook = await this._context.Ebooks
+                                .FirstOrDefaultAsync(e => e.ID == id);
+            this._context.Ebooks.Remove(ebook);
+        }
         public async Task DeleteAllAsync(int? id)
         {
             if (id == null)

@@ -33,6 +33,14 @@ namespace CBProject.Repositories.IdentityRepos
                 throw new ArgumentNullException(nameof(payment));
             this._context.Payments.Remove(payment);
         }
+        public async Task DeleteAsync(int? id)
+        {
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
+            var payment = await this._context.Payments
+                            .FirstOrDefaultAsync(p => p.ID == id);
+            this._context.Payments.Remove(payment);
+        }
         public Payment Get(int? id)
         {
             if (id == null)
