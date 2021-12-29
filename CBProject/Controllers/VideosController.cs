@@ -83,7 +83,28 @@ namespace CBProject.Controllers
                 return HttpNotFound();
             }
             var viewModel = Mapper.Map<Video, VideoViewModel>(video);
+            viewModel.OtherUsers = await this._usersRepo.GetAllAsync();
+            viewModel.OtherCategory = await this._categoriesRepo.GetAllAsync();
+            viewModel.Requirements = await this._videoRepo.GetRequirementsAsync(video.ID);
             return View(viewModel);
+        }
+        [Authorize]
+        public async Task<ActionResult> _Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Video video = await this._videoRepo.GetAsync(id);
+            if (video == null)
+            {
+                return HttpNotFound();
+            }
+            var viewModel = Mapper.Map<Video, VideoViewModel>(video);
+            viewModel.OtherUsers = await this._usersRepo.GetAllAsync();
+            viewModel.OtherCategory = await this._categoriesRepo.GetAllAsync();
+            viewModel.Requirements = await this._videoRepo.GetRequirementsAsync(video.ID);
+            return PartialView("_Details", viewModel);
         }
         [Authorize(Roles = "Admin, ContentCreator")]
         public async Task<ActionResult> Create()
@@ -201,6 +222,23 @@ namespace CBProject.Controllers
                 return RedirectToAction("Index");
             }
             return View(viewModel);
+        }
+        public async Task<ActionResult> _Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Video video = await this._videoRepo.GetAsync(id);
+            if (video == null)
+            {
+                return HttpNotFound();
+            }
+            var viewModel = Mapper.Map<Video, VideoViewModel>(video);
+            viewModel.OtherUsers = await this._usersRepo.GetAllAsync();
+            viewModel.OtherCategory = await this._categoriesRepo.GetAllAsync();
+            viewModel.Requirements = await this._videoRepo.GetRequirementsAsync(video.ID);
+            return PartialView("_Edit", viewModel);
         }
         [Authorize(Roles = "Admin, ContentCreator")]
         public async Task<ActionResult> Delete(int? id)

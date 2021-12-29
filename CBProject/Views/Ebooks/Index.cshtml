@@ -83,6 +83,8 @@
     @Html.ActionLink("Create New", "Create")
 </p>
 
+@Scripts.Render("~/bundles/jquery")
+
 <div class="table-responsive">
     <table class="table" id="ebooks">
         <thead>
@@ -173,141 +175,39 @@
                     }
                 </td>
                 <td>
-                    <div id="myModalET" class="modal fade" role="dialog">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">Add Tag</h4>
-                                </div>
-                                <div class="modal-body">
 
-                                    @using (Html.BeginForm("AddTag", "Ebooks", new { ebookId = item.ID }, FormMethod.Post))
-                                    {
-                                        @Html.AntiForgeryToken()
-                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                        @Html.HiddenFor(model => item.ID)
-
-                                        <div style="margin: 7px;">
-                                            <i class="fas fa-pencil-alt prefix" style="margin-left: 11%;"></i>
-                                            <textarea class="md-textarea form-control" rows="3" name="title" style="margin: 0 auto;"></textarea>
-                                            <input type="submit" value="Save" class="btn btn-default" style="margin-left: 80%; margin-top: 11px;" />
-                                        </div>
-                                    }
-
-                                </div>
-                                <div class="modal-footer">
-                                    @*<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>*@
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="myModalEC" class="modal fade" role="dialog">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">Add Comment</h4>
-                                </div>
-                                <div class="modal-body">
-
-                                    @using (Html.BeginForm("AddReview", "Ebooks", new { ebookId = item.ID }, FormMethod.Post))
-                                    {
-                                        @Html.AntiForgeryToken()
-                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                        @Html.HiddenFor(model => item.ID)
-
-                                        <div style="margin: 7px;">
-                                            <i class="fas fa-pencil-alt prefix" style="margin-left: 11%;"></i>
-                                            <textarea class="md-textarea form-control" rows="3" name="comment" style="margin: 0 auto;"></textarea>
-                                            <input type="submit" value="Save" class="btn btn-default" style="margin-left: 80%; margin-top: 11px;" />
-                                        </div>
-                                    }
-
-                                </div>
-                                <div class="modal-footer">
-                                    @*<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>*@
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="myModal" class="modal fade" role="dialog">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">Modal Header</h4>
-                                </div>
-                                <div class="modal-body">
-                                    @{ Html.RenderPartial("_Details", @item); }
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="editModal" class="modal fade" role="dialog">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">Modal Header</h4>
-                                </div>
-                                <div class="modal-body">
-                                    @{ Html.RenderPartial("_Edit", @item); }
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     @if (access == RoleLevel.FULL)
                     {
-                        <button type="button" data-id="@item.ID" class="btn btn-dark" data-toggle="modal" data-target="#myModalET">Tag</button>
-                        <button type="button" data - id="@item.ID" class="btn btn-primary" data-toggle="modal" data-target="#myModalEC">Comment</button>
-                        <button type="button" data-id="@item.ID" class="btn btn-info" data-toggle="modal" data-target="#myModal">Details</button>
-                        <button type="button" data-id="@item.ID" class="btn btn-success" data-toggle="modal" data-target="#editModal">Edit</button>
-                        <button type="button" data-id="@item.ID" class='btn btn-danger btn-delete' data-toggle="modal">Delete</button>
+                        <button type="button" class="btn btn-dark tag-modal-button-ebook" data-toggle="modal" data-target="#tag-modal-ebook" data-id="@item.ID">Tag</button>
+                        <button type="button" class="btn btn-primary comment-modal-button-ebook" data-toggle="modal" data-target="#review-modal-ebook" data-id="@item.ID">Comment</button>
+                        <button type="button" class="btn btn-info details-modal-button-ebook" data-toggle="modal" data-target="#details-modal-ebook" data-id="@item.ID">Details</button>
+                        <button type="button" class="btn btn-success edit-modal-button-ebook" data-toggle="modal" data-target="#edit-modal-ebook" data-id="@item.ID">Edit</button>
+                        <button type="button" class="btn btn-danger delete-modal-button-ebook" data-toggle="modal" data-target="#delete-modal-ebook" data-id="@item.ID">Delete</button>
                     }
                     else if (access == RoleLevel.PLUSSFULL)
                     {
-                        @*<button type="button" data-id="@item.ID" class="btn btn-dark" data-toggle="modal" data-target="#myModalET">Tag</button>*@
-                        <button type="button" data - id="@item.ID" class="btn btn-primary" data-toggle="modal" data-target="#myModalEC">Comment</button>
-                        <button type="button" data-id="@item.ID" class="btn btn-info" data-toggle="modal" data-target="#myModal">Details</button>
-                        @*<button type="button" data-id="@item.ID" class="btn btn-success" data-toggle="modal" data-target="#editModal">Edit</button>*@
-                        <button type="button" data-id="@item.ID" class='btn btn-danger btn-delete' data-toggle="modal">Delete</button>
+                        <button type="button" class="btn btn-primary comment-modal-button-ebook" data-toggle="modal" data-target="#review-modal-ebook" data-id="@item.ID">Comment</button>
+                        <button type="button" class="btn btn-success edit-modal-button-ebook" data-toggle="modal" data-target="#edit-modal-ebook" data-id="@item.ID">Edit</button>
+                        <button type="button" class="btn btn-info details-modal-button-ebook" data-toggle="modal" data-target="#details-modal-ebook" data-id="@item.ID">Details</button>
+                        <button type="button" class="btn btn-danger delete-modal-button-ebook" data-toggle="modal" data-target="#delete-modal-ebook" data-id="@item.ID">Delete</button>
                     }
                     else if (access == RoleLevel.MIDDLE)
                     {
-                        @*<button type="button" data-id="@item.ID" class="btn btn-dark" data-toggle="modal" data-target="#myModalET">Tag</button>*@
-                        @*<button type="button" data - id="@item.ID" class="btn btn-primary" data-toggle="modal" data-target="#myModalEC">Comment</button>*@
-                        <button type="button" data-id="@item.ID" class="btn btn-info" data-toggle="modal" data-target="#myModal">Details</button>
-                        <button type="button" data-id="@item.ID" class="btn btn-success" data-toggle="modal" data-target="#editModal">Edit</button>
-                        <button type="button" data-id="@item.ID" class='btn btn-danger btn-delete' data-toggle="modal">Delete</button>
+                        <button type="button" class="btn btn-info details-modal-button-ebook" data-toggle="modal" data-target="#review-modal-ebook" data-id="@item.ID">Details</button>
+                        <button type="button" class="btn btn-success edit-modal-button-ebook" data-toggle="modal" data-target="#edit-modal-ebook" data-id="@item.ID">Edit</button>
+                        <button type="button" class="btn btn-info details-modal-button-ebook" data-toggle="modal" data-target="#details-modal-ebook" data-id="@item.ID">Details</button>
+                        <button type="button" class="btn btn-danger delete-modal-button-ebook" data-toggle="modal" data-target="#delete-modal-ebook" data-id="@item.ID">Delete</button>
                     }
                     else if (access == RoleLevel.LOW)
                     {
-                        @*<button type="button" data-id="@item.ID" class="btn btn-dark" data-toggle="modal" data-target="#myModalET">Tag</button>*@
-                        <button type="button" data - id="@item.ID" class="btn btn-primary" data-toggle="modal" data-target="#myModalEC">Comment</button>
-                        @*<button type="button" data-id="@item.ID" class="btn btn-info" data-toggle="modal" data-target="#myModal">Details</button>*@
-                        @*<button type="button" data-id="@item.ID" class="btn btn-success" data-toggle="modal" data-target="#editModal">Edit</button>
-                            <button type="button" data-id="@item.ID" class='btn btn-danger btn-delete' data-toggle="modal">Delete</button>*@
+                        <button type="button" class="btn btn-primary comment-modal-button-ebook" data-toggle="modal" data-target="#review-modal-ebook" data-id="@item.ID">Comment</button>
                     }
                     else if (access == RoleLevel.SUPERLOW)
                     {
-                        @*<button type="button" data-id="@item.ID" class="btn btn-dark" data-toggle="modal" data-target="#myModalET">Tag</button>*@
-                        <button type="button" data - id="@item.ID" class="btn btn-primary" data-toggle="modal" data-target="#myModalEC">Comment</button>
-                        @*<button type="button" data-id="@item.ID" class="btn btn-info" data-toggle="modal" data-target="#myModal">Details</button>*@
-                        @*<button type="button" data-id="@item.ID" class="btn btn-success" data-toggle="modal" data-target="#editModal">Edit</button>
-                            <button type="button" data-id="@item.ID" class='btn btn-danger btn-delete' data-toggle="modal">Delete</button>*@
-                    }
-                    else if (access == RoleLevel.FULL)
-                    {
+                        <button type="button" class="btn btn-primary comment-modal-button-ebook" data-toggle="modal" data-target="#review-modal-ebook" data-id="@item.ID">Comment</button>
                     }
                     @*@Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |*@
+                    @Html.ActionLink("Details", "Details", new { id = item.ID }) |*@
                     @*@Html.ActionLink("Delete", "Delete", new { id = item.ID })*@
                 </td>
             </tr>
@@ -318,13 +218,80 @@
 
 
 
-<div id="deletemodal" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+<!-- Add Tag Modal -->
+<div id="tag-modal-ebook" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add Tag</h4>
+            </div>
+            <div class="modal-body">
+
+                <input id="myId" class="form-control" readonly="readonly" />
+
+                @*@using (Html.BeginForm("AddTag", "Ebooks", new { ebookId = item.ID }, FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => item.ID)
+
+            <div style="margin: 7px;">
+                <i class="fas fa-pencil-alt prefix" style="margin-left: 11%;"></i>
+                <textarea class="md-textarea form-control" rows="3" name="title" style="margin: 0 auto;"></textarea>
+                <input type="submit" value="Save" class="btn btn-default" style="margin-left: 80%; margin-top: 11px;" />
+            </div>
+        }*@
+
+            </div>
+            <div class="modal-footer">
+                @*<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>*@
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Review Modal -->
+<div id="review-modal-ebook" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add Comment</h4>
+            </div>
+            <div class="modal-body">
+                <input id="myId" class="form-control" readonly="readonly" />
+
+                @*@using (Html.BeginForm("AddReview", "Ebooks", new { ebookId = item.ID }, FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => item.ID)
+
+            <div style="margin: 7px;">
+                <i class="fas fa-pencil-alt prefix" style="margin-left: 11%;"></i>
+                <textarea class="md-textarea form-control" rows="3" name="comment" style="margin: 0 auto;"></textarea>
+                <input type="submit" value="Save" class="btn btn-default" style="margin-left: 80%; margin-top: 11px;" />
+            </div>
+        }*@
+
+            </div>
+            <div class="modal-footer">
+                @*<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>*@
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete This Ebook Modal -->
+<div id="delete-modal-ebook" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Delete Ebook</h5>
             </div>
             <div class="modal-body">
+                <input id="myId" class="form-control" readonly="readonly" />
                 <p>Are you sure you want to delete this Ebook ?</p>
             </div>
             <div class="modal-footer">
@@ -335,7 +302,43 @@
     </div>
 </div>
 
+<!-- _Edit Modal -->
+<div id="edit-modal-ebook" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Edit</h4>
+            </div>
+            <div class="modal-body edit-modal-ebook">
+                <input id="myId" class="form-control" readonly="readonly" />
+                @*@{ Html.RenderPartial("_Edit", item); }*@
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
+<!-- _Details Modal -->
+<div id="details-modal-ebook" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Details</h4>
+            </div>
+            <div class="modal-body details-modal-ebook">
+                <input id="myId" class="form-control" readonly="readonly" />
+                @*@{ Html.RenderPartial("_Details", item); }*@
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
@@ -345,6 +348,35 @@
 @section scripts{
     <script>
         $(document).ready(function () {
+
+            // When Open Modal Paw Id
+            $('#tag-modal-ebook').on('show.bs.modal', function (e) {
+                var Id = $(e.relatedTarget).data('id');
+                $(e.currentTarget).find('input[id="myId"]').val(Id);
+            });
+
+            $('#review-modal-ebook').on('show.bs.modal', function (e) {
+                var Id = $(e.relatedTarget).data('id');
+                $(e.currentTarget).find('input[id="myId"]').val(Id);
+            });
+
+            $('#delete-modal-ebook').on('show.bs.modal', function (e) {
+                var Id = $(e.relatedTarget).data('id');
+                $(e.currentTarget).find('input[id="myId"]').val(Id);
+            });
+
+            $('#edit-modal-ebook').on('show.bs.modal', function (e) {
+                var Id = $(e.relatedTarget).data('id');
+                $(e.currentTarget).find('input[id="myId"]').val(Id);
+            });
+
+            $('#details-modal-ebook').on('show.bs.modal', function (e) {
+                var Id = $(e.relatedTarget).data('id');
+                $(e.currentTarget).find('input[id="myId"]').val(Id);
+            });
+
+
+
             $("#ebooks").on("click", ".btn-delete", function () {
                 var button = $(this);
                 $('#deletemodal').show(300);

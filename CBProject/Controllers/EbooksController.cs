@@ -93,7 +93,32 @@ namespace CBProject.Controllers
                 return HttpNotFound();
             }
             var viewModel = Mapper.Map<Ebook, EbookViewModel>(ebook);
+            var categories = await this._categoriesRepository.GetAllAsync();
+            viewModel.Categories = new SelectList(categories, "ID", "Name");
+            var users = await this._usersRepo.GetAllAsync();
+            viewModel.Users = new SelectList(users, "Id", "FullName");
+            viewModel.Requirements = await this._ebooksRepository.GetRequirementsAsync(ebook.ID);
             return View(viewModel);
+        }
+        [Authorize]
+        public async Task<ActionResult> _Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Ebook ebook = await this._ebooksRepository.GetAsync(id);
+            if (ebook == null)
+            {
+                return HttpNotFound();
+            }
+            var viewModel = Mapper.Map<Ebook, EbookViewModel>(ebook);
+            var categories = await this._categoriesRepository.GetAllAsync();
+            viewModel.Categories = new SelectList(categories, "ID", "Name");
+            var users = await this._usersRepo.GetAllAsync();
+            viewModel.Users = new SelectList(users, "Id", "FullName");
+            viewModel.Requirements = await this._ebooksRepository.GetRequirementsAsync(ebook.ID);
+            return PartialView("_Details", viewModel);
         }
         [Authorize(Roles = "Admin, ContentCreator")]
         public async Task<ActionResult> Create()
@@ -222,6 +247,26 @@ namespace CBProject.Controllers
             }
             
             return View(viewModel);
+        }
+        [Authorize]
+        public async Task<ActionResult> _Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Ebook ebook = await this._ebooksRepository.GetAsync(id);
+            if (ebook == null)
+            {
+                return HttpNotFound();
+            }
+            var viewModel = Mapper.Map<Ebook, EbookViewModel>(ebook);
+            var categories = await this._categoriesRepository.GetAllAsync();
+            viewModel.Categories = new SelectList(categories, "ID", "Name");
+            var users = await this._usersRepo.GetAllAsync();
+            viewModel.Users = new SelectList(users, "Id", "FullName");
+            viewModel.Requirements = await this._ebooksRepository.GetRequirementsAsync(ebook.ID);
+            return PartialView("_Edit", viewModel);
         }
         [Authorize(Roles = "Admin, ContentCreator")]
         public async Task<ActionResult> Delete(int? id)
