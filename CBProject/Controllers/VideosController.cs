@@ -25,6 +25,7 @@ namespace CBProject.Controllers
         private readonly TagsRepository _tagsRepo;
         private readonly ReviewsRepository _reviewRepo;
         private readonly RatingsRepository _ratingsRepo;
+        private RequirementsRepository _requirementsRepo;
         public VideosController(IUnitOfWork unitOfWork, IUsersRepo usersRepo)
         {
             this._videoRepo = unitOfWork.Videos;
@@ -33,6 +34,7 @@ namespace CBProject.Controllers
             this._tagsRepo = unitOfWork.Tags;
             this._reviewRepo = unitOfWork.Reviews;
             this._ratingsRepo = unitOfWork.Ratings;
+            this._requirementsRepo = unitOfWork.Requirements;
         }
         [Authorize]
         public async Task<ActionResult> Index()
@@ -45,6 +47,7 @@ namespace CBProject.Controllers
                 var viewModel = Mapper.Map<Video, VideoViewModel>(video);
                 viewModel.OtherCategory = categories;
                 viewModel.Rate = await this._videoRepo.GetRatingsAverageAsync(video.ID);
+                viewModel.Requirements = await this._videoRepo.GetRequirementsAsync(video.ID);
                 viewModels.Add(viewModel);
             }
             return View(viewModels);
@@ -64,6 +67,7 @@ namespace CBProject.Controllers
                 sum += rating.Rate;
             }
             viewModel.Rate = sum / ratings.Count;
+            viewModel.Requirements = await this._videoRepo.GetRequirementsAsync(id);
             return View("PublicDetails", viewModel);
         }
         [Authorize]
@@ -138,6 +142,7 @@ namespace CBProject.Controllers
             var viewModel = Mapper.Map<Video, VideoViewModel>(video);
             viewModel.OtherUsers = await this._usersRepo.GetAllAsync();
             viewModel.OtherCategory = await this._categoriesRepo.GetAllAsync();
+            viewModel.Requirements = await this._videoRepo.GetRequirementsAsync(video.ID);
             return View(viewModel);
         }
         [HttpPost]
@@ -261,6 +266,7 @@ namespace CBProject.Controllers
                 this._tagsRepo.Dispose();
                 this._reviewRepo.Dispose();
                 this._ratingsRepo.Dispose();
+                this._requirementsRepo.Dispose();
             }
             base.Dispose(disposing);
         }

@@ -2,6 +2,10 @@
   "title": "Panel de control | Skote - Plantilla de administrador y panel",
   "t-menu": "Menú",
 
+  "t-orders": "Pedidos",
+  "t-wallet": "Cartera",
+  "t-related": "Relacionada",
+  "t-requirements": "Requisitos",
   "t-home": "Casa",
   "t-lessons": "Lecciones",
   "t-manage": "Gestionar",
@@ -11,7 +15,6 @@
   "t-users": "Usuarias",
   "t-roles": "Roles",
   "t-deleted-users": "Usuarios Eliminadas",
-  "t-actions": "Comportamiento",
   "t-categories": "Categorías",
   "t-content-types": "Tipos De Contenido",
   "t-payments": "Pagos",

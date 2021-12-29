@@ -87,26 +87,19 @@
                     <hr style="background-color:darkblue;" />
                     <li>
                         <a href=@Url.Action("Index", "Home") key="t-home" class="waves-effect">
-                       
-                                <i class="fas fa-home"></i>
-                               
-                                <span key="t-home">Site</span>
-
+                            <i class="fas fa-home"></i>
+                            <span key="t-home">Site</span>
                         </a>
                     </li>
                     <li>
                         <a href=@Url.Action("Lessons", "Home") key="t-lessons" class="waves-effect">
-                            
-                                <i class="fas fa-book"></i>
-                            
-                                <span  key="t-lessons">Courses</span>
-                           
+                            <i class="fas fa-book"></i>
+                            <span key="t-lessons">Courses</span>
                         </a>
                     </li>
                     <li>
                         <a href="javascript: void(0);" class="waves-effect">
                             <i class="fas fa-user"></i>
-                            
                             <span key="t-account">Account</span>
                         </a>
                         <ul class="sub-menu" aria-expanded="false">
@@ -118,32 +111,39 @@
                     <li>
                         <a href="javascript: void(0);" class="waves-effect">
                             <i class="fas fa-clipboard"></i>
-                         
-                            <span key="t-actions">Actions</span>
-                        </a>
-                        <ul class="sub-menu" aria-expanded="false">
-                            <li><a href=@Url.Action("Index", "Categories") key="t-categories">Categories</a></li>
-                            <li><a href=@Url.Action("Index", "ContentTypes") key="t-content-types">ContentTypes</a></li>
-                            <li><a href=@Url.Action("Index", "Payments") key="t-payments">Payments</a></li>
-                            <li><a href=@Url.Action("Index", "SubscriptionPackages") key="t-subscription-packages">SubscriptionPackages</a></li>
-                        </ul>
-                    </li>
-
-                    <li>
-                        <a href="javascript: void(0);" class="waves-effect">
-                            <i class="fas fa-photo-video"></i>
-                         
-                            <span key="t-contents">Contents</span>
+                            <span key="t-related">Related</span>
                         </a>
                         <ul class="sub-menu" aria-expanded="false">
                             <li><a href=@Url.Action("Index", "Ratings") key="t-ratings">Ratings</a></li>
                             <li><a href=@Url.Action("Index", "Reviews") key="t-reviews">Reviews</a></li>
                             <li><a href=@Url.Action("Index", "Tags") key="t-tags">Tags</a></li>
+                            <li><a href=@Url.Action("Index", "Requirements") key="t-requirements">Requieremnts</a></li>
+
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript: void(0);" class="waves-effect">
+                            <i class="fas fa-photo-video"></i>
+                            <span key="t-contents">Contents</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            <li><a href=@Url.Action("Index", "Categories") key="t-categories">Categories</a></li>
+                            <li><a href=@Url.Action("Index", "ContentTypes") key="t-content-types">ContentTypes</a></li>
                             <li><a href=@Url.Action("Index", "Videos") key="t-videos">Videos</a></li>
                             <li><a href=@Url.Action("Index", "Ebooks") key="t-ebooks">Ebooks</a></li>
                         </ul>
                     </li>
-
+                    <li>
+                        <a href="javascript: void(0);" class="waves-effect">
+                            <i class="fas fa-wallet"></i>
+                            <span key="t-wallet">Wallet</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            <li><a href=@Url.Action("Index", "Orders") key="t-orders">Orders</a></li>
+                            <li><a href=@Url.Action("Index", "Payments") key="t-payments">Payments</a></li>
+                            <li><a href=@Url.Action("Index", "SubscriptionPackages") key="t-subscription-packages">SubscriptionPackages</a></li>
+                        </ul>
+                    </li>
                     <hr style="margin-left: 3px; margin-right: 3px;" />
                 </ul>
             </div>

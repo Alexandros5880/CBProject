@@ -219,8 +219,10 @@
     <Compile Include="Controllers\ContentTypesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\PaymentsController.cs" />
     <Compile Include="Controllers\RatingsController.cs" />
+    <Compile Include="Controllers\RequirementsController.cs" />
     <Compile Include="Controllers\ReviewsController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\SubscriptionPackagesController.cs" />
@@ -235,9 +237,9 @@
     <Compile Include="HelperClasses\UnitOfWork.cs" />
     <Compile Include="HelperClasses\Interfaces\IUnitOfWork.cs" />
     <Compile Include="HelperClasses\StaticImfo.cs" />
-    <Compile Include="Migrations\202112281144544_Initial.cs" />
-    <Compile Include="Migrations\202112281144544_Initial.Designer.cs">
-      <DependentUpon>202112281144544_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\202112281259421_Initial.cs" />
+    <Compile Include="Migrations\202112281259421_Initial.Designer.cs">
+      <DependentUpon>202112281259421_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -1852,6 +1854,16 @@
     <Content Include="Views\SubscriptionPackages\Subscribe.cshtml" />
     <Content Include="Views\Videos\PublicDetails.cshtml" />
     <Content Include="Views\Home\Terms.cshtml" />
+    <Content Include="Views\Requirements\Create.cshtml" />
+    <Content Include="Views\Requirements\Delete.cshtml" />
+    <Content Include="Views\Requirements\Details.cshtml" />
+    <Content Include="Views\Requirements\Edit.cshtml" />
+    <Content Include="Views\Requirements\Index.cshtml" />
+    <Content Include="Views\Orders\Create.cshtml" />
+    <Content Include="Views\Orders\Delete.cshtml" />
+    <Content Include="Views\Orders\Details.cshtml" />
+    <Content Include="Views\Orders\Edit.cshtml" />
+    <Content Include="Views\Orders\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1950,8 +1962,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202112281144544_Initial.resx">
-      <DependentUpon>202112281144544_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202112281259421_Initial.resx">
+      <DependentUpon>202112281259421_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

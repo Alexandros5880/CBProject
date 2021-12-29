@@ -2,6 +2,10 @@
   "title": "Dashboard | Skote - Admin & Dashboard Template",
   "t-menu": "Menu",
 
+  "t-orders": "Orders",
+  "t-wallet": "Wallet",
+  "t-related": "Related",
+  "t-requirements":  "Requirements",
   "t-home": "Home",
   "t-lessons": "Lessons",
   "t-manage": "Manage",
@@ -11,7 +15,6 @@
   "t-users": "Users",
   "t-roles": "Roles",
   "t-deleted-users": "Deleted Users",
-  "t-actions": "Actions",
   "t-categories": "Categories",
   "t-content-types": "ContentTypes",
   "t-payments": "Payments",

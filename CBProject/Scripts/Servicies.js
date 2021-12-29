@@ -363,8 +363,66 @@ function getPayment(id, callback) {
     });
 }
 
+// TODO: Fix Requirements API Client side functions in Servicies.js
+function addEbookRequarement(id, content, callback) {
+    $.ajax({
+        type: "POST",
+        url: `/api/ebook/requarements/add?id=${id}&content=${content}`,
+        success: function (data) {
+            if (data) {
+                callback(data);
+            }
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+}
 
+function removeEbookRequarement(id, content, callback) {
+    $.ajax({
+        type: "DELETE",
+        url: `/api/ebook/requarements/remove?id=${id}&content=${content}`,
+        success: function (data) {
+            if (data) {
+                callback(data);
+            }
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+}
 
+function addVideoRequarement(id, content, callback) {
+    $.ajax({
+        type: "POST",
+        url: `/api/video/requarements/add?id=${id}&content=${content}`,
+        success: function (data) {
+            if (data) {
+                callback(data);
+            }
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+}
+
+function removeVideoRequarement(id, content, callback) {
+    $.ajax({
+        type: "DELETE",
+        url: `/api/video/requarements/remove?id=${id}&content=${content}`,
+        success: function (data) {
+            if (data) {
+                callback(data);
+            }
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+}
 
 
 
@@ -394,4 +452,18 @@ function createOrder(packageId) {
             }
         });
     });
+}
+
+
+
+function addRequirements(modelId, content, type) {
+    console.log(modelId)
+    console.log(`ContentType: ${type}`);
+    console.log(`Content: ${content}`);
+}
+
+function RemoveRequirements(modelId, content, type) {
+    console.log(modelId)
+    console.log(`ContentType: ${type}`);
+    console.log(`Content: ${content}`);
 }
