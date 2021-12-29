@@ -345,8 +345,11 @@ namespace CBProject.Repositories
         {
             if (videoId == null)
                 throw new ArgumentNullException(nameof(videoId));
+            var video = await this._context.Videos.FirstOrDefaultAsync(e => e.ID == videoId);
+            if (video == null)
+                throw new ArgumentNullException(nameof(video));
             var reqTreq = await this._context.RequirementsToVideos
-                                            .Where(r => r.VideoId == videoId)
+                                            .Where(r => r.VideoId == video.ID)
                                             .Select(r => r.RequirementId)
                                             .ToListAsync();
             return await this._context.Requirements
@@ -373,20 +376,32 @@ namespace CBProject.Repositories
             );
             await this._context.SaveChangesAsync();
         }
-        public async Task RemoveRequirementAsync(int? videoId, string content)
+        public async Task RemoveRequirementAsync(int? videoId, int? requirementId)
         {
             if (videoId == null)
                 throw new ArgumentNullException(nameof(videoId));
-            var requirement = await this._context.Requirements
-                                                .FirstOrDefaultAsync(r => r.Content.Equals(content));
-            if (requirement == null)
-                throw new ArgumentNullException(nameof(requirement));
-            var requirementToVideo = await this._context.RequirementsToVideos
-                                                .FirstOrDefaultAsync(r => r.RequirementId == requirement.ID);
-            if (requirementToVideo == null)
-                throw new ArgumentNullException(nameof(requirementToVideo));
-            this._context.RequirementsToVideos.Remove(requirementToVideo);
-            this._context.Requirements.Remove(requirement);
+            if (requirementId == null)
+                throw new ArgumentNullException(nameof(requirementId));
+            var video = await this._context.Videos.FirstOrDefaultAsync(e => e.ID == videoId);
+            if (video == null)
+                throw new ArgumentNullException(nameof(video));
+            var reqToVideos = await this._context.RequirementsToVideos
+                                        .Where(r => r.VideoId == video.ID)
+                                        .ToListAsync();
+            foreach (var req in reqToVideos)
+            {
+                if (req.RequirementId == requirementId)
+                {
+                    this._context.RequirementsToVideos.Remove(req);
+                }
+            }
+            foreach (var req in await this._context.Requirements.ToListAsync())
+            {
+                if (req.ID == requirementId)
+                {
+                    this._context.Requirements.Remove(req);
+                }
+            }
             await this._context.SaveChangesAsync();
         }
 

@@ -299,12 +299,15 @@ namespace CBProject.Repositories
         {
             if (ebookId == null)
                 throw new ArgumentNullException(nameof(ebookId));
-            var reqTreq = await this._context.RequirementsToEbooks
-                                            .Where(r => r.EbookId == ebookId)
+            var ebook = await this._context.Ebooks.FirstOrDefaultAsync(e => e.ID == ebookId);
+            if (ebook == null)
+                throw new ArgumentNullException(nameof(ebook));
+            var reqToEbookIds = await this._context.RequirementsToEbooks
+                                            .Where(r => r.EbookId == ebook.ID)
                                             .Select(r => r.RequirementId)
                                             .ToListAsync();
             return await this._context.Requirements
-                        .Where(r => reqTreq.Contains(r.ID))
+                        .Where(r => reqToEbookIds.Contains(r.ID))
                         .ToListAsync();
         }
         public async Task AddRequirementAsync(int? ebookId, string content)
@@ -327,20 +330,32 @@ namespace CBProject.Repositories
             );
             await this._context.SaveChangesAsync();
         }
-        public async Task RemoveRequirementAsync(int? ebookId, string content)
+        public async Task RemoveRequirementAsync(int? ebookId, int? requirementId)
         {
             if (ebookId == null)
                 throw new ArgumentNullException(nameof(ebookId));
-            var requirement = await this._context.Requirements
-                                                .FirstOrDefaultAsync(r => r.Content.Equals(content));
-            if (requirement == null)
-                throw new ArgumentNullException(nameof(requirement));
-            var requirementToEbook = await this._context.RequirementsToEbooks
-                                                .FirstOrDefaultAsync(r => r.RequirementId == requirement.ID);
-            if (requirementToEbook == null)
-                throw new ArgumentNullException(nameof(requirementToEbook));
-            this._context.RequirementsToEbooks.Remove(requirementToEbook);
-            this._context.Requirements.Remove(requirement);
+            if (requirementId == null)
+                throw new ArgumentNullException(nameof(requirementId));
+            var ebook = await this._context.Ebooks.FirstOrDefaultAsync(e => e.ID == ebookId);
+            if (ebook == null)
+                throw new ArgumentNullException(nameof(ebook));
+            var reqToEbooks = await this._context.RequirementsToEbooks
+                                        .Where(r => r.EbookId == ebook.ID)
+                                        .ToListAsync();
+            foreach(var req in reqToEbooks)
+            {
+                if (req.RequirementId == requirementId)
+                {
+                    this._context.RequirementsToEbooks.Remove(req);
+                }
+            }
+            foreach(var req in await this._context.Requirements.ToListAsync())
+            {
+                if (req.ID == requirementId)
+                {
+                    this._context.Requirements.Remove(req);
+                }
+            }
             await this._context.SaveChangesAsync();
         }
 

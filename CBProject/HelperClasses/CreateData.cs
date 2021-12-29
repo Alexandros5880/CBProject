@@ -2947,57 +2947,49 @@ namespace CBProject.HelperClasses
         }
         public static void CreateRequiremenets(ApplicationDbContext context)
         {
-            context.Requirements.Add(
+            for(int i = 1; i < (21*3); i++)
+            {
+                context.Requirements.Add(
                     new Requirement()
                     {
-                        ID = 1,
-                        Content = "Requirements 1"
+                        ID = i,
+                        Content = $"Requirements {i}"
                     }
                 );
-            context.Requirements.Add(
-                    new Requirement()
-                    {
-                        ID = 2,
-                        Content = "Requirements 2"
-                    }
-                );
-            context.Requirements.Add(
-                    new Requirement()
-                    {
-                        ID = 3,
-                        Content = "Requirements 3"
-                    }
-                );
+            }
             context.SaveChanges();
+            var requirements = context.Requirements.ToList();
             var ebooks = context.Ebooks.ToList();
             var videos = context.Videos.ToList();
-            var requirements = context.Requirements.ToList();
+            int counter = 1;
             foreach (var ebook in ebooks)
             {
-                foreach(var req in requirements)
+                for(int i = 0; i < 3; i++)
                 {
                     context.RequirementsToEbooks.Add(
                         new RequirementToEbook()
                         {
                             ID = ebook.ID,
-                            Requirement = req,
+                            Requirement = requirements[counter],
                             Ebook = ebook
                         }
                     );
+                    counter++;
                 }
             }
             foreach (var video in videos)
             {
-                foreach (var req in requirements)
+                for (int i = 0; i < 3; i++)
                 {
                     context.RequirementsToVideos.Add(
                         new RequirementToVideo()
                         {
                             ID = video.ID,
-                            Requirement = req,
+                            Requirement = requirements[counter],
                             Video = video
                         }
                     );
+                    counter++;
                 }
             }
             context.SaveChanges();
