@@ -367,11 +367,12 @@ function getPayment(id, callback) {
 function addEbookRequarement(id, content, callback) {
     $.ajax({
         type: "POST",
-        url: `/api/ebook/requarements/add?id=${id}&content=${content}`,
+        url: `/api/ebook/requarements/add/${id}`,
+        data: {
+            content: content
+        },
         success: function (data) {
-            if (data) {
-                callback(data);
-            }
+            callback(data);
         },
         error: function (error) {
             console.log(error);
@@ -379,14 +380,12 @@ function addEbookRequarement(id, content, callback) {
     });
 }
 
-function removeEbookRequarement(id, content, callback) {
+function removeEbookRequarement(id, contentId, callback) {
     $.ajax({
-        type: "DELETE",
-        url: `/api/ebook/requarements/remove?id=${id}&content=${content}`,
+        type: "GET",
+        url: `/api/ebook/requarements/remove/${id}/${contentId}`,
         success: function (data) {
-            if (data) {
-                callback(data);
-            }
+            callback(data);
         },
         error: function (error) {
             console.log(error);
@@ -397,11 +396,12 @@ function removeEbookRequarement(id, content, callback) {
 function addVideoRequarement(id, content, callback) {
     $.ajax({
         type: "POST",
-        url: `/api/video/requarements/add?id=${id}&content=${content}`,
+        url: `/api/video/requarements/add/{id}`,
+        data: {
+            content: content
+        },
         success: function (data) {
-            if (data) {
-                callback(data);
-            }
+            callback(data);
         },
         error: function (error) {
             console.log(error);
@@ -409,14 +409,12 @@ function addVideoRequarement(id, content, callback) {
     });
 }
 
-function removeVideoRequarement(id, content, callback) {
+function removeVideoRequarement(id, contentId, callback) {
     $.ajax({
-        type: "DELETE",
-        url: `/api/video/requarements/remove?id=${id}&content=${content}`,
+        type: "GET",
+        url: `/api/video/requarements/remove/${id}/${contentIdt}`,
         success: function (data) {
-            if (data) {
-                callback(data);
-            }
+            callback(data);
         },
         error: function (error) {
             console.log(error);
@@ -454,16 +452,26 @@ function createOrder(packageId) {
     });
 }
 
-
-
 function addRequirements(modelId, content, type) {
-    console.log(modelId)
-    console.log(`ContentType: ${type}`);
-    console.log(`Content: ${content}`);
+    if (type === 'ebook') {
+        addEbookRequarement(modelId, content, function (response) {
+            location.reload();
+        });
+    } else if (type == 'video') {
+        addVideoRequarement(modelId, content, function (response) {
+            location.reload();
+        });
+    }
 }
 
-function RemoveRequirements(modelId, content, type) {
-    console.log(modelId)
-    console.log(`ContentType: ${type}`);
-    console.log(`Content: ${content}`);
+function removeRequarements(modelId, contentId, type) {
+    if (type === 'ebook') {
+        removeEbookRequarement(modelId, contentId, function (response) {
+            location.reload();
+        });
+    } else if (type == 'video') {
+        removeVideoRequarement(modelId, contentId, function (response) {
+            location.reload();
+        });
+    }
 }

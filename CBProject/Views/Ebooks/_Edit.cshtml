@@ -105,13 +105,13 @@
         @Html.Label("Remove Requirement", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             <select class="form-control" id="remove-requirement-textarea-Ebook-Partial">
-                @foreach (var req in Model.Requirements)
+                @foreach (var req in @Model.Requirements)
                 {
                     <option value="@req.ID">@req.Content</option>
                 }
             </select>
             <br />
-            <button class="btn btn-dark" onclick="RemoveRequirements(@Model.ID, $('#remove-requirement-textarea-Ebook-Partial option:selected').val(), 'ebook');">Remove</button>
+            <button class="btn btn-dark" onclick="removeRequarements(@Model.ID, $('#remove-requirement-textarea-Ebook-Partial option:selected').val(), 'ebook');">Remove</button>
         </div>
     </div>
 </div>

@@ -1,4 +1,5 @@
 ﻿using CBProject.HelperClasses.Interfaces;
+using CBProject.Models.HelperModels;
 using CBProject.Models.ViewModels;
 using CBProject.Repositories.IdentityRepos;
 using CBProject.Repositories.IdentityRepos.Interfaces;
@@ -291,48 +292,48 @@ namespace CBProject.Controllers.API
             return Ok(await this._unitOfWork.Payments.GetAsync(id));
         }
 
-        [HttpGet]
-        [Route("api/ebook/requarements/add")]
-        public async Task<IHttpActionResult> AddEbookRequarement(int? id, string context)
+        [HttpPost]
+        [Route("api/ebook/requarements/add/{id}")]
+        public async Task<IHttpActionResult> AddEbookRequarement(int? id, AddRequirement requirement)
         {
             if (id == null)
                 return NotFound();
-            if (context == null)
+            if (requirement == null)
                 return NotFound();
-            await this._unitOfWork.Ebooks.AddRequirementAsync(id, context);
-            return Ok();
-        }
-        [HttpDelete]
-        [Route("api/ebook/requarements/remove")]
-        public async Task<IHttpActionResult> RemoveEbookRequarement(int? id, string context)
-        {
-            if (id == null)
-                return NotFound();
-            if (context == null)
-                return NotFound();
-            await this._unitOfWork.Ebooks.RemoveRequirementAsync(id, context);
+            await this._unitOfWork.Ebooks.AddRequirementAsync(id, requirement.Content);
             return Ok();
         }
         [HttpGet]
-        [Route("api/video/requarements/add")]
-        public async Task<IHttpActionResult> AddVideoRequarement(int? id, string context)
+        [Route("api/ebook/requarements/remove/{ebookId}/{requirementId}")]
+        public async Task<IHttpActionResult> RemoveEbookRequarement(int? ebookId, int? requirementId)
         {
-            if (id == null)
+            if (ebookId == null)
                 return NotFound();
-            if (context == null)
+            if (requirementId == null)
                 return NotFound();
-            await this._unitOfWork.Videos.AddRequirementAsync(id, context);
+            await this._unitOfWork.Ebooks.RemoveRequirementAsync(ebookId, requirementId);
             return Ok();
         }
-        [HttpDelete]
-        [Route("api/video/requarements/remove")]
-        public async Task<IHttpActionResult> RemoveVideoRequarement(int? id, string context)
+        [HttpPost]
+        [Route("api/video/requarements/add/{id}")]
+        public async Task<IHttpActionResult> AddVideoRequarement(int? id, AddRequirement requirement)
         {
             if (id == null)
                 return NotFound();
-            if (context == null)
+            if (requirement == null)
                 return NotFound();
-            await this._unitOfWork.Videos.RemoveRequirementAsync(id, context);
+            await this._unitOfWork.Videos.AddRequirementAsync(id, requirement.Content);
+            return Ok();
+        }
+        [HttpGet]
+        [Route("api/video/requarements/remove/{videoId}/{requirementId}")]
+        public async Task<IHttpActionResult> RemoveVideoRequarement(int? videoId, int? requirementId)
+        {
+            if (videoId == null)
+                return NotFound();
+            if (requirementId == null)
+                return NotFound();
+            await this._unitOfWork.Videos.RemoveRequirementAsync(videoId, requirementId);
             return Ok();
         }
     }
