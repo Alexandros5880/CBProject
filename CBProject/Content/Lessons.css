@@ -1,0 +1,41 @@
+﻿#filter-slidebar > li {
+    margin-top: 11% !important;
+    text-align: center;
+}
+
+#search-addon:hover {
+    cursor: pointer;
+}
+
+.drop-down-buttons {
+    margin-top: 5px;
+}
+
+#subscription-container {
+    text-align: center;
+    margin-top: 33%;
+}
+
+/*.subscribe-button {
+        border-radius: 11px;
+        background-color: red;
+        color: #ffffff;
+        padding: 11px;
+    }*/
+
+/*    .subscribe-button:hover {
+        color: #ffffff;
+        background-color: darkred;
+    }*/
+
+a:hover {
+    cursor: pointer;
+}
+
+/*.item {
+        height: 400px !important;
+    }*/
+
+#ourHolder:hover {
+    transform: translate(0, -7px);
+}

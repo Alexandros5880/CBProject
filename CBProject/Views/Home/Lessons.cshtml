@@ -74,56 +74,6 @@
 
 
 
-<style>
-    #filter-slidebar > li {
-        margin-top: 11% !important;
-        text-align: center;
-    }
-
-    #search-addon:hover {
-        cursor: pointer;
-    }
-
-    .drop-down-buttons {
-        margin-top: 5px;
-    }
-
-    #subscription-container {
-        text-align: center;
-        margin-top: 33%;
-    }
-
-    /*.subscribe-button {
-        border-radius: 11px;
-        background-color: red;
-        color: #ffffff;
-        padding: 11px;
-    }*/
-
-/*    .subscribe-button:hover {
-        color: #ffffff;
-        background-color: darkred;
-    }*/
-
-    a:hover {
-        cursor: pointer;
-    }
-
-    /*.item {
-        height: 400px !important;
-    }*/
-
-    #ourHolder:hover {
-        transform: translate(0, -7px);
-    }
-</style>
-
-
-
-
-
-
-
 <div class="row" style="margin-top: 50px !important; margin-bottom: 50px !important;">
 
     <!-- Filters SlideBar -->
@@ -211,15 +161,15 @@
                             <input type="hidden" id="content" name="content" value="${video.id}">
                             <input type="hidden" id="content-type" name="content-type" value="video">
                             <div class="card item" id="card-video">
-                                <iframe class="embed-responsive-item" src="${video.videoPath}" allowfullscreen></iframe>
+                                <iframe class="embed-responsive-item" src="${video.videoPath}" autoplay="false" allowfullscreen></iframe>
                                 <!--<img alt="Cover Foto" src="${video.videoImagePath}" style="width:100%;" />-->
                                 <p><b>${video.title}</b></p>
                                 <div class="card-body">
-                                    <p><img class="img-icon-index" src="../assets/images/icons-person.png" alt="person" /> Programming with  </p>
-                                    <p><img class="img-icon-index" src="../assets/images/icon-video.png" alt="video" /> hours on-demand video  </p>
+                                    <p><img class="img-icon-index" src="../assets/images/icons/icons-person.png" alt="person" /> Programming with  </p>
+                                    <p><img class="img-icon-index" src="../assets/images/icons/icon-video.png" alt="video" /> hours on-demand video  </p>
                                     <br />
                                     <button class="btn btn-card btn-lg details">Details</button>
-                                    <button class="btn btn-card btn-lg btn-open-modal more" data-toggle="modal" data-target="#modal-fullscreen-xl">
+                                    <button class="btn btn-card-play btn-lg btn-open-modal more" data-toggle="modal" data-target="#modal-fullscreen-xl">
                                         Play
                                     </button>
                                 </div>

@@ -14,18 +14,18 @@
 @section fullWidth{
 
     <div class="row">
-        <div class="col-md-7 col-sm-7 col-sm-offset-1 col-md-offset-1 col-xs-12 col-xs-offset-1 text">
-            <p id="home-big-title">What do you want to learn todaty?</p>
+        <div class="col-md-7 col-sm-7 col-sm-offset-1 col-md-offset-1 col-xs-12 col-xs-offset-1 text animate__fadeInLeft">
+            <p id="home-big-title"  class="animate__animated animate__fadeInLeft ">What do you want to learn todaty?</p>
             <br />
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+            <p  class="animate__animated animate__fadeInLeft">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
             <br />
             <div class="row">
                 <div class="col-md-6 col-sm-7 col-xs-8 home-search-bar">
-                    <input id="search-input" type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
+                    <input id="search-input" type="search" class="form-control rounded animate__animated animate__fadeInUp" placeholder="Search" aria-label="Search"
                            aria-describedby="search-addon" />
                 </div>
                 <div class="col-md-4 ">
-                    <button type="button" class="btn btn-search search">Search</button>
+                    <button type="button" class="btn btn-search search animate__animated animate__fadeInUp">Search</button>
                 </div>
             </div>
         </div>
@@ -89,7 +89,7 @@
 <div class="grey-row">
     <div class="container">
         <div class="row ">
-            <h2 id="best-sellers">Best Sellers</h2>
+            <h2 id="best-sellers">Ebook | Best Sellers</h2>
             <br/>
             @foreach (var ebook in Model.Ebooks.Take(4))
             { 
@@ -173,6 +173,7 @@
                         `
                                     <div class="col-md-4">
                                         <div class="card card-plan text-center">
+                                            
                                             <div class="card-body">
                                                 <h5 class="card-title">${d.description}</h5>
                                                 <hr />
@@ -254,14 +255,14 @@
                                     <input type="hidden" id="content-type" name="content-type" value="video">
                                     <div class="card item" id="card-video">
 
-                                             <iframe class="embed-responsive-item" src="${video.videoPath}" allowfullscreen></iframe>
+                                             <iframe class="embed-responsive-item" src="${video.videoPath}" autoplay="false" allowfullscreen></iframe>
                                            <!--<img alt="Cover Foto" src="${video.videoImagePath}" style="width:100%;" />-->
                                             <p><b>${video.title}</b></p>
                                          <hr/>
                                         <div class="card-body">
 
-                                       <p><img class="img-icon-index" src="../assets/images/icons-person.png" alt="person" /> Programming with  </p>
-                                            <p><img class="img-icon-index" src="../assets/images/icon-video.png" alt="video" /> hours on-demand video  </p>
+                                       <p><img class="img-icon-index" src="../assets/images/icons/icons-person.png" alt="person" /> Programming with  </p>
+                                            <p><img class="img-icon-index" src="../assets/images/icons/icon-video.png" alt="video" /> hours on-demand video  </p>
                                             <br />
                                             <button class="btn btn-card btn-lg details">Details</button>
                                             <button class="btn btn-card-play btn-lg btn-open-modal more" data-toggle="modal" data-target="#video-modal-fullscreen-xl">
@@ -283,7 +284,7 @@
                                             </div>
                                             <div class="modal-body">
                                                 <div class="embed-responsive embed-responsive-16by9">
-                                                    <iframe class="embed-responsive-item" src="${video.videoPath}" allowfullscreen></iframe>
+                                                    <iframe class="embed-responsive-item" src="${video.videoPath}" autoplay="false" allowfullscreen></iframe>
                                                 </div>
                                             </div>
                                             <div class="modal-footer">

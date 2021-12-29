@@ -6,81 +6,42 @@
 
 
 
-
-<style>
-    .package-card {
-        margin-top: 33px;
-    }
-
-    .item {
-        border-radius: 11px;
-        border-style: solid;
-    }
-
-    .item:hover {
-        transform: translate(0, -11px);
-    }
-
-    .item-header {
-        border-radius: 11px 11px 0 0;
-        background-color: darkgrey;
-        text-align: center;
-        padding: 7px;
-    }
-</style>
-
-
-
-
-
-
 <div class="container">
 
     <br />
     <br />
-
-    <h2>Subscribe Now</h2>
-
-    <br />
-    <br />
+    <h3 style="text-align:center">Plans</h3>
+    <h2 style="text-align:center"><b>A global learning platform for eneryone</b></h2>
     <br />
     <br />
 
-    <div class="row plans">
-
-    </div>
-
-
+    <div class="row plans"></div>
 
     <!-- Payment Modal -->
     <div class="modal fade paymentModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <div class="modal-content payment-window"> <!-- Payment Container (Here loads payment UI) -->
-                
+            <div class="modal-content payment-window">
+                <!-- Payment Container (Here loads payment UI) -->
+
             </div>
         </div>
     </div>
-
-
-
     <br />
     <br />
+    <p>
+        <i>
+            *Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+            when an unknown printer took a galley of type and scrambled it to make a type
+            specimen book.Ipsum is simply dummy text of the printing and typesetting industry.
+            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when
+            an unknown printer took a galley of type and scrambled it to make a type specimen book
+        </i>
+    </p>
     <br />
     <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-
 </div>
+
 
 
 
@@ -103,6 +64,10 @@
                                     <br />
                                     <p class="card-text"><img class="img-icon-tik" src="/img/icons-tik.png" alt="tik" /> Duration: ${d.duration} </p>
                                     <p class="card-text"><img class="img-icon-tik" src="/img/icons-tik.png" alt="tik" /> Started: ${d.startDate} </p>
+                                     <p class="card-text"><img class="img-icon-tik" src="/img/icons-tik.png" alt="tik" /> Mobile app access </p>
+                                     <p class="card-text"><img class="img-icon-tik" src="/img/icons-tik.png" alt="tik" /> Access to 6,500+ courses</p>
+                                       <p class="card-text"><img class="img-icon-tik" src="/img/icons-tik.png" alt="tik" /> Custom topics </p>
+
                                     <br />
                                     <a class="btn btn-card-plan buy-button" data-value="${d.id}" data-toggle="modal" data-target=".paymentModal">Buy</a>
                                 </div>

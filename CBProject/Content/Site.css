@@ -146,9 +146,13 @@ a:hover {
 
 .btn-search {
     color: white;
-    background-color: #5B65E8;
+    background-color: #6d77ff;
 }
 
+    .btn-search:hover {
+        color: white;
+        background-color: #5b65e8;
+    }
 .grey-row {
     background-color: #F0F0F0; /*light-grey*/
 }
@@ -187,22 +191,22 @@ a:hover {
     }
 
 .btn-card {
-    background-color: white;
-    color: #5B65E8;
+    background-color: #6d77ff;
+    color: white;
     border: 2px solid #5B65E8;
     font-size: 15px;
     padding: 5px 10px;
 }
 .btn-card-play {
-    background-color: white;
-    color: #2FB8A9;
+    background-color: #52d2c4;
+    color: white;
     border: 2px solid #2FB8A9;
     font-size: 15px;
     padding: 5px 10px;
 }
     .btn-card-play:hover {
         background-color: #2FB8A9;
-        color:white;
+        color: white;
     }
 
 
@@ -242,10 +246,10 @@ a:hover {
 }
 .ebook-card a {
     padding: 7px 15px;
-    color: #5B65E8;
+    background-color: #6d77ff;
+    color: white;
     border: 2px solid #5B65E8;
     border-radius: 5px;
-    
 }
     .ebook-card a:hover {
         color: white;

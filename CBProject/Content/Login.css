@@ -25,7 +25,7 @@ body {
 }
 
 .login-container-left img {
-    width: 100%;
+    width: 96%;
 }
 
 .bigTitle {
@@ -60,12 +60,18 @@ body {
 .checkbox label {
     padding-left: 0px !important;
     color: #c7dbd9;
-    margin-bottom: 10%;
+  
 }
 
 .checkbox {
     margin-top: 5px;
     margin-bottom: 20%;
+}
+.checkbox p a{
+   color:white;
+}
+.checkbox p  {
+    color: white;
 }
 
 .register-new-user p a {
@@ -79,6 +85,12 @@ body {
 
 .input-login{
     max-width:100% !important;
+}
+.newsletter{
+    padding-top:0px !important;
+}
+input[type="file"] {
+   color:white;
 }
 
 @media only screen and (max-width: 768px) {

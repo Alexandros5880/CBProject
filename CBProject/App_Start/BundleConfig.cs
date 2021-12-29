@@ -34,7 +34,9 @@ namespace CBProject
                       "~/Content/site.css",
                       "~/Content/Login.css",
                       "~/Content/About.css",
-                      "~/Content/Details.css"
+                      "~/Content/Details.css",
+                      "~/Content/Lessons.css",
+                      "~/Content/Subscribe.css"
                       ));
 
 
