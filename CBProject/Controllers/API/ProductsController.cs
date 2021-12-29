@@ -21,7 +21,6 @@ namespace CBProject.Controllers.API
             this._rolesRepo = (RolesRepo)rolesRepo;
             this._unitOfWork = unitOfWork;
         }
-
         // GET api/<controller>
         public async Task<IHttpActionResult> Get()
         {
@@ -38,10 +37,11 @@ namespace CBProject.Controllers.API
 
             return Ok(products);
         }
-
         // GET api/<controller>/5
         public async Task<IHttpActionResult> Get(string search)
         {
+            if (search == null)
+                return NotFound();
             var category = await this._unitOfWork.Categories
                         .GetByNameAsync(search);
             var videos = await this._unitOfWork.Videos.GetAllQuerable()
@@ -61,8 +61,10 @@ namespace CBProject.Controllers.API
         }
         [HttpGet]
         [Route("api/products/contenst/bycategory")]
-        public async Task<IHttpActionResult> GetContentsByCategoryId(int id)
+        public async Task<IHttpActionResult> GetContentsByCategoryId(int? id)
         {
+            if (id == null)
+                return NotFound();
             var category = await this._unitOfWork.Categories
                         .GetAsync(id);
             var videos = await this._unitOfWork.Videos.GetAllQuerable()
@@ -82,6 +84,8 @@ namespace CBProject.Controllers.API
         [Route("api/products/contenst/bycategory")]
         public async Task<IHttpActionResult> GetContentsByCategoryName(string name)
         {
+            if (name == null)
+                return NotFound();
             var category = await this._unitOfWork.Categories
                         .GetByNameAsync(name);
             var videos = await this._unitOfWork.Videos.GetAllQuerable()
@@ -101,6 +105,8 @@ namespace CBProject.Controllers.API
         [Route("api/products/search/filters")]
         public async Task<IHttpActionResult> GetSearchByFilters(FilterParams filters)
         {
+            if (filters == null)
+                return NotFound();
             var products = await this._unitOfWork.Categories.GetSearchByFiltersAsync(filters);
             return Ok(products);
         }
@@ -113,14 +119,18 @@ namespace CBProject.Controllers.API
         }
         [HttpGet]
         [Route("api/packages/")]
-        public async Task<IHttpActionResult> GetSubscriptionPackage(int id)
+        public async Task<IHttpActionResult> GetSubscriptionPackage(int? id)
         {
+            if (id == null)
+                return NotFound();
             return Ok(await this._unitOfWork.SubscriptionPackages.GetAsync(id));
         }
         [HttpGet]
         [Route("api/user")]
         public async Task<IHttpActionResult> GetUser(string userId)
         {
+            if (userId == null)
+                return NotFound();
             return Ok(await this._usersRepo.GetAsync(userId));
         }
         [HttpGet]
@@ -148,8 +158,10 @@ namespace CBProject.Controllers.API
         }
         [HttpGet]
         [Route("api/category")]
-        public async Task<IHttpActionResult> GetCategory(int id)
+        public async Task<IHttpActionResult> GetCategory(int? id)
         {
+            if (id == null)
+                return NotFound();
             var categories = await this._unitOfWork.Categories
                                                 .GetAsync(id);
             return Ok(categories);
@@ -182,14 +194,18 @@ namespace CBProject.Controllers.API
         }
         [HttpGet]
         [Route("api/tag")]
-        public async Task<IHttpActionResult> GetTag(int id)
+        public async Task<IHttpActionResult> GetTag(int? id)
         {
+            if (id == null)
+                return NotFound();
             return Ok(await this._unitOfWork.Tags.GetAsync(id));
         }
         [HttpGet]
         [Route("api/users/role")]
         public async Task<IHttpActionResult> GetUsersByRole(string rolename)
         {
+            if (rolename == null)
+                return NotFound();
             var rolesIds = await this._rolesRepo
                                              .GetAllQuerable()
                                              .Where(r => r.Name.Equals(rolename))
@@ -212,8 +228,10 @@ namespace CBProject.Controllers.API
         }
         [HttpGet]
         [Route("api/review")]
-        public async Task<IHttpActionResult> GetReview(int id)
+        public async Task<IHttpActionResult> GetReview(int? id)
         {
+            if (id == null)
+                return NotFound();
             return Ok(await this._unitOfWork.Reviews.GetAsync(id));
         }
         [HttpGet]
@@ -224,8 +242,10 @@ namespace CBProject.Controllers.API
         }
         [HttpGet]
         [Route("api/ebook")]
-        public async Task<IHttpActionResult> GetEbook(int id)
+        public async Task<IHttpActionResult> GetEbook(int? id)
         {
+            if (id == null)
+                return NotFound();
             return Ok(await this._unitOfWork.Ebooks.GetAsync(id));
         }
         [HttpGet]
@@ -236,8 +256,10 @@ namespace CBProject.Controllers.API
         }
         [HttpGet]
         [Route("api/video")]
-        public async Task<IHttpActionResult> GetVideo(int id)
+        public async Task<IHttpActionResult> GetVideo(int? id)
         {
+            if (id == null)
+                return NotFound();
             return Ok(await this._unitOfWork.Videos.GetAsync(id));
         }
         [HttpGet]
@@ -248,8 +270,10 @@ namespace CBProject.Controllers.API
         }
         [HttpGet]
         [Route("api/contenttype")]
-        public async Task<IHttpActionResult> GetContentType(int id)
+        public async Task<IHttpActionResult> GetContentType(int? id)
         {
+            if (id == null)
+                return NotFound();
             return Ok(await this._unitOfWork.ContentTypes.GetAsync(id));
         }
         [HttpGet]
@@ -260,35 +284,56 @@ namespace CBProject.Controllers.API
         }
         [HttpGet]
         [Route("api/payment")]
-        public async Task<IHttpActionResult> GetPayment(int id)
+        public async Task<IHttpActionResult> GetPayment(int? id)
         {
+            if (id == null)
+                return NotFound();
             return Ok(await this._unitOfWork.Payments.GetAsync(id));
         }
 
-        // TODO: Fix Requirements API Controller Functions in ProductsController.cs
-        [HttpPost]
+        [HttpGet]
         [Route("api/ebook/requarements/add")]
-        public async Task<IHttpActionResult> AddEbookRequarement(int id)
+        public async Task<IHttpActionResult> AddEbookRequarement(int? id, string context)
         {
-            return Ok(await this._unitOfWork.Payments.GetAsync(id));
+            if (id == null)
+                return NotFound();
+            if (context == null)
+                return NotFound();
+            await this._unitOfWork.Ebooks.AddRequirementAsync(id, context);
+            return Ok();
         }
         [HttpDelete]
         [Route("api/ebook/requarements/remove")]
-        public async Task<IHttpActionResult> RemoveEbookRequarement(int id)
+        public async Task<IHttpActionResult> RemoveEbookRequarement(int? id, string context)
         {
-            return Ok(await this._unitOfWork.Payments.GetAsync(id));
+            if (id == null)
+                return NotFound();
+            if (context == null)
+                return NotFound();
+            await this._unitOfWork.Ebooks.RemoveRequirementAsync(id, context);
+            return Ok();
         }
-        [HttpPost]
+        [HttpGet]
         [Route("api/video/requarements/add")]
-        public async Task<IHttpActionResult> AddVideoRequarement(int id)
+        public async Task<IHttpActionResult> AddVideoRequarement(int? id, string context)
         {
-            return Ok(await this._unitOfWork.Payments.GetAsync(id));
+            if (id == null)
+                return NotFound();
+            if (context == null)
+                return NotFound();
+            await this._unitOfWork.Videos.AddRequirementAsync(id, context);
+            return Ok();
         }
         [HttpDelete]
         [Route("api/video/requarements/remove")]
-        public async Task<IHttpActionResult> RemoveVideoRequarement(int id)
+        public async Task<IHttpActionResult> RemoveVideoRequarement(int? id, string context)
         {
-            return Ok(await this._unitOfWork.Payments.GetAsync(id));
+            if (id == null)
+                return NotFound();
+            if (context == null)
+                return NotFound();
+            await this._unitOfWork.Videos.RemoveRequirementAsync(id, context);
+            return Ok();
         }
     }
 }

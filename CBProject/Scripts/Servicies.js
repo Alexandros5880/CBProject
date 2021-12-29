@@ -364,10 +364,10 @@ function getPayment(id, callback) {
 }
 
 // TODO: Fix Requirements API Client side functions in Servicies.js
-function addEbookRequarement(ebookId, content, type, callback) {
+function addEbookRequarement(id, content, callback) {
     $.ajax({
         type: "POST",
-        url: "/api/ebook/requarements/add",
+        url: `/api/ebook/requarements/add?id=${id}&content=${content}`,
         success: function (data) {
             if (data) {
                 callback(data);
@@ -379,10 +379,10 @@ function addEbookRequarement(ebookId, content, type, callback) {
     });
 }
 
-function removeEbookRequarement(id, callback) {
+function removeEbookRequarement(id, content, callback) {
     $.ajax({
         type: "DELETE",
-        url: "/api/ebook/requarements/remove",
+        url: `/api/ebook/requarements/remove?id=${id}&content=${content}`,
         success: function (data) {
             if (data) {
                 callback(data);
@@ -394,10 +394,10 @@ function removeEbookRequarement(id, callback) {
     });
 }
 
-function addVideoRequarement(ebookId, content, type, callback) {
+function addVideoRequarement(id, content, callback) {
     $.ajax({
         type: "POST",
-        url: "/api/video/requarements/add",
+        url: `/api/video/requarements/add?id=${id}&content=${content}`,
         success: function (data) {
             if (data) {
                 callback(data);
@@ -409,10 +409,10 @@ function addVideoRequarement(ebookId, content, type, callback) {
     });
 }
 
-function removeVideoRequarement(id, callback) {
+function removeVideoRequarement(id, content, callback) {
     $.ajax({
         type: "DELETE",
-        url: "/api/video/requarements/remove",
+        url: `/api/video/requarements/remove?id=${id}&content=${content}`,
         success: function (data) {
             if (data) {
                 callback(data);

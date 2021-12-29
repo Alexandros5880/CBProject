@@ -57,6 +57,7 @@ namespace CBProject.Controllers
                 viewModel.Category = ebook.Category;
                 viewModel.Creator = ebook.Creator;
                 viewModel.Rate = await this._ebooksRepository.GetRatingsAverageAsync(ebook.ID);
+                viewModel.Requirements = await this._ebooksRepository.GetRequirementsAsync(ebook.ID);
                 viewModels.Add(viewModel);
             }
             return View(viewModels);
