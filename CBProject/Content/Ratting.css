@@ -19,7 +19,7 @@
 .rating-container .rating-input {
     position: absolute;
     cursor: pointer;
-    width: 100%;
+    width: 60%;
     height: 1px;
     bottom: 0;
     left: 0;
@@ -86,19 +86,19 @@
 }
 
 .rating-lg {
-    font-size: 1.5em
+    font-size: 2em
 }
 
 .rating-md {
-    font-size: 2em
+    font-size: 1.5em
 }
 
 .rating-sm {
-    font-size: 2em
+    font-size: 1.5em
 }
 
 .rating-xs {
-    font-size: 2em
+    font-size: 1.5em
 }
 
 .rating-xl {
@@ -136,6 +136,23 @@
     margin-right: 5px;
     margin-left: 0
 }
+
+input[type=submit] {
+    -webkit-appearance: button;
+    cursor: pointer;
+    background-color: #e8e8e8;
+    border: 2px solid #a8a8a8;
+    border-radius: 5px;
+}
+
+
+    input[type=submit]:hover {
+        background-color: #a8a8a8;
+        border: 2px solid #a8a8a8;
+        color:white;
+    }
+
+
 
 
 

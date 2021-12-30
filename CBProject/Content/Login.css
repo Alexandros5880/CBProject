@@ -93,17 +93,4 @@ input[type="file"] {
    color:white;
 }
 
-@media only screen and (max-width: 768px) {
-    .login-container-left img {
-        display: none;
-    }
 
-    .bigTitle {
-        margin-top: 0px;
-        padding-top: 10%;
-    }
-
-    .btn-loginForm {
-        margin-bottom: 10%;
-    }
-}
