@@ -100,26 +100,6 @@ namespace CBProject.Controllers
             viewModel.Requirements = await this._ebooksRepository.GetRequirementsAsync(ebook.ID);
             return View(viewModel);
         }
-        [Authorize]
-        public async Task<ActionResult> _Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Ebook ebook = await this._ebooksRepository.GetAsync(id);
-            if (ebook == null)
-            {
-                return HttpNotFound();
-            }
-            var viewModel = Mapper.Map<Ebook, EbookViewModel>(ebook);
-            var categories = await this._categoriesRepository.GetAllAsync();
-            viewModel.Categories = new SelectList(categories, "ID", "Name");
-            var users = await this._usersRepo.GetAllAsync();
-            viewModel.Users = new SelectList(users, "Id", "FullName");
-            viewModel.Requirements = await this._ebooksRepository.GetRequirementsAsync(ebook.ID);
-            return PartialView("_Details", viewModel);
-        }
         [Authorize(Roles = "Admin, ContentCreator")]
         public async Task<ActionResult> Create()
         {
@@ -248,26 +228,6 @@ namespace CBProject.Controllers
             
             return View(viewModel);
         }
-        [Authorize]
-        public async Task<ActionResult> _Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Ebook ebook = await this._ebooksRepository.GetAsync(id);
-            if (ebook == null)
-            {
-                return HttpNotFound();
-            }
-            var viewModel = Mapper.Map<Ebook, EbookViewModel>(ebook);
-            var categories = await this._categoriesRepository.GetAllAsync();
-            viewModel.Categories = new SelectList(categories, "ID", "Name");
-            var users = await this._usersRepo.GetAllAsync();
-            viewModel.Users = new SelectList(users, "Id", "FullName");
-            viewModel.Requirements = await this._ebooksRepository.GetRequirementsAsync(ebook.ID);
-            return PartialView("_Edit", viewModel);
-        }
         [Authorize(Roles = "Admin, ContentCreator")]
         public async Task<ActionResult> Delete(int? id)
         {
@@ -322,6 +282,108 @@ namespace CBProject.Controllers
             await this._ebooksRepository.AddRatingAsync(ebookId, User.Identity.GetUserId(), rate);
             return RedirectToAction("Index");
         }
+
+        [Authorize]
+        public async Task<ActionResult> _Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Ebook ebook = await this._ebooksRepository.GetAsync(id);
+            if (ebook == null)
+            {
+                return HttpNotFound();
+            }
+            var viewModel = Mapper.Map<Ebook, EbookViewModel>(ebook);
+            var categories = await this._categoriesRepository.GetAllAsync();
+            viewModel.Categories = new SelectList(categories, "ID", "Name");
+            var users = await this._usersRepo.GetAllAsync();
+            viewModel.Users = new SelectList(users, "Id", "FullName");
+            viewModel.Requirements = await this._ebooksRepository.GetRequirementsAsync(ebook.ID);
+            return PartialView("_Details", viewModel);
+        }
+        [Authorize]
+        public async Task<ActionResult> _Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Ebook ebook = await this._ebooksRepository.GetAsync(id);
+            if (ebook == null)
+            {
+                return HttpNotFound();
+            }
+            var viewModel = Mapper.Map<Ebook, EbookViewModel>(ebook);
+            var categories = await this._categoriesRepository.GetAllAsync();
+            viewModel.Categories = new SelectList(categories, "ID", "Name");
+            var users = await this._usersRepo.GetAllAsync();
+            viewModel.Users = new SelectList(users, "Id", "FullName");
+            viewModel.Requirements = await this._ebooksRepository.GetRequirementsAsync(ebook.ID);
+            return PartialView("_Edit", viewModel);
+        }
+        [Authorize]
+        public async Task<ActionResult> _Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Ebook ebook = await this._ebooksRepository.GetAsync(id);
+            if (ebook == null)
+            {
+                return HttpNotFound();
+            }
+            var viewModel = Mapper.Map<Ebook, EbookViewModel>(ebook);
+            var categories = await this._categoriesRepository.GetAllAsync();
+            viewModel.Categories = new SelectList(categories, "ID", "Name");
+            var users = await this._usersRepo.GetAllAsync();
+            viewModel.Users = new SelectList(users, "Id", "FullName");
+            viewModel.Requirements = await this._ebooksRepository.GetRequirementsAsync(ebook.ID);
+            return PartialView("_Delete", viewModel);
+        }
+        [Authorize]
+        public async Task<ActionResult> _Review(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Ebook ebook = await this._ebooksRepository.GetAsync(id);
+            if (ebook == null)
+            {
+                return HttpNotFound();
+            }
+            var viewModel = Mapper.Map<Ebook, EbookViewModel>(ebook);
+            var categories = await this._categoriesRepository.GetAllAsync();
+            viewModel.Categories = new SelectList(categories, "ID", "Name");
+            var users = await this._usersRepo.GetAllAsync();
+            viewModel.Users = new SelectList(users, "Id", "FullName");
+            viewModel.Requirements = await this._ebooksRepository.GetRequirementsAsync(ebook.ID);
+            return PartialView("_Review", viewModel);
+        }
+        [Authorize]
+        public async Task<ActionResult> _Tag(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Ebook ebook = await this._ebooksRepository.GetAsync(id);
+            if (ebook == null)
+            {
+                return HttpNotFound();
+            }
+            var viewModel = Mapper.Map<Ebook, EbookViewModel>(ebook);
+            var categories = await this._categoriesRepository.GetAllAsync();
+            viewModel.Categories = new SelectList(categories, "ID", "Name");
+            var users = await this._usersRepo.GetAllAsync();
+            viewModel.Users = new SelectList(users, "Id", "FullName");
+            viewModel.Requirements = await this._ebooksRepository.GetRequirementsAsync(ebook.ID);
+            return PartialView("_Tag", viewModel);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
