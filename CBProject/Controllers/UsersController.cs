@@ -99,6 +99,8 @@ namespace CBProject.Controllers
                     model.CVPath = (StaticImfo.CVPath + user.Id + FileName).Trim();
                     model.CVFile.SaveAs(Server.MapPath(model.CVPath));
                 }
+                CBProject.HelperClasses.EmailService test = new HelperClasses.EmailService();
+                await test.SendEmail(user);
                 return RedirectToAction("Index");
             }
             catch

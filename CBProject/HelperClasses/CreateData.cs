@@ -152,8 +152,8 @@ namespace CBProject.HelperClasses
                     BirthDate = DateTime.Today.AddYears(-30),
                     FirstName = "Antonis",
                     LastName = "Ploumis",
-                    Email = "djplou@hotmail.com",
-                    UserName = "djplou@hotmail.com",
+                    Email = "ant.ploumis@gmail.com",
+                    UserName = "ant.ploumis@gmail.com",
                     PhoneNumber = "6945857485",
                     Password = "Antonis123!",
                     Country = "Greece",
@@ -296,7 +296,8 @@ namespace CBProject.HelperClasses
                 context.CategoriesToCategories.Add(catToCat6);
 
                 context.SaveChanges();
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
@@ -372,7 +373,8 @@ namespace CBProject.HelperClasses
                 context.ContentTypes.Add(content10);
                 context.ContentTypes.Add(content11);
                 context.SaveChanges();
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
@@ -432,7 +434,8 @@ namespace CBProject.HelperClasses
                 context.Payments.Add(payment4);
                 context.Payments.Add(payment5);
                 context.SaveChanges();
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
@@ -490,7 +493,8 @@ namespace CBProject.HelperClasses
                 context.SubcriptionPackages.Add(package2);
                 context.SubcriptionPackages.Add(package3);
                 context.SaveChanges();
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
@@ -612,7 +616,8 @@ namespace CBProject.HelperClasses
                 context.Ebooks.Add(ebook7);
                 context.Ebooks.Add(ebook8);
                 context.SaveChanges();
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
@@ -2947,7 +2952,7 @@ namespace CBProject.HelperClasses
         }
         public static void CreateRequiremenets(ApplicationDbContext context)
         {
-            for(int i = 1; i < (21*3); i++)
+            for (int i = 1; i < (21 * 3); i++)
             {
                 context.Requirements.Add(
                     new Requirement()
@@ -2964,7 +2969,7 @@ namespace CBProject.HelperClasses
             int counter = 1;
             foreach (var ebook in ebooks)
             {
-                for(int i = 0; i < 3; i++)
+                for (int i = 0; i < 3; i++)
                 {
                     context.RequirementsToEbooks.Add(
                         new RequirementToEbook()
