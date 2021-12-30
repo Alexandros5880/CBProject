@@ -57,9 +57,6 @@ function payPayPal(user, package) {
 
 // Create Order
 function createNewOrder(user, package) {
-    // TODO: 1). Create new Order here with this user and this subscription package
-    //console.log(user);
-    //console.log(package);
     createOrder(user, package, function (response) {
         console.log(response);
     });
