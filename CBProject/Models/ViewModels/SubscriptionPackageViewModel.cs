@@ -1,6 +1,4 @@
-﻿
-using CBProject.Models.EntityModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -20,9 +18,5 @@ namespace CBProject.Models.ViewModels
         public ICollection<ApplicationUser> OtherUsers { get; set; }
         public ICollection<string> AddUsers { get; set; }
         public ICollection<string> RemoveUsers { get; set; }
-        public ContentType ContentType { get; set; }
-        public ICollection<ContentType> OtherContentType { get; set; }
-        public Payment Payment { get; set; }
-        public ICollection<Payment> OtherPayments { get; set; }
     }
 }

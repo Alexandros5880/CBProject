@@ -1,11 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CBProject.Models.EntityModels
 {
     public class RequirementToVideo
     {
-        [Key]
         public int ID { get; set; }
         [ForeignKey("Requirement")]
         public int RequirementId { get; set; }

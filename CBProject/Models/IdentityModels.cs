@@ -11,8 +11,6 @@ using System.Threading.Tasks;
 
 namespace CBProject.Models
 {
-
-
     public enum RoleLevel
     {
         SUPERLOW,
@@ -63,8 +61,7 @@ namespace CBProject.Models
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
             ApplicationUser applicationUser = this;
-            userIdentity.AddClaim(new Claim("FullName", applicationUser.FullName));
-            //userIdentity.AddClaim(new Claim("ImagePath", applicationUser.ImagePath));
+            //userIdentity.AddClaim(new Claim("FullName", applicationUser.FullName));
         // Add custom user claims here
         return userIdentity;
         }
@@ -86,7 +83,6 @@ namespace CBProject.Models
         public DbSet<Category> Categories { get; set; }
         public DbSet<CategoryToCategory> CategoriesToCategories { get; set; }
         public DbSet<SubscriptionPackage> SubcriptionPackages { get; set; }
-        public DbSet<ContentType> ContentTypes { get; set; }
         public DbSet<Ebook> Ebooks { get; set; }
         public DbSet<Video> Videos { get; set; }
         public DbSet<Rating> Ratings { get; set; }
@@ -138,5 +134,4 @@ namespace CBProject.Models
 
         }
     }
-
 }

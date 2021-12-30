@@ -1,10 +1,12 @@
 ﻿using CBProject.HelperClasses.Interfaces;
+using CBProject.Models;
 using CBProject.Models.EntityModels;
 using CBProject.Models.HelperModels;
 using CBProject.Models.ViewModels;
 using CBProject.Repositories.IdentityRepos;
 using CBProject.Repositories.IdentityRepos.Interfaces;
 using Microsoft.AspNet.Identity;
+using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
@@ -120,12 +122,15 @@ namespace CBProject.Controllers.API
                                 .GetAllAsync());
         }
         [HttpGet]
-        [Route("api/packages/")]
+        [Route("api/packages/{id}")]
         public async Task<IHttpActionResult> GetSubscriptionPackage(int? id)
         {
             if (id == null)
                 return NotFound();
-            return Ok(await this._unitOfWork.SubscriptionPackages.GetAsync(id));
+            SubscriptionPackage package = await this._unitOfWork.SubscriptionPackages.GetAsync(id);
+            if (package == null)
+                return NotFound();
+            return Ok(package);
         }
         [HttpGet]
         [Route("api/user")]
@@ -265,20 +270,6 @@ namespace CBProject.Controllers.API
             return Ok(await this._unitOfWork.Videos.GetAsync(id));
         }
         [HttpGet]
-        [Route("api/contenttypes")]
-        public async Task<IHttpActionResult> GetContentTypes()
-        {
-            return Ok(await this._unitOfWork.ContentTypes.GetAllAsync());
-        }
-        [HttpGet]
-        [Route("api/contenttype")]
-        public async Task<IHttpActionResult> GetContentType(int? id)
-        {
-            if (id == null)
-                return NotFound();
-            return Ok(await this._unitOfWork.ContentTypes.GetAsync(id));
-        }
-        [HttpGet]
         [Route("api/payments")]
         public async Task<IHttpActionResult> GetPayments()
         {
@@ -340,11 +331,21 @@ namespace CBProject.Controllers.API
 
         [HttpPost]
         [Route("api/order/new")]
-        public async Task<IHttpActionResult> CreateOrder(Order order)
+        public async Task<IHttpActionResult> CreateOrder([FromBody] OrderApiModel order)
         {
-            this._unitOfWork.Orders.Add(order);
+            ApplicationUser user = await this._usersRepo.GetByEmailAsync(order.UserEmail);
+            SubscriptionPackage package = await this._unitOfWork.SubscriptionPackages.GetAsync(order.SubscriptionId);
+            Order newOrder = new Order()
+            {
+                UserId = user.Id,
+                SubscriptionPackageId = package.ID,
+                IsClose = false,
+                CreatedDate = DateTime.Today
+            };
+            this._unitOfWork.Orders.Add(newOrder);
             await this._unitOfWork.Orders.SaveAsync();
-            return Ok();
+            Order orderDB = await this._unitOfWork.Orders.GetAsync(user.Id, package.ID);
+            return Ok(orderDB);
         }
     }
 }

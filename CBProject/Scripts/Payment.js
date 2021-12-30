@@ -2,8 +2,6 @@
 
 // PayPal
 function payPayPal(user, package) {
-    // Create Order
-    createNewOrder(user, package);
     // Create PayPall Function
     function loadPayPalScript(url, callback) {
         const el = document.querySelector(`script[src="${url}"]`);
@@ -31,21 +29,31 @@ function payPayPal(user, package) {
             // On Payment Done
             onApprove(data, actions) {
                 return actions.order.capture().then(details => {
-                    // Show a success message to the buyer
-                    alert(`Transaction completed by ${details.payer.name.given_name}`);
-                    // TODO: 2). Get The Last Orde Of This User, Update it to CLOSE, create Payment ans connect this user with the subscription package
-                    console.log(details.payer.email);
+                    //console.log(details.payer.name.given_name);
+                    //alert(`Transaction completed by ${details.payer.name.given_name}`);
+
+
+                    // TODO: Update this Order To isClose = true and remove order from localStorage
+                    var order = JSON.parse(localStorage.getItem('order'));
                 });
             },
 
             // On Payment Canceled
             onCancel: function (data) {
-                alert("You Cansele your Order.");
+                // TODO: Delete this order from localStorage and from Server
+                var order = JSON.parse(localStorage.getItem('order'));
+                //window.location.href = "/SubscriptionPackages/Subscribe";
             },
 
             // On Transactions Error
             onError: function (err) {
-                window.location.href = "/SubscriptionPackages/Subscribe";
+                // TODO: Delete this order from localStorage and from Server
+                var order = JSON.parse(localStorage.getItem('order'));
+                //window.location.href = "/SubscriptionPackages/Subscribe";
+            },
+
+            onInit: function (data, actions) {
+                createNewOrder(user, package);
             }
 
         }).render('.payment-window');
@@ -57,8 +65,8 @@ function payPayPal(user, package) {
 
 // Create Order
 function createNewOrder(user, package) {
-    createOrder(user, package, function (response) {
-        console.log(response);
+    addNewOrder(user, package, function (order) {
+        localStorage.setItem('order', JSON.stringify(order));
     });
 }
 

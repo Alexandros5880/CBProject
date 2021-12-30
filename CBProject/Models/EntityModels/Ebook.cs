@@ -7,11 +7,8 @@ namespace CBProject.Models.EntityModels
 {
     public class Ebook
     {
-        [Key]
         public int ID { get; set; }
-        [Required]
         public string Title{ get; set; }
-        [Required]
         public string Description { get; set; }
         public string Thumbnail { get; set; }
         public string EbookImagePath { get; set; }

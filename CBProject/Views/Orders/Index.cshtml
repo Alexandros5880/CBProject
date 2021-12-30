@@ -18,10 +18,10 @@
             @Html.DisplayNameFor(model => model.CreatedDate)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.LastUpdatedDate)
+            @Html.DisplayNameFor(model => model.User.FullName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.User.FullName)
+            @Html.DisplayNameFor(model => model.Package.Description)
         </th>
         <th></th>
     </tr>
@@ -35,10 +35,10 @@
         @Html.DisplayFor(modelItem => item.CreatedDate)
     </td>
     <td>
-        @Html.DisplayFor(modelItem => item.LastUpdatedDate)
+        @Html.DisplayFor(modelItem => item.User.FullName)
     </td>
     <td>
-        @Html.DisplayFor(modelItem => item.User.FullName)
+        @Html.DisplayFor(modelItem => item.Package.Description)
     </td>
     <td>
         @Html.ActionLink("Details", "Details", new { id = item.ID })

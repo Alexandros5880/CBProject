@@ -8,17 +8,12 @@ namespace CBProject.Models
 {
     public class Video
     {
-        [Key]
         public int ID { get; set; }
-        [MaxLength(150)]
-        [Required]
         public string Title { get; set; }
         public string Thumbnail { get; set; }
         public string VideoImagePath { get; set; }
         public string VideoPath { get; set; }
         public string Content { get; set; }
-        [MaxLength]
-        [Required]
         public string Description { get; set; }
         [DataType(DataType.Date)]
         public DateTime UploadDate { get; set; }

@@ -216,7 +216,6 @@
     <Compile Include="Controllers\API\ProductsController.cs" />
     <Compile Include="Controllers\EbooksController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
-    <Compile Include="Controllers\ContentTypesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
@@ -237,17 +236,14 @@
     <Compile Include="HelperClasses\UnitOfWork.cs" />
     <Compile Include="HelperClasses\Interfaces\IUnitOfWork.cs" />
     <Compile Include="HelperClasses\StaticImfo.cs" />
-
-    <Compile Include="Migrations\202112301409197_Initiasl1.cs" />
-    <Compile Include="Migrations\202112301409197_Initiasl1.Designer.cs">
-      <DependentUpon>202112301409197_Initiasl1.cs</DependentUpon>
-
+    <Compile Include="Migrations\202112301841288_Initial.cs" />
+    <Compile Include="Migrations\202112301841288_Initial.Designer.cs">
+      <DependentUpon>202112301841288_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\EntityModels\Category.cs" />
     <Compile Include="Models\EntityModels\CategoryToCategory.cs" />
-    <Compile Include="Models\EntityModels\ContentType.cs" />
     <Compile Include="Models\EntityModels\Ebook.cs" />
     <Compile Include="Models\EntityModels\Order.cs" />
     <Compile Include="Models\EntityModels\Payment.cs" />
@@ -262,6 +258,7 @@
     <Compile Include="Models\EntityModels\TagToEbook.cs" />
     <Compile Include="Models\EntityModels\TagToVideo.cs" />
     <Compile Include="Models\HelperModels\AddRequirement.cs" />
+    <Compile Include="Models\HelperModels\OrderApiModel.cs" />
     <Compile Include="Models\HelperModels\Products.cs" />
     <Compile Include="Models\Interfaces\IApplicationDbContext.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -286,7 +283,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\CategoriesRepository.cs" />
     <Compile Include="Repositories\CategoryToCategoryRepository.cs" />
-    <Compile Include="Repositories\ContentTypeRepository.cs" />
     <Compile Include="Repositories\EbooksRepository.cs" />
     <Compile Include="Repositories\Interfaces\IRepository.cs" />
     <Compile Include="Repositories\IdentityRepos\Interfaces\IRolesRepo.cs" />
@@ -303,7 +299,6 @@
     <Compile Include="Repositories\VideosRepository.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
-
   <ItemGroup>
     <Content Include="assets\css\app-dark-rtl.min.css" />
     <Content Include="assets\css\app-dark.css" />
@@ -1797,11 +1792,6 @@
     <Content Include="Views\Categories\Details.cshtml" />
     <Content Include="Views\Categories\Edit.cshtml" />
     <Content Include="Views\Categories\Index.cshtml" />
-    <Content Include="Views\ContentTypes\Create.cshtml" />
-    <Content Include="Views\ContentTypes\Delete.cshtml" />
-    <Content Include="Views\ContentTypes\Details.cshtml" />
-    <Content Include="Views\ContentTypes\Edit.cshtml" />
-    <Content Include="Views\ContentTypes\Index.cshtml" />
     <Content Include="Views\SubscriptionPackages\Create.cshtml" />
     <Content Include="Views\SubscriptionPackages\Delete.cshtml" />
     <Content Include="Views\SubscriptionPackages\Details.cshtml" />
@@ -1863,10 +1853,6 @@
     <Content Include="Views\Requirements\Details.cshtml" />
     <Content Include="Views\Requirements\Edit.cshtml" />
     <Content Include="Views\Requirements\Index.cshtml" />
-    <Content Include="Views\Orders\Create.cshtml" />
-    <Content Include="Views\Orders\Delete.cshtml" />
-    <Content Include="Views\Orders\Details.cshtml" />
-    <Content Include="Views\Orders\Edit.cshtml" />
     <Content Include="Views\Orders\Index.cshtml" />
     <Content Include="Views\Ebooks\_Delete.cshtml" />
     <Content Include="Views\Ebooks\_Review.cshtml" />
@@ -1874,6 +1860,10 @@
     <Content Include="Views\Videos\_Tag.cshtml" />
     <Content Include="Views\Videos\_Review.cshtml" />
     <Content Include="Views\Videos\_Delete.cshtml" />
+    <Content Include="Views\Orders\Create.cshtml" />
+    <Content Include="Views\Orders\Details.cshtml" />
+    <Content Include="Views\Orders\Edit.cshtml" />
+    <Content Include="Views\Orders\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1972,9 +1962,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-
-    <EmbeddedResource Include="Migrations\202112301409197_Initiasl1.resx">
-      <DependentUpon>202112301409197_Initiasl1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202112301841288_Initial.resx">
+      <DependentUpon>202112301841288_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

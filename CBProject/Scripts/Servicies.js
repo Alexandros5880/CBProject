@@ -62,10 +62,10 @@ function getSubscriptionPackages(callback) {
     });
 }
 
-function getSubscriptionPackage(packageId, callback) {
+function getSubscriptionPackage(id, callback) {
     return $.ajax({
         type: "GET",
-        url: `/api/packages?id=${packageId}`,
+        url: `/api/packages/${id}`,
         success: function (data) {
             if (data) {
                 callback(data);
@@ -303,36 +303,6 @@ function getVideo(id, callback) {
     });
 }
 
-function getContentTypes(callback) {
-    $.ajax({
-        type: "GET",
-        url: "/api/contenttypes",
-        success: function (data) {
-            if (data) {
-                callback(data);
-            }
-        },
-        error: function (error) {
-            console.log(error);
-        }
-    });
-}
-
-function getContentType(id, callback) {
-    $.ajax({
-        type: "GET",
-        url: "/api/contenttype?id=" + id,
-        success: function (data) {
-            if (data) {
-                callback(data);
-            }
-        },
-        error: function (error) {
-            console.log(error);
-        }
-    });
-}
-
 function getPayments(callback) {
     $.ajax({
         type: "GET",
@@ -421,17 +391,15 @@ function removeVideoRequarement(id, contentId, callback) {
     });
 }
 
-function createOrder(user, package, callback) {
+function addNewOrder(user, package, callback) {
     var today = new Date();
     $.ajax({
         type: "POST",
         url: `/api/order/new`,
         data: {
-            user: user,
-            subscriptionPackage: package,
-            isClose: false,
-            createdDate: today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate(),
-            lastUpdateDate: today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
+            userEmail: user.email,
+            subscriptionId: package.id,
+            isClose: false
         },
         success: function (data) {
             callback(data);
@@ -461,7 +429,6 @@ function createOrder(packageId) {
     getSubscriptionPackage(packageId, function (package) {
         getLogedUser(function (user) {
             if (user !== "null") {
-                //doPayment(user, package);
                 payPayPal(user, package);
             } else {
                 window.location.href = "/Account/Register";

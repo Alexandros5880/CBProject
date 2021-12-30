@@ -6,13 +6,12 @@ namespace CBProject.Models.EntityModels
 {
     public class SubscriptionPackage
     {
-        [Key]
         public int ID { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
         public float Duration { get; set; }
         public ICollection<ApplicationUser> MyUsers { get; set; }
-        public ContentType ContentType { get; set; }
+        public ICollection<Order> Orders { get; set; }
         public bool AutoSubscription { get; set; }
         [DataType(DataType.Date)]
         public DateTime StartDate { get; set; }

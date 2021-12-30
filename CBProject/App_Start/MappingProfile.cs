@@ -2,7 +2,6 @@
 using CBProject.Models;
 using CBProject.Models.EntityModels;
 using CBProject.Models.ViewModels;
-using System.Collections.Generic;
 
 namespace CBProject.App_Start
 {
@@ -19,23 +18,8 @@ namespace CBProject.App_Start
             Mapper.CreateMap<ApplicationUser, ApplicationUserViewModel>();
             Mapper.CreateMap<ApplicationUserViewModel, ApplicationUser>();
 
-            Mapper.CreateMap<ICollection<ApplicationRole>, ICollection<IdentityRoleViewModel>>();
-            Mapper.CreateMap<ICollection<IdentityRoleViewModel>, ICollection<ApplicationRole>>();
-
-            Mapper.CreateMap<ICollection<ApplicationUser>, ICollection<RegisterViewModel>>();
-            Mapper.CreateMap<ICollection<RegisterViewModel>, ICollection<ApplicationUser>>();
-
-            Mapper.CreateMap<ICollection<ApplicationUser>, ICollection<ApplicationUserViewModel>>();
-            Mapper.CreateMap<ICollection<ApplicationUserViewModel>, ICollection<ApplicationUser>>();
-
             Mapper.CreateMap<Ebook, EbookViewModel>();
             Mapper.CreateMap<EbookViewModel, Ebook>();
-
-            Mapper.CreateMap<IEnumerable<Ebook>, IEnumerable<EbookViewModel>>();
-            Mapper.CreateMap<IEnumerable<EbookViewModel>, IEnumerable<Ebook>>();
-
-            Mapper.CreateMap<ContentType, ContentTypeViewModel>();
-            Mapper.CreateMap<ContentTypeViewModel, ContentType>();
 
             Mapper.CreateMap<Category, CategoryViewModel>();
             Mapper.CreateMap<CategoryViewModel, Category>();

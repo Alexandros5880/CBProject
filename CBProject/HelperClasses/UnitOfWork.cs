@@ -18,7 +18,6 @@ namespace CBProject.HelperClasses
         public ApplicationUserManager UserManager { get; protected set; }
         public CategoriesRepository Categories { get; protected set; }
         public CategoryToCategoryRepository CategoryToCategory { get; protected set; }
-        public ContentTypeRepository ContentTypes { get; protected set; }
         public VideosRepository Videos { get; protected set; }
         public RatingsRepository Ratings { get; protected set; }
         public ReviewsRepository Reviews { get; protected set; }
@@ -37,7 +36,6 @@ namespace CBProject.HelperClasses
             this.UserManager = new ApplicationUserManager(this.UserStore);
             this.CategoryToCategory = new CategoryToCategoryRepository(this);
             this.Categories = new CategoriesRepository(this);
-            this.ContentTypes = new ContentTypeRepository(this);
             this.Videos = new VideosRepository(this);
             this.Ratings = new RatingsRepository(this);
             this.Reviews = new ReviewsRepository(this);
@@ -61,7 +59,6 @@ namespace CBProject.HelperClasses
                     this.UserManager.Dispose();
                     this.Categories.Dispose();
                     this.CategoryToCategory.Dispose();
-                    this.ContentTypes.Dispose();
                     this.Videos.Dispose();
                     this.Ratings.Dispose();
                     this.Reviews.Dispose();

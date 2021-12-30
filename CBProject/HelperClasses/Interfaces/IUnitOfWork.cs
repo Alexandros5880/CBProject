@@ -15,7 +15,6 @@ namespace CBProject.HelperClasses.Interfaces
         ApplicationUserManager UserManager { get; }
         CategoriesRepository Categories { get; }
         CategoryToCategoryRepository CategoryToCategory { get; }
-        ContentTypeRepository ContentTypes { get; }
         VideosRepository Videos { get; }
         RatingsRepository Ratings { get; }
         TagsRepository Tags { get; }
