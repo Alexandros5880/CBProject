@@ -136,6 +136,8 @@ namespace CBProject.Models
 
         public bool NewsletterAcception { get; set; }
 
+        public bool TermsAndConditionsAcception { get; set; }
+
         public bool IsInactive { get; set; }
     }
 

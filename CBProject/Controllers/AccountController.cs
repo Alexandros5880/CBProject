@@ -231,38 +231,46 @@ namespace CBProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model, HttpPostedFileBase CVFile, HttpPostedFileBase ImageFile)
         {
-            // Save Image File
-            if (ImageFile != null)
+            if (model.TermsAndConditionsAcception)
             {
-                model.ImageFile = ImageFile;
-                string FileName = Path.GetFileNameWithoutExtension(model.ImageFile.FileName);
-                string FileExtension = Path.GetExtension(model.ImageFile.FileName);
-                FileName = FileName.Trim() + FileExtension;
-                model.ImagePath = (StaticImfo.UsersImagesPath + model.FirstName + model.LastName + "_" + FileName).Trim();
-                model.ImageFile.SaveAs(Server.MapPath(model.ImagePath));
-            }
-            // Save CV File
-            if (CVFile != null)
-            {
-                model.CVFile = CVFile;
-                string FileName = Path.GetFileNameWithoutExtension(model.CVFile.FileName);
-                string FileExtension = Path.GetExtension(model.CVFile.FileName);
-                FileName = FileName.Trim() + FileExtension;
-                model.CVPath = (StaticImfo.CVPath + model.FirstName + model.LastName + "_" + FileName).Trim();
-                model.CVFile.SaveAs(Server.MapPath(model.CVPath));
-            }
-            var user = Mapper.Map<RegisterViewModel, ApplicationUser>(model);
-            user.UserName = user.Email;
-            var result = await UserManager.CreateAsync(user, model.Password);
+                // Save Image File
+                if (ImageFile != null)
+                {
+                    model.ImageFile = ImageFile;
+                    string FileName = Path.GetFileNameWithoutExtension(model.ImageFile.FileName);
+                    string FileExtension = Path.GetExtension(model.ImageFile.FileName);
+                    FileName = FileName.Trim() + FileExtension;
+                    model.ImagePath = (StaticImfo.UsersImagesPath + model.FirstName + model.LastName + "_" + FileName).Trim();
+                    model.ImageFile.SaveAs(Server.MapPath(model.ImagePath));
+                }
+                // Save CV File
+                if (CVFile != null)
+                {
+                    model.CVFile = CVFile;
+                    string FileName = Path.GetFileNameWithoutExtension(model.CVFile.FileName);
+                    string FileExtension = Path.GetExtension(model.CVFile.FileName);
+                    FileName = FileName.Trim() + FileExtension;
+                    model.CVPath = (StaticImfo.CVPath + model.FirstName + model.LastName + "_" + FileName).Trim();
+                    model.CVFile.SaveAs(Server.MapPath(model.CVPath));
+                }
+                var user = Mapper.Map<RegisterViewModel, ApplicationUser>(model);
+                user.UserName = user.Email;
+                var result = await UserManager.CreateAsync(user, model.Password);
 
-            if (result.Succeeded)
-            {
-                await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                var visitorsRole = await this._rolesRepo.GetByNameAsync("Guest");
-                this._usersRepo.AddRole(user, visitorsRole);
+                if (result.Succeeded)
+                {
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    var visitorsRole = await this._rolesRepo.GetByNameAsync("Guest");
+                    this._usersRepo.AddRole(user, visitorsRole);
+                    return RedirectToAction("Index", "Home");
+                }
+                AddErrors(result);
+                return View(model);
             }
-            AddErrors(result);
-            return View(model);
+            else
+            {
+                return View(model);
+            }
         }
 
         //

@@ -73,6 +73,7 @@ namespace CBProject.Migrations
                         CVPath = c.String(),
                         ImagePath = c.String(),
                         NewsletterAcception = c.Boolean(nullable: false),
+                        TermsAndConditionsAcception = c.Boolean(nullable: false),
                         IsInactive = c.Boolean(nullable: false),
                         Email = c.String(maxLength: 256),
                         EmailConfirmed = c.Boolean(nullable: false),
