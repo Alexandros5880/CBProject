@@ -26,6 +26,12 @@
 
         var fullName = currentUser.FullName;
         var userImage = currentUser.ImagePath;
+
+        if (userImage == null || userImage.IsEmpty())
+        {
+            userImage = "\\assets\\images\\users\\anonimus.png";
+        }
+
         RoleLevel access = RoleLevel.SUPERLOW;
 
         foreach (var role in currentUser.Roles)
