@@ -1,4 +1,5 @@
 ﻿using CBProject.HelperClasses.Interfaces;
+using CBProject.Models.EntityModels;
 using CBProject.Models.HelperModels;
 using CBProject.Models.ViewModels;
 using CBProject.Repositories.IdentityRepos;
@@ -334,6 +335,15 @@ namespace CBProject.Controllers.API
             if (requirementId == null)
                 return NotFound();
             await this._unitOfWork.Videos.RemoveRequirementAsync(videoId, requirementId);
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("api/order/new")]
+        public async Task<IHttpActionResult> CreateOrder(Order order)
+        {
+            this._unitOfWork.Orders.Add(order);
+            await this._unitOfWork.Orders.SaveAsync();
             return Ok();
         }
     }

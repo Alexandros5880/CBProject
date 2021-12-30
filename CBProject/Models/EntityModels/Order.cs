@@ -7,7 +7,6 @@ namespace CBProject.Models.EntityModels
     {
         [Key]
         public int ID { get; set; }
-        [Required]
         public ApplicationUser User { get; set; }
         [Required]
         public SubscriptionPackage SubscriptionPackage { get; set; }

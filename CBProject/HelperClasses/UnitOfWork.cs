@@ -14,8 +14,8 @@ namespace CBProject.HelperClasses
         public ApplicationDbContext Context { get; protected set; }
         public RoleStore<ApplicationRole> RoleStore { get; protected set; }
         public RoleManager<ApplicationRole> RoleManager { get; protected set; }
-        public UserStore<ApplicationUser> UserStore { get; protected set; }
-        public UserManager<ApplicationUser> UserManager { get; protected set; }
+        public UserStore<ApplicationUser, ApplicationRole, string, IdentityUserLogin, IdentityUserRole, IdentityUserClaim> UserStore { get; protected set; }
+        public ApplicationUserManager UserManager { get; protected set; }
         public CategoriesRepository Categories { get; protected set; }
         public CategoryToCategoryRepository CategoryToCategory { get; protected set; }
         public ContentTypeRepository ContentTypes { get; protected set; }
@@ -32,9 +32,9 @@ namespace CBProject.HelperClasses
         {
             this.Context = (ApplicationDbContext)context;
             this.RoleStore = new RoleStore<ApplicationRole>(this.Context);
-            this.UserStore = new UserStore<ApplicationUser>(this.Context);
+            this.UserStore = new UserStore<ApplicationUser, ApplicationRole, string, IdentityUserLogin, IdentityUserRole, IdentityUserClaim>(this.Context);
             this.RoleManager = new RoleManager<ApplicationRole>(this.RoleStore);
-            this.UserManager = new UserManager<ApplicationUser>(this.UserStore);
+            this.UserManager = new ApplicationUserManager(this.UserStore);
             this.CategoryToCategory = new CategoryToCategoryRepository(this);
             this.Categories = new CategoriesRepository(this);
             this.ContentTypes = new ContentTypeRepository(this);

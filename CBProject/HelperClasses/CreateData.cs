@@ -384,7 +384,6 @@ namespace CBProject.HelperClasses
                 Payment payment1 = new Payment()
                 {
                     ID = 1,
-                    PaymentMethods = PaymentMethods.Paypal,
                     User = (ApplicationUser)context.Users.FirstOrDefault(U => U.FirstName.Equals("Alexandros_1")),
                     Price = 100M,
                     Tax = 24.00,
@@ -393,7 +392,6 @@ namespace CBProject.HelperClasses
                 Payment payment2 = new Payment()
                 {
                     ID = 2,
-                    PaymentMethods = PaymentMethods.DebitCard,
                     User = (ApplicationUser)context.Users.FirstOrDefault(U => U.FirstName.Equals("Alexandros_2")),
                     Price = 100M,
                     Tax = 24.00,
@@ -402,7 +400,6 @@ namespace CBProject.HelperClasses
                 Payment payment3 = new Payment()
                 {
                     ID = 3,
-                    PaymentMethods = PaymentMethods.BankTransfer,
                     User = (ApplicationUser)context.Users.FirstOrDefault(U => U.FirstName.Equals("Alexandros_3")),
                     Price = 100M,
                     Tax = 24.00,
@@ -411,7 +408,6 @@ namespace CBProject.HelperClasses
                 Payment payment4 = new Payment()
                 {
                     ID = 4,
-                    PaymentMethods = PaymentMethods.Paypal,
                     User = (ApplicationUser)context.Users.FirstOrDefault(U => U.FirstName.Equals("Alexandros_4")),
                     Price = 100M,
                     Tax = 24.00,
@@ -420,7 +416,6 @@ namespace CBProject.HelperClasses
                 Payment payment5 = new Payment()
                 {
                     ID = 5,
-                    PaymentMethods = PaymentMethods.DebitCard,
                     User = (ApplicationUser)context.Users.FirstOrDefault(U => U.FirstName.Equals("Alexandros_5")),
                     Price = 100M,
                     Tax = 24.00,
@@ -453,8 +448,7 @@ namespace CBProject.HelperClasses
                     },
                     ContentType = context.ContentTypes.FirstOrDefault(c => c.ID == 1),
                     AutoSubscription = true,
-                    StartDate = DateTime.Today,
-                    Payment = context.Payments.FirstOrDefault(p => p.ID == 1)
+                    StartDate = DateTime.Today
                 };
                 SubscriptionPackage package2 = new SubscriptionPackage()
                 {
@@ -468,8 +462,7 @@ namespace CBProject.HelperClasses
                     },
                     ContentType = context.ContentTypes.FirstOrDefault(c => c.ID == 2),
                     AutoSubscription = true,
-                    StartDate = DateTime.Today,
-                    Payment = context.Payments.FirstOrDefault(p => p.ID == 2)
+                    StartDate = DateTime.Today
                 };
                 SubscriptionPackage package3 = new SubscriptionPackage()
                 {
@@ -483,8 +476,7 @@ namespace CBProject.HelperClasses
                     },
                     ContentType = context.ContentTypes.FirstOrDefault(c => c.ID == 3),
                     AutoSubscription = true,
-                    StartDate = DateTime.Today,
-                    Payment = context.Payments.FirstOrDefault(p => p.ID == 3)
+                    StartDate = DateTime.Today
                 };
                 context.SubcriptionPackages.Add(package1);
                 context.SubcriptionPackages.Add(package2);

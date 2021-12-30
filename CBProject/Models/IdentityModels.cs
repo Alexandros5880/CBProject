@@ -47,15 +47,16 @@ namespace CBProject.Models
         [Required]
         public string StreetNumber { get; set; }
         public string CreditCardNum { get; set; }
-        public int SubscriptionId { get; set; }
         public string ContentAccess { get; set; }
         public string CVPath { get; set; }
         public string ImagePath { get; set; }
         public bool NewsletterAcception { get; set; }
         public bool IsInactive { get; set; }
+        public SubscriptionPackage SubscriptionPackage { get; set; }
         public ICollection<Video> Videos { get; set; }
-        public ICollection<Payment> Payments { get; set; }
         public ICollection<Ebook> Ebooks { get; set; }
+        public ICollection<Order> Orders { get; set; }
+        public ICollection<Payment> Payments { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser, string> manager)
         {
@@ -124,6 +125,16 @@ namespace CBProject.Models
                         .HasRequired<Category>(c => c.ChiledCategory)
                         .WithMany()
                         .WillCascadeOnDelete(false);
+
+            //modelBuilder.Entity<Order>()
+            //            .HasRequired(o => o.User)
+            //            .WithRequiredPrincipal()
+            //            .WillCascadeOnDelete(false);
+
+            //modelBuilder.Entity<ApplicationUser>()
+            //            .HasRequired(u => u.Orders)
+            //            .WithMany()
+            //            .WillCascadeOnDelete(false);
 
         }
     }

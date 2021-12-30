@@ -136,7 +136,8 @@ namespace CBProject.Controllers
                     case SignInStatus.Success:
                         if (access == RoleLevel.FULL) 
                         {
-                            return RedirectToAction("Index", "Users");
+                            //return RedirectToAction("Index", "Users");
+                            return RedirectToAction("Index", "Home");
                         } 
                         else if (access == RoleLevel.PLUSSFULL)
                         {
@@ -237,8 +238,8 @@ namespace CBProject.Controllers
                 string FileName = Path.GetFileNameWithoutExtension(model.ImageFile.FileName);
                 string FileExtension = Path.GetExtension(model.ImageFile.FileName);
                 FileName = FileName.Trim() + FileExtension;
-                model.CVPath = Server.MapPath(StaticImfo.UsersImagesPath + model.FirstName + " " + model.LastName + FileName);
-                model.ImageFile.SaveAs(model.CVPath);
+                model.ImagePath = (StaticImfo.UsersImagesPath + model.FirstName + model.LastName + "_" + FileName).Trim();
+                model.ImageFile.SaveAs(Server.MapPath(model.ImagePath));
             }
             // Save CV File
             if (CVFile != null)
@@ -247,8 +248,8 @@ namespace CBProject.Controllers
                 string FileName = Path.GetFileNameWithoutExtension(model.CVFile.FileName);
                 string FileExtension = Path.GetExtension(model.CVFile.FileName);
                 FileName = FileName.Trim() + FileExtension;
-                model.CVPath = Server.MapPath(StaticImfo.CVPath + model.FirstName + " " + model.LastName + FileName);
-                model.CVFile.SaveAs(model.CVPath);
+                model.CVPath = (StaticImfo.CVPath + model.FirstName + model.LastName + "_" + FileName).Trim();
+                model.CVFile.SaveAs(Server.MapPath(model.CVPath));
             }
             var user = Mapper.Map<RegisterViewModel, ApplicationUser>(model);
             user.UserName = user.Email;
@@ -267,26 +268,27 @@ namespace CBProject.Controllers
                 // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                 // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                if (User.IsInRole("Admin"))
-                {
-                    return RedirectToAction("Index", "Users");
-                }
-                else if (UserManager.IsInRole(user.Id, "Teacher"))
-                {
-                    return RedirectToAction("Index", "Reviews");
-                }
-                else if (UserManager.IsInRole(user.Id, "Student"))
-                {
-                    return RedirectToAction("Index", "Videos");
-                }
-                else if (UserManager.IsInRole(user.Id, "Guest"))
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+                //if (User.IsInRole("Admin"))
+                //{
+                //    return RedirectToAction("Index", "Users");
+                //}
+                //else if (UserManager.IsInRole(user.Id, "Teacher"))
+                //{
+                //    return RedirectToAction("Index", "Reviews");
+                //}
+                //else if (UserManager.IsInRole(user.Id, "Student"))
+                //{
+                //    return RedirectToAction("Index", "Videos");
+                //}
+                //else if (UserManager.IsInRole(user.Id, "Guest"))
+                //{
+                //    return RedirectToAction("Index", "Home");
+                //}
             }
             AddErrors(result);
             // If we got this far, something failed, redisplay form
-            return View(model);
+            //return View(model);
+            return RedirectToAction("Index", "Home");
         }
 
         //

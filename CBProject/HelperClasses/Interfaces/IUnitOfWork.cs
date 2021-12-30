@@ -11,8 +11,8 @@ namespace CBProject.HelperClasses.Interfaces
         ApplicationDbContext Context { get; }
         RoleStore<ApplicationRole> RoleStore { get; }
         RoleManager<ApplicationRole> RoleManager { get; }
-        UserStore<ApplicationUser> UserStore { get; }
-        UserManager<ApplicationUser> UserManager { get; }
+        UserStore<ApplicationUser, ApplicationRole, string, IdentityUserLogin, IdentityUserRole, IdentityUserClaim> UserStore { get; }
+        ApplicationUserManager UserManager { get; }
         CategoriesRepository Categories { get; }
         CategoryToCategoryRepository CategoryToCategory { get; }
         ContentTypeRepository ContentTypes { get; }
