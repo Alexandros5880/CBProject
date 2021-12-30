@@ -245,7 +245,7 @@ namespace CBProject.Repositories.IdentityRepos
             user.NewsletterAcception = obj.NewsletterAcception;
             user.IsInactive = obj.IsInactive;
             user.CreditCardNum = obj.CreditCardNum;
-            user.SubscriptionId = obj.SubscriptionId;
+            user.SubscriptionPackage = obj.SubscriptionPackage;
             user.ContentAccess = obj.ContentAccess;
             user.ImagePath = obj.ImagePath;
             user.CVPath = obj.CVPath;
@@ -273,7 +273,7 @@ namespace CBProject.Repositories.IdentityRepos
             user.NewsletterAcception = obj.NewsletterAcception;
             user.IsInactive = obj.IsInactive;
             user.CreditCardNum = obj.CreditCardNum;
-            user.SubscriptionId = obj.SubscriptionId;
+            user.SubscriptionPackage = obj.SubscriptionPackage;
             user.ContentAccess = obj.ContentAccess;
             user.ImagePath = obj.ImagePath;
             user.CVPath = obj.CVPath;

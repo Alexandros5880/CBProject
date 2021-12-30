@@ -16,6 +16,5 @@ namespace CBProject.Models.EntityModels
         public bool AutoSubscription { get; set; }
         [DataType(DataType.Date)]
         public DateTime StartDate { get; set; }
-        public Payment Payment { get; set; }
     }
 }

@@ -363,7 +363,6 @@ function getPayment(id, callback) {
     });
 }
 
-// TODO: Fix Requirements API Client side functions in Servicies.js
 function addEbookRequarement(id, content, callback) {
     $.ajax({
         type: "POST",
@@ -422,7 +421,26 @@ function removeVideoRequarement(id, contentId, callback) {
     });
 }
 
-
+function createOrder(user, package, callback) {
+    var today = new Date();
+    $.ajax({
+        type: "POST",
+        url: `/api/order/new`,
+        data: {
+            user: user,
+            subscriptionPackage: package,
+            isClose: false,
+            createdDate: today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate(),
+            lastUpdateDate: today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
+        },
+        success: function (data) {
+            callback(data);
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+}
 
 
 
