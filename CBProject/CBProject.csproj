@@ -1868,6 +1868,9 @@
     <Content Include="Views\Ebooks\_Delete.cshtml" />
     <Content Include="Views\Ebooks\_Review.cshtml" />
     <Content Include="Views\Ebooks\_Tag.cshtml" />
+    <Content Include="Views\Videos\_Tag.cshtml" />
+    <Content Include="Views\Videos\_Review.cshtml" />
+    <Content Include="Views\Videos\_Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

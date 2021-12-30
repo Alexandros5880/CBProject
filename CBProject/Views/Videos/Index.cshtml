@@ -82,6 +82,73 @@
 
 @Scripts.Render("~/bundles/jquery")
 
+
+<script type="text/javascript">
+    $(function () {
+
+        // Open _Tag Modal
+        $("body").on('click', '#tag-modal-button-video', function () {
+            var id = $(this).attr('data-id');
+            $.ajax({
+                url: '/Videos/_Tag/' + id,
+                type: 'GET',
+                success: function (response) {
+                    $('.tag-modal-video').html(response);
+                }
+            });
+        });
+
+        // Open _Review Modal
+        $("body").on('click', '#comment-modal-button-video', function () {
+            var id = $(this).attr('data-id');
+            $.ajax({
+                url: '/Videos/_Review/' + id,
+                type: 'GET',
+                success: function (response) {
+                    $('.review-modal-video').html(response);
+                }
+            });
+        });
+
+        // Open _Delete Modal
+        $("body").on('click', '#delete-modal-button-video', function () {
+            var id = $(this).attr('data-id');
+            $.ajax({
+                url: '/Videos/_Delete/' + id,
+                type: 'GET',
+                success: function (response) {
+                    $('.delete-modal-video').html(response);
+                }
+            });
+        });
+
+        // Open _Edit Modal
+        $("body").on('click', '#edit-modal-button-video', function () {
+            var id = $(this).attr('data-id');
+            $.ajax({
+                url: '/Videos/_Edit/' + id,
+                type: 'GET',
+                success: function (response) {
+                    $('.edit-modal-video').html(response);
+                }
+            });
+        });
+
+        // Open _Details Modal
+        $("body").on('click', '#details-modal-button-video', function () {
+            var id = $(this).attr('data-id');
+            $.ajax({
+                url: '/Videos/_Details/' + id,
+                type: 'GET',
+                success: function (response) {
+                    $('.details-modal-video').html(response);
+                }
+            });
+        });
+
+    });
+</script>
+
 <div class="table-responsive">
     <table class="table" id="videos">
         <tr>
@@ -185,33 +252,33 @@
 
                     @if (access == RoleLevel.FULL)
                     {
-                        <button type="button" class="btn btn-dark tag-modal-button-video" data-toggle="modal" data-target="#tag-modal-video" data-id="@item.ID">Tag</button>
-                        <button type="button" class="btn btn-primary comment-modal-button-video" data-toggle="modal" data-target="#review-modal-video" data-id="@item.ID">Comment</button>
-                        <button type="button" class="btn btn-info details-modal-button-video" data-toggle="modal" data-target="#details-modal-video" data-id="@item.ID">Details</button>
-                        <button type="button" class="btn btn-success edit-modal-button-video" data-toggle="modal" data-target="#edit-modal-video" data-id="@item.ID">Edit</button>
-                        <button type="button" class="btn btn-danger btn-delete delete-modal-button-video" data-toggle="modal" data-target="#delete-modal-video" data-id="@item.ID">Delete</button>
+                        <button type="button" id="tag-modal-button-video" class="btn btn-dark tag-modal-button-video" data-toggle="modal" data-target="#tag-modal-video" data-id="@item.ID">Tag</button>
+                        <button type="button" id="comment-modal-button-video" class="btn btn-primary comment-modal-button-video" data-toggle="modal" data-target="#review-modal-video" data-id="@item.ID">Comment</button>
+                        <button type="button" id="details-modal-button-video" class="btn btn-info details-modal-button-video" data-toggle="modal" data-target="#details-modal-video" data-id="@item.ID">Details</button>
+                        <button type="button" id="edit-modal-button-video" class="btn btn-success edit-modal-button-video" data-toggle="modal" data-target="#edit-modal-video" data-id="@item.ID">Edit</button>
+                        <button type="button" id="delete-modal-button-video" class="btn btn-danger btn-delete delete-modal-button-video" data-toggle="modal" data-target="#delete-modal-video" data-id="@item.ID">Delete</button>
                     }
                     else if (access == RoleLevel.PLUSSFULL)
                     {
-                        <button type="button" class="btn btn-primary comment-modal-button-video" data-toggle="modal" data-target="#review-modal-video" data-id="@item.ID">Comment</button>
-                        <button type="button" class="btn btn-info details-modal-button-video" data-toggle="modal" data-target="#details-modal-video" data-id="@item.ID">Details</button>
-                        <button type="button" class="btn btn-success edit-modal-button-video" data-toggle="modal" data-target="#edit-modal-video" data-id="@item.ID">Edit</button>
-                        <button type="button" class="btn btn-danger btn-delete delete-modal-button-video" data-toggle="modal" data-target="#delete-modal-video" data-id="@item.ID">Delete</button>
+                        <button type="button" id="comment-modal-button-video" class="btn btn-primary comment-modal-button-video" data-toggle="modal" data-target="#review-modal-video" data-id="@item.ID">Comment</button>
+                        <button type="button" id="details-modal-button-video" class="btn btn-info details-modal-button-video" data-toggle="modal" data-target="#details-modal-video" data-id="@item.ID">Details</button>
+                        <button type="button" id="edit-modal-button-video" class="btn btn-success edit-modal-button-video" data-toggle="modal" data-target="#edit-modal-video" data-id="@item.ID">Edit</button>
+                        <button type="button" id="delete-modal-button-video" class="btn btn-danger btn-delete delete-modal-button-video" data-toggle="modal" data-target="#delete-modal-video" data-id="@item.ID">Delete</button>
                     }
                     else if (access == RoleLevel.MIDDLE)
                     {
-                        <button type="button" class="btn btn-primary comment-modal-button-video" data-toggle="modal" data-target="#review-modal-video" data-id="@item.ID">Comment</button>
-                        <button type="button" class="btn btn-info details-modal-button-video" data-toggle="modal" data-target="#details-modal-video" data-id="@item.ID">Details</button>
-                        <button type="button" class="btn btn-success edit-modal-button-video" data-toggle="modal" data-target="#edit-modal-video" data-id="@item.ID">Edit</button>
-                        <button type="button" class="btn btn-danger btn-delete delete-modal-button-video" data-toggle="modal" data-target="#delete-modal-video" data-id="@item.ID">Delete</button>
+                        <button type="button" id="comment-modal-button-video" class="btn btn-primary comment-modal-button-video" data-toggle="modal" data-target="#review-modal-video" data-id="@item.ID">Comment</button>
+                        <button type="button" id="details-modal-button-video" class="btn btn-info details-modal-button-video" data-toggle="modal" data-target="#details-modal-video" data-id="@item.ID">Details</button>
+                        <button type="button" id="edit-modal-button-video" class="btn btn-success edit-modal-button-video" data-toggle="modal" data-target="#edit-modal-video" data-id="@item.ID">Edit</button>
+                        <button type="button" id="delete-modal-button-video" class="btn btn-danger btn-delete delete-modal-button-video" data-toggle="modal" data-target="#delete-modal-video" data-id="@item.ID">Delete</button>
                     }
                     else if (access == RoleLevel.LOW)
                     {
-                        <button type="button" class="btn btn-primary comment-modal-button-video" data-toggle="modal" data-target="#review-modal-video" data-id="@item.ID">Comment</button>
+                        <button type="button" id="comment-modal-button-video" class="btn btn-primary comment-modal-button-video" data-toggle="modal" data-target="#review-modal-video" data-id="@item.ID">Comment</button>
                     }
                     else if (access == RoleLevel.SUPERLOW)
                     {
-                        <button type="button" class="btn btn-primary comment-modal-button" data-toggle="modal" data-target="#review-modal-video" data-id="@item.ID">Comment</button>
+                        <button type="button" id="comment-modal-button-video" class="btn btn-primary comment-modal-button" data-toggle="modal" data-target="#review-modal-video" data-id="@item.ID">Comment</button>
                     }
                     <style>
                         button {
@@ -241,29 +308,13 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Add Tag</h4>
             </div>
-            <div class="modal-body">
-
-                <input id="myId" class="form-control" readonly="readonly" />
-
-                @*@using (Html.BeginForm("AddTag", "Videos", new { videoId = item.ID }, FormMethod.Post))
-        {
-            @Html.AntiForgeryToken()
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.HiddenFor(model => item.ID)
-
-            <div style="margin: 7px;">
-                <i class="fas fa-pencil-alt prefix" style="margin-left: 11%;"></i>
-                <textarea class="md-textarea form-control" rows="3" name="title" style="margin: 0 auto;"></textarea>
-                <input type="submit" value="Save" class="btn btn-default" style="margin-left: 80%; margin-top: 11px;" />
-            </div>
-        }*@
+            <div class="modal-body tag-modal-video">
 
             </div>
             <div class="modal-footer">
-                @*<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>*@
+
             </div>
         </div>
     </div>
@@ -274,29 +325,13 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Add Comment</h4>
             </div>
-            <div class="modal-body">
-
-                <input id="myId" class="form-control" readonly="readonly" />
-
-                @*@using (Html.BeginForm("AddReview", "Videos", new { videoId = item.ID }, FormMethod.Post))
-        {
-            @Html.AntiForgeryToken()
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.HiddenFor(model => item.ID)
-
-            <div style="margin: 7px;">
-                <i class="fas fa-pencil-alt prefix" style="margin-left: 11%;"></i>
-                <textarea class="md-textarea form-control" rows="3" name="comment" style="margin: 0 auto;"></textarea>
-                <input type="submit" value="Save" class="btn btn-default" style="margin-left: 80%; margin-top: 11px;" />
-            </div>
-        }*@
+            <div class="modal-body review-modal-video">
 
             </div>
             <div class="modal-footer">
-                @*<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>*@
+
             </div>
         </div>
     </div>
@@ -307,15 +342,13 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Delete Video</h5>
+                <h5 class="modal-title">Delete</h5>
             </div>
-            <div class="modal-body">
-                <input id="myId" class="form-control" readonly="readonly" />
-                <p>Are you sure you want to delete this Video ?</p>
+            <div class="modal-body delete-modal-video">
+
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary save-delete-modal">Delete</button>
-                <button type="button" class="btn btn-secondary close-delete-modal">Close</button>
+
             </div>
         </div>
     </div>
@@ -326,15 +359,13 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Modal Header</h4>
             </div>
             <div class="modal-body edit-modal-video">
-                <input id="myId" class="form-control" readonly="readonly" />
-                @*@{ Html.RenderPartial("_Edit", item); }*@
+
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
             </div>
         </div>
     </div>
@@ -345,15 +376,13 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Modal Header</h4>
+                <h4 class="modal-title">Details</h4>
             </div>
             <div class="modal-body details-modal-video">
-                <input id="myId" class="form-control" readonly="readonly" />
-                @*@{ Html.RenderPartial("_Details", item); }*@
+
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
             </div>
         </div>
     </div>
@@ -364,65 +393,7 @@
 
 @section scripts{
     <script>
-        $(document).ready(function () {
 
-            // When Open Modal Paw Id
-            $('#tag-modal-video').on('show.bs.modal', function (e) {
-                var Id = $(e.relatedTarget).data('id');
-                $(e.currentTarget).find('input[id="myId"]').val(Id);
-            });
-
-            $('#review-modal-video').on('show.bs.modal', function (e) {
-                var Id = $(e.relatedTarget).data('id');
-                $(e.currentTarget).find('input[id="myId"]').val(Id);
-            });
-
-            $('#delete-modal-video').on('show.bs.modal', function (e) {
-                var Id = $(e.relatedTarget).data('id');
-                $(e.currentTarget).find('input[id="myId"]').val(Id);
-            });
-
-            $('#edit-modal-video').on('show.bs.modal', function (e) {
-                var Id = $(e.relatedTarget).data('id');
-                $(e.currentTarget).find('input[id="myId"]').val(Id);
-            });
-
-            $('#details-modal-video').on('show.bs.modal', function (e) {
-                var Id = $(e.relatedTarget).data('id');
-                $(e.currentTarget).find('input[id="myId"]').val(Id);
-            });
-
-
-
-            $("#videos").on("click", ".btn-delete", function () {
-                var button = $(this);
-                $('#deletemodalV').show(300);
-                $(".save-delete-modal").on("click", function () {
-
-                    $('#deletemodalV').hide(300);
-
-                    //$.ajax({
-                    //    url:"/api/ebooks/" + button.attr("data-id"),
-                    //    method: "DELETE"
-                    //}).done(function (data) {
-                    //    button.parents("tr").remove();
-                    //    $('#deletemodal').hide(300);
-                    //}).fail(function (error) {
-                    //    console.log("Error: " + error);
-                    //});
-
-                });
-                $(".close-delete-modal").on("click", function () {
-                    $('#deletemodalV').hide(300);
-                });
-            });
-        });
-        $(document).mouseup(function (e) {
-            var container = $(".modal-content");
-            if (!container.is(e.target) && container.has(e.target).length === 0) {
-                $("#deletemodalV").hide(300);
-            }
-        });
     </script>
 
     <script src="~/Scripts/Ratting.js"></script>

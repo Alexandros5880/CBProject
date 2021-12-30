@@ -88,24 +88,6 @@ namespace CBProject.Controllers
             viewModel.Requirements = await this._videoRepo.GetRequirementsAsync(video.ID);
             return View(viewModel);
         }
-        [Authorize]
-        public async Task<ActionResult> _Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Video video = await this._videoRepo.GetAsync(id);
-            if (video == null)
-            {
-                return HttpNotFound();
-            }
-            var viewModel = Mapper.Map<Video, VideoViewModel>(video);
-            viewModel.OtherUsers = await this._usersRepo.GetAllAsync();
-            viewModel.OtherCategory = await this._categoriesRepo.GetAllAsync();
-            viewModel.Requirements = await this._videoRepo.GetRequirementsAsync(video.ID);
-            return PartialView("_Details", viewModel);
-        }
         [Authorize(Roles = "Admin, ContentCreator")]
         public async Task<ActionResult> Create()
         {
@@ -223,23 +205,6 @@ namespace CBProject.Controllers
             }
             return View(viewModel);
         }
-        public async Task<ActionResult> _Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Video video = await this._videoRepo.GetAsync(id);
-            if (video == null)
-            {
-                return HttpNotFound();
-            }
-            var viewModel = Mapper.Map<Video, VideoViewModel>(video);
-            viewModel.OtherUsers = await this._usersRepo.GetAllAsync();
-            viewModel.OtherCategory = await this._categoriesRepo.GetAllAsync();
-            viewModel.Requirements = await this._videoRepo.GetRequirementsAsync(video.ID);
-            return PartialView("_Edit", viewModel);
-        }
         [Authorize(Roles = "Admin, ContentCreator")]
         public async Task<ActionResult> Delete(int? id)
         {
@@ -294,6 +259,98 @@ namespace CBProject.Controllers
             await this._videoRepo.AddRatingAsync(videoId, User.Identity.GetUserId(), rate);
             return RedirectToAction("Index");
         }
+        // Partial Views
+        [Authorize]
+        public async Task<ActionResult> _Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Video video = await this._videoRepo.GetAsync(id);
+            if (video == null)
+            {
+                return HttpNotFound();
+            }
+            var viewModel = Mapper.Map<Video, VideoViewModel>(video);
+            viewModel.OtherUsers = await this._usersRepo.GetAllAsync();
+            viewModel.OtherCategory = await this._categoriesRepo.GetAllAsync();
+            viewModel.Requirements = await this._videoRepo.GetRequirementsAsync(video.ID);
+            return PartialView("_Details", viewModel);
+        }
+        [Authorize]
+        public async Task<ActionResult> _Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Video video = await this._videoRepo.GetAsync(id);
+            if (video == null)
+            {
+                return HttpNotFound();
+            }
+            var viewModel = Mapper.Map<Video, VideoViewModel>(video);
+            viewModel.OtherUsers = await this._usersRepo.GetAllAsync();
+            viewModel.OtherCategory = await this._categoriesRepo.GetAllAsync();
+            viewModel.Requirements = await this._videoRepo.GetRequirementsAsync(video.ID);
+            return PartialView("_Edit", viewModel);
+        }
+        [Authorize]
+        public async Task<ActionResult> _Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Video video = await this._videoRepo.GetAsync(id);
+            if (video == null)
+            {
+                return HttpNotFound();
+            }
+            var viewModel = Mapper.Map<Video, VideoViewModel>(video);
+            viewModel.OtherUsers = await this._usersRepo.GetAllAsync();
+            viewModel.OtherCategory = await this._categoriesRepo.GetAllAsync();
+            viewModel.Requirements = await this._videoRepo.GetRequirementsAsync(video.ID);
+            return PartialView("_Delete", viewModel);
+        }
+        [Authorize]
+        public async Task<ActionResult> _Review(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Video video = await this._videoRepo.GetAsync(id);
+            if (video == null)
+            {
+                return HttpNotFound();
+            }
+            var viewModel = Mapper.Map<Video, VideoViewModel>(video);
+            viewModel.OtherUsers = await this._usersRepo.GetAllAsync();
+            viewModel.OtherCategory = await this._categoriesRepo.GetAllAsync();
+            viewModel.Requirements = await this._videoRepo.GetRequirementsAsync(video.ID);
+            return PartialView("_Review", viewModel);
+        }
+        [Authorize]
+        public async Task<ActionResult> _Tag(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Video video = await this._videoRepo.GetAsync(id);
+            if (video == null)
+            {
+                return HttpNotFound();
+            }
+            var viewModel = Mapper.Map<Video, VideoViewModel>(video);
+            viewModel.OtherUsers = await this._usersRepo.GetAllAsync();
+            viewModel.OtherCategory = await this._categoriesRepo.GetAllAsync();
+            viewModel.Requirements = await this._videoRepo.GetRequirementsAsync(video.ID);
+            return PartialView("_Tag", viewModel);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
