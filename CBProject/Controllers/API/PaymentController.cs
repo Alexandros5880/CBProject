@@ -19,7 +19,7 @@ namespace CBProject.Controllers.API
         // GET api/Payment
         public async Task<IHttpActionResult> Get()
         {
-            var payments = await this._paymentsRepository.GetAllAsync();
+            var payments = await this._paymentsRepository.GetAllEmptyAsync();
             return Ok(payments);
         }
 
@@ -28,7 +28,7 @@ namespace CBProject.Controllers.API
         {
             if (id == null)
                 return NotFound();
-            var payment = await this._paymentsRepository.GetAsync(id);
+            var payment = await this._paymentsRepository.GetEmptyAsync(id);
             return Ok(payment);
         }
 

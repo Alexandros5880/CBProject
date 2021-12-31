@@ -19,7 +19,7 @@ namespace CBProject.Controllers.API
         // GET api/Order
         public async Task<IHttpActionResult> Get()
         {
-            var orders = await this._ordersRepository.GetAllAsync();
+            var orders = await this._ordersRepository.GetAllEmptyAsync();
             return Ok(orders);
         }
 
@@ -28,7 +28,7 @@ namespace CBProject.Controllers.API
         {
             if (id == null)
                 return NotFound();
-            var order = await this._ordersRepository.GetAsync(id);
+            var order = await this._ordersRepository.GetEmptyAsync(id);
             if (order == null)
                 return NotFound();
             return Ok(order);

@@ -19,7 +19,7 @@ namespace CBProject.Controllers.API
         // GET api/Rating
         public async Task<IHttpActionResult> Get()
         {
-            var ratings = await this._retingsRepository.GetAllAsync();
+            var ratings = await this._retingsRepository.GetAllEmptyAsync();
             return Ok(ratings);
         }
 
@@ -28,7 +28,7 @@ namespace CBProject.Controllers.API
         {
             if (id == null)
                 return NotFound();
-            var rating = await this._retingsRepository.GetAsync(id);
+            var rating = await this._retingsRepository.GetEmptyAsync(id);
             if (rating == null)
                 return NotFound();
             return Ok(rating);
