@@ -221,7 +221,10 @@
     <Compile Include="Controllers\API\RatingController.cs" />
     <Compile Include="Controllers\API\RequirementController.cs" />
     <Compile Include="Controllers\API\ReviewController.cs" />
+    <Compile Include="Controllers\API\SubscriptionPackageController.cs" />
+    <Compile Include="Controllers\API\TagController.cs" />
     <Compile Include="Controllers\API\UserController.cs" />
+    <Compile Include="Controllers\API\VideoController.cs" />
     <Compile Include="Controllers\EbooksController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
