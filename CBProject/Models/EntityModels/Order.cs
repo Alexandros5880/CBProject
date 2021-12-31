@@ -14,6 +14,8 @@ namespace CBProject.Models.EntityModels
         public int SubscriptionPackageId { get; set; }
         public SubscriptionPackage Package { get; set; }
         public bool IsClose { get; set; }
+        public bool IsCanceled { get; set; }
+        public bool IsCanceledByError { get; set; }
         [DataType(DataType.Date)]
         public DateTime CreatedDate { get; set; }
     }

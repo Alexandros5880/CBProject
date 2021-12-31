@@ -301,61 +301,6 @@ namespace CBProject.HelperClasses
                 throw new Exception(ex.Message);
             }
         }
-        public static void CreatePayments(ApplicationDbContext context)
-        {
-            try
-            {
-                Payment payment1 = new Payment()
-                {
-                    ID = 1,
-                    User = (ApplicationUser)context.Users.FirstOrDefault(U => U.FirstName.Equals("Alexandros_1")),
-                    Price = 100M,
-                    Tax = 24.00,
-                    Discount = 00.33
-                };
-                Payment payment2 = new Payment()
-                {
-                    ID = 2,
-                    User = (ApplicationUser)context.Users.FirstOrDefault(U => U.FirstName.Equals("Alexandros_2")),
-                    Price = 100M,
-                    Tax = 24.00,
-                    Discount = 00.33
-                };
-                Payment payment3 = new Payment()
-                {
-                    ID = 3,
-                    User = (ApplicationUser)context.Users.FirstOrDefault(U => U.FirstName.Equals("Alexandros_3")),
-                    Price = 100M,
-                    Tax = 24.00,
-                    Discount = 00.33
-                };
-                Payment payment4 = new Payment()
-                {
-                    ID = 4,
-                    User = (ApplicationUser)context.Users.FirstOrDefault(U => U.FirstName.Equals("Alexandros_4")),
-                    Price = 100M,
-                    Tax = 24.00,
-                    Discount = 00.33
-                };
-                Payment payment5 = new Payment()
-                {
-                    ID = 5,
-                    User = (ApplicationUser)context.Users.FirstOrDefault(U => U.FirstName.Equals("Alexandros_5")),
-                    Price = 100M,
-                    Tax = 24.00,
-                    Discount = 00.33
-                };
-                context.Payments.Add(payment1);
-                context.Payments.Add(payment2);
-                context.Payments.Add(payment3);
-                context.Payments.Add(payment4);
-                context.Payments.Add(payment5);
-                context.SaveChanges();
-            } catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
         public static void CreateSubscriptionPackages(ApplicationDbContext context)
         {
             try

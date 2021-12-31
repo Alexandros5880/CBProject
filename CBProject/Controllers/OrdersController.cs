@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace CBProject.Controllers
 {
+    [Authorize]
     public class OrdersController : Controller
     {
         private readonly OrdersRepository _ordersRepository;

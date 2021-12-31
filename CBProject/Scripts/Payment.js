@@ -33,13 +33,15 @@ function payPayPal(user, package) {
                     order.isClose = true;
                     var myorder = {
                         id: order.id,
-                        userEmail: order.user.email,
-                        subscriptionId: order.package.id,
-                        isClose: order.isClose
+                        userId: order.userId,
+                        subscriptionId: order.subscriptionPackageId,
+                        isClose: order.isClose,
+                        isCanceled: order.isCanceled,
+                        isCanceledByError: order.isCanceledByError
                     }
                     updateOrder(myorder, function (responseOrder) {
                         var payment = {
-                            userEmail: responseOrder.userEmail,
+                            userId: responseOrder.userId,
                             price: responseOrder.price,
                             tax: 24.00,
                             discount: 0.33
@@ -55,8 +57,23 @@ function payPayPal(user, package) {
             onCancel: function (data) {
                 var order = JSON.parse(localStorage.getItem('order'));
                 localStorage.removeItem('order');
-                deleteOrder(order.id, function (response) {
-                    console.log("Delete Ok.");
+                //deleteOrder(order.id, function (response) {
+                //    console.log("Delete Ok.");
+                //});
+                order.isCanceled = true;
+                console.log("Before Update Order");
+                console.log(order);
+                var myorder = {
+                    id: order.id,
+                    userId: order.userId,
+                    subscriptionId: order.subscriptionPackageId,
+                    isClose: order.isClose,
+                    isCanceled: order.isCanceled,
+                    isCanceledByError: order.isCanceledByError
+                }
+                console.log("Update Order");
+                updateOrder(myorder, function (responseOrder) {
+                    console.log("Order Canceled.");
                 });
                 //window.location.href = "/SubscriptionPackages/Subscribe";
             },
@@ -65,8 +82,20 @@ function payPayPal(user, package) {
             onError: function (err) {
                 var order = JSON.parse(localStorage.getItem('order'));
                 localStorage.removeItem('order');
-                deleteOrder(order.id, function (response) {
-                    console.log("Delete Ok.");
+                //deleteOrder(order.id, function (response) {
+                //    console.log("Delete Ok.");
+                //});
+                order.isCanseledByError = true;
+                var myorder = {
+                    id: order.id,
+                    userId: order.userId,
+                    subscriptionId: order.subscriptionPackageId,
+                    isClose: order.isClose,
+                    isCanceled: order.isCanceled,
+                    isCanceledByError: order.isCanceledByError
+                }
+                updateOrder(myorder, function (responseOrder) {
+                    console.log("Order Canceled By Error.");
                 });
                 //window.location.href = "/SubscriptionPackages/Subscribe";
             },
@@ -89,6 +118,7 @@ function payPayPal(user, package) {
 // Create Order
 function createNewOrder(user, package) {
     addNewOrder(user, package, function (order) {
+        console.log(order);
         localStorage.setItem('order', JSON.stringify(order));
     });
 }

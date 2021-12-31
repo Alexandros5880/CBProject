@@ -19,11 +19,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Package.Description)
+            @Html.DisplayNameFor(model => model.SubscriptionPackageId)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Package.Description)
+            @Html.DisplayFor(model => model.SubscriptionPackageId)
         </dd>
 
         <dt>
@@ -32,6 +32,22 @@
 
         <dd>
             @Html.DisplayFor(model => model.IsClose)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsCanceled)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsCanceled)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsCanceledByError)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsCanceledByError)
         </dd>
 
         <dt>

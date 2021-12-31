@@ -399,7 +399,9 @@ function addNewOrder(user, package, callback) {
         data: {
             userEmail: user.email,
             subscriptionId: package.id,
-            isClose: false
+            isClose: false,
+            isCanceled: false,
+            isCanceledByError: false
         },
         success: function (data) {
             callback(data);

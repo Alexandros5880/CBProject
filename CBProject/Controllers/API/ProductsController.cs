@@ -1,5 +1,4 @@
 ﻿using CBProject.HelperClasses.Interfaces;
-using CBProject.Models;
 using CBProject.Models.EntityModels;
 using CBProject.Models.HelperModels;
 using CBProject.Models.ViewModels;
@@ -333,29 +332,30 @@ namespace CBProject.Controllers.API
         [Route("api/order/new")]
         public async Task<IHttpActionResult> CreateOrder([FromBody] OrderApiModel order)
         {
-            ApplicationUser user = await this._usersRepo.GetByEmailAsync(order.UserEmail);
             Order newOrder = new Order()
             {
-                UserId = user.Id,
+                UserId = order.UserId,
                 SubscriptionPackageId = order.SubscriptionId,
                 IsClose = false,
+                IsCanceled = false,
+                IsCanceledByError = false,
                 CreatedDate = DateTime.Today
             };
             this._unitOfWork.Orders.Add(newOrder);
             await this._unitOfWork.Orders.SaveAsync();
-            Order orderDB = await this._unitOfWork.Orders.GetAsync(user.Id, order.SubscriptionId);
-            return Ok(orderDB);
+            return Ok(newOrder);
         }
         [HttpPut]
         [Route("api/order/update")]
         public async Task<IHttpActionResult> UpdateOrder([FromBody] OrderApiModel order)
         {
-            ApplicationUser user = await this._usersRepo.GetByEmailAsync(order.UserEmail);
             SubscriptionPackage package = await this._unitOfWork.SubscriptionPackages.GetAsync(order.SubscriptionId);
             Order orderDB = await this._unitOfWork.Orders.GetAsync(order.ID);
             orderDB.SubscriptionPackageId = order.SubscriptionId;
-            orderDB.UserId = user.Id;
+            orderDB.UserId = order.UserId;
             orderDB.IsClose = order.IsClose;
+            orderDB.IsCanceled = order.IsCanceled;
+            orderDB.IsCanceledByError = order.IsCanceledByError;
             this._unitOfWork.Orders.Update(orderDB);
             await this._unitOfWork.Orders.SaveAsync();
             order.Price = package.Price;
@@ -378,10 +378,9 @@ namespace CBProject.Controllers.API
         [Route("api/payment/create")]
         public async Task<IHttpActionResult> CreatePayment([FromBody] CreatePaymentAPI payment)
         {
-            ApplicationUser user = await this._usersRepo.GetByEmailAsync(payment.UserEmail);
             Payment paymentDB = new Payment()
             {
-                UserId = user.Id,
+                UserId = payment.UserId,
                 Price = payment.Price,
                 Tax = payment.Tax,
                 Discount = payment.Discount

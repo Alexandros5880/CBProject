@@ -125,6 +125,8 @@ namespace CBProject.Migrations
                         UserId = c.String(maxLength: 128),
                         SubscriptionPackageId = c.Int(nullable: false),
                         IsClose = c.Boolean(nullable: false),
+                        IsCanceled = c.Boolean(nullable: false),
+                        IsCanceledByError = c.Boolean(nullable: false),
                         CreatedDate = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.ID)
