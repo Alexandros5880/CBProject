@@ -27,6 +27,8 @@ namespace CBProject.HelperClasses
         public PaymentsRepository Payments { get; protected set; }
         public OrdersRepository Orders { get; protected set; }
         public RequirementsRepository Requirements { get; protected set; }
+        public RatingsToEbooksRepository RatingsToEbooks { get; protected set; }
+        public RatingsToVideosRepository RatingsToVideos { get; protected set; }
         public UnitOfWork(IApplicationDbContext context)
         {
             this.Context = (ApplicationDbContext)context;
@@ -45,6 +47,8 @@ namespace CBProject.HelperClasses
             this.Payments = new PaymentsRepository(this);
             this.Orders = new OrdersRepository(this);
             this.Requirements = new RequirementsRepository(this);
+            this.RatingsToEbooks = new RatingsToEbooksRepository(this);
+            this.RatingsToVideos = new RatingsToVideosRepository(this);
         }
         protected virtual void Dispose(bool disposing)
         {
@@ -67,6 +71,8 @@ namespace CBProject.HelperClasses
                     this.Payments.Dispose();
                     this.Orders.Dispose();
                     this.Requirements.Dispose();
+                    this.RatingsToEbooks.Dispose();
+                    this.RatingsToVideos.Dispose();
                 }
                 disposedValue = true;
             }

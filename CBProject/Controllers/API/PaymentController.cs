@@ -42,7 +42,7 @@ namespace CBProject.Controllers.API
             return Ok(payment);
         }
 
-        // PUT api/Payment/5
+        // PUT api/Payment
         public async Task<IHttpActionResult> Put([FromBody] Payment payment)
         {
             if (payment == null)

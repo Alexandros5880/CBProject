@@ -24,5 +24,7 @@ namespace CBProject.HelperClasses.Interfaces
         PaymentsRepository Payments { get; }
         OrdersRepository Orders { get; }
         RequirementsRepository Requirements { get; }
+        RatingsToEbooksRepository RatingsToEbooks { get; }
+        RatingsToVideosRepository RatingsToVideos { get; }
     }
 }

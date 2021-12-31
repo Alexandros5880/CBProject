@@ -44,7 +44,7 @@ namespace CBProject.Controllers.API
             return Ok(video);
         }
 
-        // PUT api/<controller>/5
+        // PUT api/<controller>
         public async Task<IHttpActionResult> Put([FromBody] Video video)
         {
             if (video == null)

@@ -44,7 +44,7 @@ namespace CBProject.Controllers.API
             return Ok(catToCat);
         }
 
-        // PUT api/CategoryToCategory/5
+        // PUT api/CategoryToCategory
         public async Task<IHttpActionResult> Put([FromBody] CategoryToCategory catToCat)
         {
             if (catToCat == null)

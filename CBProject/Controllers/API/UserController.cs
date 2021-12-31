@@ -43,7 +43,7 @@ namespace CBProject.Controllers.API
             return Ok(user);
         }
 
-        // PUT api/User/5
+        // PUT api/User
         public async Task<IHttpActionResult> Put([FromBody] ApplicationUser user)
         {
             if (user == null)

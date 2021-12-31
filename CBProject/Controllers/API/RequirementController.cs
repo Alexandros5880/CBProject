@@ -44,7 +44,7 @@ namespace CBProject.Controllers.API
             return Ok(requirement);
         }
 
-        // PUT api/Requirement/5
+        // PUT api/Requirement
         public async Task<IHttpActionResult> Put([FromBody] Requirement requirement)
         {
             if (requirement == null)

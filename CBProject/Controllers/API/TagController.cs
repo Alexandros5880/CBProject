@@ -44,7 +44,7 @@ namespace CBProject.Controllers.API
             return Ok(tag);
         }
 
-        // PUT api/Tag/5
+        // PUT api/Tag
         public async Task<IHttpActionResult> Put([FromBody] Tag tag)
         {
             if (tag == null)

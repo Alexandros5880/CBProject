@@ -219,6 +219,8 @@
     <Compile Include="Controllers\API\PaymentController.cs" />
     <Compile Include="Controllers\API\ProductsController.cs" />
     <Compile Include="Controllers\API\RatingController.cs" />
+    <Compile Include="Controllers\API\RatingToEbookController.cs" />
+    <Compile Include="Controllers\API\RatingToVideoController.cs" />
     <Compile Include="Controllers\API\RequirementController.cs" />
     <Compile Include="Controllers\API\ReviewController.cs" />
     <Compile Include="Controllers\API\SubscriptionPackageController.cs" />

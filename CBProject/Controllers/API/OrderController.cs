@@ -44,7 +44,7 @@ namespace CBProject.Controllers.API
             return Ok(order);
         }
 
-        // PUT api/Order/5
+        // PUT api/Order
         public async Task<IHttpActionResult> Put([FromBody] Order order)
         {
             if (order == null)

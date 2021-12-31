@@ -44,7 +44,7 @@ namespace CBProject.Controllers.API
             return Ok(rating);
         }
 
-        // PUT api/Rating/5
+        // PUT api/Rating
         public async Task<IHttpActionResult> Put([FromBody] Rating rating)
         {
             if (rating == null)

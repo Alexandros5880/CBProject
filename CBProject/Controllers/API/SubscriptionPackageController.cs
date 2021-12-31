@@ -44,7 +44,7 @@ namespace CBProject.Controllers.API
             return Ok(package);
         }
 
-        // PUT api/SubscriptionPackage/5
+        // PUT api/SubscriptionPackage
         public async Task<IHttpActionResult> Put([FromBody] SubscriptionPackage package)
         {
             if (package == null)
