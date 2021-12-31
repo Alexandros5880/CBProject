@@ -45,7 +45,7 @@ function payPayPal(user, package) {
                             discount: 0.33
                         };
                         createPayment(payment, function (responsePayment) {
-                            //console.log("Payment OK");
+                            alert("Payment OK");
                         });
                     });
                 });
@@ -53,21 +53,31 @@ function payPayPal(user, package) {
 
             // On Payment Canceled
             onCancel: function (data) {
-                // TODO: Delete this order from localStorage and from Server
                 var order = JSON.parse(localStorage.getItem('order'));
+                localStorage.removeItem('order');
+                deleteOrder(order.id, function (response) {
+                    console.log("Delete Ok.");
+                });
                 //window.location.href = "/SubscriptionPackages/Subscribe";
             },
 
             // On Transactions Error
             onError: function (err) {
-                // TODO: Delete this order from localStorage and from Server
                 var order = JSON.parse(localStorage.getItem('order'));
+                localStorage.removeItem('order');
+                deleteOrder(order.id, function (response) {
+                    console.log("Delete Ok.");
+                });
                 //window.location.href = "/SubscriptionPackages/Subscribe";
             },
 
             onInit: function (data, actions) {
+                
+            },
+
+            onClick: function (data, actions) {
                 createNewOrder(user, package);
-            }
+            },
 
         }).render('.payment-window');
     });

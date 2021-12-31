@@ -346,7 +346,6 @@ namespace CBProject.Controllers.API
             Order orderDB = await this._unitOfWork.Orders.GetAsync(user.Id, order.SubscriptionId);
             return Ok(orderDB);
         }
-
         [HttpPut]
         [Route("api/order/update")]
         public async Task<IHttpActionResult> UpdateOrder([FromBody] OrderApiModel order)
@@ -363,6 +362,16 @@ namespace CBProject.Controllers.API
             //order.Tax = 24.00;
             //order.Discount = 0.33;
             return Ok(order);
+        }
+        [HttpDelete]
+        [Route("api/order/delete/{id}")]
+        public async Task<IHttpActionResult> DeleteOrder(int? id)
+        {
+            if (id == null)
+                return NotFound();
+            await this._unitOfWork.Orders.DeleteAsync(id);
+            await this._unitOfWork.Orders.SaveAsync();
+            return Ok();
         }
 
         [HttpPost]

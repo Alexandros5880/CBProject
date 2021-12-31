@@ -410,11 +410,22 @@ function addNewOrder(user, package, callback) {
     });
 }
 function updateOrder(order, callback) {
-    var today = new Date();
     $.ajax({
         type: "PUT",
         url: `/api/order/update`,
         data: order,
+        success: function (data) {
+            callback(data);
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+}
+function deleteOrder(id, callback) {
+    $.ajax({
+        type: "DELETE",
+        url: `/api/order/delete/${id}`,
         success: function (data) {
             callback(data);
         },
