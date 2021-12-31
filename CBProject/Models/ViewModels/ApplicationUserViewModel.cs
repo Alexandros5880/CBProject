@@ -81,6 +81,9 @@ namespace CBProject.Models.ViewModels
 
         public bool IsInactive { get; set; }
 
+        [Range(typeof(bool), "true", "true", ErrorMessage = "You need to agree first!")]
+        public bool IsAgreeWithTerms { get; set; }
+
         public ICollection<ApplicationRole> OtherRoles { get; set; }
         public ICollection<ApplicationRole> MyRoles { get; set; }
         public ICollection<string> AddRoles { get; set; }
