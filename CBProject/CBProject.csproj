@@ -213,6 +213,8 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\API\CategoryController.cs" />
+    <Compile Include="Controllers\API\CategoryToCategoryController.cs" />
     <Compile Include="Controllers\API\ProductsController.cs" />
     <Compile Include="Controllers\EbooksController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />

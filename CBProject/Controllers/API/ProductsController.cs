@@ -1,4 +1,5 @@
-﻿using CBProject.HelperClasses.Interfaces;
+﻿using CBProject.HelperClasses;
+using CBProject.HelperClasses.Interfaces;
 using CBProject.Models.EntityModels;
 using CBProject.Models.HelperModels;
 using CBProject.Models.ViewModels;
@@ -13,18 +14,18 @@ using System.Web.Http;
 
 namespace CBProject.Controllers.API
 {
-    public class ProductsController : ApiController
+    public class ProductsController : ApiController, IDisposable
     {
         private readonly UsersRepo _usersRepo;
         private readonly RolesRepo _rolesRepo;
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly UnitOfWork _unitOfWork;
         public ProductsController(IUnitOfWork unitOfWork, IUsersRepo usersRepo, IRolesRepo rolesRepo)
         {
             this._usersRepo = (UsersRepo)usersRepo;
             this._rolesRepo = (RolesRepo)rolesRepo;
-            this._unitOfWork = unitOfWork;
+            this._unitOfWork = (UnitOfWork)unitOfWork;
         }
-        // GET api/<controller>
+        // GET api/Products
         public async Task<IHttpActionResult> Get()
         {
             var videos = await this._unitOfWork.Videos.GetAllQuerable()
@@ -40,7 +41,7 @@ namespace CBProject.Controllers.API
 
             return Ok(products);
         }
-        // GET api/<controller>/5
+        // GET api/Products/5
         public async Task<IHttpActionResult> Get(string search)
         {
             if (search == null)
@@ -388,6 +389,17 @@ namespace CBProject.Controllers.API
             this._unitOfWork.Payments.Add(paymentDB);
             await this._unitOfWork.Payments.SaveAsync();
             return Ok(payment);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                this._usersRepo.Dispose();
+                this._rolesRepo.Dispose();
+                this._unitOfWork.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }
