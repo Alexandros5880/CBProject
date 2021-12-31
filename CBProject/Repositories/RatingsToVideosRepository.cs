@@ -10,109 +10,109 @@ using System.Threading.Tasks;
 
 namespace CBProject.Repositories
 {
-    public class RatingsToEbooksRepository : IRepository<RatingToEbook>, IDisposable
+    public class RatingsToVideosRepository : IRepository<RatingToVideo>, IDisposable
     {
         private bool disposedValue;
         private ApplicationDbContext _context { get; set; }
-        public RatingsToEbooksRepository(IUnitOfWork unitOfWork)
+        public RatingsToVideosRepository(IUnitOfWork unitOfWork)
         {
             this._context = unitOfWork.Context;
         }
-        public void Add(RatingToEbook obj)
+        public void Add(RatingToVideo obj)
         {
             if (obj == null)
                 throw new ArgumentNullException(nameof(obj));
-            this._context.RatingsToEbooks.Add(obj);
+            this._context.RatingsToVideos.Add(obj);
         }
         public void Delete(int? id)
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
-            var ratingToEbook = this._context.RatingsToEbooks
+            var ratingToVideo = this._context.RatingsToVideos
                                     .FirstOrDefault(r => r.ID == id);
-            if (ratingToEbook == null)
-                throw new ArgumentNullException(nameof(ratingToEbook));
-            this._context.RatingsToEbooks.Remove(ratingToEbook);
+            if (ratingToVideo == null)
+                throw new ArgumentNullException(nameof(ratingToVideo));
+            this._context.RatingsToVideos.Remove(ratingToVideo);
         }
         public async Task DeleteAsync(int? id)
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
-            var ratingToEbook = await this._context.RatingsToEbooks
+            var ratingToVideo = await this._context.RatingsToVideos
                                         .FirstOrDefaultAsync(r => r.ID == id);
-            if (ratingToEbook == null)
-                throw new ArgumentNullException(nameof(ratingToEbook));
-            this._context.RatingsToEbooks.Remove(ratingToEbook);
+            if (ratingToVideo == null)
+                throw new ArgumentNullException(nameof(ratingToVideo));
+            this._context.RatingsToVideos.Remove(ratingToVideo);
         }
-        public RatingToEbook Get(int? id)
+        public RatingToVideo Get(int? id)
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
-            var ratingToEbook = this._context.RatingsToEbooks
-                                            .Include(r => r.Ebook)
+            var ratingToVideo = this._context.RatingsToVideos
+                                            .Include(r => r.Video)
                                             .Include(r => r.Rating)
                                             .FirstOrDefault(r => r.ID == id);
-            if (ratingToEbook == null)
-                throw new ArgumentNullException(nameof(ratingToEbook));
-            return ratingToEbook;
+            if (ratingToVideo == null)
+                throw new ArgumentNullException(nameof(ratingToVideo));
+            return ratingToVideo;
         }
-        public ICollection<RatingToEbook> GetAll()
+        public ICollection<RatingToVideo> GetAll()
         {
-            return this._context.RatingsToEbooks
-                                .Include(r => r.Ebook)
+            return this._context.RatingsToVideos
+                                .Include(r => r.Video)
                                 .Include(r => r.Rating)
                                 .ToList();
         }
-        public async Task<ICollection<RatingToEbook>> GetAllAsync()
+        public async Task<ICollection<RatingToVideo>> GetAllAsync()
         {
-            return await this._context.RatingsToEbooks
-                                .Include(r => r.Ebook)
+            return await this._context.RatingsToVideos
+                                .Include(r => r.Video)
                                 .Include(r => r.Rating)
                                 .ToListAsync();
         }
-        public ICollection<RatingToEbook> GetAllEmpty()
+        public ICollection<RatingToVideo> GetAllEmpty()
         {
-            return this._context.RatingsToEbooks.ToList();
+            return this._context.RatingsToVideos.ToList();
         }
-        public async Task<ICollection<RatingToEbook>> GetAllEmptyAsync()
+        public async Task<ICollection<RatingToVideo>> GetAllEmptyAsync()
         {
-            return await this._context.RatingsToEbooks.ToListAsync();
+            return await this._context.RatingsToVideos.ToListAsync();
         }
-        public IQueryable<RatingToEbook> GetAllQueryable()
+        public IQueryable<RatingToVideo> GetAllQueryable()
         {
-            return this._context.RatingsToEbooks;
+            return this._context.RatingsToVideos;
         }
-        public async Task<RatingToEbook> GetAsync(int? id)
+        public async Task<RatingToVideo> GetAsync(int? id)
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
-            var ratingToEbook = await this._context.RatingsToEbooks
-                                        .Include(r => r.Ebook)
+            var  ratingToVideo = await this._context.RatingsToVideos
+                                        .Include(r => r.Video)
                                         .Include(r => r.Rating)
                                         .FirstOrDefaultAsync(r => r.ID == id);
-            if (ratingToEbook == null)
-                throw new ArgumentNullException(nameof(ratingToEbook));
-            return ratingToEbook;
+            if (ratingToVideo == null)
+                throw new ArgumentNullException(nameof(ratingToVideo));
+            return ratingToVideo;
         }
-        public RatingToEbook GetEmpty(int? id)
+        public RatingToVideo GetEmpty(int? id)
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
-            var ratingToEbook = this._context.RatingsToEbooks
+            var ratingToVideo = this._context.RatingsToVideos
                                 .FirstOrDefault(r => r.ID == id);
-            if (ratingToEbook == null)
-                throw new ArgumentNullException(nameof(ratingToEbook));
-            return ratingToEbook;
+            if (ratingToVideo == null)
+                throw new ArgumentNullException(nameof(ratingToVideo));
+            return ratingToVideo;
         }
-        public async Task<RatingToEbook> GetEmptyAsync(int? id)
+        public async Task<RatingToVideo> GetEmptyAsync(int? id)
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
-            var ratingToEbook = await this._context.RatingsToEbooks
+            var ratingToVideo = await this._context.RatingsToVideos
                                 .FirstOrDefaultAsync(r => r.ID == id);
-            if (ratingToEbook == null)
-                throw new ArgumentNullException(nameof(ratingToEbook));
-            return ratingToEbook;
+            if (ratingToVideo == null)
+                throw new ArgumentNullException(nameof(ratingToVideo));
+            return ratingToVideo;
         }
         public void Save()
         {
@@ -122,7 +122,7 @@ namespace CBProject.Repositories
         {
             return await this._context.SaveChangesAsync();
         }
-        public void Update(RatingToEbook obj)
+        public void Update(RatingToVideo obj)
         {
             if (obj == null)
                 throw new ArgumentNullException(nameof(obj));

@@ -304,6 +304,8 @@
     <Compile Include="Repositories\OrdersRepository.cs" />
     <Compile Include="Repositories\PaymentsRepository.cs" />
     <Compile Include="Repositories\RatingsRepository.cs" />
+    <Compile Include="Repositories\RatingsToEbooksRepository.cs" />
+    <Compile Include="Repositories\RatingsToVideosRepository.cs" />
     <Compile Include="Repositories\RequirementsRepository.cs" />
     <Compile Include="Repositories\ReviewsRepository.cs" />
     <Compile Include="Repositories\SubscriptionPackageRepository.cs" />
