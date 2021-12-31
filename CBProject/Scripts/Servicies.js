@@ -409,7 +409,35 @@ function addNewOrder(user, package, callback) {
         }
     });
 }
+function updateOrder(order, callback) {
+    var today = new Date();
+    $.ajax({
+        type: "PUT",
+        url: `/api/order/update`,
+        data: order,
+        success: function (data) {
+            callback(data);
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+}
 
+function createPayment(payment, callback) {
+    var today = new Date();
+    $.ajax({
+        type: "POST",
+        url: `/api/payment/create`,
+        data: payment,
+        success: function (data) {
+            callback(data);
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+}
 
 
 

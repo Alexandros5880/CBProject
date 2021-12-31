@@ -29,12 +29,25 @@ function payPayPal(user, package) {
             // On Payment Done
             onApprove(data, actions) {
                 return actions.order.capture().then(details => {
-                    //console.log(details.payer.name.given_name);
-                    //alert(`Transaction completed by ${details.payer.name.given_name}`);
-
-
-                    // TODO: Update this Order To isClose = true and remove order from localStorage
                     var order = JSON.parse(localStorage.getItem('order'));
+                    order.isClose = true;
+                    var myorder = {
+                        id: order.id,
+                        userEmail: order.user.email,
+                        subscriptionId: order.package.id,
+                        isClose: order.isClose
+                    }
+                    updateOrder(myorder, function (responseOrder) {
+                        var payment = {
+                            userEmail: responseOrder.userEmail,
+                            price: responseOrder.price,
+                            tax: 24.00,
+                            discount: 0.33
+                        };
+                        createPayment(payment, function (responsePayment) {
+                            //console.log("Payment OK");
+                        });
+                    });
                 });
             },
 

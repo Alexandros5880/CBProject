@@ -334,18 +334,52 @@ namespace CBProject.Controllers.API
         public async Task<IHttpActionResult> CreateOrder([FromBody] OrderApiModel order)
         {
             ApplicationUser user = await this._usersRepo.GetByEmailAsync(order.UserEmail);
-            SubscriptionPackage package = await this._unitOfWork.SubscriptionPackages.GetAsync(order.SubscriptionId);
             Order newOrder = new Order()
             {
                 UserId = user.Id,
-                SubscriptionPackageId = package.ID,
+                SubscriptionPackageId = order.SubscriptionId,
                 IsClose = false,
                 CreatedDate = DateTime.Today
             };
             this._unitOfWork.Orders.Add(newOrder);
             await this._unitOfWork.Orders.SaveAsync();
-            Order orderDB = await this._unitOfWork.Orders.GetAsync(user.Id, package.ID);
+            Order orderDB = await this._unitOfWork.Orders.GetAsync(user.Id, order.SubscriptionId);
             return Ok(orderDB);
+        }
+
+        [HttpPut]
+        [Route("api/order/update")]
+        public async Task<IHttpActionResult> UpdateOrder([FromBody] OrderApiModel order)
+        {
+            ApplicationUser user = await this._usersRepo.GetByEmailAsync(order.UserEmail);
+            SubscriptionPackage package = await this._unitOfWork.SubscriptionPackages.GetAsync(order.SubscriptionId);
+            Order orderDB = await this._unitOfWork.Orders.GetAsync(order.ID);
+            orderDB.SubscriptionPackageId = order.SubscriptionId;
+            orderDB.UserId = user.Id;
+            orderDB.IsClose = order.IsClose;
+            this._unitOfWork.Orders.Update(orderDB);
+            await this._unitOfWork.Orders.SaveAsync();
+            order.Price = package.Price;
+            //order.Tax = 24.00;
+            //order.Discount = 0.33;
+            return Ok(order);
+        }
+
+        [HttpPost]
+        [Route("api/payment/create")]
+        public async Task<IHttpActionResult> CreatePayment([FromBody] CreatePaymentAPI payment)
+        {
+            ApplicationUser user = await this._usersRepo.GetByEmailAsync(payment.UserEmail);
+            Payment paymentDB = new Payment()
+            {
+                UserId = user.Id,
+                Price = payment.Price,
+                Tax = payment.Tax,
+                Discount = payment.Discount
+            };
+            this._unitOfWork.Payments.Add(paymentDB);
+            await this._unitOfWork.Payments.SaveAsync();
+            return Ok(payment);
         }
     }
 }
