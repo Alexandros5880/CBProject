@@ -30,6 +30,7 @@ function payPayPal(user, package) {
             onApprove(data, actions) {
                 return actions.order.capture().then(details => {
                     var order = JSON.parse(localStorage.getItem('order'));
+                    localStorage.removeItem('order');
                     order.isClose = true;
                     var myorder = {
                         id: order.id,
@@ -71,9 +72,9 @@ function payPayPal(user, package) {
                     isCanceled: order.isCanceled,
                     isCanceledByError: order.isCanceledByError
                 }
-                console.log("Update Order");
+                //console.log("Update Order");
                 updateOrder(myorder, function (responseOrder) {
-                    console.log("Order Canceled.");
+                    //console.log("Order Canceled.");
                 });
                 //window.location.href = "/SubscriptionPackages/Subscribe";
             },
@@ -95,7 +96,7 @@ function payPayPal(user, package) {
                     isCanceledByError: order.isCanceledByError
                 }
                 updateOrder(myorder, function (responseOrder) {
-                    console.log("Order Canceled By Error.");
+                    //console.log("Order Canceled By Error.");
                 });
                 //window.location.href = "/SubscriptionPackages/Subscribe";
             },
@@ -118,7 +119,7 @@ function payPayPal(user, package) {
 // Create Order
 function createNewOrder(user, package) {
     addNewOrder(user, package, function (order) {
-        console.log(order);
+        //console.log(order);
         localStorage.setItem('order', JSON.stringify(order));
     });
 }

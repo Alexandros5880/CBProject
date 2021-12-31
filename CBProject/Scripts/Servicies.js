@@ -397,7 +397,7 @@ function addNewOrder(user, package, callback) {
         type: "POST",
         url: `/api/order/new`,
         data: {
-            userEmail: user.email,
+            userId: user.id,
             subscriptionId: package.id,
             isClose: false,
             isCanceled: false,
