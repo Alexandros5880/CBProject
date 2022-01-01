@@ -26,5 +26,11 @@ namespace CBProject.HelperClasses.Interfaces
         RequirementsRepository Requirements { get; }
         RatingsToEbooksRepository RatingsToEbooks { get; }
         RatingsToVideosRepository RatingsToVideos { get; }
+        RequirementsToEbooksRepository RequirementsToEbooks { get; }
+        RequirementsToVideosRepository RequirementsToVideos { get; }
+        ReviewsToEbooksRepository ReviewsToEbooks { get; }
+        ReviewsToVideosRepository ReviewsToVideos { get; }
+        TagsToEbooksRepository TagsToEbooks { get; }
+        TagsToVideosRepository TagsToVideos { get; }
     }
 }

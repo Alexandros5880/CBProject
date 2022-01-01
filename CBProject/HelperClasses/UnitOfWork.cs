@@ -29,6 +29,12 @@ namespace CBProject.HelperClasses
         public RequirementsRepository Requirements { get; protected set; }
         public RatingsToEbooksRepository RatingsToEbooks { get; protected set; }
         public RatingsToVideosRepository RatingsToVideos { get; protected set; }
+        public RequirementsToEbooksRepository RequirementsToEbooks { get; protected set; }
+        public RequirementsToVideosRepository RequirementsToVideos { get; protected set; }
+        public ReviewsToEbooksRepository ReviewsToEbooks { get; protected set; }
+        public ReviewsToVideosRepository ReviewsToVideos { get; protected set; }
+        public TagsToEbooksRepository TagsToEbooks { get; protected set; }
+        public TagsToVideosRepository TagsToVideos { get; protected set; }
         public UnitOfWork(IApplicationDbContext context)
         {
             this.Context = (ApplicationDbContext)context;
@@ -49,6 +55,12 @@ namespace CBProject.HelperClasses
             this.Requirements = new RequirementsRepository(this);
             this.RatingsToEbooks = new RatingsToEbooksRepository(this);
             this.RatingsToVideos = new RatingsToVideosRepository(this);
+            this.RequirementsToEbooks = new RequirementsToEbooksRepository(this);
+            this.RequirementsToVideos = new RequirementsToVideosRepository(this);
+            this.ReviewsToEbooks = new ReviewsToEbooksRepository(this);
+            this.ReviewsToVideos = new ReviewsToVideosRepository(this);
+            this.TagsToEbooks = new TagsToEbooksRepository(this);
+            this.TagsToVideos = new TagsToVideosRepository(this);
         }
         protected virtual void Dispose(bool disposing)
         {
@@ -73,6 +85,12 @@ namespace CBProject.HelperClasses
                     this.Requirements.Dispose();
                     this.RatingsToEbooks.Dispose();
                     this.RatingsToVideos.Dispose();
+                    this.RequirementsToEbooks.Dispose();
+                    this.RequirementsToVideos.Dispose();
+                    this.ReviewsToEbooks.Dispose();
+                    this.ReviewsToVideos.Dispose();
+                    this.TagsToEbooks.Dispose();
+                    this.TagsToVideos.Dispose();
                 }
                 disposedValue = true;
             }
