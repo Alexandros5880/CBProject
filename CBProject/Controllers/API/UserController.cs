@@ -17,6 +17,8 @@ namespace CBProject.Controllers.API
         }
 
         // GET api/User
+        [HttpGet]
+        [Route("api/User/all")]
         public async Task<IHttpActionResult> Get()
         {
             var users = await this._usersRepo.GetAllAsync();

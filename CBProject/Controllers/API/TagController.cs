@@ -17,6 +17,8 @@ namespace CBProject.Controllers.API
         }
 
         // GET api/Tag
+        [HttpGet]
+        [Route("api/Tag/all")]
         public async Task<IHttpActionResult> Get()
         {
             var tags = await this._tagsRepository.GetAllEmptyAsync();

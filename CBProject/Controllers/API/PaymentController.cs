@@ -16,7 +16,9 @@ namespace CBProject.Controllers.API
             this._paymentsRepository = unitOfWork.Payments;
         }
 
-        // GET api/Payment
+        // GET api/Payment/all
+        [HttpGet]
+        [Route("api/Payment/all")]
         public async Task<IHttpActionResult> Get()
         {
             var payments = await this._paymentsRepository.GetAllEmptyAsync();

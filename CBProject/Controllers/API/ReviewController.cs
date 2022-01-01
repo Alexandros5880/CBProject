@@ -17,6 +17,8 @@ namespace CBProject.Controllers.API
         }
 
         // GET api/Review
+        [HttpGet]
+        [Route("api/Review/all")]
         public async Task<IHttpActionResult> Get()
         {
             var reviews = await this._reviewsRepository.GetAllEmptyAsync();

@@ -16,14 +16,16 @@ namespace CBProject.Controllers.API
             this._videosRepository = unitOfWork.Videos;
         }
 
-        // GET api/<controller>
+        // GET api/Video
+        [HttpGet]
+        [Route("api/Video/all")]
         public async Task<IHttpActionResult> Get()
         {
             var videos = await this._videosRepository.GetAllEmptyAsync();
             return Ok(videos);
         }
 
-        // GET api/<controller>/5
+        // GET api/Video/5
         public async Task<IHttpActionResult> Get(int? id)
         {
             if (id == null)
@@ -34,7 +36,7 @@ namespace CBProject.Controllers.API
             return Ok(video);
         }
 
-        // POST api/<controller>
+        // POST api/Video
         public async Task<IHttpActionResult> Post([FromBody] Video video)
         {
             if (video == null)
@@ -44,7 +46,7 @@ namespace CBProject.Controllers.API
             return Ok(video);
         }
 
-        // PUT api/<controller>
+        // PUT api/Video
         public async Task<IHttpActionResult> Put([FromBody] Video video)
         {
             if (video == null)
@@ -54,7 +56,7 @@ namespace CBProject.Controllers.API
             return Ok(video);
         }
 
-        // DELETE api/<controller>/5
+        // DELETE api/Video/5
         public async Task<IHttpActionResult> Delete(int? id)
         {
             if (id == null)
