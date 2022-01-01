@@ -74,8 +74,72 @@
 
 
 
-<div class="row" style="margin-top: 50px !important; margin-bottom: 50px !important;">
+<style>
+    .lessons-top-navbar {
+        padding-top: 57px !important;
+    }
+    .lessons-top-title {
+        margin-left: 33px;
+        margin-top: 11px;
+    }
+    .lessons-top-grid {
+        padding-top: 11px;
+    }
+    .search-top-input {
+        float: right !important;
+        margin-right: 33px;
+    }
+    .lessons-top-nav-filters-buttons {
+        margin-left: 33px;
+    }
+</style>
 
+
+
+<nav class="navbar navbar-light bg-light justify-content-between lessons-top-navbar">
+    <h2 class="lessons-top-title">Chillin and searching something...</h2>
+    <div class="row lessons-top-grid">
+        <div class="col-md-6">
+            <form class="form-inline lessons-top-nav-filters-buttons">
+                <span class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                        <span class="glyphicon glyphicon-filter"></span>
+                        Filter
+                        <span class="glyphicon glyphicon-menu-down"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#" class="ebooks-filter">Ebooks</a></li>
+                        <li><a href="#" class="videos-filter">Videos</a></li>
+                    </ul>
+                </span>
+                <span class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                        <span class="glyphicon glyphicon-sort-by-attributes"></span>
+                        Sort By
+                        <span class="glyphicon glyphicon-menu-down"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#" class="lessons-sequence">Lesson Sequence</a></li>
+                        <li><a href="#" class="created-date">Created Date</a></li>
+                    </ul>
+                </span>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <form class="form-inline search-top-input">
+                <input id="lessons-top-search-input" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-search search-top-button">
+                    Search
+                    <i class="fa fa-search"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+
+
+<div class="row" style="margin-top: 50px !important; margin-bottom: 50px !important;">
     <!-- Filters SlideBar -->
     <div class="col-md-2">
         <ul class="nav flex-column" id="filter-slidebar">
@@ -121,7 +185,6 @@
             @Html.ActionLink("Subscribe Now", "Subscribe", "SubscriptionPackages", null, new { @class = "subscribe-button" })
         </div>
     </div>
-
     <!-- Main Content -->
     <div class="col-md-10">
         <div class="container-fluid">
@@ -140,7 +203,6 @@
             </div>
         </div>
     </div>
-
 </div>
 
 
@@ -149,9 +211,14 @@
     <script>
         $(document).ready(function () {
 
+            var ebooks = false;
+            var videos = true;
+            var lessonsSequence = true;
+            var createdDate = false;
+
             // Load Videos When Load The Page
             getVideos(function (data) {
-                console.log(data);
+                //console.log(data);
                 $(".contents").empty();
                 data.slice(0, 8).forEach(video => {
                     $(".contents").append(
@@ -202,7 +269,70 @@
                 });
             });
 
-            // Search Button Clicks
+            // Search Button Top Clicks
+            $(document.body).on('click', 'button', function () {
+                if (this.classList.contains('search-top-button')) {
+                    var search = $("#lessons-top-search-input").val();
+                    searchTop(ebooks, videos, lessonsSequence, createdDate, search);
+                }
+            });
+
+            // Filter By Ebooks
+            $(document.body).on('click', 'a', function () {
+                if (this.classList.contains('ebooks-filter')) {
+                    ebooks = true;
+                    videos = false;
+                }
+            });
+
+            // Filter By Videos
+            $(document.body).on('click', 'a', function () {
+                if (this.classList.contains('videos-filter')) {
+                    ebooks = false;
+                    videos = true;
+                }
+            });
+
+            // Sort By Lessons Sequence
+            $(document.body).on('click', 'a', function () {
+                if (this.classList.contains('lessons-sequence')) {
+                    lessonsSequence = true;
+                    createdDate = false;
+                }
+            });
+
+            // Sort By Created Date
+            $(document.body).on('click', 'a', function () {
+                if (this.classList.contains('created-date')) {
+                    lessonsSequence = false;
+                    createdDate = true;
+                }
+            });
+
+
+            function searchTop(ebooks, videos, lessonsSequence, createdDate, search) {
+
+                alert(`ebooks: ${ebooks}, video: ${videos}, lessonsSeq: ${lessonsSequence}, createdDate: ${createdDate},  Search: ${search}`);
+
+                //var sendData = {
+                //    Ebooks: ebooks,
+                //    Videos: videos,
+                //    CategoryName: category,
+                //    TagName: tag,
+                //    TitleName: title,
+                //    TeacherName: teacher
+                //};
+
+                //getProductsByFilters(sendData, function (response_data) {
+                //    render(response_data, videos, ebooks);
+                //});
+            };
+
+
+
+            ///////////////  Old System  /////////////////
+
+            // Search Button Left Clicks
             $(document.body).on('click', 'button', function () {
                 if (this.classList.contains('search-button')) {
                     search();
@@ -254,10 +384,16 @@
                 };
 
                 getProductsByFilters(sendData, function (response_data) {
-                    console.log(response_data);
                     render(response_data, videos, ebooks);
                 });
             }
+
+            ///////////////  Old System  /////////////////
+
+
+
+
+
 
             // Render UI Function
             function render(data, videos, ebooks) {

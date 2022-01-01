@@ -29,3 +29,6 @@ namespace CBProject.Models.EntityModels
         public ICollection<RequirementToEbook> RequirementsToEbooks { get; set; }
     }
 }
+
+
+// TODO: Create API Ebook Controller
