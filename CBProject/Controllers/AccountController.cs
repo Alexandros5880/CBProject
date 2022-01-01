@@ -263,7 +263,7 @@ namespace CBProject.Controllers
                     var visitorsRole = await this._rolesRepo.GetByNameAsync("Guest");
                     this._usersRepo.AddRole(user, visitorsRole);
                     HelperClasses.EmailService email = new HelperClasses.EmailService();
-                    await email.SendEmail(user);
+                    await email.SendEmailRegister(user);
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);                

@@ -54,6 +54,7 @@ namespace CBProject.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> Contact(ContactViewModel contact)
         {
             if (!ModelState.IsValid)

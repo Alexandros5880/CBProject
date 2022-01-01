@@ -10,6 +10,7 @@ using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using System.Xml.Linq;
 
 namespace CBProject.HelperClasses
 {
@@ -26,7 +27,13 @@ namespace CBProject.HelperClasses
                 EnableSsl = true
             });
         }
-        public Task SendEmail(ApplicationUser user)
+
+        //SendEmailRegister
+        //SendEmailContact
+        //SendEmailChangedPassword
+        
+
+        public Task SendEmailRegister(ApplicationUser user)
         {           
 
             Email.DefaultSender = _sender;
@@ -73,6 +80,27 @@ namespace CBProject.HelperClasses
                 .To("codeme.email@gmail.com")
                 .Subject("Contact Form")
                 .Body(message.ToString());
+
+            return email.SendAsync();
+        }
+
+        public Task SendEmailChangedPassword(ApplicationUser user)
+        {
+
+            Email.DefaultSender = _sender;
+
+            StringBuilder body = new StringBuilder();
+            body.Append($"Dear {user.FullName},\n\n")
+                .Append("Your Password has been changed.\n\n")
+                .Append($"Kind Regards, \n")
+                .Append($"--CodeMe Team");
+
+
+            var email = Email
+                .From("codeme.email@gmail.com", "CodeMe")
+                .To(user.Email)
+                .Subject("Change Password")
+                .Body(body.ToString());
 
             return email.SendAsync();
         }
