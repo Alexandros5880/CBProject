@@ -7,13 +7,10 @@ namespace CBProject.Models
 {
     public class Rating
     {
-        [Key]
         public int ID { get; set; }
-        [Required]
         [Range(0, 10)]
         public float Rate { get; set; }
         [ForeignKey("Rater")]
-        [Required]
         public string RaterId { get; set; }
         public ApplicationUser Rater { get; set; }
         public ICollection<RatingToEbook> RatingsToEbooks { get; set; }

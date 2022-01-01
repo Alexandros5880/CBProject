@@ -56,7 +56,7 @@ namespace CBProject.Controllers
                 viewModel.Users = new SelectList(users, "Id", "FullName");
                 viewModel.Category = ebook.Category;
                 viewModel.Creator = ebook.Creator;
-                viewModel.Rate = await this._ebooksRepository.GetRatingsAverageAsync(ebook.ID);
+                viewModel.Rate = ebook.RatingsAVG;
                 viewModel.Requirements = await this._ebooksRepository.GetRequirementsAsync(ebook.ID);
                 viewModels.Add(viewModel);
             }

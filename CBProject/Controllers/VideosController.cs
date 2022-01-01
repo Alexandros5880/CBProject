@@ -46,7 +46,7 @@ namespace CBProject.Controllers
             {
                 var viewModel = Mapper.Map<Video, VideoViewModel>(video);
                 viewModel.OtherCategory = categories;
-                viewModel.Rate = await this._videoRepo.GetRatingsAverageAsync(video.ID);
+                viewModel.Rate = video.RatingsAVG;
                 viewModel.Requirements = await this._videoRepo.GetRequirementsAsync(video.ID);
                 viewModels.Add(viewModel);
             }

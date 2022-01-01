@@ -54,12 +54,7 @@
 
         </div>
 
-        @*<div class="row" id="ebooks-home">
-
-        </div>*@
-
         <br />
-
     </div>
     <br />
     <br /><br />
@@ -90,25 +85,29 @@
     <div class="container">
         <div class="row ">
             <h2 id="best-sellers">Ebook | Best Sellers</h2>
-            <br/>
-            @foreach (var ebook in Model.Ebooks.Take(4))
-            { 
+            <br />
+
+            <div class="row" id="ebooks-home">
+
+            </div>
+
+            @*@foreach (var ebook in Model.Ebooks.Take(4))
+            {
                 <div class="col-md-3 ourHolder" data-item="@ebook.Category">
                     <div class="card item" id="card-ebook">
                         <img alt="Cover Foto" src="@ebook.EbookImagePath" style="height: 150px; text-align: center;" />
                         <hr />
-                        @*<img class="card-img-top" style="width:100%" src="~/img/@Url.Content(video.Thumbnail)" alt="Card image cap">*@
+                    <img class="card-img-top" style="width:100%" src="~/img/@Url.Content(video.Thumbnail)" alt="Card image cap">
                     <div class="card-body ebook-card">
-                        <p><b>@ebook.Title</b></p>
-                        <p>@ebook.Description</p>
-                        <br />
-                        <a href="@Url.Action("PublicDetails", "Ebooks", new { id = ebook.ID })">More</a>
+                            <p><b>@ebook.Title</b></p>
+                            <p>@ebook.Description</p>
+                            <br />
+                            <a href="@Url.Action("PublicDetails", "Ebooks", new { id = ebook.ID })">More</a>
+                        </div>
                     </div>
-                    </div>
-
                 </div>
-            }
-           
+            }*@
+
         </div>
     </div>
 </div>
@@ -156,10 +155,10 @@
                     if (d.master) {
                         $("#filter-tab").append(
                             `
-                                            <li>
-                                                <a class="nav-link active category-tab" aria-current="page" data-value="${d.id}">${d.name}</a>
-                                            </li>
-                                        `
+                                <li>
+                                    <a class="nav-link active category-tab" aria-current="page" data-value="${d.id}">${d.name}</a>
+                                </li>
+                            `
                         );
                     }
                 });
@@ -171,22 +170,22 @@
                 data.forEach(d => {
                     $(".plans").append(
                         `
-                                    <div class="col-md-4">
-                                        <div class="card card-plan text-center">
-                                            
-                                            <div class="card-body">
-                                                <h5 class="card-title">${d.description}</h5>
-                                                <hr />
-                                                <h4 class="price">${d.price}€<small> / year</small> </h4>
-                                                <br />
-                                                <p class="card-text"><img class="img-icon-tik" src="/img/icons-tik.png" alt="tik" /> Duration: ${d.duration} </p>
-                                                <p class="card-text"><img class="img-icon-tik" src="/img/icons-tik.png" alt="tik" /> Started: ${d.startDate} </p>
-                                                <br />
-                                                <a class="btn btn-card-plan buy-button" data-value="${d.id}" data-toggle="modal" data-target=".paymentModal">Buy</a>
-                                            </div>
-                                        </div>
+                            <div class="col-md-4">
+                                <div class="card card-plan text-center">
+
+                                    <div class="card-body">
+                                        <h5 class="card-title">${d.description}</h5>
+                                        <hr />
+                                        <h4 class="price">${d.price}€<small> / year</small> </h4>
+                                        <br />
+                                        <p class="card-text"><img class="img-icon-tik" src="/img/icons-tik.png" alt="tik" /> Duration: ${d.duration} </p>
+                                        <p class="card-text"><img class="img-icon-tik" src="/img/icons-tik.png" alt="tik" /> Started: ${d.startDate} </p>
+                                        <br />
+                                        <a class="btn btn-card-plan buy-button" data-value="${d.id}" data-toggle="modal" data-target=".paymentModal">Buy</a>
                                     </div>
-                                `
+                                </div>
+                            </div>
+                        `
                     );
                 });
             });
@@ -300,50 +299,20 @@
                 // console.log(ebook.ebookFilePath);
                 $("#ebooks-home").append(
                     `
-                                <div class="col-md-3 ourHolder" data-item="${ebook.category}">
-                                    <input type="hidden" id="category" name="category" value="${ebook.category.id}">
-                                    <input type="hidden" id="content" name="content" value="${ebook.id}">
-                                    <input type="hidden" id="content-type" name="content-type" value="ebook">
-                                    <div class="card item" id="card-ebook">
-                                        <div style="width:100%; text-align:center; margin-top: 5%;">
-                                            <img alt="Cover Foto" src="${ebook.ebookImagePath}" style="height:150px;" />
-                                            <h4 style="margin-top: 5%;">${ebook.title}</h4>
-                                            <label>${ebook.ebookFilePath}</label>
-                                        </div>
-                                        <div class="card-body text-center">
-                                            <p class="card-text">${ebook.description}</p>
-                                            <br />
-                                            <button class="btn btn-card btn-lg details">Details</button>
-                                            <button class="btn btn-card btn-lg btn-open-modal more" data-toggle="modal" data-target="#ebook-modal-fullscreen-xl">
-                                                Read
-                                            </button>
-                                        </div>
-                                    </div>
+                        <div class="col-md-3 ourHolder" data-item="${ebook.category}">
+                            <div class="card item" id="card-ebook">
+                                <img alt="Cover Foto" src="${ebook.ebookImagePath}" style="height: 150px; text-align: center;" />
+                                <hr />
+                            <!--<img class="card-img-top" style="width:100%" src="~/img/${ebook.thumbnail}" alt="Card image cap">-->
+                            <div class="card-body ebook-card">
+                                    <p><b>${ebook.title}</b></p>
+                                    <p>${ebook.description}</p>
+                                    <br />
+                                    <a href="/Ebooks/PublicDetails/${ebook.id}">More</a>
                                 </div>
-
-                                <!-- Ebook Modal -->
-                                <div class="modal modal-fullscreen-xl" id="ebook-modal-fullscreen-xl" tabindex="-1" role="dialog" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title">${ebook.title}</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="embed-responsive embed-responsive-16by9">
-                                                    <label>${ebook.ebookFilePath}</label>
-                                                    <!--<iframe class="embed-responsive-item" src="${ebook.ebookFilePath}" allowfullscreen></iframe>-->
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            `
+                            </div>
+                        </div>
+                    `
                 );
             });
         }

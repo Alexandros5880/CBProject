@@ -74,54 +74,83 @@
 
 
 
-<div class="row" style="margin-top: 50px !important; margin-bottom: 50px !important;">
+<style>
+    .lessons-top-navbar {
+        padding-top: 57px !important;
+    }
 
-    <!-- Filters SlideBar -->
-    <div class="col-md-2">
-        <ul class="nav flex-column" id="filter-slidebar">
-            <li class="nav-item">
-                <fieldset id="group1">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label class="form-check-label" for="ebooks-input">Ebooks</label>
-                            <input class="radios-selection" type="radio" id="ebooks-input" name="group1" style="margin-right: 5%;">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-check-label" for="videos-input">Videos</label>
-                            <input class="radios-selection" type="radio" id="videos-input" name="group1" checked>
-                        </div>
-                    </div>
-                </fieldset>
-            </li>
-            <li class="nav-item">
-                <input id="category-search-button" type="search" class="form-control rounded" placeholder="Search Category" aria-label="Search"
-                       aria-describedby="search-addon" />
-            </li>
-            <li class="nav-item">
-                <input id="tag-search-button" type="search" class="form-control rounded" placeholder="Search Tag" aria-label="Search"
-                       aria-describedby="search-addon" />
-            </li>
-            <li class="nav-item">
-                <input id="title-search-button" type="search" class="form-control rounded" placeholder="Search Title" aria-label="Search"
-                       aria-describedby="search-addon" />
-            </li>
-            <li class="nav-item">
-                <input id="teacher-search-button" type="search" class="form-control rounded" placeholder="Search Teacher" aria-label="Search"
-                       aria-describedby="search-addon" />
-            </li>
-            <li>
-                <button class="btn btn-search search-button">
+    .lessons-top-title {
+        margin-left: 33px;
+        margin-top: 11px;
+    }
+
+    .lessons-top-grid {
+        padding-top: 11px;
+    }
+
+    .search-top-input {
+        float: right !important;
+        margin-right: 33px;
+    }
+
+    .lessons-top-nav-filters-buttons {
+        margin-left: 33px;
+    }
+</style>
+
+
+<!-- Filters Top Nav -->
+<nav class="navbar navbar-light bg-light justify-content-between lessons-top-navbar">
+    <h2 class="lessons-top-title">Chillin and searching something...</h2>
+    <div class="row lessons-top-grid">
+        <div class="col-md-6">
+            <form class="form-inline lessons-top-nav-filters-buttons">
+                <span class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                        <span class="glyphicon glyphicon-filter"></span>
+                        Filter
+                        <span class="glyphicon glyphicon-menu-down"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#" class="ebooks-filter">Ebooks</a></li>
+                        <li><a href="#" class="videos-filter">Videos</a></li>
+                    </ul>
+                </span>
+                <span class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                        <span class="glyphicon glyphicon-sort-by-attributes"></span>
+                        Sort By
+                        <span class="glyphicon glyphicon-menu-down"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#" class="lessons-ratings">Rating</a></li>
+                        <li><a href="#" class="created-date">Created Date</a></li>
+                    </ul>
+                </span>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <form class="form-inline search-top-input">
+                <input id="lessons-top-search-input" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-search search-top-button" type='button'>
                     Search
                     <i class="fa fa-search"></i>
                 </button>
-            </li>
-        </ul>
+            </form>
+        </div>
+    </div>
+</nav>
+
+
+
+<div class="row" style="margin-top: 50px !important; margin-bottom: 50px !important;">
+    <!-- Filters SlideBar -->
+    <div class="col-md-2">
         <br />
         <div id="subscription-container">
             @Html.ActionLink("Subscribe Now", "Subscribe", "SubscriptionPackages", null, new { @class = "subscribe-button" })
         </div>
     </div>
-
     <!-- Main Content -->
     <div class="col-md-10">
         <div class="container-fluid">
@@ -140,7 +169,6 @@
             </div>
         </div>
     </div>
-
 </div>
 
 
@@ -149,137 +177,33 @@
     <script>
         $(document).ready(function () {
 
+            var ebooks = false;
+            var videos = true;
+            var lessonsRatings = true;
+            var createdDate = false;
+            var search = "";
+
             // Load Videos When Load The Page
             getVideos(function (data) {
-                console.log(data);
+                //console.log(data);
                 $(".contents").empty();
                 data.slice(0, 8).forEach(video => {
                     $(".contents").append(
                         `
-                        <div class="col-md-3 ourHolder" ">
-                            <input type="hidden" id="category" name="category" value="${video.category.id}">
-                            <input type="hidden" id="content" name="content" value="${video.id}">
-                            <input type="hidden" id="content-type" name="content-type" value="video">
-                            <div class="card item" id="card-video">
-                                <iframe class="embed-responsive-item" src="${video.videoPath}" autoplay="false" allowfullscreen></iframe>
-                                <!--<img alt="Cover Foto" src="${video.videoImagePath}" style="width:100%;" />-->
-                                <p><b>${video.title}</b></p>
-                                <div class="card-body">
-                                    <p><img class="img-icon-index" src="../assets/images/icons/icons-person.png" alt="person" /> Programming with  </p>
-                                    <p><img class="img-icon-index" src="../assets/images/icons/icon-video.png" alt="video" /> hours on-demand video  </p>
-                                    <br />
-                                    <button class="btn btn-card btn-lg details">Details</button>
-                                    <button class="btn btn-card-play btn-lg btn-open-modal more" data-toggle="modal" data-target="#modal-fullscreen-xl">
-                                        Play
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Video Modal -->
-                        <div class="modal modal-fullscreen-xl" id="modal-fullscreen-xl" tabindex="-1" role="dialog" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">${video.title}</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="${video.videoPath}" allowfullscreen></iframe>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        `
-                    );
-                });
-            });
-
-            // Search Button Clicks
-            $(document.body).on('click', 'button', function () {
-                if (this.classList.contains('search-button')) {
-                    search();
-                }
-            });
-
-            // Radio Buttons Videos Or Ebooks Changed
-            $(document.body).on('click', 'input', function () {
-                if (this.classList.contains('radios-selection')) {
-                    search();
-                }
-            });
-
-            // When Or Card Item Od Every Viedo Or Ebook Clicked
-            $(".ourHolder").on("click", function () {
-                //var categoryId = $(this).find("input[type=hidden]").val();
-                //var contentId = $(this).find("input[name=content]").val();
-                //var contentType = $(this).find("input[name=content-type]").val();
-                //redirectToCategoriesLessons(categoryId, contentId, contentType);
-            });
-
-            // When Details Buttons Clicked
-            $(document.body).on('click', 'button', function () {
-                if (this.classList.contains('details')) {
-                    var categoryId = $(this).parent().parent().parent().find("input[type=hidden]").val();
-                    var contentId = $(this).parent().parent().parent().find("input[name=content]").val();
-                    var contentType = $(this).parent().parent().parent().find("input[name=content-type]").val();
-                    redirectToGuestDetails(categoryId, contentId, contentType);
-                }
-            });
-
-            // Search Function
-            function search() {
-                var ebooks = $("#ebooks-input:checked").val() ? true : false;
-                var videos = $("#videos-input:checked").val() ? true : false;
-                var category = $("#category-search-button").val();
-                var tag = $("#tag-search-button").val();
-                var title = $("#title-search-button").val();
-                var teacher = $("#teacher-search-button").val();
-
-
-                var sendData = {
-                    Ebooks: ebooks,
-                    Videos: videos,
-                    CategoryName: category,
-                    TagName: tag,
-                    TitleName: title,
-                    TeacherName: teacher
-                };
-
-                getProductsByFilters(sendData, function (response_data) {
-                    console.log(response_data);
-                    render(response_data, videos, ebooks);
-                });
-            }
-
-            // Render UI Function
-            function render(data, videos, ebooks) {
-                if (data.videos && videos) {
-                    $(".contents").empty();
-                    data.videos.forEach(video => {
-                        $(".contents").append(
-                            `
                             <div class="col-md-3 ourHolder" ">
-                                <input type="hidden" id="category" name="category" value="${video.categoryId}">
+                                <input type="hidden" id="category" name="category" value="${video.category.id}">
                                 <input type="hidden" id="content" name="content" value="${video.id}">
                                 <input type="hidden" id="content-type" name="content-type" value="video">
                                 <div class="card item" id="card-video">
-                                    <iframe class="embed-responsive-item" src="${video.videoPath}" allowfullscreen></iframe>
+                                    <iframe class="embed-responsive-item" src="${video.videoPath}" autoplay="false" allowfullscreen></iframe>
                                     <!--<img alt="Cover Foto" src="${video.videoImagePath}" style="width:100%;" />-->
                                     <p><b>${video.title}</b></p>
                                     <div class="card-body">
-                                        <p><img class="img-icon-index" src="../assets/images/icons-person.png" alt="person" /> Programming with  </p>
-                                        <p><img class="img-icon-index" src="../assets/images/icon-video.png" alt="video" /> hours on-demand video  </p>
+                                        <p><img class="img-icon-index" src="../assets/images/icons/icons-person.png" alt="person" /> Programming with  </p>
+                                        <p><img class="img-icon-index" src="../assets/images/icons/icon-video.png" alt="video" /> hours on-demand video  </p>
                                         <br />
                                         <button class="btn btn-card btn-lg details">Details</button>
-                                        <button class="btn btn-card btn-lg btn-open-modal more" data-toggle="modal" data-target="#modal-fullscreen-xl">
+                                        <button class="btn btn-card-play btn-lg btn-open-modal more" data-toggle="modal" data-target="#modal-fullscreen-xl">
                                             Play
                                         </button>
                                     </div>
@@ -308,6 +232,146 @@
                                 </div>
                             </div>
                             `
+                    );
+                });
+            });
+
+            // Search Button Top Clicks
+            $(document.body).on('click', 'button', function () {
+                if (this.classList.contains('search-top-button')) {
+                    var search = $("#lessons-top-search-input").val();
+                    searchTop(ebooks, videos, lessonsRatings, createdDate, search);
+                }
+            });
+
+            // Filter By Ebooks
+            $(document.body).on('click', 'a', function () {
+                if (this.classList.contains('ebooks-filter')) {
+                    ebooks = true;
+                    videos = false;
+                    $(".search-top-button").click();
+                }
+            });
+
+            // Filter By Videos
+            $(document.body).on('click', 'a', function () {
+                if (this.classList.contains('videos-filter')) {
+                    ebooks = false;
+                    videos = true;
+                    $(".search-top-button").click();
+                }
+            });
+
+            // Sort By Lessons Rating
+            $(document.body).on('click', 'a', function () {
+                if (this.classList.contains('lessons-ratings')) {
+                    lessonsRatings = true;
+                    createdDate = false;
+                    $(".search-top-button").click();
+                }
+            });
+
+            // Sort By Created Date
+            $(document.body).on('click', 'a', function () {
+                if (this.classList.contains('created-date')) {
+                    lessonsRatings = false;
+                    createdDate = true;
+                    $(".search-top-button").click();
+                }
+            });
+
+            // Search
+            function searchTop(ebooks, videos, lessonsRatings, createdDate, search) {
+                var sendData = {
+                    ebooks: ebooks,
+                    videos: videos,
+                    lessonsRatings: lessonsRatings,
+                    createdDate: createdDate,
+                    search: search
+                };
+                getProductsByFilters(sendData, function (response_data) {
+                    render(response_data, videos, ebooks);
+                });
+            };
+
+
+
+
+
+
+
+
+
+            // When Or Card Item Od Every Viedo Or Ebook Clicked
+            $(".ourHolder").on("click", function () {
+                //var categoryId = $(this).find("input[type=hidden]").val();
+                //var contentId = $(this).find("input[name=content]").val();
+                //var contentType = $(this).find("input[name=content-type]").val();
+                //redirectToCategoriesLessons(categoryId, contentId, contentType);
+            });
+
+            // When Details Buttons Clicked
+            $(document.body).on('click', 'button', function () {
+                if (this.classList.contains('details')) {
+                    var categoryId = $(this).parent().parent().parent().find("input[type=hidden]").val();
+                    var contentId = $(this).parent().parent().parent().find("input[name=content]").val();
+                    var contentType = $(this).parent().parent().parent().find("input[name=content-type]").val();
+                    redirectToGuestDetails(categoryId, contentId, contentType);
+                }
+            });
+
+
+
+
+            // Render UI Function
+            function render(data, videos, ebooks) {
+                if (data.videos && videos) {
+                    $(".contents").empty();
+                    data.videos.forEach(video => {
+                        $(".contents").append(
+                            `
+                                <div class="col-md-3 ourHolder" ">
+                                    <input type="hidden" id="category" name="category" value="${video.categoryId}">
+                                    <input type="hidden" id="content" name="content" value="${video.id}">
+                                    <input type="hidden" id="content-type" name="content-type" value="video">
+                                    <div class="card item" id="card-video">
+                                        <iframe class="embed-responsive-item" src="${video.videoPath}" allowfullscreen></iframe>
+                                        <!--<img alt="Cover Foto" src="${video.videoImagePath}" style="width:100%;" />-->
+                                        <p><b>${video.title}</b></p>
+                                        <div class="card-body">
+                                            <p><img class="img-icon-index" src="../assets/images/icons/icons-person.png" alt="person" /> Programming with  </p>
+                                            <p><img class="img-icon-index" src="../assets/images/icons/icon-video.png" alt="video" /> hours on-demand video  </p>
+                                            <br />
+                                            <button class="btn btn-card btn-lg details">Details</button>
+                                            <button class="btn btn-card btn-lg btn-open-modal more" data-toggle="modal" data-target="#modal-fullscreen-xl">
+                                                Play
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Video Modal -->
+                                <div class="modal modal-fullscreen-xl" id="modal-fullscreen-xl" tabindex="-1" role="dialog" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">${video.title}</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="embed-responsive embed-responsive-16by9">
+                                                    <iframe class="embed-responsive-item" src="${video.videoPath}" allowfullscreen></iframe>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                `
                         );
                     });
                 }
@@ -316,48 +380,48 @@
                     data.ebooks.forEach(ebook => {
                         $(".contents").append(
                             `
-                            <div class="col-md-4 ourHolder" id="ourHolder">
-                                <input type="hidden" id="category" name="category" value="${ebook.categoryId}">
-                                <input type="hidden" id="content" name="content" value="${ebook.id}">
-                                <input type="hidden" id="content-type" name="content-type" value="ebook">
-                                <div class="card item" id="card-video">
-                                    <div style="width:100%; text-align:center; margin-top: 5%;">
-                                        <img alt="Cover Foto" src="${ebook.ebookImagePath}" style="height:150px;" />
-                                        <h4 style="margin-top: 5%;">${ebook.title}</h4>
-                                    </div>
-                                    <div class="card-body text-center">
-                                        <p class="card-text"> ${ebook.description} </p>
-                                        <p class="card-text"> ${ebook.title}  </p>
-                                        <br />
-                                        <button class="btn btn-card btn-lg details">Details</button>
-                                        <button class="btn btn-card btn-lg btn-open-modal" data-toggle="modal" data-target="#modal-fullscreen-xl">
-                                            Read
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Ebook Modal -->
-                            <div class="modal modal-fullscreen-xl" id="modal-fullscreen-xl" tabindex="-1" role="dialog" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">${ebook.title}</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
+                                <div class="col-md-4 ourHolder" id="ourHolder">
+                                    <input type="hidden" id="category" name="category" value="${ebook.categoryId}">
+                                    <input type="hidden" id="content" name="content" value="${ebook.id}">
+                                    <input type="hidden" id="content-type" name="content-type" value="ebook">
+                                    <div class="card item" id="card-video">
+                                        <div style="width:100%; text-align:center; margin-top: 5%;">
+                                            <img alt="Cover Foto" src="${ebook.ebookImagePath}" style="height:150px;" />
+                                            <h4 style="margin-top: 5%;">${ebook.title}</h4>
+                                        </div>
+                                        <div class="card-body text-center">
+                                            <p class="card-text"> ${ebook.description} </p>
+                                            <p class="card-text"> ${ebook.title}  </p>
+                                            <br />
+                                            <button class="btn btn-card btn-lg details">Details</button>
+                                            <button class="btn btn-card btn-lg btn-open-modal" data-toggle="modal" data-target="#modal-fullscreen-xl">
+                                                Read
                                             </button>
                                         </div>
-                                        <div class="modal-body">
-                                            <div class="embed-responsive embed-responsive-16by9">
-                                                <embed src='${ebook.ebookFilePath} width:"300px;" height="300px" />
+                                    </div>
+                                </div>
+                                <!-- Ebook Modal -->
+                                <div class="modal modal-fullscreen-xl" id="modal-fullscreen-xl" tabindex="-1" role="dialog" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">${ebook.title}</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
                                             </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <div class="modal-body">
+                                                <div class="embed-responsive embed-responsive-16by9">
+                                                    <embed src='${ebook.ebookFilePath} width:"300px;" height="300px" />
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            `
+                                `
                         );
                     });
                 }

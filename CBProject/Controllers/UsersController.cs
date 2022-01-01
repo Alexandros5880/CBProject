@@ -86,7 +86,7 @@ namespace CBProject.Controllers
                     string FileName = Path.GetFileNameWithoutExtension(model.ImageFile.FileName);
                     string FileExtension = Path.GetExtension(model.ImageFile.FileName);
                     FileName = FileName.Trim() + FileExtension;
-                    model.ImagePath = (StaticImfo.UsersImagesPath + user.Id + FileName).Trim();
+                    model.ImagePath = (StaticImfo.UsersImagesPath + model.FirstName + model.LastName + "_" + FileName).Trim();
                     model.ImageFile.SaveAs(Server.MapPath(model.ImagePath));
                 }
                 // Save CV File
@@ -96,7 +96,7 @@ namespace CBProject.Controllers
                     string FileName = Path.GetFileNameWithoutExtension(model.CVFile.FileName);
                     string FileExtension = Path.GetExtension(model.CVFile.FileName);
                     FileName = FileName.Trim() + FileExtension;
-                    model.CVPath = (StaticImfo.CVPath + user.Id + FileName).Trim();
+                    model.CVPath = (StaticImfo.CVPath + model.FirstName + model.LastName + "_" + FileName).Trim();
                     model.CVFile.SaveAs(Server.MapPath(model.CVPath));
                 }
                 CBProject.HelperClasses.EmailService test = new HelperClasses.EmailService();
@@ -137,7 +137,7 @@ namespace CBProject.Controllers
                     string FileName = Path.GetFileNameWithoutExtension(model.ImageFile.FileName);
                     string FileExtension = Path.GetExtension(model.ImageFile.FileName);
                     FileName = FileName.Trim() + FileExtension;
-                    model.ImagePath = (StaticImfo.UsersImagesPath + model.Id + FileName).Trim();
+                    model.ImagePath = (StaticImfo.UsersImagesPath + model.FirstName + model.LastName + "_" + FileName).Trim();
                     model.ImageFile.SaveAs(Server.MapPath(model.ImagePath));
                     imgPath = true;
                 }
@@ -149,7 +149,7 @@ namespace CBProject.Controllers
                     string FileName = Path.GetFileNameWithoutExtension(model.CVFile.FileName);
                     string FileExtension = Path.GetExtension(model.CVFile.FileName);
                     FileName = FileName.Trim() + FileExtension;
-                    model.CVPath = (StaticImfo.CVPath + model.Id + FileName).Trim();
+                    model.CVPath = (StaticImfo.CVPath + model.FirstName + model.LastName + "_" + FileName).Trim();
                     model.CVFile.SaveAs(Server.MapPath(model.CVPath));
                     cvPath = true;
                 }

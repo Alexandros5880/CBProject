@@ -7,11 +7,8 @@ namespace CBProject.Models.EntityModels
 {
     public class Ebook
     {
-        [Key]
         public int ID { get; set; }
-        [Required]
         public string Title{ get; set; }
-        [Required]
         public string Description { get; set; }
         public string Thumbnail { get; set; }
         public string EbookImagePath { get; set; }
@@ -26,9 +23,13 @@ namespace CBProject.Models.EntityModels
         [ForeignKey("Category")]
         public int CategoryId { get; set; }  
         public Category Category { get; set; }
+        public float RatingsAVG { get; set; }
         public ICollection<TagToEbook> TagsToEbooks { get; set; }
         public ICollection<RatingToEbook> RatingsToEbooks { get; set; }
         public ICollection<ReviewToEbook> ReviewsToEbooks { get; set; }
         public ICollection<RequirementToEbook> RequirementsToEbooks { get; set; }
     }
 }
+
+
+// TODO: Create API Ebook Controller

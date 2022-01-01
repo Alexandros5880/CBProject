@@ -1,20 +1,26 @@
-﻿using CBProject.Models;
+﻿using CBProject.HelperClasses.Interfaces;
 using CBProject.Models.EntityModels;
-using System.Data.Entity;
+using CBProject.Repositories;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace CBProject.Controllers
 {
+    [Authorize]
     public class OrdersController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private readonly OrdersRepository _ordersRepository;
 
+        public OrdersController(IUnitOfWork unitOfWork)
+        {
+            this._ordersRepository = unitOfWork.Orders;
+        }
         // GET: Orders
         public async Task<ActionResult> Index()
         {
-            return View(await db.Orders.ToListAsync());
+            var orders = await this._ordersRepository.GetAllAsync();
+            return View(orders);
         }
 
         // GET: Orders/Details/5
@@ -24,7 +30,7 @@ namespace CBProject.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Order order = await db.Orders.FindAsync(id);
+            Order order = await this._ordersRepository.GetAsync(id);
             if (order == null)
             {
                 return HttpNotFound();
@@ -43,12 +49,12 @@ namespace CBProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "ID,IsClose,CreatedDate,LastUpdatedDate")] Order order)
+        public async Task<ActionResult> Create(Order order)
         {
             if (ModelState.IsValid)
             {
-                db.Orders.Add(order);
-                await db.SaveChangesAsync();
+                this._ordersRepository.Add(order);
+                await this._ordersRepository.SaveAsync();
                 return RedirectToAction("Index");
             }
 
@@ -62,7 +68,7 @@ namespace CBProject.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Order order = await db.Orders.FindAsync(id);
+            Order order = await this._ordersRepository.GetAsync(id);
             if (order == null)
             {
                 return HttpNotFound();
@@ -75,12 +81,12 @@ namespace CBProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "ID,IsClose,CreatedDate,LastUpdatedDate")] Order order)
+        public async Task<ActionResult> Edit(Order order)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(order).State = EntityState.Modified;
-                await db.SaveChangesAsync();
+                this._ordersRepository.Update(order);
+                await this._ordersRepository.SaveAsync();
                 return RedirectToAction("Index");
             }
             return View(order);
@@ -93,7 +99,7 @@ namespace CBProject.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Order order = await db.Orders.FindAsync(id);
+            Order order = await this._ordersRepository.GetAsync(id);
             if (order == null)
             {
                 return HttpNotFound();
@@ -106,9 +112,8 @@ namespace CBProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Order order = await db.Orders.FindAsync(id);
-            db.Orders.Remove(order);
-            await db.SaveChangesAsync();
+            this._ordersRepository.Delete(id);
+            await this._ordersRepository.SaveAsync();
             return RedirectToAction("Index");
         }
 
@@ -116,7 +121,7 @@ namespace CBProject.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                this._ordersRepository.Dispose();
             }
             base.Dispose(disposing);
         }

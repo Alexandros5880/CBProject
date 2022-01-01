@@ -25,6 +25,7 @@ namespace CBProject.App_Start
             builder.RegisterType<UserStore<ApplicationUser>>().As<IUserStore<ApplicationUser>>();
             builder.RegisterType<RoleStore<IdentityRole>>().As<IRoleStore<IdentityRole, string>>();
             builder.RegisterType<ApplicationDbContext>().As<IApplicationDbContext>();
+            builder.RegisterType<CreateData>();
 
             var container = builder.Build(); // Container with all my Objects for dependency Injection
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));

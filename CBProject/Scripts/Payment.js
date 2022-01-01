@@ -2,8 +2,6 @@
 
 // PayPal
 function payPayPal(user, package) {
-    // Create Order
-    createNewOrder(user, package);
     // Create PayPall Function
     function loadPayPalScript(url, callback) {
         const el = document.querySelector(`script[src="${url}"]`);
@@ -31,22 +29,85 @@ function payPayPal(user, package) {
             // On Payment Done
             onApprove(data, actions) {
                 return actions.order.capture().then(details => {
-                    // Show a success message to the buyer
-                    alert(`Transaction completed by ${details.payer.name.given_name}`);
-                    // TODO: 2). Get The Last Orde Of This User, Update it to CLOSE, create Payment ans connect this user with the subscription package
-                    console.log(details.payer.email);
+                    var order = JSON.parse(localStorage.getItem('order'));
+                    localStorage.removeItem('order');
+                    order.isClose = true;
+                    var myorder = {
+                        id: order.id,
+                        userId: order.userId,
+                        subscriptionId: order.subscriptionPackageId,
+                        isClose: order.isClose,
+                        isCanceled: order.isCanceled,
+                        isCanceledByError: order.isCanceledByError
+                    }
+                    updateOrder(myorder, function (responseOrder) {
+                        var payment = {
+                            userId: responseOrder.userId,
+                            price: responseOrder.price,
+                            tax: 24.00,
+                            discount: 0.33
+                        };
+                        createPayment(payment, function (responsePayment) {
+                            alert("Payment OK");
+                        });
+                    });
                 });
             },
 
             // On Payment Canceled
             onCancel: function (data) {
-                alert("You Cansele your Order.");
+                var order = JSON.parse(localStorage.getItem('order'));
+                localStorage.removeItem('order');
+                //deleteOrder(order.id, function (response) {
+                //    console.log("Delete Ok.");
+                //});
+                order.isCanceled = true;
+                console.log("Before Update Order");
+                console.log(order);
+                var myorder = {
+                    id: order.id,
+                    userId: order.userId,
+                    subscriptionId: order.subscriptionPackageId,
+                    isClose: order.isClose,
+                    isCanceled: order.isCanceled,
+                    isCanceledByError: order.isCanceledByError
+                }
+                //console.log("Update Order");
+                updateOrder(myorder, function (responseOrder) {
+                    //console.log("Order Canceled.");
+                });
+                //window.location.href = "/SubscriptionPackages/Subscribe";
             },
 
             // On Transactions Error
             onError: function (err) {
-                window.location.href = "/SubscriptionPackages/Subscribe";
-            }
+                var order = JSON.parse(localStorage.getItem('order'));
+                localStorage.removeItem('order');
+                //deleteOrder(order.id, function (response) {
+                //    console.log("Delete Ok.");
+                //});
+                order.isCanseledByError = true;
+                var myorder = {
+                    id: order.id,
+                    userId: order.userId,
+                    subscriptionId: order.subscriptionPackageId,
+                    isClose: order.isClose,
+                    isCanceled: order.isCanceled,
+                    isCanceledByError: order.isCanceledByError
+                }
+                updateOrder(myorder, function (responseOrder) {
+                    //console.log("Order Canceled By Error.");
+                });
+                //window.location.href = "/SubscriptionPackages/Subscribe";
+            },
+
+            onInit: function (data, actions) {
+                
+            },
+
+            onClick: function (data, actions) {
+                createNewOrder(user, package);
+            },
 
         }).render('.payment-window');
     });
@@ -57,8 +118,9 @@ function payPayPal(user, package) {
 
 // Create Order
 function createNewOrder(user, package) {
-    // TODO: 1). Create new Order here with this user and this subscription package
-    console.log(user);
-    console.log(package);
+    addNewOrder(user, package, function (order) {
+        //console.log(order);
+        localStorage.setItem('order', JSON.stringify(order));
+    });
 }
 

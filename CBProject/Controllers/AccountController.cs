@@ -136,7 +136,8 @@ namespace CBProject.Controllers
                     case SignInStatus.Success:
                         if (access == RoleLevel.FULL) 
                         {
-                            return RedirectToAction("Index", "Users");
+                            //return RedirectToAction("Index", "Users");
+                            return RedirectToAction("Index", "Home");
                         } 
                         else if (access == RoleLevel.PLUSSFULL)
                         {
@@ -230,63 +231,46 @@ namespace CBProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model, HttpPostedFileBase CVFile, HttpPostedFileBase ImageFile)
         {
-            // Save Image File
-            if (ImageFile != null)
+            if (model.TermsAndConditionsAcception)
             {
-                model.ImageFile = ImageFile;
-                string FileName = Path.GetFileNameWithoutExtension(model.ImageFile.FileName);
-                string FileExtension = Path.GetExtension(model.ImageFile.FileName);
-                FileName = FileName.Trim() + FileExtension;
-                model.CVPath = Server.MapPath(StaticImfo.UsersImagesPath + model.FirstName + " " + model.LastName + FileName);
-                model.ImageFile.SaveAs(model.CVPath);
-            }
-            // Save CV File
-            if (CVFile != null)
-            {
-                model.CVFile = CVFile;
-                string FileName = Path.GetFileNameWithoutExtension(model.CVFile.FileName);
-                string FileExtension = Path.GetExtension(model.CVFile.FileName);
-                FileName = FileName.Trim() + FileExtension;
-                model.CVPath = Server.MapPath(StaticImfo.CVPath + model.FirstName + " " + model.LastName + FileName);
-                model.CVFile.SaveAs(model.CVPath);
-            }
-            var user = Mapper.Map<RegisterViewModel, ApplicationUser>(model);
-            user.UserName = user.Email;
-            var result = await UserManager.CreateAsync(user, model.Password);
-
-            if (result.Succeeded)
-            {
-                await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-
-                var visitorsRole = await this._rolesRepo.GetByNameAsync("Guest");
-                this._usersRepo.AddRole(user, visitorsRole);
-
-                // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                // Send an email with this link
-                // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-                if (User.IsInRole("Admin"))
+                // Save Image File
+                if (ImageFile != null)
                 {
-                    return RedirectToAction("Index", "Users");
+                    model.ImageFile = ImageFile;
+                    string FileName = Path.GetFileNameWithoutExtension(model.ImageFile.FileName);
+                    string FileExtension = Path.GetExtension(model.ImageFile.FileName);
+                    FileName = FileName.Trim() + FileExtension;
+                    model.ImagePath = (StaticImfo.UsersImagesPath + model.FirstName + model.LastName + "_" + FileName).Trim();
+                    model.ImageFile.SaveAs(Server.MapPath(model.ImagePath));
                 }
-                else if (UserManager.IsInRole(user.Id, "Teacher"))
+                // Save CV File
+                if (CVFile != null)
                 {
-                    return RedirectToAction("Index", "Reviews");
+                    model.CVFile = CVFile;
+                    string FileName = Path.GetFileNameWithoutExtension(model.CVFile.FileName);
+                    string FileExtension = Path.GetExtension(model.CVFile.FileName);
+                    FileName = FileName.Trim() + FileExtension;
+                    model.CVPath = (StaticImfo.CVPath + model.FirstName + model.LastName + "_" + FileName).Trim();
+                    model.CVFile.SaveAs(Server.MapPath(model.CVPath));
                 }
-                else if (UserManager.IsInRole(user.Id, "Student"))
+                var user = Mapper.Map<RegisterViewModel, ApplicationUser>(model);
+                user.UserName = user.Email;
+                var result = await UserManager.CreateAsync(user, model.Password);
+
+                if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Videos");
-                }
-                else if (UserManager.IsInRole(user.Id, "Guest"))
-                {
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    var visitorsRole = await this._rolesRepo.GetByNameAsync("Guest");
+                    this._usersRepo.AddRole(user, visitorsRole);
                     return RedirectToAction("Index", "Home");
                 }
+                AddErrors(result);
+                return View(model);
             }
-            AddErrors(result);
-            // If we got this far, something failed, redisplay form
-            return View(model);
+            else
+            {
+                return View(model);
+            }
         }
 
         //

@@ -36,17 +36,18 @@ namespace CBProject
                       "~/Content/About.css",
                       "~/Content/Details.css",
                       "~/Content/Lessons.css",
-                      "~/Content/Subscribe.css"
+                      "~/Content/Subscribe.css",
+                      "~/Content/Datatables/css/dataTables.bootstrap.css"
                       ));
 
 
 
 
-            //bundles.Add(new StyleBundle("~/Scripts/DataTables").Include(
-            //    "~/Scripts/DataTables*",
-            //    "~/Scripts/Datatables/jquery.dataTables.js",
-            //    "~/Scripts/Datatables/dataTables.bootstrap.js"
-            //    ));
+            bundles.Add(new StyleBundle("~/Scripts/DataTables").Include(
+                "~/Scripts/DataTables*",
+                "~/Scripts/Datatables/jquery.dataTables.js",
+                "~/Scripts/Datatables/dataTables.bootstrap.js"
+                ));
 
             bundles.Add(new Bundle("~/Scripts/DataTables_Videos.js").Include(
                       "~/Scripts/DataTables_Videos.js"

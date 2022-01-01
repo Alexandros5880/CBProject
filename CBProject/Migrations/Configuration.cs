@@ -12,17 +12,17 @@ namespace CBProject.Migrations
 
         protected override void Seed(CBProject.Models.ApplicationDbContext context)
         {
-            CreateData.CreateUsersAndRoles(context);
-            CreateData.CreateCategories(context);
-            CreateData.CreateContentTypes(context);
-            CreateData.CreatePayments(context);
-            CreateData.CreateSubscriptionPackages(context);
-            CreateData.CreateEbook(context);
-            CreateData.CreateVideo(context);
-            CreateData.CreateTags(context);
-            CreateData.CreateRating(context);
-            CreateData.CreateReview(context);
-            CreateData.CreateRequiremenets(context);
+            var createData = new CreateData(context);
+            createData.CreateUsersAndRoles();
+            createData.CreateCategories();
+            createData.CreateSubscriptionPackages();
+            createData.CreateEbook();
+            createData.CreateVideo();
+            createData.CreateTags();
+            createData.CreateRating();
+            createData.CreateReview();
+            createData.CreateRequiremenets();
+            //createData.Dispose();
         }
     }
 }

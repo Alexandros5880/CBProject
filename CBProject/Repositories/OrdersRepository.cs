@@ -48,21 +48,21 @@ namespace CBProject.Repositories
                 throw new ArgumentNullException(nameof(id));
             return this._context.Orders
                         .Include(o => o.User)
-                        .Include(o => o.SubscriptionPackage)
+                        .Include(o => o.Package)
                         .FirstOrDefault(o => o.ID == id);
         }
         public ICollection<Order> GetAll()
         {
             return this._context.Orders
                         .Include(o => o.User)
-                        .Include(o => o.SubscriptionPackage)
+                        .Include(o => o.Package)
                         .ToList();
         }
         public async Task<ICollection<Order>> GetAllAsync()
         {
             return await this._context.Orders
                                 .Include(o => o.User)
-                                .Include(o => o.SubscriptionPackage)
+                                .Include(o => o.Package)
                                 .ToListAsync();
         }
         public ICollection<Order> GetAllEmpty()
@@ -81,7 +81,7 @@ namespace CBProject.Repositories
         {
             return await this._context.Orders
                         .Include(o => o.User)
-                        .Include(o => o.SubscriptionPackage)
+                        .Include(o => o.Package)
                         .FirstOrDefaultAsync(o => o.ID == id);
         }
         public Order GetEmpty(int? id)
@@ -107,6 +107,13 @@ namespace CBProject.Repositories
             if (obj == null)
                 throw new ArgumentNullException(nameof(obj));
             this._context.Entry(obj).State = EntityState.Modified;
+        }
+        public async Task<Order> GetAsync(string userId, int packageId)
+        {
+            return await this._context.Orders
+                        .Include(o => o.User)
+                        .Include(o => o.Package)
+                        .FirstOrDefaultAsync(o => o.UserId.Equals(userId) && o.SubscriptionPackageId == packageId);
         }
         protected virtual void Dispose(bool disposing)
         {

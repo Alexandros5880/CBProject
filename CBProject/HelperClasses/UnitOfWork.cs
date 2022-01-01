@@ -14,11 +14,10 @@ namespace CBProject.HelperClasses
         public ApplicationDbContext Context { get; protected set; }
         public RoleStore<ApplicationRole> RoleStore { get; protected set; }
         public RoleManager<ApplicationRole> RoleManager { get; protected set; }
-        public UserStore<ApplicationUser> UserStore { get; protected set; }
-        public UserManager<ApplicationUser> UserManager { get; protected set; }
+        public UserStore<ApplicationUser, ApplicationRole, string, IdentityUserLogin, IdentityUserRole, IdentityUserClaim> UserStore { get; protected set; }
+        public ApplicationUserManager UserManager { get; protected set; }
         public CategoriesRepository Categories { get; protected set; }
         public CategoryToCategoryRepository CategoryToCategory { get; protected set; }
-        public ContentTypeRepository ContentTypes { get; protected set; }
         public VideosRepository Videos { get; protected set; }
         public RatingsRepository Ratings { get; protected set; }
         public ReviewsRepository Reviews { get; protected set; }
@@ -28,16 +27,23 @@ namespace CBProject.HelperClasses
         public PaymentsRepository Payments { get; protected set; }
         public OrdersRepository Orders { get; protected set; }
         public RequirementsRepository Requirements { get; protected set; }
+        public RatingsToEbooksRepository RatingsToEbooks { get; protected set; }
+        public RatingsToVideosRepository RatingsToVideos { get; protected set; }
+        public RequirementsToEbooksRepository RequirementsToEbooks { get; protected set; }
+        public RequirementsToVideosRepository RequirementsToVideos { get; protected set; }
+        public ReviewsToEbooksRepository ReviewsToEbooks { get; protected set; }
+        public ReviewsToVideosRepository ReviewsToVideos { get; protected set; }
+        public TagsToEbooksRepository TagsToEbooks { get; protected set; }
+        public TagsToVideosRepository TagsToVideos { get; protected set; }
         public UnitOfWork(IApplicationDbContext context)
         {
             this.Context = (ApplicationDbContext)context;
             this.RoleStore = new RoleStore<ApplicationRole>(this.Context);
-            this.UserStore = new UserStore<ApplicationUser>(this.Context);
+            this.UserStore = new UserStore<ApplicationUser, ApplicationRole, string, IdentityUserLogin, IdentityUserRole, IdentityUserClaim>(this.Context);
             this.RoleManager = new RoleManager<ApplicationRole>(this.RoleStore);
-            this.UserManager = new UserManager<ApplicationUser>(this.UserStore);
+            this.UserManager = new ApplicationUserManager(this.UserStore);
             this.CategoryToCategory = new CategoryToCategoryRepository(this);
             this.Categories = new CategoriesRepository(this);
-            this.ContentTypes = new ContentTypeRepository(this);
             this.Videos = new VideosRepository(this);
             this.Ratings = new RatingsRepository(this);
             this.Reviews = new ReviewsRepository(this);
@@ -47,6 +53,14 @@ namespace CBProject.HelperClasses
             this.Payments = new PaymentsRepository(this);
             this.Orders = new OrdersRepository(this);
             this.Requirements = new RequirementsRepository(this);
+            this.RatingsToEbooks = new RatingsToEbooksRepository(this);
+            this.RatingsToVideos = new RatingsToVideosRepository(this);
+            this.RequirementsToEbooks = new RequirementsToEbooksRepository(this);
+            this.RequirementsToVideos = new RequirementsToVideosRepository(this);
+            this.ReviewsToEbooks = new ReviewsToEbooksRepository(this);
+            this.ReviewsToVideos = new ReviewsToVideosRepository(this);
+            this.TagsToEbooks = new TagsToEbooksRepository(this);
+            this.TagsToVideos = new TagsToVideosRepository(this);
         }
         protected virtual void Dispose(bool disposing)
         {
@@ -61,7 +75,6 @@ namespace CBProject.HelperClasses
                     this.UserManager.Dispose();
                     this.Categories.Dispose();
                     this.CategoryToCategory.Dispose();
-                    this.ContentTypes.Dispose();
                     this.Videos.Dispose();
                     this.Ratings.Dispose();
                     this.Reviews.Dispose();
@@ -70,6 +83,14 @@ namespace CBProject.HelperClasses
                     this.Payments.Dispose();
                     this.Orders.Dispose();
                     this.Requirements.Dispose();
+                    this.RatingsToEbooks.Dispose();
+                    this.RatingsToVideos.Dispose();
+                    this.RequirementsToEbooks.Dispose();
+                    this.RequirementsToVideos.Dispose();
+                    this.ReviewsToEbooks.Dispose();
+                    this.ReviewsToVideos.Dispose();
+                    this.TagsToEbooks.Dispose();
+                    this.TagsToVideos.Dispose();
                 }
                 disposedValue = true;
             }

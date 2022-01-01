@@ -222,10 +222,28 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\API\CategoryController.cs" />
+    <Compile Include="Controllers\API\CategoryToCategoryController.cs" />
+    <Compile Include="Controllers\API\OrderController.cs" />
+    <Compile Include="Controllers\API\PaymentController.cs" />
     <Compile Include="Controllers\API\ProductsController.cs" />
+    <Compile Include="Controllers\API\RatingController.cs" />
+    <Compile Include="Controllers\API\RatingToEbookController.cs" />
+    <Compile Include="Controllers\API\RatingToVideoController.cs" />
+    <Compile Include="Controllers\API\RequirementController.cs" />
+    <Compile Include="Controllers\API\RequirementToEbookController.cs" />
+    <Compile Include="Controllers\API\RequirementToVideoController.cs" />
+    <Compile Include="Controllers\API\ReviewController.cs" />
+    <Compile Include="Controllers\API\ReviewToEbookController.cs" />
+    <Compile Include="Controllers\API\ReviewToVideoController.cs" />
+    <Compile Include="Controllers\API\SubscriptionPackageController.cs" />
+    <Compile Include="Controllers\API\TagController.cs" />
+    <Compile Include="Controllers\API\TagToEbookController.cs" />
+    <Compile Include="Controllers\API\TagToVideoController.cs" />
+    <Compile Include="Controllers\API\UserController.cs" />
+    <Compile Include="Controllers\API\VideoController.cs" />
     <Compile Include="Controllers\EbooksController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
-    <Compile Include="Controllers\ContentTypesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
@@ -241,21 +259,21 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="HelperClasses\Compares\RatingCompare.cs" />
     <Compile Include="HelperClasses\CreateData.cs" />
     <Compile Include="HelperClasses\EmailService.cs" />
     <Compile Include="HelperClasses\Pagination.cs" />
-    <Compile Include="HelperClasses\UnitOfWork.cs" />
     <Compile Include="HelperClasses\Interfaces\IUnitOfWork.cs" />
     <Compile Include="HelperClasses\StaticImfo.cs" />
-    <Compile Include="Migrations\202112291645591_Initial.cs" />
-    <Compile Include="Migrations\202112291645591_Initial.Designer.cs">
-      <DependentUpon>202112291645591_Initial.cs</DependentUpon>
+    <Compile Include="HelperClasses\UnitOfWork.cs" />
+    <Compile Include="Migrations\202201011737324_Initial.cs" />
+    <Compile Include="Migrations\202201011737324_Initial.Designer.cs">
+      <DependentUpon>202201011737324_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\EntityModels\Category.cs" />
     <Compile Include="Models\EntityModels\CategoryToCategory.cs" />
-    <Compile Include="Models\EntityModels\ContentType.cs" />
     <Compile Include="Models\EntityModels\Ebook.cs" />
     <Compile Include="Models\EntityModels\Order.cs" />
     <Compile Include="Models\EntityModels\Payment.cs" />
@@ -270,6 +288,8 @@
     <Compile Include="Models\EntityModels\TagToEbook.cs" />
     <Compile Include="Models\EntityModels\TagToVideo.cs" />
     <Compile Include="Models\HelperModels\AddRequirement.cs" />
+    <Compile Include="Models\HelperModels\CreatePaymentAPI.cs" />
+    <Compile Include="Models\HelperModels\OrderApiModel.cs" />
     <Compile Include="Models\HelperModels\Products.cs" />
     <Compile Include="Models\Interfaces\IApplicationDbContext.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -282,7 +302,7 @@
     <Compile Include="Models\ViewModels\CategoryViewModel.cs" />
     <Compile Include="Models\ViewModels\ContentTypeViewModel.cs" />
     <Compile Include="Models\ViewModels\EbookViewModel.cs" />
-    <Compile Include="Models\HelperModels\FilterPageViewModel.cs" />
+    <Compile Include="Models\HelperModels\FilterParams.cs" />
     <Compile Include="Models\ViewModels\HomeViewModel.cs" />
     <Compile Include="Models\ViewModels\IdentityRoleViewModel.cs" />
     <Compile Include="Models\ViewModels\PaymentViewModel.cs" />
@@ -294,7 +314,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\CategoriesRepository.cs" />
     <Compile Include="Repositories\CategoryToCategoryRepository.cs" />
-    <Compile Include="Repositories\ContentTypeRepository.cs" />
     <Compile Include="Repositories\EbooksRepository.cs" />
     <Compile Include="Repositories\Interfaces\IRepository.cs" />
     <Compile Include="Repositories\IdentityRepos\Interfaces\IRolesRepo.cs" />
@@ -304,10 +323,18 @@
     <Compile Include="Repositories\OrdersRepository.cs" />
     <Compile Include="Repositories\PaymentsRepository.cs" />
     <Compile Include="Repositories\RatingsRepository.cs" />
+    <Compile Include="Repositories\RatingsToEbooksRepository.cs" />
+    <Compile Include="Repositories\RatingsToVideosRepository.cs" />
     <Compile Include="Repositories\RequirementsRepository.cs" />
+    <Compile Include="Repositories\RequirementsToEbooksRepository.cs" />
+    <Compile Include="Repositories\RequirementsToVideosRepository.cs" />
     <Compile Include="Repositories\ReviewsRepository.cs" />
+    <Compile Include="Repositories\ReviewsToEbooksRepository.cs" />
+    <Compile Include="Repositories\ReviewsToVideosRepository.cs" />
     <Compile Include="Repositories\SubscriptionPackageRepository.cs" />
     <Compile Include="Repositories\TagsRepository.cs" />
+    <Compile Include="Repositories\TagsToEbooksRepository.cs" />
+    <Compile Include="Repositories\TagsToVideosRepository.cs" />
     <Compile Include="Repositories\VideosRepository.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -1804,11 +1831,6 @@
     <Content Include="Views\Categories\Details.cshtml" />
     <Content Include="Views\Categories\Edit.cshtml" />
     <Content Include="Views\Categories\Index.cshtml" />
-    <Content Include="Views\ContentTypes\Create.cshtml" />
-    <Content Include="Views\ContentTypes\Delete.cshtml" />
-    <Content Include="Views\ContentTypes\Details.cshtml" />
-    <Content Include="Views\ContentTypes\Edit.cshtml" />
-    <Content Include="Views\ContentTypes\Index.cshtml" />
     <Content Include="Views\SubscriptionPackages\Create.cshtml" />
     <Content Include="Views\SubscriptionPackages\Delete.cshtml" />
     <Content Include="Views\SubscriptionPackages\Details.cshtml" />
@@ -1870,17 +1892,17 @@
     <Content Include="Views\Requirements\Details.cshtml" />
     <Content Include="Views\Requirements\Edit.cshtml" />
     <Content Include="Views\Requirements\Index.cshtml" />
-    <Content Include="Views\Orders\Create.cshtml" />
-    <Content Include="Views\Orders\Delete.cshtml" />
-    <Content Include="Views\Orders\Details.cshtml" />
-    <Content Include="Views\Orders\Edit.cshtml" />
-    <Content Include="Views\Orders\Index.cshtml" />
     <Content Include="Views\Ebooks\_Delete.cshtml" />
     <Content Include="Views\Ebooks\_Review.cshtml" />
     <Content Include="Views\Ebooks\_Tag.cshtml" />
     <Content Include="Views\Videos\_Tag.cshtml" />
     <Content Include="Views\Videos\_Review.cshtml" />
     <Content Include="Views\Videos\_Delete.cshtml" />
+    <Content Include="Views\Orders\Index.cshtml" />
+    <Content Include="Views\Orders\Details.cshtml" />
+    <Content Include="Views\Orders\Create.cshtml" />
+    <Content Include="Views\Orders\Edit.cshtml" />
+    <Content Include="Views\Orders\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1979,8 +2001,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202112291645591_Initial.resx">
-      <DependentUpon>202112291645591_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202201011737324_Initial.resx">
+      <DependentUpon>202201011737324_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

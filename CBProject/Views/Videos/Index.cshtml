@@ -1,12 +1,6 @@
 ﻿@model IEnumerable<CBProject.Models.ViewModels.VideoViewModel>
 
-
-
-
-
 <link rel="stylesheet" href="~/Content/Ratting.css">
-
-
 
 @using Microsoft.AspNet.Identity
 @using Microsoft.AspNet.Identity.EntityFramework
@@ -161,27 +155,27 @@
             <th>
                 @Html.DisplayNameFor(model => model.Title)
             </th>
-            <th>
-                Cover
-            </th>
+            @*<th>
+                    Cover
+                </th>*@
             @if (access == RoleLevel.FULL || access == RoleLevel.PLUSSFULL)
             {
                 <th>
                     @Html.DisplayNameFor(model => model.Thumbnail)
                 </th>
             }
-            <th>
-                @Html.DisplayNameFor(model => model.VideoFile)
-            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.VideoFile)
+                </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.Description)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.UploadDate)
             </th>
-            <th>
-                Rating
-            </th>
+            @*<th>
+                    Rating
+                </th>*@
             <th></th>
         </tr>
 
@@ -201,53 +195,57 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Title)
                 </td>
-                <td>
-                    <img alt="Cover Foto" src="@item.VideoImagePath" style="height:150px;" />
-                </td>
+                @*<td>
+                        <img alt="Cover Foto" src="@item.VideoImagePath" style="height:150px;" />
+                    </td>*@
                 @if (access == RoleLevel.FULL || access == RoleLevel.PLUSSFULL)
                 {
                     <td>
                         @Html.DisplayFor(modelItem => item.Thumbnail)
                     </td>
                 }
-                <td>
-                    @{
-                        var path = item.VideoPath;
-                        if (item.VideoPath == null || item.VideoPath == "")
-                        {
-                            path = item.Url;
-                        }
+                <!--<td>
+                @{
+                    var path = item.VideoPath;
+                    if (item.VideoPath == null || item.VideoPath == "")
+                    {
+                        path = item.Url;
                     }
-                    <video controls preload="metadata" height="200">
-                        @*poster="@item.VideoImagePath"*@
-                        <source src="@path" type="video/mp4">
-                        <source src="@path" type="video/webm" />
-                        <source src="@path" type="video/ogg" />
-                        Your browser does not support HTML5 video.
-                    </video>
-                    @*<iframe width="200" height="300" src="@path" allowfullscreen></iframe>*@
-                </td>
+                }
+                <video controls preload="metadata" height="200">-->
+                @*poster="@item.VideoImagePath"*@
+                <!--<source src="@path" type="video/mp4">
+                    <source src="@path" type="video/webm" />
+                    <source src="@path" type="video/ogg" />
+                    Your browser does not support HTML5 video.
+                </video>-->
+                @*<iframe width="200" height="300" src="@path" allowfullscreen></iframe>*@
+                <!--</td>-->
                 <td>
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.UploadDate)
                 </td>
-                <td>
-                    @using (Html.BeginForm("AddRate", "Videos", new { videoId = item.ID }, FormMethod.Post, new { id = "video-rating-form" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        @Html.HiddenFor(model => item.ID)
-                        <input name="rate"
-                               class="rating rating-loading"
-                               data-min="0"
-                               data-max="5"
-                               data-step="0.1"
-                               value="@item.Rate"> <!-- onchange="$('#video-rating-form').submit()" -->
-                        <input type="submit" value="Submit" />
-                    }
-                </td>
+                @*
+                    <td>
+                        @using (Html.BeginForm("AddRate", "Videos", new { videoId = item.ID }, FormMethod.Post, new { id = "video-rating-form" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            @Html.HiddenFor(model => item.ID)
+                            <input name="rate"
+                                   class="rating rating-loading"
+                                   data-min="0"
+                                   data-max="5"
+                                   data-step="0.1"
+                                   value="@item.Rate"> <!-- onchange="$('#video-rating-form').submit()" -->
+                            <input type="submit" value="Submit" />
+                        }
+                    </td>*@
+
+
+
                 <td>
 
                     @if (access == RoleLevel.FULL)
@@ -388,12 +386,26 @@
     </div>
 </div>
 
-
-
-
 @section scripts{
     <script>
+        $(document).ready(function () {
+            var table = $("#videos").DataTable({
+                ajax: {
+                    url: "/videos/",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "title",
+                        render: function (data, type, video) {
+                            return "<a href='/videos/_edit/" + video.id + "'>" + video.Title + "</a>";
+                        }
+                    },
 
+                ]
+            });
+
+        });
     </script>
 
     <script src="~/Scripts/Ratting.js"></script>

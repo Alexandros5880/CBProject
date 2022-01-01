@@ -16,13 +16,11 @@ namespace CBProject.Controllers
     {
         private SubscriptionPackageRepository _subscriptionRepo;
         private UsersRepo _usersRepo;
-        private ContentTypeRepository _contentTypeRepo;
         private PaymentsRepository _peynmentRepo;
         public SubscriptionPackagesController(IUnitOfWork unitOfWork, IUsersRepo usersRepo)
         {
             this._subscriptionRepo = unitOfWork.SubscriptionPackages;
             this._usersRepo = (UsersRepo)usersRepo;
-            this._contentTypeRepo = unitOfWork.ContentTypes;
             this._peynmentRepo = unitOfWork.Payments;
 
         }
@@ -54,8 +52,6 @@ namespace CBProject.Controllers
         {
             var viewModel = new SubscriptionPackageViewModel();
             viewModel.OtherUsers = await this._usersRepo.GetAllAsync();
-            viewModel.OtherContentType = await this._contentTypeRepo.GetAllAsync();
-            viewModel.OtherPayments = await this._peynmentRepo.GetAllAsync();
             return View(viewModel);
         }
         [HttpPost]
@@ -96,8 +92,6 @@ namespace CBProject.Controllers
                                             .GetAllQuerable()
                                             .Where(u => !subscriptionPackage.MyUsers.Contains(u))
                                             .ToListAsync();
-            viewModel.OtherContentType = await this._contentTypeRepo.GetAllAsync();
-            viewModel.OtherPayments = await this._peynmentRepo.GetAllAsync();
             return View(viewModel);
         }
         [HttpPost]
@@ -155,7 +149,6 @@ namespace CBProject.Controllers
             {
                 this._subscriptionRepo.Dispose();
                 this._usersRepo.Dispose();
-                this._contentTypeRepo.Dispose();
                 this._peynmentRepo.Dispose();
             }
             base.Dispose(disposing);

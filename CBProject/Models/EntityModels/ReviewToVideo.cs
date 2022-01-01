@@ -1,10 +1,14 @@
-﻿namespace CBProject.Models.EntityModels
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace CBProject.Models.EntityModels
 {
     public class ReviewToVideo
     {
         public int ID { get; set; }
+        [ForeignKey("Review")]
         public int ReviewId { get; set; }
         public Review Review { get; set; }
+        [ForeignKey("Video")]
         public int VideoId { get; set; }
         public Video Video { get; set; }
     }

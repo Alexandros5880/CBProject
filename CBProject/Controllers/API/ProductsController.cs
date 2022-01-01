@@ -1,9 +1,13 @@
-﻿using CBProject.HelperClasses.Interfaces;
+﻿using CBProject.HelperClasses;
+using CBProject.HelperClasses.Compares;
+using CBProject.HelperClasses.Interfaces;
+using CBProject.Models.EntityModels;
 using CBProject.Models.HelperModels;
 using CBProject.Models.ViewModels;
 using CBProject.Repositories.IdentityRepos;
 using CBProject.Repositories.IdentityRepos.Interfaces;
 using Microsoft.AspNet.Identity;
+using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,18 +15,18 @@ using System.Web.Http;
 
 namespace CBProject.Controllers.API
 {
-    public class ProductsController : ApiController
+    public class ProductsController : ApiController, IDisposable
     {
         private readonly UsersRepo _usersRepo;
         private readonly RolesRepo _rolesRepo;
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly UnitOfWork _unitOfWork;
         public ProductsController(IUnitOfWork unitOfWork, IUsersRepo usersRepo, IRolesRepo rolesRepo)
         {
             this._usersRepo = (UsersRepo)usersRepo;
             this._rolesRepo = (RolesRepo)rolesRepo;
-            this._unitOfWork = unitOfWork;
+            this._unitOfWork = (UnitOfWork)unitOfWork;
         }
-        // GET api/<controller>
+        // GET api/Products
         public async Task<IHttpActionResult> Get()
         {
             var videos = await this._unitOfWork.Videos.GetAllQuerable()
@@ -38,7 +42,7 @@ namespace CBProject.Controllers.API
 
             return Ok(products);
         }
-        // GET api/<controller>/5
+        // GET api/Products/5
         public async Task<IHttpActionResult> Get(string search)
         {
             if (search == null)
@@ -104,11 +108,33 @@ namespace CBProject.Controllers.API
         }
         [HttpPost]
         [Route("api/products/search/filters")]
-        public async Task<IHttpActionResult> GetSearchByFilters(FilterParams filters)
+        public async Task<IHttpActionResult> GetSearchByFilters([FromBody] FilterParams filters)
         {
             if (filters == null)
                 return NotFound();
-            var products = await this._unitOfWork.Categories.GetSearchByFiltersAsync(filters);
+
+            string search = filters.Search != null ? filters.Search : "";
+
+            var ebooks = await this._unitOfWork.Ebooks.GetAllBySearchAsync(search);
+            var videos = await this._unitOfWork.Videos.GetAllBySearchAsync(search);
+
+            if (filters.CreatedDate)
+            {
+                ebooks = ebooks.OrderBy(e => e.UploadDate).ToList();
+                videos = videos.OrderBy(v => v.UploadDate).ToList();
+            }
+            else if (filters.LessonsRatings)
+            {
+                ebooks = ebooks.OrderBy(e => e.RatingsAVG, new RatingCompare()).ToList();
+                videos = videos.OrderBy(v => v.RatingsAVG, new RatingCompare()).ToList();
+            }
+
+            Products products = new Products()
+            {
+                Ebooks = ebooks,
+                Videos = videos
+            };
+
             return Ok(products);
         }
         [HttpGet]
@@ -119,12 +145,15 @@ namespace CBProject.Controllers.API
                                 .GetAllAsync());
         }
         [HttpGet]
-        [Route("api/packages/")]
+        [Route("api/packages/{id}")]
         public async Task<IHttpActionResult> GetSubscriptionPackage(int? id)
         {
             if (id == null)
                 return NotFound();
-            return Ok(await this._unitOfWork.SubscriptionPackages.GetAsync(id));
+            SubscriptionPackage package = await this._unitOfWork.SubscriptionPackages.GetAsync(id);
+            if (package == null)
+                return NotFound();
+            return Ok(package);
         }
         [HttpGet]
         [Route("api/user")]
@@ -264,20 +293,6 @@ namespace CBProject.Controllers.API
             return Ok(await this._unitOfWork.Videos.GetAsync(id));
         }
         [HttpGet]
-        [Route("api/contenttypes")]
-        public async Task<IHttpActionResult> GetContentTypes()
-        {
-            return Ok(await this._unitOfWork.ContentTypes.GetAllAsync());
-        }
-        [HttpGet]
-        [Route("api/contenttype")]
-        public async Task<IHttpActionResult> GetContentType(int? id)
-        {
-            if (id == null)
-                return NotFound();
-            return Ok(await this._unitOfWork.ContentTypes.GetAsync(id));
-        }
-        [HttpGet]
         [Route("api/payments")]
         public async Task<IHttpActionResult> GetPayments()
         {
@@ -335,6 +350,79 @@ namespace CBProject.Controllers.API
                 return NotFound();
             await this._unitOfWork.Videos.RemoveRequirementAsync(videoId, requirementId);
             return Ok();
+        }
+
+        [HttpPost]
+        [Route("api/order/new")]
+        public async Task<IHttpActionResult> CreateOrder([FromBody] OrderApiModel order)
+        {
+            Order newOrder = new Order()
+            {
+                UserId = order.UserId,
+                SubscriptionPackageId = order.SubscriptionId,
+                IsClose = false,
+                IsCanceled = false,
+                IsCanceledByError = false,
+                CreatedDate = DateTime.Today
+            };
+            this._unitOfWork.Orders.Add(newOrder);
+            await this._unitOfWork.Orders.SaveAsync();
+            return Ok(newOrder);
+        }
+        [HttpPut]
+        [Route("api/order/update")]
+        public async Task<IHttpActionResult> UpdateOrder([FromBody] OrderApiModel order)
+        {
+            SubscriptionPackage package = await this._unitOfWork.SubscriptionPackages.GetAsync(order.SubscriptionId);
+            Order orderDB = await this._unitOfWork.Orders.GetAsync(order.ID);
+            orderDB.SubscriptionPackageId = order.SubscriptionId;
+            orderDB.UserId = order.UserId;
+            orderDB.IsClose = order.IsClose;
+            orderDB.IsCanceled = order.IsCanceled;
+            orderDB.IsCanceledByError = order.IsCanceledByError;
+            this._unitOfWork.Orders.Update(orderDB);
+            await this._unitOfWork.Orders.SaveAsync();
+            order.Price = package.Price;
+            //order.Tax = 24.00;
+            //order.Discount = 0.33;
+            return Ok(order);
+        }
+        [HttpDelete]
+        [Route("api/order/delete/{id}")]
+        public async Task<IHttpActionResult> DeleteOrder(int? id)
+        {
+            if (id == null)
+                return NotFound();
+            await this._unitOfWork.Orders.DeleteAsync(id);
+            await this._unitOfWork.Orders.SaveAsync();
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("api/payment/create")]
+        public async Task<IHttpActionResult> CreatePayment([FromBody] CreatePaymentAPI payment)
+        {
+            Payment paymentDB = new Payment()
+            {
+                UserId = payment.UserId,
+                Price = payment.Price,
+                Tax = payment.Tax,
+                Discount = payment.Discount
+            };
+            this._unitOfWork.Payments.Add(paymentDB);
+            await this._unitOfWork.Payments.SaveAsync();
+            return Ok(payment);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                this._usersRepo.Dispose();
+                this._rolesRepo.Dispose();
+                this._unitOfWork.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }

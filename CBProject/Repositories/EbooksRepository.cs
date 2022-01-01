@@ -154,12 +154,34 @@ namespace CBProject.Repositories
         {
             return this._context.Ebooks;
         }
+        public async Task<ICollection<Ebook>> GetAllBySearchAsync(string search)
+        {
+            return await this._context.Ebooks
+                .Where(e => e.Category.Name.Contains(search) ||
+                            e.Content.Contains(search) ||
+                            e.Creator.FirstName.Contains(search) ||
+                            e.Creator.LastName.Contains(search) ||
+                            e.Creator.Email.Contains(search) ||
+                            e.Description.Contains(search) ||
+                            e.Title.Contains(search))
+                            .ToListAsync();
+        }
 
         public async Task<float> GetRatingsAverageAsync(int? ebookId)
         {
             var ratings = await this.GetRetingsAsync(ebookId);
             float sum = 0;
             foreach(var rate in ratings)
+            {
+                sum += rate.Rate;
+            }
+            return sum / ratings.Count;
+        }
+        public float GetRatingsAverage(int? ebookId)
+        {
+            var ratings = this.GetRetings(ebookId);
+            float sum = 0;
+            foreach (var rate in ratings)
             {
                 sum += rate.Rate;
             }
@@ -174,6 +196,16 @@ namespace CBProject.Repositories
             return await this._context.Ratings
                 .Where(r => ratingsToEbooks.Contains(r.ID))
                 .ToListAsync();
+        }
+        public ICollection<Rating> GetRetings(int? ebookId)
+        {
+            var ratingsToEbooks = this._context.RatingsToEbooks
+                .Where(r => r.EbookId == ebookId)
+                .Select(r => r.RatingId)
+                .ToList();
+            return this._context.Ratings
+                .Where(r => ratingsToEbooks.Contains(r.ID))
+                .ToList();
         }
         public async Task AddRatingAsync(int? ebookId, string userId, float rate)
         {
@@ -194,6 +226,36 @@ namespace CBProject.Repositories
             };
             this._context.RatingsToEbooks.Add(rateToEbook);
             await this._context.SaveChangesAsync();
+            var avg = await this.GetRatingsAverageAsync(ebookId);
+            var ebook = await this.GetAsync(ebookId);
+            ebook.RatingsAVG = avg;
+            this.Update(ebook);
+            await this.SaveAsync();
+        }
+        public void AddRating(int? ebookId, string userId, float rate)
+        {
+            var rater = this._context.Users.FirstOrDefault(u => u.Id.Equals(userId));
+            if (rater == null)
+                throw new NullReferenceException(nameof(rater));
+            var myRate = new Rating()
+            {
+                Rate = rate,
+                Rater = rater
+            };
+            this._context.Ratings.Add(myRate);
+            this._context.SaveChanges();
+            var rateToEbook = new RatingToEbook()
+            {
+                Rating = this._context.Ratings.FirstOrDefault(r => r.Rate == rate && r.Rater.Id.Equals(rater.Id)),
+                Ebook = this._context.Ebooks.FirstOrDefault(e => e.ID == ebookId)
+            };
+            this._context.RatingsToEbooks.Add(rateToEbook);
+            this._context.SaveChanges();
+            var avg = this.GetRatingsAverage(ebookId);
+            var ebook = this.Get(ebookId);
+            ebook.RatingsAVG = avg;
+            this.Update(ebook);
+            this.Save();
         }
         public async Task RemoveRatingAsync(int? ebookId, string userId, float rate)
         {
@@ -208,6 +270,11 @@ namespace CBProject.Repositories
             this._context.RatingsToEbooks.Remove(rateToEbook);
             this._context.Ratings.Remove(myRate);
             await this._context.SaveChangesAsync();
+            var avg = await this.GetRatingsAverageAsync(ebookId);
+            var ebook = await this.GetAsync(ebookId);
+            ebook.RatingsAVG = avg;
+            this.Update(ebook);
+            await this.SaveAsync();
         }
 
         public async Task<ICollection<Review>> GetReviewsAsync(int? ebookId)
