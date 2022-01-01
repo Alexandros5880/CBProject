@@ -222,9 +222,15 @@
     <Compile Include="Controllers\API\RatingToEbookController.cs" />
     <Compile Include="Controllers\API\RatingToVideoController.cs" />
     <Compile Include="Controllers\API\RequirementController.cs" />
+    <Compile Include="Controllers\API\RequirementToEbookController.cs" />
+    <Compile Include="Controllers\API\RequirementToVideoController.cs" />
     <Compile Include="Controllers\API\ReviewController.cs" />
+    <Compile Include="Controllers\API\ReviewToEbookController.cs" />
+    <Compile Include="Controllers\API\ReviewToVideoController.cs" />
     <Compile Include="Controllers\API\SubscriptionPackageController.cs" />
     <Compile Include="Controllers\API\TagController.cs" />
+    <Compile Include="Controllers\API\TagToEbookController.cs" />
+    <Compile Include="Controllers\API\TagToVideoController.cs" />
     <Compile Include="Controllers\API\UserController.cs" />
     <Compile Include="Controllers\API\VideoController.cs" />
     <Compile Include="Controllers\EbooksController.cs" />
