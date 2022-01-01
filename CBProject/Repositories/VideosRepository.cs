@@ -223,6 +223,16 @@ namespace CBProject.Repositories
             }
             return sum / ratings.Count;
         }
+        public float GetRatingsAverage(int? videoId)
+        {
+            var ratings = this.GetRetings(videoId);
+            float sum = 0;
+            foreach (var rate in ratings)
+            {
+                sum += rate.Rate;
+            }
+            return sum / ratings.Count;
+        }
         public async Task<ICollection<Rating>> GetRetingsAsync(int? videoId)
         {
             var ratingsToVideos = await this._context.RatingsToVideos
@@ -232,6 +242,16 @@ namespace CBProject.Repositories
             return await this._context.Ratings
                 .Where(r => ratingsToVideos.Contains(r.ID))
                 .ToListAsync();
+        }
+        public ICollection<Rating> GetRetings(int? videoId)
+        {
+            var ratingsToVideos = this._context.RatingsToVideos
+                .Where(r => r.VideoId == videoId)
+                .Select(r => r.RatingId)
+                .ToList();
+            return this._context.Ratings
+                .Where(r => ratingsToVideos.Contains(r.ID))
+                .ToList();
         }
         public async Task AddRatingAsync(int? videoId, string userId, float rate)
         {
@@ -252,6 +272,36 @@ namespace CBProject.Repositories
             };
             this._context.RatingsToVideos.Add(rateToVideo);
             await this._context.SaveChangesAsync();
+            var avg = await this.GetRatingsAverageAsync(videoId);
+            var video = await this.GetAsync(videoId);
+            video.RatingsAVG = avg;
+            this.Update(video);
+            await this.SaveAsync();
+        }
+        public void AddRating(int? videoId, string userId, float rate)
+        {
+            var rater = this._context.Users.FirstOrDefault(u => u.Id.Equals(userId));
+            if (rater == null)
+                throw new NullReferenceException(nameof(rater));
+            var myRate = new Rating()
+            {
+                Rate = rate,
+                Rater = rater
+            };
+            this._context.Ratings.Add(myRate);
+            this._context.SaveChanges();
+            var rateToVideo = new RatingToVideo()
+            {
+                Rating = this._context.Ratings.FirstOrDefault(r => r.Rate == rate && r.Rater.Id.Equals(rater.Id)),
+                Video = this._context.Videos.FirstOrDefault(e => e.ID == videoId)
+            };
+            this._context.RatingsToVideos.Add(rateToVideo);
+            this._context.SaveChanges();
+            var avg = this.GetRatingsAverage(videoId);
+            var video = this.Get(videoId);
+            video.RatingsAVG = avg;
+            this.Update(video);
+            this.Save();
         }
         public async Task RemoveRatingAsync(int? videoId, string userId, float rate)
         {
@@ -266,6 +316,11 @@ namespace CBProject.Repositories
             this._context.RatingsToVideos.Remove(rateToVideo);
             this._context.Ratings.Remove(myRate);
             await this._context.SaveChangesAsync();
+            var avg = await this.GetRatingsAverageAsync(videoId);
+            var video = await this.GetAsync(videoId);
+            video.RatingsAVG = avg;
+            this.Update(video);
+            await this.SaveAsync();
         }
 
         public async Task<ICollection<Review>> GetReviewsAsync(int? videoId)

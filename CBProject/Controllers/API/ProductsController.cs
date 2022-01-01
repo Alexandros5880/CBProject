@@ -1,4 +1,5 @@
 ﻿using CBProject.HelperClasses;
+using CBProject.HelperClasses.Compares;
 using CBProject.HelperClasses.Interfaces;
 using CBProject.Models.EntityModels;
 using CBProject.Models.HelperModels;
@@ -116,6 +117,17 @@ namespace CBProject.Controllers.API
 
             var ebooks = await this._unitOfWork.Ebooks.GetAllBySearchAsync(search);
             var videos = await this._unitOfWork.Videos.GetAllBySearchAsync(search);
+
+            if (filters.CreatedDate)
+            {
+                ebooks = ebooks.OrderBy(e => e.UploadDate).ToList();
+                videos = videos.OrderBy(v => v.UploadDate).ToList();
+            }
+            else if (filters.LessonsRatings)
+            {
+                ebooks = ebooks.OrderBy(e => e.RatingsAVG, new RatingCompare()).ToList();
+                videos = videos.OrderBy(v => v.RatingsAVG, new RatingCompare()).ToList();
+            }
 
             Products products = new Products()
             {

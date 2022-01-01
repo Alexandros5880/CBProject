@@ -46,6 +46,7 @@ namespace CBProject.Migrations
                         UploadDate = c.DateTime(nullable: false),
                         CreatorId = c.String(maxLength: 128),
                         CategoryId = c.Int(nullable: false),
+                        RatingsAVG = c.Single(nullable: false),
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.Categories", t => t.CategoryId, cascadeDelete: true)
@@ -190,6 +191,7 @@ namespace CBProject.Migrations
                         CreatorId = c.String(maxLength: 128),
                         CategoryId = c.Int(nullable: false),
                         Url = c.String(),
+                        RatingsAVG = c.Single(nullable: false),
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.Categories", t => t.CategoryId, cascadeDelete: true)

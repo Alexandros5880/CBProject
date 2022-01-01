@@ -123,7 +123,7 @@
                         <span class="glyphicon glyphicon-menu-down"></span>
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a href="#" class="lessons-sequence">Lesson Sequence</a></li>
+                        <li><a href="#" class="lessons-ratings">Rating</a></li>
                         <li><a href="#" class="created-date">Created Date</a></li>
                     </ul>
                 </span>
@@ -179,7 +179,7 @@
 
             var ebooks = false;
             var videos = true;
-            var lessonsSequence = true;
+            var lessonsRatings = true;
             var createdDate = false;
             var search = "";
 
@@ -240,7 +240,7 @@
             $(document.body).on('click', 'button', function () {
                 if (this.classList.contains('search-top-button')) {
                     var search = $("#lessons-top-search-input").val();
-                    searchTop(ebooks, videos, lessonsSequence, createdDate, search);
+                    searchTop(ebooks, videos, lessonsRatings, createdDate, search);
                 }
             });
 
@@ -262,10 +262,10 @@
                 }
             });
 
-            // Sort By Lessons Sequence
+            // Sort By Lessons Rating
             $(document.body).on('click', 'a', function () {
-                if (this.classList.contains('lessons-sequence')) {
-                    lessonsSequence = true;
+                if (this.classList.contains('lessons-ratings')) {
+                    lessonsRatings = true;
                     createdDate = false;
                     $(".search-top-button").click();
                 }
@@ -274,19 +274,18 @@
             // Sort By Created Date
             $(document.body).on('click', 'a', function () {
                 if (this.classList.contains('created-date')) {
-                    lessonsSequence = false;
+                    lessonsRatings = false;
                     createdDate = true;
                     $(".search-top-button").click();
                 }
             });
 
-
-            function searchTop(ebooks, videos, lessonsSequence, createdDate, search) {
-                //alert(`ebooks: ${ebooks}, video: ${videos}, lessonsSeq: ${lessonsSequence}, createdDate: ${createdDate},  Search: ${search}`);
+            // Search
+            function searchTop(ebooks, videos, lessonsRatings, createdDate, search) {
                 var sendData = {
                     ebooks: ebooks,
                     videos: videos,
-                    lessonsSequence: lessonsSequence,
+                    lessonsRatings: lessonsRatings,
                     createdDate: createdDate,
                     search: search
                 };

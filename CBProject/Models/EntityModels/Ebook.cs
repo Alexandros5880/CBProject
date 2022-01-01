@@ -23,6 +23,7 @@ namespace CBProject.Models.EntityModels
         [ForeignKey("Category")]
         public int CategoryId { get; set; }  
         public Category Category { get; set; }
+        public float RatingsAVG { get; set; }
         public ICollection<TagToEbook> TagsToEbooks { get; set; }
         public ICollection<RatingToEbook> RatingsToEbooks { get; set; }
         public ICollection<ReviewToEbook> ReviewsToEbooks { get; set; }

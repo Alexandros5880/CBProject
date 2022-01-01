@@ -250,14 +250,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="HelperClasses\Compares\RatingCompare.cs" />
     <Compile Include="HelperClasses\CreateData.cs" />
     <Compile Include="HelperClasses\Pagination.cs" />
-    <Compile Include="HelperClasses\UnitOfWork.cs" />
     <Compile Include="HelperClasses\Interfaces\IUnitOfWork.cs" />
     <Compile Include="HelperClasses\StaticImfo.cs" />
-    <Compile Include="Migrations\202112311344398_Initial.cs" />
-    <Compile Include="Migrations\202112311344398_Initial.Designer.cs">
-      <DependentUpon>202112311344398_Initial.cs</DependentUpon>
+    <Compile Include="HelperClasses\UnitOfWork.cs" />
+    <Compile Include="Migrations\202201011612583_Initial.cs" />
+    <Compile Include="Migrations\202201011612583_Initial.Designer.cs">
+      <DependentUpon>202201011612583_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -1990,8 +1991,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202112311344398_Initial.resx">
-      <DependentUpon>202112311344398_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202201011612583_Initial.resx">
+      <DependentUpon>202201011612583_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
