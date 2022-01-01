@@ -98,7 +98,7 @@ namespace CBProject.Repositories
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
-            var obj = this._context.ReviewsToEbooks
+            var obj = this._context.ReviewsToVideos
                             .FirstOrDefault(r => r.ID == id);
             if (obj == null)
                 throw new ArgumentNullException(nameof(obj));

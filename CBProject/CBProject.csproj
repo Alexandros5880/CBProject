@@ -309,9 +309,15 @@
     <Compile Include="Repositories\RatingsToEbooksRepository.cs" />
     <Compile Include="Repositories\RatingsToVideosRepository.cs" />
     <Compile Include="Repositories\RequirementsRepository.cs" />
+    <Compile Include="Repositories\RequirementsToEbooksRepository.cs" />
+    <Compile Include="Repositories\RequirementsToVideosRepository.cs" />
     <Compile Include="Repositories\ReviewsRepository.cs" />
+    <Compile Include="Repositories\ReviewsToEbooksRepository.cs" />
+    <Compile Include="Repositories\ReviewsToVideosRepository.cs" />
     <Compile Include="Repositories\SubscriptionPackageRepository.cs" />
     <Compile Include="Repositories\TagsRepository.cs" />
+    <Compile Include="Repositories\TagsToEbooksRepository.cs" />
+    <Compile Include="Repositories\TagsToVideosRepository.cs" />
     <Compile Include="Repositories\VideosRepository.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
