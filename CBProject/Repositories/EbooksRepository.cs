@@ -154,6 +154,18 @@ namespace CBProject.Repositories
         {
             return this._context.Ebooks;
         }
+        public async Task<ICollection<Ebook>> GetAllBySearchAsync(string search)
+        {
+            return await this._context.Ebooks
+                .Where(e => e.Category.Name.Contains(search) ||
+                            e.Content.Contains(search) ||
+                            e.Creator.FirstName.Contains(search) ||
+                            e.Creator.LastName.Contains(search) ||
+                            e.Creator.Email.Contains(search) ||
+                            e.Description.Contains(search) ||
+                            e.Title.Contains(search))
+                            .ToListAsync();
+        }
 
         public async Task<float> GetRatingsAverageAsync(int? ebookId)
         {

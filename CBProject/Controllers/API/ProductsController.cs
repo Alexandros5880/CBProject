@@ -107,11 +107,22 @@ namespace CBProject.Controllers.API
         }
         [HttpPost]
         [Route("api/products/search/filters")]
-        public async Task<IHttpActionResult> GetSearchByFilters(FilterParams filters)
+        public async Task<IHttpActionResult> GetSearchByFilters([FromBody] FilterParams filters)
         {
             if (filters == null)
                 return NotFound();
-            var products = await this._unitOfWork.Categories.GetSearchByFiltersAsync(filters);
+
+            string search = filters.Search != null ? filters.Search : "";
+
+            var ebooks = await this._unitOfWork.Ebooks.GetAllBySearchAsync(search);
+            var videos = await this._unitOfWork.Videos.GetAllBySearchAsync(search);
+
+            Products products = new Products()
+            {
+                Ebooks = ebooks,
+                Videos = videos
+            };
+
             return Ok(products);
         }
         [HttpGet]

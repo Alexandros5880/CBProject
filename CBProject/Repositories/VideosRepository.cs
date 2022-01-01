@@ -199,6 +199,18 @@ namespace CBProject.Repositories
         {
             return this._context.Videos;
         }
+        public async Task<ICollection<Video>> GetAllBySearchAsync(string search)
+        {
+            return await this._context.Videos
+                .Where(e => e.Category.Name.Contains(search) ||
+                            e.Content.Contains(search) ||
+                            e.Creator.FirstName.Contains(search) ||
+                            e.Creator.LastName.Contains(search) ||
+                            e.Creator.Email.Contains(search) ||
+                            e.Description.Contains(search) ||
+                            e.Title.Contains(search))
+                            .ToListAsync();
+        }
 
 
         public async Task<float> GetRatingsAverageAsync(int? videoId)
