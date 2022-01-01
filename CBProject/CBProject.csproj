@@ -300,6 +300,7 @@
     <Compile Include="Models\EntityModels\Video.cs" />
     <Compile Include="Models\ViewModels\ApplicationUserViewModel.cs" />
     <Compile Include="Models\ViewModels\CategoryViewModel.cs" />
+    <Compile Include="Models\ViewModels\ContactViewModel.cs" />
     <Compile Include="Models\ViewModels\ContentTypeViewModel.cs" />
     <Compile Include="Models\ViewModels\EbookViewModel.cs" />
     <Compile Include="Models\HelperModels\FilterParams.cs" />
@@ -434,6 +435,7 @@
     <Content Include="assets\images\small\img-5.jpg" />
     <Content Include="assets\images\small\img-6.jpg" />
     <Content Include="assets\images\small\img-7.jpg" />
+    <Content Include="assets\images\SPunv_Ju_400x400.jpg" />
     <Content Include="assets\images\tg.jpg" />
     <Content Include="assets\images\users\avatar-1.jpg" />
     <Content Include="assets\images\users\avatar-2.jpg" />

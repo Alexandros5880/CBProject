@@ -1,4 +1,5 @@
 ﻿using CBProject.Models;
+using CBProject.Models.ViewModels;
 using FluentEmail.Core;
 using FluentEmail.Smtp;
 using System;
@@ -53,6 +54,27 @@ namespace CBProject.HelperClasses
                 .Append($"--CodeMe Team");
 
             return body.ToString();
+        }
+
+        public Task SendEmailContact(ContactViewModel contact )
+        {
+
+            StringBuilder message = new StringBuilder();
+            message.Append($"From:{contact.LastName} {contact.FirstName} \n")
+                   .Append($"Email: {contact.Email} \n")
+                   .Append($"Phone: {contact.Phone} \n")
+                   .Append($"Subject: {contact.Subject} \n")
+                   .Append($"Message: {contact.Message} \n");
+
+            Email.DefaultSender = _sender;
+
+            var email = Email
+                .From("codeme.email@gmail.com", "Contact Form")
+                .To("codeme.email@gmail.com")
+                .Subject("Contact Form")
+                .Body(message.ToString());
+
+            return email.SendAsync();
         }
     }
 }

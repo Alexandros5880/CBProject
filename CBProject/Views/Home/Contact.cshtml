@@ -1,33 +1,84 @@
-﻿@{
+﻿@model CBProject.Models.ViewModels.ContactViewModel
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
 
 <div class="row">
-
-    <div class="col-md-3">
-        <div style="margin-top: 33%; text-align: center;">
-            One Women Way<br />
-            Fleming 14<br />
-            <abbr title="Phone">P:</abbr>425.555.0100
+    <div class="col-md-12">
+        <div class="col-md-4 col-md-offset-3">
+            <h1><strong>Contact Us</strong></h1>
+            <br/>
+            <h2>Have any questions?</h2>
+            <br />
+            <h4>We'd love to hear from you!</h4>
         </div>
-        <div style="margin-top:33%;">
-            <strong>Team:</strong>
-            <div style="margin-left:7%;">
-                <strong>Cordinator - FrontEnd/BackEnd Developer:</strong>&ensp;<a href="https://www.facebook.com/profile.php?id=1539022572"><i><u>Theodwra Galata</u></i></a><br />
-                <strong>FrondEnd/BackEnd Developer:</strong>&ensp;<a href="https://www.facebook.com/jim.gasteratos"><i><u>Dimitris Gasteratos</u></i></a><br />
-                <strong>FrondEnd/BackEnd Developer:</strong>&ensp;<a href="https://www.facebook.com/ploumis.antonis"><i><u>Adonis Plumis</u></i></a><br />
-                <strong>FrondEnd/BackEnd Developer:</strong>&ensp;<a href="https://www.facebook.com/profile.php?id=100013059701658"><i><u>Alexandros Platanios</u></i></a><br />
+        <div class="col-md-5">
+            <img src="~/assets/images/SPunv_Ju_400x400.jpg" height="250" width="100%"/>
+        </div>
+    </div>
+</div>
+<div class="row">
+ @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+    <div class="form">
+        
+
+        <div class="col-md-8 col-md-offset-4">
+            <h1><strong>Here is how to get in touch with us!</strong></h1>
+            <br />
+            <div class="col-md-4">
+                <div class="form-group">
+                    @Html.EditorFor(m => m.FirstName, new { htmlAttributes = new { @class = "form-control", placeholder = "First Name" } })
+                    @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    @Html.EditorFor(m => m.LastName, new { htmlAttributes = new { @class = "form-control", placeholder = "Last Name" } })
+                    @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8 col-md-offset-4">
+            <div class="col-md-4">
+                <div class="form-group">
+                    @Html.EditorFor(m => m.Phone, new { htmlAttributes = new { @class = "form-control", placeholder = "Phone" } })
+                    @Html.ValidationMessageFor(m => m.Phone, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    @Html.EditorFor(m => m.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "E-mail" } })
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8 col-md-offset-4">
+            <div class="col-md-8">
+                <div class="form-group">
+                    @Html.EditorFor(m => m.Subject, new { htmlAttributes = new { @class = "form-control", placeholder = "Subject" } })
+                    @Html.ValidationMessageFor(m => m.Subject, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8 col-md-offset-4">
+            <div class="col-md-8">
+                <div class="form-group">
+                    @Html.EditorFor(m => m.Message, new { htmlAttributes = new { @class = "form-control", placeholder = "Message", style = "max-width: none; height:120px;" } })
+                    @Html.ValidationMessageFor(m => m.Message, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 col-md-offset-6">
+                <button type="submit" class="btn" style="background-color: #78DACF; color: white; width:100px;" ><strong>Send</strong></button>
             </div>
         </div>
     </div>
-
-    <div class="col-md-9">
-        <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.5067193714685!2d23.773858615670797!3d37.825021617039084!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14a1954d6fc743a1%3A0x5fb660bb4c6d4864!2sFlemingk%2014%2C%20Voula%20166%2073!5e0!3m2!1sen!2sgr!4v1640255843082!5m2!1sen!2sgr" 
-                style="border:0; height: 73vh; width: 95%; margin:3%;" allowfullscreen="" loading="lazy"></iframe>
-    </div>
-
+    }
 </div>
+<br/>
 

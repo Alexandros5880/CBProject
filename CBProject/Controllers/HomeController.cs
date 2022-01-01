@@ -38,7 +38,7 @@ namespace CBProject.Controllers
             {
                 viewModel.Ebooks.Add(Mapper.Map<Ebook, EbookViewModel>(ebook));
             }
-            foreach(var video in videos)
+            foreach (var video in videos)
             {
                 viewModel.Videos.Add(Mapper.Map<Video, VideoViewModel>(video));
             }
@@ -50,6 +50,20 @@ namespace CBProject.Controllers
         }
         public async Task<ActionResult> Contact()
         {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Contact(ContactViewModel contact)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(contact);
+            }
+
+            HelperClasses.EmailService email = new HelperClasses.EmailService();
+            await email.SendEmailContact(contact);
+
             return View();
         }
         public async Task<ActionResult> Lessons()

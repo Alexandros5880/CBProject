@@ -262,9 +262,11 @@ namespace CBProject.Controllers
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                     var visitorsRole = await this._rolesRepo.GetByNameAsync("Guest");
                     this._usersRepo.AddRole(user, visitorsRole);
+                    HelperClasses.EmailService email = new HelperClasses.EmailService();
+                    await email.SendEmail(user);
                     return RedirectToAction("Index", "Home");
                 }
-                AddErrors(result);
+                AddErrors(result);                
                 return View(model);
             }
             else

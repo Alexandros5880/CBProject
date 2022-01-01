@@ -298,6 +298,10 @@ textarea {
   font-size: inherit;
   line-height: inherit; }
 
+textarea{
+    max-width: none;
+}
+
 button,
 select {
   text-transform: none; }
