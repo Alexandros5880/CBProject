@@ -49,6 +49,7 @@ namespace CBProject.Models
         public string CVPath { get; set; }
         public string ImagePath { get; set; }
         public bool NewsletterAcception { get; set; }
+        public bool TermsAndConditionsAcception { get; set; }
         public bool IsInactive { get; set; }
         public SubscriptionPackage SubscriptionPackage { get; set; }
         public ICollection<Video> Videos { get; set; }

@@ -142,7 +142,8 @@
             <div class="form-group">
                 <div class="col-md-3 col-md-offset-3">
                     <div class="checkbox">
-                        @Html.CheckBoxFor(x => x.IsAgreeWithTerms)
+                        @Html.EditorFor(model => model.TermsAndConditionsAcception)
+                        @Html.ValidationMessageFor(model => model.TermsAndConditionsAcception, "", new { @class = "text-danger" })
                         <p>@Html.ActionLink("Terms & Conditions", "Terms", "Home")</p>
                         <div class="text-danger">
                             @Html.ValidationMessageFor(x => x.IsAgreeWithTerms)

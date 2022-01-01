@@ -1,19 +1,16 @@
 namespace CBProject.Migrations
 {
     using CBProject.HelperClasses;
-    using CBProject.Models;
     using System.Data.Entity.Migrations;
 
     internal sealed class Configuration : DbMigrationsConfiguration<CBProject.Models.ApplicationDbContext>
     {
-
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            
         }
 
-        protected override void Seed(ApplicationDbContext context)
+        protected override void Seed(CBProject.Models.ApplicationDbContext context)
         {
             var createData = new CreateData(context);
             createData.CreateUsersAndRoles();
