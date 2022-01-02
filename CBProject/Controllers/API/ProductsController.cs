@@ -135,12 +135,14 @@ namespace CBProject.Controllers.API
                 videos = videos.OrderBy(v => v.RatingsAVG, new RatingCompare()).ToList();
             }
 
-            
+
 
             Products products = new Products()
             {
                 Ebooks = ebooks,
-                Videos = videos
+                Videos = videos,
+                EbooksPages = Pagination.CountPages(ebooks, StaticImfo.PageSize),
+                VideosPages = Pagination.CountPages(videos, StaticImfo.PageSize)
             };
 
             return Ok(products);

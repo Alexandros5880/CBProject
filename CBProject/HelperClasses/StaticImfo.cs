@@ -8,6 +8,6 @@
         public static string UsersImagesPath { get; } = @"/UsersImages/";
         public static string EbooksImagesPath { get; } = @"/EbooksImages/";
         public static string EbooksFilesPath { get; } = @"/EbooksFiles/";
-        public static int PageSize { get; set; } = 5;
+        public static int PageSize { get; set; } = 8;
     }
 }
