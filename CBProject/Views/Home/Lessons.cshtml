@@ -168,14 +168,14 @@
                 </div>
                 <div class="col-lg-12">
                     <nav>
-                        <ul class="pagination pagination-lg justify-content-center">
-                            <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
+                        <ul class="pagination pagination-lg justify-content-center pagination-content">
+                            @*<li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
                             <li class="page-item"><a class="page-link" href="#">1</a></li>
                             <li class="page-item"><a class="page-link" href="">2</a></li>
                             <li class="page-item"><a class="page-link" href="">3</a></li>
                             <li class="page-item"><a class="page-link" href="">4</a></li>
                             <li class="page-item"><a class="page-link" href="">5</a></li>
-                            <li class="page-item"><a class="page-link" href="">&raquo;</a></li>
+                            <li class="page-item"><a class="page-link" href="">&raquo;</a></li>*@
                         </ul>
                     </nav>
                 </div>
@@ -195,16 +195,29 @@
             var lessonsRatings = true;
             var createdDate = false;
             var search = "";
+            var pages = 1;
+            var page = 1;
 
-            // Load Videos When Load The Page
-            getVideos(function (data) {
+
+            // Setup Pages
+            getVideosPages(function (pagesNumber) {
+                pages = pagesNumber;
+                for (i = 1; i <= pagesNumber; i++) {
+                    $(".pagination-content").append(`<li class="page-item"><a class="pagenation-link" data-id=${i}>${i}</a></li>`);
+                };
+            });
+
+
+            // Render the first page of Videos When Page Loads
+            getVideosPage(page, function (data) {
                 //console.log(data);
                 $(".contents").empty();
-                data.slice(0, 8).forEach(video => {
-                    $(".contents").append(
-                        `
+                data.forEach(video => {
+                    getCategory(video.categoryId, function (category) {
+                        $(".contents").append(
+                            `
                             <div class="col-md-3 ourHolder" ">
-                                <input type="hidden" id="category" name="category" value="${video.category.id}">
+                                <input type="hidden" id="category" name="category" value="${category.id}">
                                 <input type="hidden" id="content" name="content" value="${video.id}">
                                 <input type="hidden" id="content-type" name="content-type" value="video">
                                 <div class="card item" id="card-video">
@@ -245,15 +258,16 @@
                                 </div>
                             </div>
                             `
-                    );
+                        );
+                    });
                 });
-            });
+            });            
 
             // Search Button Top Clicks
             $(document.body).on('click', 'button', function () {
                 if (this.classList.contains('search-top-button')) {
                     var search = $("#lessons-top-search-input").val();
-                    searchTop(ebooks, videos, lessonsRatings, createdDate, search);
+                    searchTop(ebooks, videos, lessonsRatings, createdDate, search, page);
                 }
             });
 
@@ -289,38 +303,15 @@
                 if (this.classList.contains('created-date')) {
                     lessonsRatings = false;
                     createdDate = true;
-                    $(".search-top-button").click();
                 }
             });
 
-            // Search
-            function searchTop(ebooks, videos, lessonsRatings, createdDate, search) {
-                var sendData = {
-                    ebooks: ebooks,
-                    videos: videos,
-                    lessonsRatings: lessonsRatings,
-                    createdDate: createdDate,
-                    search: search
-                };
-                getProductsByFilters(sendData, function (response_data) {
-                    render(response_data, videos, ebooks);
-                });
-            };
-
-
-
-
-
-
-
-
-
-            // When Or Card Item Od Every Viedo Or Ebook Clicked
-            $(".ourHolder").on("click", function () {
-                //var categoryId = $(this).find("input[type=hidden]").val();
-                //var contentId = $(this).find("input[name=content]").val();
-                //var contentType = $(this).find("input[name=content-type]").val();
-                //redirectToCategoriesLessons(categoryId, contentId, contentType);
+            // Whene Paginations Link Number Clicked
+            $(document.body).on('click', 'a', function () {
+                if (this.classList.contains('pagenation-link')) {
+                    page = $(this).data("id");
+                    $(".search-top-button").click();
+                }
             });
 
             // When Details Buttons Clicked
@@ -333,68 +324,93 @@
                 }
             });
 
+            // When Or Card Item Od Every Viedo Or Ebook Clicked
+            $(".ourHolder").on("click", function () {
+                //var categoryId = $(this).find("input[type=hidden]").val();
+                //var contentId = $(this).find("input[name=content]").val();
+                //var contentType = $(this).find("input[name=content-type]").val();
+                //redirectToCategoriesLessons(categoryId, contentId, contentType);
+            });
 
 
 
-            // Render UI Function
+            // Search
+            function searchTop(ebooks, videos, lessonsRatings, createdDate, search, page) {
+                var sendData = {
+                    ebooks: ebooks,
+                    videos: videos,
+                    lessonsRatings: lessonsRatings,
+                    createdDate: createdDate,
+                    search: search,
+                    page: page
+                };
+                getProductsByFilters(sendData, function (response_data) {
+                    //console.log(response_data);
+                    render(response_data, videos, ebooks);
+                });
+            };
+
+            // Contents Render UI Function
             function render(data, videos, ebooks) {
                 if (data.videos && videos) {
                     $(".contents").empty();
                     data.videos.forEach(video => {
-                        $(".contents").append(
-                            `
-                                <div class="col-md-3 ourHolder" ">
-                                    <input type="hidden" id="category" name="category" value="${video.categoryId}">
-                                    <input type="hidden" id="content" name="content" value="${video.id}">
-                                    <input type="hidden" id="content-type" name="content-type" value="video">
-                                    <div class="card item" id="card-video">
-                                        <iframe class="embed-responsive-item" src="${video.videoPath}" allowfullscreen></iframe>
-                                        <!--<img alt="Cover Foto" src="${video.videoImagePath}" style="width:100%;" />-->
-                                        <p><b>${video.title}</b></p>
-                                        <div class="card-body">
-                                            <p><img class="img-icon-index" src="../assets/images/icons/icons-person.png" alt="person" /> Programming with  </p>
-                                            <p><img class="img-icon-index" src="../assets/images/icons/icon-video.png" alt="video" /> hours on-demand video  </p>
-                                            <br />
-                                            <button class="btn btn-card btn-lg details">Details</button>
-                                            <button class="btn btn-card btn-lg btn-open-modal more" data-toggle="modal" data-target="#modal-fullscreen-xl">
-                                                Play
+                        getCategory(video.categoryId, function (category) {
+                            $(".contents").append(
+                                `
+                            <div class="col-md-3 ourHolder" ">
+                                <input type="hidden" id="category" name="category" value="${category.id}">
+                                <input type="hidden" id="content" name="content" value="${video.id}">
+                                <input type="hidden" id="content-type" name="content-type" value="video">
+                                <div class="card item" id="card-video">
+                                    <iframe class="embed-responsive-item" src="${video.videoPath}" allowfullscreen></iframe>
+                                    <!--<img alt="Cover Foto" src="${video.videoImagePath}" style="width:100%;" />-->
+                                    <p><b>${video.title}</b></p>
+                                    <div class="card-body">
+                                        <p><img class="img-icon-index" src="../assets/images/icons/icons-person.png" alt="person" /> Programming with  </p>
+                                        <p><img class="img-icon-index" src="../assets/images/icons/icon-video.png" alt="video" /> hours on-demand video  </p>
+                                        <br />
+                                        <button class="btn btn-card btn-lg details">Details</button>
+                                        <button class="btn btn-card btn-lg btn-open-modal more" data-toggle="modal" data-target="#modal-fullscreen-xl">
+                                            Play
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Video Modal -->
+                            <div class="modal modal-fullscreen-xl" id="modal-fullscreen-xl" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">${video.title}</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                    </div>
-                                </div>
-
-                                <!-- Video Modal -->
-                                <div class="modal modal-fullscreen-xl" id="modal-fullscreen-xl" tabindex="-1" role="dialog" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title">${video.title}</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
+                                        <div class="modal-body">
+                                            <div class="embed-responsive embed-responsive-16by9">
+                                                <iframe class="embed-responsive-item" src="${video.videoPath}" allowfullscreen></iframe>
                                             </div>
-                                            <div class="modal-body">
-                                                <div class="embed-responsive embed-responsive-16by9">
-                                                    <iframe class="embed-responsive-item" src="${video.videoPath}" allowfullscreen></iframe>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                         </div>
                                     </div>
                                 </div>
-                                `
-                        );
+                            </div>
+                            `
+                            );
+                        });
                     });
                 }
                 if (data.ebooks && ebooks) {
                     $(".contents").empty();
                     data.ebooks.forEach(ebook => {
-                        $(".contents").append(
-                            `
+                        getCategory(ebook.categoryId, function (category) {
+                            $(".contents").append(`
                                 <div class="col-md-4 ourHolder" id="ourHolder">
-                                    <input type="hidden" id="category" name="category" value="${ebook.categoryId}">
+                                    <input type="hidden" id="category" name="category" value="${category.id}">
                                     <input type="hidden" id="content" name="content" value="${ebook.id}">
                                     <input type="hidden" id="content-type" name="content-type" value="ebook">
                                     <div class="card item" id="card-video">
@@ -434,8 +450,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                `
-                        );
+                            `);
+                        });
                     });
                 }
                 $(".ourHolder").on("click", function () {
@@ -444,6 +460,28 @@
                     //var contentType = $(this).find("input[name=content-type]").val();
                     //redirectToCategoriesLessons(categoryId, contentId, contentType);
                 });
+                paginationButtonsRender();
+            }
+
+            // Pagination Buttons Render
+            function paginationButtonsRender() {
+                $(".pagination-content").empty();
+                if (ebooks) {
+                    getEbooksPages(function (pagesNumber) {
+                        pages = pagesNumber;
+                        console.log(pages);
+                        for (i = 1; i <= pagesNumber; i++) {
+                            $(".pagination-content").append(`<li class="page-item"><a class="pagenation-link" data-id=${i}>${i}</a></li>`);
+                        };
+                    });
+                } else if (videos) {
+                    getVideosPages(function (pagesNumber) {
+                        pages = pagesNumber;
+                        for (i = 1; i <= pagesNumber; i++) {
+                            $(".pagination-content").append(`<li class="page-item"><a class="pagenation-link" data-id=${i}>${i}</a></li>`);
+                        };
+                    });
+                }
             }
 
         });
