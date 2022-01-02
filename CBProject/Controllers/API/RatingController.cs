@@ -1,7 +1,9 @@
-﻿using CBProject.HelperClasses.Interfaces;
+﻿using CBProject.HelperClasses;
+using CBProject.HelperClasses.Interfaces;
 using CBProject.Models;
 using CBProject.Repositories;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -62,6 +64,26 @@ namespace CBProject.Controllers.API
             await this._retingsRepository.DeleteAsync(id);
             await this._retingsRepository.SaveAsync();
             return Ok();
+        }
+
+        [HttpGet]
+        [Route("api/Rating/Pages")]
+        public async Task<IHttpActionResult> PagesCount()
+        {
+            var query = this._retingsRepository.GetAllQueryable();
+            int pages = await Pagination.CountPagesAsync(query, StaticImfo.PageSize);
+            return Ok(pages);
+        }
+
+        [HttpGet]
+        [Route("api/Rating/Page/{number}")]
+        public async Task<IHttpActionResult> GetPage(int number)
+        {
+            if (number > StaticImfo.PageSize)
+                return BadRequest();
+            var query = this._retingsRepository.GetAllQueryable();
+            var myPage = Pagination.Page(query.OrderBy(c => c.ID), number, StaticImfo.PageSize);
+            return Ok(myPage);
         }
 
         protected override void Dispose(bool disposing)

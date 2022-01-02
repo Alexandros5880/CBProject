@@ -1,7 +1,9 @@
-﻿using CBProject.Models;
+﻿using CBProject.HelperClasses;
+using CBProject.Models;
 using CBProject.Repositories.IdentityRepos;
 using CBProject.Repositories.IdentityRepos.Interfaces;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -72,6 +74,26 @@ namespace CBProject.Controllers.API
                 return NotFound();
             await this._usersRepo.DeleteRealAsync(id);
             return Ok();
+        }
+
+        [HttpGet]
+        [Route("api/User/Pages")]
+        public async Task<IHttpActionResult> PagesCount()
+        {
+            var query = this._usersRepo.GetAllQueryable();
+            int pages = await Pagination.CountPagesAsync(query, StaticImfo.PageSize);
+            return Ok(pages);
+        }
+
+        [HttpGet]
+        [Route("api/User/Page/{number}")]
+        public async Task<IHttpActionResult> GetPage(int number)
+        {
+            if (number > StaticImfo.PageSize)
+                return BadRequest();
+            var query = this._usersRepo.GetAllQueryable();
+            var myPage = Pagination.Page(query.OrderBy(c => c.Id), number, StaticImfo.PageSize);
+            return Ok(myPage);
         }
 
         protected override void Dispose(bool disposing)
