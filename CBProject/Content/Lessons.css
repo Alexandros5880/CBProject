@@ -39,3 +39,8 @@ a:hover {
 #ourHolder:hover {
     transform: translate(0, -7px);
 }
+
+#search-big-title {
+    font-weight: bold;
+    font-size: 35px;
+}
