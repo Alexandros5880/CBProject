@@ -166,6 +166,17 @@ namespace CBProject.Repositories
                             e.Title.Contains(search))
                             .ToListAsync();
         }
+        public IQueryable<Ebook> GetAllBySearch(IQueryable<Ebook> ebooksQ,string search)
+        {
+            return ebooksQ
+                .Where(e => e.Category.Name.Contains(search) ||
+                            e.Content.Contains(search) ||
+                            e.Creator.FirstName.Contains(search) ||
+                            e.Creator.LastName.Contains(search) ||
+                            e.Creator.Email.Contains(search) ||
+                            e.Description.Contains(search) ||
+                            e.Title.Contains(search));
+        }
 
         public async Task<float> GetRatingsAverageAsync(int? ebookId)
         {

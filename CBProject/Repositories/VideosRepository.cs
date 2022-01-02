@@ -211,7 +211,17 @@ namespace CBProject.Repositories
                             e.Title.Contains(search))
                             .ToListAsync();
         }
-
+        public IQueryable<Video> GetAllBySearch(IQueryable<Video> videosQ, string search)
+        {
+            return videosQ
+                .Where(e => e.Category.Name.Contains(search) ||
+                            e.Content.Contains(search) ||
+                            e.Creator.FirstName.Contains(search) ||
+                            e.Creator.LastName.Contains(search) ||
+                            e.Creator.Email.Contains(search) ||
+                            e.Description.Contains(search) ||
+                            e.Title.Contains(search));
+        }
 
         public async Task<float> GetRatingsAverageAsync(int? videoId)
         {
