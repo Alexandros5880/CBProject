@@ -52,7 +52,6 @@ namespace CBProject.Controllers
         {
             return View();
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Contact(ContactViewModel contact)
@@ -61,10 +60,8 @@ namespace CBProject.Controllers
             {
                 return View(contact);
             }
-
             HelperClasses.EmailService email = new HelperClasses.EmailService();
             await email.SendEmailContact(contact);
-
             return View();
         }
         public async Task<ActionResult> Lessons()
