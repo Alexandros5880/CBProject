@@ -5,6 +5,7 @@
 
 <h2>@ViewBag.Title.</h2>
 
+
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div>
     <h4>Change your account settings</h4>
@@ -22,6 +23,12 @@
                 @Html.ActionLink("Create", "SetPassword")
             }
             ]
+        </dd>
+        <dt>
+            @Html.LabelFor(model => model.User.FirstName)        
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.User.FirstName)
         </dd>
         <dt>External Logins:</dt>
         <dd>
@@ -84,4 +91,5 @@
                 }*@
         </dd>
     </dl>
+    @Html.ActionLink("Edit User", "Edit", "Users", new { id=Model.User.Id }, null)
 </div>
