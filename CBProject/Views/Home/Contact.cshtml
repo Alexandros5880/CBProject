@@ -5,91 +5,97 @@
 
 
 
+@section styles {
+    <link rel="stylesheet" herf="~/Content/Contact.css" />
+}
+
+
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-<div class="container-fluid">
+    <div class="container-fluid">
 
-    <div class="row contact-title-div">
-        <div class="col-md-6 contact-title-div">
-            <h1><strong>Contact Us</strong></h1>
-            <br />
-            <h2>Have any questions?</h2>
-            <br />
-            <h4>We'd love to hear from you!</h4>
+        <div class="row contact-title-div">
+            <div class="col-md-6 contact-title-div">
+                <h1><strong>Contact Us</strong></h1>
+                <br />
+                <h2>Have any questions?</h2>
+                <br />
+                <h4>We'd love to hear from you!</h4>
+            </div>
+            <div class="col-md-6 contact-image-div">
+                <img src="~/assets/images/SPunv_Ju_400x400.jpg" height="250" />
+            </div>
         </div>
-        <div class="col-md-6 contact-image-div">
-            <img src="~/assets/images/SPunv_Ju_400x400.jpg" height="250" />
+
+        <div class="container contact-main-container">
+
+            <div class="contact-message-content">
+                <h1><strong>Here is how to get in touch with us!</strong></h1>
+                <br />
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.EditorFor(m => m.FirstName, new { htmlAttributes = new { @class = "form-control", placeholder = "First Name" } })
+                            @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.EditorFor(m => m.LastName, new { htmlAttributes = new { @class = "form-control", placeholder = "Last Name" } })
+                            @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.EditorFor(m => m.Phone, new { htmlAttributes = new { @class = "form-control", placeholder = "Phone" } })
+                            @Html.ValidationMessageFor(m => m.Phone, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.EditorFor(m => m.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "E-mail" } })
+                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.EditorFor(m => m.Subject, new { htmlAttributes = new { @class = "form-control", placeholder = "Subject" } })
+                            @Html.ValidationMessageFor(m => m.Subject, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.EditorFor(m => m.Message, new { htmlAttributes = new { @class = "form-control", placeholder = "Message", style = "max-width: none; height:120px;" } })
+                            @Html.ValidationMessageFor(m => m.Message, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <button type="submit" class="btn" style="background-color: #78DACF; color: white; width:100px;"><strong>Send</strong></button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
         </div>
+
     </div>
-
-    <div class="container contact-main-container">
-
-        <div class="contact-message-content">
-            <h1><strong>Here is how to get in touch with us!</strong></h1>
-            <br />
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        @Html.EditorFor(m => m.FirstName, new { htmlAttributes = new { @class = "form-control", placeholder = "First Name" } })
-                        @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        @Html.EditorFor(m => m.LastName, new { htmlAttributes = new { @class = "form-control", placeholder = "Last Name" } })
-                        @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        @Html.EditorFor(m => m.Phone, new { htmlAttributes = new { @class = "form-control", placeholder = "Phone" } })
-                        @Html.ValidationMessageFor(m => m.Phone, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        @Html.EditorFor(m => m.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "E-mail" } })
-                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        @Html.EditorFor(m => m.Subject, new { htmlAttributes = new { @class = "form-control", placeholder = "Subject" } })
-                        @Html.ValidationMessageFor(m => m.Subject, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        @Html.EditorFor(m => m.Message, new { htmlAttributes = new { @class = "form-control", placeholder = "Message", style = "max-width: none; height:120px;" } })
-                        @Html.ValidationMessageFor(m => m.Message, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <button type="submit" class="btn" style="background-color: #78DACF; color: white; width:100px;"><strong>Send</strong></button>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
 
 }
 

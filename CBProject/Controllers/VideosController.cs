@@ -41,18 +41,19 @@ namespace CBProject.Controllers
         [Authorize]
         public async Task<ActionResult> Index()
         {
-            var videos = await this._videoRepo.GetAllAsync();
-            var categories = await this._categoriesRepo.GetAllAsync();
-            List<VideoViewModel> viewModels  = new List<VideoViewModel>();
-            foreach(var video in videos)
-            {
-                var viewModel = Mapper.Map<Video, VideoViewModel>(video);
-                viewModel.OtherCategory = categories;
-                viewModel.Rate = video.RatingsAVG;
-                viewModel.Requirements = await this._videoRepo.GetRequirementsAsync(video.ID);
-                viewModels.Add(viewModel);
-            }
-            return View(viewModels);
+            //var videos = await this._videoRepo.GetAllAsync();
+            //var categories = await this._categoriesRepo.GetAllAsync();
+            //List<VideoViewModel> viewModels  = new List<VideoViewModel>();
+            //foreach(var video in videos)
+            //{
+            //    var viewModel = Mapper.Map<Video, VideoViewModel>(video);
+            //    viewModel.OtherCategory = categories;
+            //    viewModel.Rate = video.RatingsAVG;
+            //    viewModel.Requirements = await this._videoRepo.GetRequirementsAsync(video.ID);
+            //    viewModels.Add(viewModel);
+            //}
+            //return View(viewModels);
+            return View();
         }
         public async Task<ActionResult> PublicDetails(int? id)
         {
