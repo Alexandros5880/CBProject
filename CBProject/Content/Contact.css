@@ -2,8 +2,13 @@
     padding-top: 50px;
 }
 
+<<<<<<< HEAD
 .contact-form {
     text-align: center;
+=======
+.contact-main-container {
+text-align: center;
+>>>>>>> 4b70cea61c5c02ad3aa0411acaad2102f652bd68
 }
 
 .contact-message-content {
