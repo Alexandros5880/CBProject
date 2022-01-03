@@ -42,9 +42,9 @@ namespace CBProject.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -134,11 +134,11 @@ namespace CBProject.Controllers
                 switch (result)
                 {
                     case SignInStatus.Success:
-                        if (access == RoleLevel.FULL) 
+                        if (access == RoleLevel.FULL)
                         {
                             //return RedirectToAction("Index", "Users");
                             return RedirectToAction("Index", "Home");
-                        } 
+                        }
                         else if (access == RoleLevel.PLUSSFULL)
                         {
                             return RedirectToAction("Index", "Users");
@@ -202,7 +202,7 @@ namespace CBProject.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -266,7 +266,7 @@ namespace CBProject.Controllers
                     await email.SendEmailRegister(user);
                     return RedirectToAction("Index", "Home");
                 }
-                AddErrors(result);                
+                AddErrors(result);
                 return View(model);
             }
             else
@@ -360,6 +360,8 @@ namespace CBProject.Controllers
             var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
             if (result.Succeeded)
             {
+                HelperClasses.EmailService email = new HelperClasses.EmailService();
+                await email.SendEmailChangedPassword(model.);
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
             }
             AddErrors(result);
