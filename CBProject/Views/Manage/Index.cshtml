@@ -1,28 +1,31 @@
 ﻿@model CBProject.Models.IndexViewModel
 @{
+    Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Manage";
 }
 
 
 
 <body>
-    <h2>Account Profile</h2>
+    <h2 style="margin-top: 50px;">Account Profile</h2>
     <br />
     <hr />
 
     <div class="row">
-        <div class="col-md-6">
-            <img class="userImage" src="@Model.User.ImagePath" alt="Avatar" />
+        <div class="col-md-5">
+            @if (@Model.User.ImagePath != null)
+            {
+                <img class="userImage" src="@Model.User.ImagePath" alt="Avatar" />
+            }
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
             <p class="text-success">@ViewBag.StatusMessage</p>
             <div>
                 <dl class="dl-horizontal">
-
-                    <dt>                       
+                    <dt>
                     </dt>
-                    <dd class="" style="text-align:center;">
-                        @Html.ActionLink("Edit User", "Edit", "Users", new { id = Model.User.Id }, new { @class= "btn btn-secondary" })
+                    <dd class="" style="text-align:left;">
+                        @Html.ActionLink("Edit User", "Edit", "Users", new { id = Model.User.Id }, new { @class = "btn btn-secondary" })
                     </dd>
 
                     <dt>
@@ -110,7 +113,7 @@
                     </dd>
 
                     <dt>Password:</dt>
-                    <dd>                        
+                    <dd>
                         @if (Model.HasPassword)
                         {
                             @Html.ActionLink("Change your password", "ChangePassword", null, new { @class = "btn btn-secondary" })
@@ -123,10 +126,13 @@
                 </dl>
             </div>
         </div>
-    </div>
-    
+        <div class="col-md-3">
 
-     <style>
+        </div>
+    </div>
+
+
+    <style>
 
          .userImage {
              float: right;
@@ -137,34 +143,21 @@
          body{
              text-align:center;
          }
-    
+
          .profile-img {
              text-align: left;
          }
-    
-             .profile-img img {
-                 width: 50%;
-                 height: 50%;
-             }
-    
-             @*.profile-img .file {
-                 position: relative;
-                 overflow: hidden;
-                 width: 50%;
-                 border: none;
-                 border-radius: 0;
-                 font-size: 15px;
-                 background: #212529b8;
-             }
-    
-                 .profile-img .file input {
-                     position: absolute;
-                     opacity: 0;
-                     right: 0;
-                     top: 0;
-                 }*@
 
-     </style>
+        .profile-img img {
+            width: 50%;
+            height: 50%;
+        }
+
+        /*.dl-horizontal > dd {
+            text-align: left;
+        }*/
+
+    </style>
 
 </body>
 

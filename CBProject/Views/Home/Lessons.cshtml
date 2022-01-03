@@ -73,76 +73,77 @@
 }
 
 
-
-<style>
-    .lessons-top-navbar {
-        padding-top: 57px !important;
-    }
-
-    .lessons-top-title {
-        margin-left: 33px;
-        margin-top: 11px;
-    }
-
-    .lessons-top-grid {
-        padding-top: 11px;
-    }
-
-    .search-top-input {
-        float: right !important;
-        margin-right: 33px;
-    }
-
-    .lessons-top-nav-filters-buttons {
-        margin-left: 33px;
-    }
-</style>
-
-
 <!-- Filters Top Nav -->
 <nav class="navbar navbar-light bg-light justify-content-between lessons-top-navbar">
-    <h2 class="lessons-top-title">Chillin and searching something...</h2>
+    <h3 id="lessons-big-title" class="animate__animated animate__fadeInLeft">Chillin and searching something...</h3>
     <div class="row lessons-top-grid">
-        <div class="col-md-6">
-            <form class="form-inline lessons-top-nav-filters-buttons">
-                <span class="dropdown">
+        <div class="col-sm-8">
+            <div class="form-inline lessons-top-nav-filters-buttons">
+                <span class="dropdown left-filter">
                     <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
                         <span class="glyphicon glyphicon-filter"></span>
                         Filter
                         <span class="glyphicon glyphicon-menu-down"></span>
                     </button>
-                    <ul class="dropdown-menu">
-                        <li><a href="#" class="ebooks-filter">Ebooks</a></li>
-                        <li><a href="#" class="videos-filter">Videos</a></li>
+                    <ul class="dropdown-menu left-filter-menu">
+                        <li class="ebooks-filter"><a href="#" class="ebooks-filter">Ebooks</a></li>
+                        <li class="videos-filter"><a href="#" class="videos-filter">Videos</a></li>
                     </ul>
                 </span>
-                <span class="dropdown">
+                <span class="dropdown right-filter">
                     <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
                         <span class="glyphicon glyphicon-sort-by-attributes"></span>
                         Sort By
                         <span class="glyphicon glyphicon-menu-down"></span>
                     </button>
-                    <ul class="dropdown-menu">
-                        <li><a href="#" class="lessons-ratings">Rating</a></li>
-                        <li><a href="#" class="created-date">Created Date</a></li>
+                    <ul class="dropdown-menu right-filter-menu">
+                        <li class="lessons-ratings"><a href="#" class="lessons-ratings">Rating</a></li>
+                        <li class="created-date"><a href="#" class="created-date">Created Date</a></li>
                     </ul>
                 </span>
-            </form>
+            </div>
         </div>
-        <div class="col-md-6">
-            <form class="form-inline search-top-input">
+        <div class="col-sm-4">
+            <div class="form-inline search-top-input">
                 <input id="lessons-top-search-input" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-search search-top-button" type='button'>
                     Search
                     <i class="fa fa-search"></i>
                 </button>
-            </form>
+            </div>
         </div>
     </div>
 </nav>
 
 
 
+
+
+<div class="container-fluid main-content">
+    <div class="grey-row">
+        <div class="container">
+            <br />
+            <br />
+
+            <div class="row contents">
+
+            </div>
+
+            <br />
+            <br />
+        </div>
+        <div class="col-lg-12" style="text-align:center;">
+            <nav>
+                <ul class="pagination pagination-lg justify-content-center pagination-content">
+
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+
+@*
 <div class="row" style="margin-top: 50px !important; margin-bottom: 50px !important;">
     <!-- Filters SlideBar -->
     <div class="col-md-2">
@@ -169,13 +170,6 @@
                 <div class="col-lg-12">
                     <nav>
                         <ul class="pagination pagination-lg justify-content-center pagination-content">
-                            @*<li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="">2</a></li>
-                            <li class="page-item"><a class="page-link" href="">3</a></li>
-                            <li class="page-item"><a class="page-link" href="">4</a></li>
-                            <li class="page-item"><a class="page-link" href="">5</a></li>
-                            <li class="page-item"><a class="page-link" href="">&raquo;</a></li>*@
                         </ul>
                     </nav>
                 </div>
@@ -183,7 +177,7 @@
         </div>
     </div>
 </div>
-
+*@
 
 
 @section scripts {
@@ -298,7 +292,16 @@
 
             // Contents Render UI Function
             function render(data, videos, ebooks) {
+                if (lessonsRatings) {
+                    $(".lessons-ratings").addClass("active");
+                    $(".created-date").removeClass("active");
+                } else if (createdDate) {
+                    $(".created-date").addClass("active");
+                    $(".lessons-ratings").removeClass("active");
+                }
                 if (data.ebooks && ebooks) {
+                    $(".ebooks-filter").addClass("active");
+                    $(".videos-filter").removeClass("active");
                     $(".contents").empty();
                     data.ebooks.forEach(ebook => {
                         getCategory(ebook.categoryId, function (category) {
@@ -349,6 +352,8 @@
                     });
                 }
                 if (data.videos && videos) {
+                    $(".ebooks-filter").removeClass("active");
+                    $(".videos-filter").addClass("active");
                     $(".contents").empty();
                     data.videos.forEach(video => {
                         getCategory(video.categoryId, function (category) {
@@ -411,7 +416,6 @@
 
             // Pagination Buttons Render
             function updatePaginationButtons() {
-                $(".pagination-content").empty();
                 if (ebooks) {
                     getEbooksPages(function (pages) {
                         RenderPaginationButtons(pages);
@@ -425,6 +429,7 @@
 
             // Render Pagination Buttons
             function RenderPaginationButtons(pages) {
+                $(".pagination-content").empty();
                 for (i = 1; i <= pages; i++) {
                     if (i == page) {
                         $(".pagination-content").append(`<li class="page-item active"><a class="pagenation-link" data-id=${i}>${i}</a></li>`);

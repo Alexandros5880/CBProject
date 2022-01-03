@@ -37,7 +37,8 @@ namespace CBProject
                       "~/Content/Details.css",
                       "~/Content/Lessons.css",
                       "~/Content/Subscribe.css",
-                      "~/Content/Datatables/css/dataTables.bootstrap.css"
+                      "~/Content/Datatables/css/dataTables.bootstrap.css",
+                      "~/Content/Contact.css"
                       ));
 
 

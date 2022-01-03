@@ -135,8 +135,6 @@ namespace CBProject.Controllers.API
                 videos = videos.OrderBy(v => v.RatingsAVG, new RatingCompare()).ToList();
             }
 
-
-
             Products products = new Products()
             {
                 Ebooks = ebooks,

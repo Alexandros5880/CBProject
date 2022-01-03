@@ -1,4 +1,4 @@
-﻿#filter-slidebar > li {
+﻿/*#filter-slidebar > li {
     margin-top: 11% !important;
     text-align: center;
 }
@@ -16,26 +16,109 @@
     margin-top: 33%;
 }
 
-/*.subscribe-button {
-        border-radius: 11px;
-        background-color: red;
-        color: #ffffff;
-        padding: 11px;
-    }*/
-
-/*    .subscribe-button:hover {
-        color: #ffffff;
-        background-color: darkred;
-    }*/
 
 a:hover {
     cursor: pointer;
 }
 
-/*.item {
-        height: 400px !important;
-    }*/
 
 #ourHolder:hover {
     transform: translate(0, -7px);
+}
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+.lessons-top-navbar {
+    padding-top: 57px !important;
+}
+
+#lessons-big-title {
+    margin-left: 33px;
+    margin-top: 11px;
+}
+
+@media only screen and (min-width: 773px) {
+    .lessons-top-nav-filters-buttons {
+        margin-left: 33px;
+    }
+
+    .lessons-top-grid {
+        padding-top: 11px;
+    }
+
+    .search-top-input {
+        float: right;
+        margin-right: 33px;
+        width: 100%;
+    }
+
+    #lessons-top-search-input {
+        width: 60%;
+    }
+
+    .search-top-button {
+    }
+
+    .main-content {
+        margin-top: 3%;
+    }
+    .left-filter-menu {
+        margin-top: 11px;
+    }
+
+    .right-filter-menu {
+        margin-top: 11px;
+    }
+}
+
+@media only screen and (max-width: 771px) {
+    .main-content {
+        margin-top: 15%;
+    }
+
+    .lessons-top-nav-filters-buttons {
+        padding-bottom: 20%;
+    }
+
+    .lessons-top-grid {
+        text-align: center;
+        padding-top: 20px;
+        ;
+    }
+
+    .search-top-input {
+        margin-top: 27px;
+    }
+
+    .search-top-button {
+        margin-top: 27px;
+    }
+
+    .left-filter {
+        float: left;
+    }
+
+    .right-filter {
+        float: left;
+        margin-left: 5px;
+    }
+
+    .left-filter-menu {
+    }
+
+    .right-filter-menu {
+    }
+}
+
+@media screen and (max-width: 1068px) and (min-width: 992px) {
 }
