@@ -73,47 +73,49 @@
 }
 
 
-<!-- Filters Top Nav -->
-<nav class="navbar navbar-light bg-light justify-content-between lessons-top-navbar">
-    <h3 id="lessons-big-title" class="animate__animated animate__fadeInLeft">Chillin and searching something...</h3>
-    <div class="row lessons-top-grid">
-        <div class="col-sm-8">
-            <div class="form-inline lessons-top-nav-filters-buttons">
-                <span class="dropdown left-filter">
-                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-                        <span class="glyphicon glyphicon-filter"></span>
-                        Filter
-                        <span class="glyphicon glyphicon-menu-down"></span>
+
+
+    <!-- Filters Top Nav -->
+    <nav class="navbar navbar-light bg-light justify-content-between lessons-top-navbar">
+        <h3 id="lessons-big-title" class="animate__animated animate__fadeInLeft">Chillin and searching something...</h3>
+        <div class="row lessons-top-grid">
+            <div class="col-sm-8">
+                <div class="form-inline lessons-top-nav-filters-buttons">
+                    <span class="dropdown left-filter">
+                        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                            <span class="glyphicon glyphicon-filter"></span>
+                            Filter
+                            <span class="glyphicon glyphicon-menu-down"></span>
+                        </button>
+                        <ul class="dropdown-menu left-filter-menu">
+                            <li class="ebooks-filter"><a href="#" class="ebooks-filter">Ebooks</a></li>
+                            <li class="videos-filter"><a href="#" class="videos-filter">Videos</a></li>
+                        </ul>
+                    </span>
+                    <span class="dropdown right-filter">
+                        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                            <span class="glyphicon glyphicon-sort-by-attributes"></span>
+                            Sort By
+                            <span class="glyphicon glyphicon-menu-down"></span>
+                        </button>
+                        <ul class="dropdown-menu right-filter-menu">
+                            <li class="lessons-ratings"><a href="#" class="lessons-ratings">Rating</a></li>
+                            <li class="created-date"><a href="#" class="created-date">Created Date</a></li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-inline search-top-input">
+                    <input id="lessons-top-search-input" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-search search-top-button" type='button'>
+                        Search
+                        <i class="fa fa-search"></i>
                     </button>
-                    <ul class="dropdown-menu left-filter-menu">
-                        <li class="ebooks-filter"><a href="#" class="ebooks-filter">Ebooks</a></li>
-                        <li class="videos-filter"><a href="#" class="videos-filter">Videos</a></li>
-                    </ul>
-                </span>
-                <span class="dropdown right-filter">
-                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-                        <span class="glyphicon glyphicon-sort-by-attributes"></span>
-                        Sort By
-                        <span class="glyphicon glyphicon-menu-down"></span>
-                    </button>
-                    <ul class="dropdown-menu right-filter-menu">
-                        <li class="lessons-ratings"><a href="#" class="lessons-ratings">Rating</a></li>
-                        <li class="created-date"><a href="#" class="created-date">Created Date</a></li>
-                    </ul>
-                </span>
+                </div>
             </div>
         </div>
-        <div class="col-sm-4">
-            <div class="form-inline search-top-input">
-                <input id="lessons-top-search-input" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-search search-top-button" type='button'>
-                    Search
-                    <i class="fa fa-search"></i>
-                </button>
-            </div>
-        </div>
-    </div>
-</nav>
+    </nav>
 
 
 
@@ -320,7 +322,7 @@
                                             <p class="card-text"> ${ebook.title}  </p>
                                             <br />
                                             <button class="btn btn-card btn-lg details">Details</button>
-                                            <button class="btn btn-card btn-lg btn-open-modal" data-toggle="modal" data-target="#modal-fullscreen-xl">
+                                            <button class="btn btn-card-play btn-lg btn-open-modal" data-toggle="modal" data-target="#modal-fullscreen-xl">
                                                 Read
                                             </button>
                                         </div>
@@ -372,7 +374,7 @@
                                         <p><img class="img-icon-index" src="../assets/images/icons/icon-video.png" alt="video" /> hours on-demand video  </p>
                                         <br />
                                         <button class="btn btn-card btn-lg details">Details</button>
-                                        <button class="btn btn-card btn-lg btn-open-modal more" data-toggle="modal" data-target="#modal-fullscreen-xl">
+                                        <button class="btn btn-card-play btn-lg btn-open-modal more" data-toggle="modal" data-target="#modal-fullscreen-xl">
                                             Play
                                         </button>
                                     </div>

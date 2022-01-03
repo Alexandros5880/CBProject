@@ -32,8 +32,9 @@ textarea {
     padding-right: 0 !important;
     padding-left: 0 !important;
 }
-/*NavBar Login Register button*/
 
+
+/*NavBar Login Register button*/
 #registerLink {
     color: #5B65E8; /*purple*/
     font-weight: bold;

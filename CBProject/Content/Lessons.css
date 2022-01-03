@@ -31,13 +31,6 @@ a:hover {
 
 
 
-
-
-
-
-
-
-
 .lessons-top-navbar {
     padding-top: 57px !important;
 }
@@ -45,6 +38,11 @@ a:hover {
 #lessons-big-title {
     margin-left: 33px;
     margin-top: 11px;
+}
+
+.pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
+    background-color: #5b65e8;
+    border-color: #5b65e8;
 }
 
 @media only screen and (min-width: 773px) {
@@ -93,7 +91,7 @@ a:hover {
     .lessons-top-grid {
         text-align: center;
         padding-top: 20px;
-        ;
+        
     }
 
     .search-top-input {
@@ -113,11 +111,7 @@ a:hover {
         margin-left: 5px;
     }
 
-    .left-filter-menu {
-    }
-
-    .right-filter-menu {
-    }
+    
 }
 
 @media screen and (max-width: 1068px) and (min-width: 992px) {
