@@ -115,8 +115,14 @@ namespace CBProject.Controllers.API
 
             string search = filters.Search != null ? filters.Search : "";
 
-            var ebooks = await this._unitOfWork.Ebooks.GetAllBySearchAsync(search);
-            var videos = await this._unitOfWork.Videos.GetAllBySearchAsync(search);
+            var ebooksQ = this._unitOfWork.Ebooks.GetAllQuerable();
+            var videosQ = this._unitOfWork.Videos.GetAllQuerable();
+
+            ebooksQ = Pagination.Page(ebooksQ.OrderBy(e => e.ID), filters.Page, StaticImfo.PageSize);
+            videosQ = Pagination.Page(videosQ.OrderBy(v => v.ID), filters.Page, StaticImfo.PageSize);
+
+            var ebooks = await this._unitOfWork.Ebooks.GetAllBySearch(ebooksQ, search).ToListAsync();
+            var videos = await this._unitOfWork.Videos.GetAllBySearch(videosQ, search).ToListAsync();
 
             if (filters.CreatedDate)
             {
@@ -132,7 +138,9 @@ namespace CBProject.Controllers.API
             Products products = new Products()
             {
                 Ebooks = ebooks,
-                Videos = videos
+                Videos = videos,
+                EbooksPages = Pagination.CountPages(ebooks, StaticImfo.PageSize),
+                VideosPages = Pagination.CountPages(videos, StaticImfo.PageSize)
             };
 
             return Ok(products);

@@ -81,6 +81,19 @@ function getUserById(id, callback) {
         }
     });
 }
+function getUserByIdSync(id, callback) {
+    $.ajax({
+        type: "GET",
+        async: false,
+        url: "/api/user?userId=" + id,
+        success: function (data) {
+            callback(data);
+        },
+        error: function (error) {
+            return error;
+        }
+    });
+}
 
 function getLogedUser(callback) {
     $.ajax({
@@ -224,7 +237,30 @@ function getEbooks(callback) {
         }
     });
 }
-
+function getEbooksPage(page, callback) {
+    $.ajax({
+        type: "GET",
+        url: `/api/Ebook/Page/${page}`,
+        success: function (data) {
+            callback(data);
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+}
+function getEbooksPages(callback) {
+    $.ajax({
+        type: "GET",
+        url: `/api/Ebook/Pages`,
+        success: function (data) {
+            callback(data);
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+}
 function getEbook(id, callback) {
     $.ajax({
         type: "GET",
@@ -250,7 +286,30 @@ function getVideos(callback) {
         }
     });
 }
-
+function getVideosPage(page, callback) {
+    $.ajax({
+        type: "GET",
+        url: `/api/Video/Page/${page}`,
+        success: function (data) {
+            callback(data);
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+}
+function getVideosPages(callback) {
+    $.ajax({
+        type: "GET",
+        url: `/api/Video/Pages`,
+        success: function (data) {
+            callback(data);
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+}
 function getVideo(id, callback) {
     $.ajax({
         type: "GET",

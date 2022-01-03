@@ -26,6 +26,7 @@ namespace CBProject.Models.ViewModels
         public Category Category { get; set; }
         public int CategoryId { get; set; }
         public string Url { get; set; }
+        public TimeSpan Duration { get; set; }
         public ICollection<ApplicationUser> OtherUsers { get; set; }
         public ICollection<Category> OtherCategory { get; set; }
         public ICollection<Requirement> Requirements { get; set; }

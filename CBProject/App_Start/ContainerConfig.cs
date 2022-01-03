@@ -25,7 +25,7 @@ namespace CBProject.App_Start
             builder.RegisterType<UserStore<ApplicationUser>>().As<IUserStore<ApplicationUser>>();
             builder.RegisterType<RoleStore<IdentityRole>>().As<IRoleStore<IdentityRole, string>>();
             builder.RegisterType<ApplicationDbContext>().As<IApplicationDbContext>();
-            builder.RegisterType<CreateData>();
+            builder.RegisterType<VideoEditor>().InstancePerLifetimeScope();
 
             var container = builder.Build(); // Container with all my Objects for dependency Injection
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
@@ -41,7 +41,7 @@ namespace CBProject.App_Start
             builder.RegisterType<UserStore<ApplicationUser>>().As<IUserStore<ApplicationUser>>();
             builder.RegisterType<RoleStore<IdentityRole>>().As<IRoleStore<IdentityRole, string>>();
             builder.RegisterType<ApplicationDbContext>().As<IApplicationDbContext>();
-
+            builder.RegisterType<VideoEditor>().InstancePerLifetimeScope();
 
             var container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
@@ -58,6 +58,7 @@ namespace CBProject.App_Start
             builder.RegisterType<UserStore<ApplicationUser>>().As<IUserStore<ApplicationUser>>();
             builder.RegisterType<RoleStore<IdentityRole>>().As<IRoleStore<IdentityRole, string>>();
             builder.RegisterType<ApplicationDbContext>().As<IApplicationDbContext>();
+            builder.RegisterType<VideoEditor>().InstancePerLifetimeScope();
 
             var container = builder.Build();
             config.DependencyResolver = new AutofacWebApiDependencyResolver(container);

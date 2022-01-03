@@ -157,6 +157,10 @@ namespace CBProject.Repositories.IdentityRepos
         {
             return await this._manager.UserManager.GetRolesAsync(user.Id);
         }
+        public IQueryable<ApplicationUser> GetAllQueryable()
+        {
+            return this._manager.UserManager.Users;
+        }
         public ICollection<ApplicationUser> GetAll()
         {
             return this._manager.UserManager.Users.ToList();

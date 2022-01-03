@@ -69,6 +69,9 @@
     <Reference Include="FluentEmail.Smtp, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentEmail.Smtp.3.0.0\lib\netstandard2.0\FluentEmail.Smtp.dll</HintPath>
     </Reference>
+    <Reference Include="MediaToolkit, Version=1.1.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MediaToolkit.1.1.0.1\lib\net40\MediaToolkit.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.1.1.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
@@ -155,6 +158,9 @@
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="Xabe.FFmpeg.Downloader">
+      <HintPath>C:\Users\Alexp\Desktop\Xabe.FFmpeg\src\Xabe.FFmpeg.Downloader\bin\Debug\netstandard2.0\Xabe.FFmpeg.Downloader.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
@@ -222,8 +228,9 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\API\CategoryController.cs" />
+    <Compile Include="Controllers\API\CategoriesController.cs" />
     <Compile Include="Controllers\API\CategoryToCategoryController.cs" />
+    <Compile Include="Controllers\API\EbookController.cs" />
     <Compile Include="Controllers\API\OrderController.cs" />
     <Compile Include="Controllers\API\PaymentController.cs" />
     <Compile Include="Controllers\API\ProductsController.cs" />
@@ -266,6 +273,7 @@
     <Compile Include="HelperClasses\Interfaces\IUnitOfWork.cs" />
     <Compile Include="HelperClasses\StaticImfo.cs" />
     <Compile Include="HelperClasses\UnitOfWork.cs" />
+    <Compile Include="HelperClasses\VideoEditor.cs" />
     <Compile Include="Migrations\202201011737324_Initial.cs" />
     <Compile Include="Migrations\202201011737324_Initial.Designer.cs">
       <DependentUpon>202201011737324_Initial.cs</DependentUpon>
@@ -1287,6 +1295,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Contact.css" />
     <Content Include="Content\DataTables\css\autoFill.bootstrap.css" />
     <Content Include="Content\DataTables\css\autoFill.bootstrap.min.css" />
     <Content Include="Content\DataTables\css\autoFill.bootstrap4.css" />
@@ -1458,6 +1467,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="assets\images\codeme_bigImg2_index.jpg" />
+    <Content Include="img\brouser_tab_icon.png" />
     <Content Include="img\icon-book.png" />
     <Content Include="img\icon-book_.png" />
     <Content Include="img\icon-category.png" />

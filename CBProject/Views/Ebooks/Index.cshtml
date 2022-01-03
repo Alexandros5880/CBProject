@@ -161,7 +161,6 @@
                     <th>
                         @Html.DisplayNameFor(model => model.Thumbnail)
                     </th>
-
                 }
                 <th>
                     @Html.DisplayNameFor(model => model.UploadDate)
@@ -229,7 +228,7 @@
                                data-min="0"
                                data-max="5"
                                data-step="0.1"
-                               value="@Html.DisplayFor(modelItem => item.Rate)"> <!-- onchange="$('#ebook-rating-form').submit()" -->
+                               value="@Html.DisplayFor(modelItem => item.Rate)">
                         <input type="submit" value="Submit" />
                     }
                 </td>

@@ -22,9 +22,14 @@ namespace CBProject.Repositories
         }
         public ICollection<Video> GetVideosCC(string userId)
         {
-            return this.GetAll()
+            var videos = this.GetAll()
                 .Where(v => v.CreatorId == userId)
                 .ToList();
+            foreach(var video in videos)
+            {
+                video.RatingsAVG = this.GetRatingsAverage(video.ID);
+            }
+            return videos;
         }
         public void Add(Video video)
         {
@@ -82,17 +87,24 @@ namespace CBProject.Repositories
         }
         public Video Get(int? id)
         {
-            return this._context.Videos
+            var video =  this._context.Videos
                 .Include(v => v.Category)
                 .Include(v => v.Creator)
                 .SingleOrDefault(v => v.ID == id);
+            video.RatingsAVG = this.GetRatingsAverage(video.ID);
+            return video;
         }
         public ICollection<Video> GetAll()
         {
-            return this._context.Videos
+            var videos = this._context.Videos
                 .Include(v => v.Category)
                 .Include(v => v.Creator)
                 .ToList();
+            foreach(var video in videos)
+            {
+                video.RatingsAVG = this.GetRatingsAverage(video.ID);
+            }
+            return videos;
         }
         public IQueryable<Video> GetAllQuerable()
         {
@@ -100,14 +112,20 @@ namespace CBProject.Repositories
         }
         public ICollection<Video> GetAllEmpty()
         {
-            
-            return this._context.Videos.ToList();
+            var videos = this._context.Videos.ToList();
+            foreach(var video in videos)
+            {
+                video.RatingsAVG = this.GetRatingsAverage(video.ID);
+            }
+            return videos;
         }
         public Video GetEmpty(int? id)
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
-            return this._context.Videos.Find(id);
+            var video = this._context.Videos.FirstOrDefault(v => v.ID == id);
+            video.RatingsAVG = this.GetRatingsAverage(video.ID);
+            return video;
         }
         public ICollection<Video> GetOtherVideosFromCategory(int? id)
         {
@@ -116,9 +134,14 @@ namespace CBProject.Repositories
             var category = this._categoriesRepository.Get(id);
             if (category == null)
                 throw new ArgumentNullException(nameof(category));
-            return _context.Videos
+            var videos = this._context.Videos
                 .Where(v => !category.Videos.Contains(v))
                 .ToList();
+            foreach(var video in videos)
+            {
+                video.RatingsAVG = this.GetRatingsAverage(video.ID);
+            }
+            return videos;
         }
         public ICollection<Video> GetVideosFromCategory(int? id)
         {
@@ -127,9 +150,14 @@ namespace CBProject.Repositories
             var category = this._categoriesRepository.Get(id);
             if (category == null)
                 throw new ArgumentNullException(nameof(category));
-            return _context.Videos
+            var videos = _context.Videos
                 .Where(v => category.Videos.Contains(v))
                 .ToList();
+            foreach( var video in videos)
+            {
+                video.RatingsAVG = this.GetRatingsAverage(video.ID);
+            }
+            return videos;
         }
         public void Save()
         {
@@ -139,39 +167,67 @@ namespace CBProject.Repositories
         {
             if (video == null)
                 throw new ArgumentNullException(nameof(video));
-            this._context.Entry(video).State = EntityState.Modified;
+            var videoDB = this.Get(video.ID);
+            videoDB.RatingsAVG = this.GetRatingsAverage(videoDB.ID);
+            _context.Entry(videoDB).CurrentValues.SetValues(video);
+        }
+        public async Task UpdateAsync(Video video)
+        {
+            if (video == null)
+                throw new ArgumentNullException(nameof(video));
+            var videoDB = await this.GetAsync(video.ID);
+            videoDB.RatingsAVG = await this.GetRatingsAverageAsync(videoDB.ID);
+            _context.Entry(videoDB).CurrentValues.SetValues(video);
         }
         public async Task<Video> GetAsync(int? id)
         {
-            return await this._context.Videos
+            var video = await this._context.Videos
                 .Include(v => v.Category)
                 .Include(v => v.Creator)
                 .SingleOrDefaultAsync(v => v.ID == id);
+            video.RatingsAVG = await this.GetRatingsAverageAsync(video.ID);
+            return video;
         }
         public async Task<Video> GetEmptyAsync(int? id)
         {
-            return await this._context.Videos
+            var video = await this._context.Videos
                 .SingleOrDefaultAsync(v => v.ID == id);
+            video.RatingsAVG = await this.GetRatingsAverageAsync(video.ID);
+            return video;
         }
         public async Task<ICollection<Video>> GetAllAsync()
         {
-            return await this._context.Videos
+            var videos = await this._context.Videos
                 .Include(v => v.Category)
                 .Include(v => v.Creator)
                 .ToListAsync();
+            foreach(var video in videos)
+            {
+                video.RatingsAVG = await this.GetRatingsAverageAsync(video.ID);
+            }
+            return videos;
         }
         public async Task<ICollection<Video>> GetAllByCategoryNameAsync(string name)
         {
-            return await this._context.Videos
+            var videos = await this._context.Videos
                 .Include(v => v.Category)
                 .Include(v => v.Creator)
                 .Where(v => v.Category.Name.Equals(name))
                 .ToListAsync();
+            foreach(var video in videos)
+            {
+                video.RatingsAVG = await this.GetRatingsAverageAsync(video.ID);
+            }
+            return videos;
         }
         public async Task<ICollection<Video>> GetAllEmptyAsync()
         {
-            return await this._context.Videos
-                .ToListAsync();
+            var videos = await this._context.Videos.ToListAsync();
+            foreach(var video in videos)
+            {
+                video.RatingsAVG = await this.GetRatingsAverageAsync(video.ID);
+            }
+            return videos;
         }
         public async Task<ICollection<Video>> GetOtherVideosFromCategoryAsync(int? id)
         {
@@ -180,9 +236,14 @@ namespace CBProject.Repositories
             var category = await this._categoriesRepository.GetAsync(id);
             if (category == null)
                 throw new ArgumentNullException(nameof(category));
-            return await _context.Videos
+            var videos = await _context.Videos
                 .Where(v => !category.Videos.Contains(v))
                 .ToListAsync();
+            foreach(var video in videos)
+            {
+                video.RatingsAVG = await this.GetRatingsAverageAsync(video.ID);
+            }
+            return videos;
         }
         public async Task<ICollection<Video>> GetVideosFromCategoryAsync(int? id)
         {
@@ -191,9 +252,14 @@ namespace CBProject.Repositories
             var category = await this._categoriesRepository.GetAsync(id);
             if (category == null)
                 throw new ArgumentNullException(nameof(category));
-            return await _context.Videos
+            var videos = await _context.Videos
                 .Where(v => category.Videos.Contains(v))
                 .ToListAsync();
+            foreach(var video in videos)
+            {
+                video.RatingsAVG = await this.GetRatingsAverageAsync(video.ID);
+            }
+            return videos;
         }
         public IQueryable<Video> GetAllQueryable()
         {
@@ -201,7 +267,7 @@ namespace CBProject.Repositories
         }
         public async Task<ICollection<Video>> GetAllBySearchAsync(string search)
         {
-            return await this._context.Videos
+            var videos = await this._context.Videos
                 .Where(e => e.Category.Name.Contains(search) ||
                             e.Content.Contains(search) ||
                             e.Creator.FirstName.Contains(search) ||
@@ -210,8 +276,23 @@ namespace CBProject.Repositories
                             e.Description.Contains(search) ||
                             e.Title.Contains(search))
                             .ToListAsync();
+            foreach(var video in videos)
+            {
+                video.RatingsAVG = await this.GetRatingsAverageAsync(video.ID);
+            }
+            return videos;
         }
-
+        public IQueryable<Video> GetAllBySearch(IQueryable<Video> videosQ, string search)
+        {
+            return videosQ
+                .Where(e => e.Category.Name.Contains(search) ||
+                            e.Content.Contains(search) ||
+                            e.Creator.FirstName.Contains(search) ||
+                            e.Creator.LastName.Contains(search) ||
+                            e.Creator.Email.Contains(search) ||
+                            e.Description.Contains(search) ||
+                            e.Title.Contains(search));
+        }
 
         public async Task<float> GetRatingsAverageAsync(int? videoId)
         {

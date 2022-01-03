@@ -1,80 +1,27 @@
-﻿@model IEnumerable<CBProject.Models.ViewModels.VideoViewModel>
+﻿
+
+
+
 
 <link rel="stylesheet" href="~/Content/Ratting.css">
 
-@using Microsoft.AspNet.Identity
-@using Microsoft.AspNet.Identity.EntityFramework
-@using CBProject.Models
-
-@{
-    //var fullname = ((System.Security.Claims.ClaimsIdentity)User.Identity).FindFirst("FullName");
-    //var user_image = ((System.Security.Claims.ClaimsIdentity)User.Identity).FindFirst("ImagePath");
-
-
-    var context = new ApplicationDbContext();
-    var userStore = new UserStore<ApplicationUser, ApplicationRole, string, IdentityUserLogin, IdentityUserRole, IdentityUserClaim>(context);
-    var userManager = new CBProject.ApplicationUserManager(userStore);
-    var currentUser = userManager.FindById(User.Identity.GetUserId());
-    var roleStore = new RoleStore<ApplicationRole>(context);
-    var roleManager = new RoleManager<ApplicationRole>(roleStore);
-
-
-    var fullName = currentUser.FullName;
-    var userImage = currentUser.ImagePath;
-    RoleLevel access = RoleLevel.SUPERLOW;
-
-    if (User.Identity.IsAuthenticated)
-    {
-        foreach (var role in currentUser.Roles)
-        {
-            var myRole = roleManager.FindById(role.RoleId);
-            if (myRole.Level == RoleLevel.FULL)
-            {
-                access = myRole.Level;
-            }
-            else if (myRole.Level == RoleLevel.PLUSSFULL)
-            {
-                if (access != RoleLevel.FULL)
-                {
-                    access = myRole.Level;
-                }
-            }
-            else if (myRole.Level == RoleLevel.MIDDLE)
-            {
-                if (access != RoleLevel.FULL &&
-                    access != RoleLevel.PLUSSFULL)
-                {
-                    access = myRole.Level;
-                }
-            }
-            else if (myRole.Level == RoleLevel.LOW)
-            {
-                if (access != RoleLevel.FULL &&
-                    access != RoleLevel.PLUSSFULL &&
-                    access != RoleLevel.MIDDLE)
-                {
-                    access = myRole.Level;
-                }
-            }
-            else if (myRole.Level == RoleLevel.SUPERLOW)
-            {
-                if (access != RoleLevel.FULL &&
-                    access != RoleLevel.PLUSSFULL &&
-                    access != RoleLevel.MIDDLE &&
-                    access != RoleLevel.LOW)
-                {
-                    access = myRole.Level;
-                }
-            }
-        }
-    }
-}
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
 
 @Scripts.Render("~/bundles/jquery")
+
+
+
+
+
+
+
+
+
+
+
 
 
 <script type="text/javascript">
@@ -143,156 +90,30 @@
     });
 </script>
 
+
+
+
+
+
+
+
 <div class="table-responsive">
     <table class="table" id="videos">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Category.Name)
-            </th>
-            <th>
-                @Html.DisplayName("Creator")
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            @*<th>
-                    Cover
-                </th>*@
-            @if (access == RoleLevel.FULL || access == RoleLevel.PLUSSFULL)
-            {
-                <th>
-                    @Html.DisplayNameFor(model => model.Thumbnail)
-                </th>
-            }
-            @*<th>
-                    @Html.DisplayNameFor(model => model.VideoFile)
-                </th>*@
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UploadDate)
-            </th>
-            @*<th>
-                    Rating
-                </th>*@
-            <th></th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
-            if (float.IsNaN(item.Rate))
-            {
-                item.Rate = 0.1f;
-            }
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Category.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Creator.FullName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                @*<td>
-                        <img alt="Cover Foto" src="@item.VideoImagePath" style="height:150px;" />
-                    </td>*@
-                @if (access == RoleLevel.FULL || access == RoleLevel.PLUSSFULL)
-                {
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Thumbnail)
-                    </td>
-                }
-                <!--<td>
-                @{
-                    var path = item.VideoPath;
-                    if (item.VideoPath == null || item.VideoPath == "")
-                    {
-                        path = item.Url;
-                    }
-                }
-                <video controls preload="metadata" height="200">-->
-                @*poster="@item.VideoImagePath"*@
-                <!--<source src="@path" type="video/mp4">
-                    <source src="@path" type="video/webm" />
-                    <source src="@path" type="video/ogg" />
-                    Your browser does not support HTML5 video.
-                </video>-->
-                @*<iframe width="200" height="300" src="@path" allowfullscreen></iframe>*@
-                <!--</td>-->
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UploadDate)
-                </td>
-                @*
-                    <td>
-                        @using (Html.BeginForm("AddRate", "Videos", new { videoId = item.ID }, FormMethod.Post, new { id = "video-rating-form" }))
-                        {
-                            @Html.AntiForgeryToken()
-                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                            @Html.HiddenFor(model => item.ID)
-                            <input name="rate"
-                                   class="rating rating-loading"
-                                   data-min="0"
-                                   data-max="5"
-                                   data-step="0.1"
-                                   value="@item.Rate"> <!-- onchange="$('#video-rating-form').submit()" -->
-                            <input type="submit" value="Submit" />
-                        }
-                    </td>*@
-
-
-
-                <td>
-
-                    @if (access == RoleLevel.FULL)
-                    {
-                        <button type="button" id="tag-modal-button-video" class="btn btn-dark tag-modal-button-video" data-toggle="modal" data-target="#tag-modal-video" data-id="@item.ID">Tag</button>
-                        <button type="button" id="comment-modal-button-video" class="btn btn-primary comment-modal-button-video" data-toggle="modal" data-target="#review-modal-video" data-id="@item.ID">Comment</button>
-                        <button type="button" id="details-modal-button-video" class="btn btn-info details-modal-button-video" data-toggle="modal" data-target="#details-modal-video" data-id="@item.ID">Details</button>
-                        <button type="button" id="edit-modal-button-video" class="btn btn-success edit-modal-button-video" data-toggle="modal" data-target="#edit-modal-video" data-id="@item.ID">Edit</button>
-                        <button type="button" id="delete-modal-button-video" class="btn btn-danger btn-delete delete-modal-button-video" data-toggle="modal" data-target="#delete-modal-video" data-id="@item.ID">Delete</button>
-                    }
-                    else if (access == RoleLevel.PLUSSFULL)
-                    {
-                        <button type="button" id="comment-modal-button-video" class="btn btn-primary comment-modal-button-video" data-toggle="modal" data-target="#review-modal-video" data-id="@item.ID">Comment</button>
-                        <button type="button" id="details-modal-button-video" class="btn btn-info details-modal-button-video" data-toggle="modal" data-target="#details-modal-video" data-id="@item.ID">Details</button>
-                        <button type="button" id="edit-modal-button-video" class="btn btn-success edit-modal-button-video" data-toggle="modal" data-target="#edit-modal-video" data-id="@item.ID">Edit</button>
-                        <button type="button" id="delete-modal-button-video" class="btn btn-danger btn-delete delete-modal-button-video" data-toggle="modal" data-target="#delete-modal-video" data-id="@item.ID">Delete</button>
-                    }
-                    else if (access == RoleLevel.MIDDLE)
-                    {
-                        <button type="button" id="comment-modal-button-video" class="btn btn-primary comment-modal-button-video" data-toggle="modal" data-target="#review-modal-video" data-id="@item.ID">Comment</button>
-                        <button type="button" id="details-modal-button-video" class="btn btn-info details-modal-button-video" data-toggle="modal" data-target="#details-modal-video" data-id="@item.ID">Details</button>
-                        <button type="button" id="edit-modal-button-video" class="btn btn-success edit-modal-button-video" data-toggle="modal" data-target="#edit-modal-video" data-id="@item.ID">Edit</button>
-                        <button type="button" id="delete-modal-button-video" class="btn btn-danger btn-delete delete-modal-button-video" data-toggle="modal" data-target="#delete-modal-video" data-id="@item.ID">Delete</button>
-                    }
-                    else if (access == RoleLevel.LOW)
-                    {
-                        <button type="button" id="comment-modal-button-video" class="btn btn-primary comment-modal-button-video" data-toggle="modal" data-target="#review-modal-video" data-id="@item.ID">Comment</button>
-                    }
-                    else if (access == RoleLevel.SUPERLOW)
-                    {
-                        <button type="button" id="comment-modal-button-video" class="btn btn-primary comment-modal-button" data-toggle="modal" data-target="#review-modal-video" data-id="@item.ID">Comment</button>
-                    }
-                    <style>
-                        button {
-                            margin: 5px;
-                        }
-                    </style>
-                    @*@Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })*@
-                </td>
+                <th>Title</th>
+                <th>Creator</th>
+                <th>Cover</th>
+                <th>Description</th>
+                <th>Upload Date</th>
+                <th>Rating</th>
+                <th></th>
             </tr>
-
-
-        }
-
+        </thead>
     </table>
+    <br/>
+    <br/>
+    <br/>
 </div>
 
 
@@ -386,28 +207,94 @@
     </div>
 </div>
 
+
+
+
+
 @section scripts{
     <script>
         $(document).ready(function () {
             var table = $("#videos").DataTable({
                 ajax: {
-                    url: "/videos/",
+                    url: "/api/Video/all",
                     dataSrc: ""
                 },
                 columns: [
                     {
                         data: "title",
                         render: function (data, type, video) {
-                            return "<a href='/videos/_edit/" + video.id + "'>" + video.Title + "</a>";
+                            return "<a href='/videos/_edit/" + video.id + "'>" + video.title + "</a>";
                         }
                     },
+                    {
+                        data: "creator",
+                        render: function (data, type, video) {
+                            var fullName = "";
+                            getUserByIdSync(video.creatorId, function (creator) {
+                                fullName = creator.fullName;
+                            });
+                            return "<a>" + fullName + "</a>";
+                        }
+                    },
+                    {
+                        data: "Cover Photo",
+                        render: function (data, type, video) {
+                            return `
+                                    <img alt="Cover Foto" src="${video.videoImagePath}" style="height: 77px;"/>
+                                    `;
+                        }
+                    },
+                    {
+                        data: "Decription",
+                        render: function (data, type, video) {
+                            return `<a>${video.description}</a>`;
+                        }
+                    },
+                    {
+                        data: "UplaodDate",
+                        render: function (data, type, video) {
+                            return `<a>${video.uploadDate}</a>`;
+                        }
+                    },
+                    {
+                        data: "Rating",
+                        render: function (data, type, video) {
+                            return `
+                                <form id="video-rating-form" method="post" action="/Videos/AddRate">
+                                    <input type="hidden" id="videoId" name="videoId" value="${video.id}">
+                                    <input name="rate"
+                                           class="rating rating-loading rate"
+                                           data-min="0"
+                                           data-max="5"
+                                           data-step="0.1"
+                                           value="${video.ratingsAVG}">
+                                    <input type="submit" value="Submit" />
+                                </form>
+                            `;
+                        }
+                    },
+                    {
+                        data: "Buttons",
+                        render: function (data, type, video) {
+                            return `
+                                <button type="button" id="tag-modal-button-video" class="btn btn-dark tag-modal-button-video" data-toggle="modal" data-target="#tag-modal-video" data-id="${video.id}">Tag</button>
+                                <button type="button" id="comment-modal-button-video" class="btn btn-primary comment-modal-button-video" data-toggle="modal" data-target="#review-modal-video" data-id="${video.id}">Comment</button>
+                                <button type="button" id="details-modal-button-video" class="btn btn-info details-modal-button-video" data-toggle="modal" data-target="#details-modal-video" data-id="${video.id}">Details</button>
+                                <button type="button" id="edit-modal-button-video" class="btn btn-success edit-modal-button-video" data-toggle="modal" data-target="#edit-modal-video" data-id="${video.id}">Edit</button>
+                                <button type="button" id="delete-modal-button-video" class="btn btn-danger btn-delete delete-modal-button-video" data-toggle="modal" data-target="#delete-modal-video" data-id="${video.id}">Delete</button>
+                            `;
+                        }
+                    }
+                ],
+                createdRow: function (row, data, dataIndex) {
+                    // any manipulation in the row element
+                    var ratingInput = $(row).find('.rating');
+                    $(ratingInput).rating();
 
-                ]
+                }
             });
-
         });
     </script>
 
     <script src="~/Scripts/Ratting.js"></script>
-
 }

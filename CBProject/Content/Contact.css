@@ -1,0 +1,39 @@
+﻿
+
+
+
+
+
+.contact-title-div {
+    padding-top: 50px;
+}
+
+.contact-main-container {
+    text-align: center;
+}
+
+.contact-message-content {
+    width: 57%;
+    margin: 0 auto;
+}
+
+.contact-image-div {
+    text-align: left;
+    padding-left: 3%;
+}
+
+@media screen and (min-width: 1000px) {
+    .contact-title-div {
+        text-align: right;
+    }
+}
+
+@media screen and (max-width: 999px) {
+    .contact-title-div {
+        text-align: center;
+    }
+
+    .contact-image-div {
+        text-align: center;
+    }
+}

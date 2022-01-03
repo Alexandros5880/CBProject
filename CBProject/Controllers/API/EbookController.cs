@@ -1,6 +1,6 @@
 ﻿using CBProject.HelperClasses;
 using CBProject.HelperClasses.Interfaces;
-using CBProject.Models;
+using CBProject.Models.EntityModels;
 using CBProject.Repositories;
 using System;
 using System.Linq;
@@ -9,81 +9,81 @@ using System.Web.Http;
 
 namespace CBProject.Controllers.API
 {
-    public class VideoController : ApiController, IDisposable
+    public class EbookController : ApiController, IDisposable
     {
-        private readonly VideosRepository _videosRepository;
+        private readonly EbooksRepository _ebooksRepository;
 
-        public VideoController(IUnitOfWork unitOfWork)
+        public EbookController(IUnitOfWork unitOfWork)
         {
-            this._videosRepository = unitOfWork.Videos;
+            this._ebooksRepository = unitOfWork.Ebooks;
         }
 
-        // GET api/Video
+        // GET api/Ebook
         [HttpGet]
-        [Route("api/Video/all")]
+        [Route("api/Ebook/all")]
         public async Task<IHttpActionResult> Get()
         {
-            var videos = await this._videosRepository.GetAllEmptyAsync();
+            var videos = await this._ebooksRepository.GetAllEmptyAsync();
             return Ok(videos);
         }
 
-        // GET api/Video/5
+        // GET api/Ebook/5
         public async Task<IHttpActionResult> Get(int? id)
         {
             if (id == null)
                 return NotFound();
-            var video = await this._videosRepository.GetEmptyAsync(id);
+            var video = await this._ebooksRepository.GetEmptyAsync(id);
             if (video == null)
                 return NotFound();
             return Ok(video);
         }
 
-        // POST api/Video
-        public async Task<IHttpActionResult> Post([FromBody] Video video)
+        // POST api/Ebook
+        public async Task<IHttpActionResult> Post([FromBody] Ebook video)
         {
             if (video == null)
                 return NotFound();
-            this._videosRepository.Add(video);
-            await this._videosRepository.SaveAsync();
+            this._ebooksRepository.Add(video);
+            await this._ebooksRepository.SaveAsync();
             return Ok(video);
         }
 
-        // PUT api/Video
-        public async Task<IHttpActionResult> Put([FromBody] Video video)
+        // PUT api/Ebook
+        public async Task<IHttpActionResult> Put([FromBody] Ebook video)
         {
             if (video == null)
                 return NotFound();
-            this._videosRepository.Update(video);
-            await this._videosRepository.SaveAsync();
+            this._ebooksRepository.Update(video);
+            await this._ebooksRepository.SaveAsync();
             return Ok(video);
         }
 
-        // DELETE api/Video/5
+        // DELETE api/Ebook/5
         public async Task<IHttpActionResult> Delete(int? id)
         {
             if (id == null)
                 return NotFound();
-            await this._videosRepository.DeleteAsync(id);
-            await this._videosRepository.SaveAsync();
+            await this._ebooksRepository.DeleteAsync(id);
+            await this._ebooksRepository.SaveAsync();
             return Ok();
         }
 
         [HttpGet]
-        [Route("api/Video/Pages")]
+        [Route("api/Ebook/Pages")]
         public async Task<IHttpActionResult> PagesCount()
         {
-            var query = this._videosRepository.GetAllQueryable();
+            var query = this._ebooksRepository.GetAllQueryable();
             int pages = await Pagination.CountPagesAsync(query, StaticImfo.PageSize);
             return Ok(pages);
         }
 
         [HttpGet]
-        [Route("api/Video/Page/{number}")]
+        [Route("api/Ebook/Page/{number}")]
         public async Task<IHttpActionResult> GetPage(int number)
         {
             if (number > StaticImfo.PageSize)
                 return BadRequest();
-            var query = this._videosRepository.GetAllQueryable();
+            var query = this._ebooksRepository.GetAllQueryable();
             var myPage = Pagination.Page(query.OrderBy(c => c.ID), number, StaticImfo.PageSize);
             return Ok(myPage);
         }
@@ -92,7 +92,7 @@ namespace CBProject.Controllers.API
         {
             if (disposing)
             {
-                this._videosRepository.Dispose();
+                this._ebooksRepository.Dispose();
             }
             base.Dispose(disposing);
         }

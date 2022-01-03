@@ -1,4 +1,6 @@
 ﻿using CBProject.Models;
+using CBProject.Repositories.IdentityRepos;
+using CBProject.Repositories.IdentityRepos.Interfaces;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -14,15 +16,18 @@ namespace CBProject.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private readonly UsersRepo _userRepo;
 
-        public ManageController()
+        public ManageController(IUsersRepo userRepo)
         {
+            this._userRepo = (UsersRepo)userRepo;
         }
 
-        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IUsersRepo userRepo)
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            this._userRepo = (UsersRepo)userRepo;
         }
 
         public ApplicationSignInManager SignInManager
@@ -69,7 +74,8 @@ namespace CBProject.Controllers
                 PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
                 Logins = await UserManager.GetLoginsAsync(userId),
-                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
+                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
+                User = await this._userRepo.GetAsync(User.Identity.GetUserId())
             };
             return View(model);
         }

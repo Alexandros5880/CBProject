@@ -87,13 +87,23 @@
             </div>
             <p class="text-center">
                 <video id="myvideo" width="100%" height="500" src="@Html.DisplayFor(model => model.VideoPath)" frameborder="0" allowfullscreen></video>
-                @*<script>
-                    window.onload = (event) => {
-                        var duretion = document.getElementById("myvideo").duration / 100;
-                        var durationParagraph = document.getElementById("video-duration")
-                        durationParagraph.appendChild(duration);
-                    };
-                </script>*@
+                <script>
+                    //window.onload = (event) => {
+                    //    var duretion = document.getElementById("myvideo").duration / 100;
+                    //    var durationParagraph = document.getElementById("video-duration")
+                    //    durationParagraph.appendChild(duration);
+                    //};
+
+                    // Load Video Duration
+                    //window.onload = (event) => {
+                    //    var duretion = document.getElementById("myvideo").duration / 100;
+                    //    var durationParagraph = $("#video-duration")
+                    //    durationParagraph.append(`
+                    //            <img class="img-icon-index" src="/img/icon-video.png" alt="video" /> ${duretion} Hours
+                    //    `);
+                    //    alert(duration);
+                    //};
+                </script>
             </p>
         </div>
     </div>
@@ -171,7 +181,7 @@
 
         <h5><b>INCLUDES</b></h5>
         <p><img class="img-icon-index" src="~/img/icons-person.png" alt="person" /> Programming with <b>@Html.DisplayFor(model => model.Creator.FullName)</b>  </p>
-        <p id="video-duration"></p>
+        <p id="video-duration"><img class="img-icon-index" src="/img/icon-video.png" alt="video" /> <b>@Model.Duration.ToString(@"hh\:mm\:ss\:fff")</b> Hours</p>
         <p><img class="img-icon-index" src="~/img/icons-calendar.png" alt="person" /> Upload Date <b>@Html.DisplayFor(model => model.UploadDate)</b> </p>
         <p><img class="img-icon-index" src="~/img/icon-category.png" alt="video" /> Category: <b>@Html.DisplayFor(model => model.Category.Name)</b> </p>
 
@@ -261,15 +271,15 @@
 
 
 
-            // Load Video Duration
-            window.onload = (event) => {
-                var duretion = document.getElementById("myvideo").duration / 100;
-                var durationParagraph = $("#video-duration")
-                durationParagraph.append(`
-                        <img class="img-icon-index" src="/img/icon-video.png" alt="video" /> ${duretion} Hours
-                `);
-                alert(duration);
-            };
+            //// Load Video Duration
+            //window.onload = (event) => {
+            //    var duretion = document.getElementById("myvideo").duration / 100;
+            //    var durationParagraph = $("#video-duration")
+            //    durationParagraph.append(`
+            //            <img class="img-icon-index" src="/img/icon-video.png" alt="video" /> ${duretion} Hours
+            //    `);
+            //    alert(duration);
+            //};
 
 
 
