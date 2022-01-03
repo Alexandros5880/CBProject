@@ -10,7 +10,6 @@ using CBProject.Repositories.IdentityRepos.Interfaces;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
@@ -122,9 +121,9 @@ namespace CBProject.Controllers
                 if (EbookImageFile != null)
                 {
                     viewModel.EbookImageFile = EbookImageFile;
-                    string FileName = Path.GetFileNameWithoutExtension(viewModel.EbookImageFile.FileName);
-                    string FileExtension = Path.GetExtension(viewModel.EbookImageFile.FileName);
-                    FileName = viewModel.Title.Trim() + FileExtension;
+                    string FileName = Path.GetFileNameWithoutExtension(EbookImageFile.FileName);
+                    string FileExtension = Path.GetExtension(EbookImageFile.FileName);
+                    FileName = FileName + FileExtension;
                     viewModel.EbookImagePath = (StaticImfo.EbooksImagesPath + FileName).Trim();
                     viewModel.EbookImageFile.SaveAs(Server.MapPath(viewModel.EbookImagePath));
                 }
@@ -132,9 +131,9 @@ namespace CBProject.Controllers
                 if (EbookFile != null)
                 {
                     viewModel.EbookFile = EbookFile;
-                    string FileName = Path.GetFileNameWithoutExtension(viewModel.EbookFile.FileName);
-                    string FileExtension = Path.GetExtension(viewModel.EbookFile.FileName);
-                    FileName = viewModel.Title.Trim() + FileExtension;
+                    string FileName = Path.GetFileNameWithoutExtension(EbookFile.FileName);
+                    string FileExtension = Path.GetExtension(EbookFile.FileName);
+                    FileName = FileName + FileExtension;
                     viewModel.EbookFilePath = (StaticImfo.EbooksFilesPath + FileName).Trim();
                     viewModel.EbookFile.SaveAs(Server.MapPath(viewModel.EbookFilePath));
                 }
@@ -178,9 +177,9 @@ namespace CBProject.Controllers
                 if (EbookImageFile != null)
                 {
                     viewModel.EbookImageFile = EbookImageFile;
-                    string FileName = Path.GetFileNameWithoutExtension(viewModel.EbookImageFile.FileName);
-                    string FileExtension = Path.GetExtension(viewModel.EbookImageFile.FileName);
-                    FileName = viewModel.Title.Trim() + FileExtension;
+                    string FileName = Path.GetFileNameWithoutExtension(EbookImageFile.FileName);
+                    string FileExtension = Path.GetExtension(EbookImageFile.FileName);
+                    FileName = FileName + FileExtension;
                     viewModel.EbookImagePath = (StaticImfo.EbooksImagesPath + FileName).Trim();
                     viewModel.EbookImageFile.SaveAs(Server.MapPath(viewModel.EbookImagePath));
                     imgFile = true;
@@ -190,9 +189,9 @@ namespace CBProject.Controllers
                 if (EbookFile != null)
                 {
                     viewModel.EbookFile = EbookFile;
-                    string FileName = Path.GetFileNameWithoutExtension(viewModel.EbookFile.FileName);
-                    string FileExtension = Path.GetExtension(viewModel.EbookFile.FileName);
-                    FileName = viewModel.Title.Trim() + FileExtension;
+                    string FileName = Path.GetFileNameWithoutExtension(EbookFile.FileName);
+                    string FileExtension = Path.GetExtension(EbookFile.FileName);
+                    FileName = FileName + FileExtension;
                     viewModel.EbookFilePath = (StaticImfo.EbooksFilesPath + FileName).Trim();
                     viewModel.EbookFile.SaveAs(Server.MapPath(viewModel.EbookFilePath));
                     file = true;
@@ -218,11 +217,8 @@ namespace CBProject.Controllers
                     }
                 }
                 var ebookDB = Mapper.Map<EbookViewModel, Ebook>(viewModel);
-                _context.Entry(ebookDB).State = EntityState.Modified;
-                //this._ebooksRepository.Delete(ebookDB.ID);
-                //await this._ebooksRepository.SaveAsync();
-                //this._ebooksRepository.Add(ebookDB);
-                //await this._ebooksRepository.SaveAsync();
+                await this._ebooksRepository.UpdateAsync(ebookDB);
+                await this._ebooksRepository.SaveAsync();
                 return RedirectToAction("Index");
             }
             

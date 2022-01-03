@@ -2,15 +2,10 @@
 using CBProject.Models.ViewModels;
 using FluentEmail.Core;
 using FluentEmail.Smtp;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web;
-using System.Xml.Linq;
 
 namespace CBProject.HelperClasses
 {
@@ -31,10 +26,11 @@ namespace CBProject.HelperClasses
         //SendEmailRegister
         //SendEmailContact
         //SendEmailChangedPassword
-        
+        //SendEmailReceipt
+
 
         public Task SendEmailRegister(ApplicationUser user)
-        {           
+        {
 
             Email.DefaultSender = _sender;
 
@@ -63,7 +59,7 @@ namespace CBProject.HelperClasses
             return body.ToString();
         }
 
-        public Task SendEmailContact(ContactViewModel contact )
+        public Task SendEmailContact(ContactViewModel contact)
         {
 
             StringBuilder message = new StringBuilder();
@@ -73,7 +69,19 @@ namespace CBProject.HelperClasses
                    .Append($"Subject: {contact.Subject} \n")
                    .Append($"Message: {contact.Message} \n");
 
+            StringBuilder messageToUser = new StringBuilder();
+            messageToUser.Append($"Dear {contact.LastName} {contact.FirstName}, \n")
+                   .Append($"We received your message and we will contact you shortly! \n")
+                   .Append($"Kind Regards, \n")
+                   .Append($"--CodeMe Team");
+
             Email.DefaultSender = _sender;
+
+            var emailToUser = Email
+                .From("codeme.email@gmail.com", "CodeMe Support")
+                .To(contact.Email)
+                .Subject("Contact CodeMe")
+                .Body(messageToUser.ToString());
 
             var email = Email
                 .From("codeme.email@gmail.com", "Contact Form")
@@ -81,16 +89,17 @@ namespace CBProject.HelperClasses
                 .Subject("Contact Form")
                 .Body(message.ToString());
 
+            emailToUser.SendAsync();
             return email.SendAsync();
         }
 
-        public Task SendEmailChangedPassword(ApplicationUser user)
+        public Task SendEmailChangedPassword(ResetPasswordViewModel user)
         {
 
             Email.DefaultSender = _sender;
 
             StringBuilder body = new StringBuilder();
-            body.Append($"Dear {user.FullName},\n\n")
+            body.Append($"Dear {user.Email},\n\n")
                 .Append("Your Password has been changed.\n\n")
                 .Append($"Kind Regards, \n")
                 .Append($"--CodeMe Team");
@@ -104,5 +113,25 @@ namespace CBProject.HelperClasses
 
             return email.SendAsync();
         }
+
+        //public Task SendEmailReceipt()
+        //{
+        //    Email.DefaultSender = _sender;
+
+        //    StringBuilder body = new StringBuilder();
+        //    body.Append($"Dear {user.FullName},\n\n")
+        //        .Append("Your Password has been changed.\n\n")
+        //        .Append($"Kind Regards, \n")
+        //        .Append($"--CodeMe Team");
+
+
+        //    var email = Email
+        //        .From("codeme.email@gmail.com", "CodeMe")
+        //        .To(user.Email)
+        //        .Subject("Change Password")
+        //        .Body(body.ToString());
+
+        //    return email.SendAsync();
+        //}
     }
 }
