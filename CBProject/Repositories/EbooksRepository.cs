@@ -28,24 +28,41 @@ namespace CBProject.Repositories
         {
            if(ebook == null)
                 throw new ArgumentNullException(nameof(ebook));
-            _context.Entry(ebook).State = EntityState.Modified;
+            var ebookDB = this.Get(ebook.ID);
+            ebookDB.RatingsAVG = this.GetRatingsAverage(ebookDB.ID);
+            _context.Entry(ebookDB).CurrentValues.SetValues(ebook);
+        }
+        public async Task UpdateAsync(Ebook ebook)
+        {
+            if (ebook == null)
+                throw new ArgumentNullException(nameof(ebook));
+            var ebookDB = await this.GetAsync(ebook.ID);
+            ebookDB.RatingsAVG = await this.GetRatingsAverageAsync(ebookDB.ID);
+            _context.Entry(ebookDB).CurrentValues.SetValues(ebook);
         }
         public Ebook Get(int? id)
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
-            return _context.Ebooks
+            var ebook = this._context.Ebooks
                 .Include(c => c.Category)
                 .Include(e => e.Category)
                 .Include(e => e.Creator)
                 .FirstOrDefault(e=>e.ID == id);
+            ebook.RatingsAVG = this.GetRatingsAverage(ebook.ID);
+            return ebook;
         }
         public ICollection<Ebook> GetAll()
         {
-            return _context.Ebooks
+            var ebooks = this._context.Ebooks
                 .Include(c => c.Creator)
                 .Include(c => c.Category)
                 .ToList();
+            foreach(var ebook in ebooks)
+            {
+                ebook.RatingsAVG = this.GetRatingsAverage(ebook.ID);
+            }
+            return ebooks;
         }
         public void Delete(int? id)
         {
@@ -96,11 +113,15 @@ namespace CBProject.Repositories
         }
         public async Task<ICollection<Ebook>> GetAllAsync()
         {
-
-            return await _context.Ebooks
+            var ebooks = await _context.Ebooks
                 .Include(c => c.Creator)
                 .Include(c => c.Category)
                 .ToListAsync();
+            foreach(var ebook in ebooks)
+            {
+                ebook.RatingsAVG = await this.GetRatingsAverageAsync(ebook.ID);
+            }
+            return ebooks;
         }
         public IQueryable<Ebook> GetAllQuerable()
         {
@@ -108,21 +129,35 @@ namespace CBProject.Repositories
         }
         public async Task<ICollection<Ebook>> GetAllByCategoryNameAsync(string name)
         {
-            return await _context.Ebooks
+            var ebooks = await _context.Ebooks
                 .Include(e => e.Creator)
                 .Include(e => e.Category)
                 .Where(e => e.Category.Name.Equals(name))
                 .ToListAsync();
+            foreach(var ebook in ebooks)
+            {
+                ebook.RatingsAVG = await this.GetRatingsAverageAsync(ebook.ID);
+            }
+            return ebooks;
         }
         public ICollection<Ebook> GetAllEmpty()
         {
-            return _context.Ebooks.ToList();
+            var ebooks = this._context.Ebooks.ToList();
+            foreach(var ebook in ebooks)
+            {
+                ebook.RatingsAVG = this.GetRatingsAverage(ebook.ID);
+            }
+            return ebooks;
         }
         public async Task<ICollection<Ebook>> GetAllEmptyAsync()
         {
-            return await this._context.Ebooks
+            var ebooks = await this._context.Ebooks
                 .ToListAsync();
-
+            foreach(var ebook in ebooks)
+            {
+                ebook.RatingsAVG = await this.GetRatingsAverageAsync(ebook.ID);
+            }
+            return ebooks;
         }
         public async Task<Ebook> GetAsync(int? id)
         {
@@ -135,6 +170,7 @@ namespace CBProject.Repositories
                  .FirstAsync(e => e.ID == id);
             if(ebook == null)
                 throw new ArgumentNullException(nameof(ebook));
+            ebook.RatingsAVG = await this.GetRatingsAverageAsync(ebook.ID);
             return ebook;
 
         }
@@ -142,7 +178,9 @@ namespace CBProject.Repositories
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
-            return _context.Ebooks.FirstOrDefault(e => e.ID == id);
+            var ebook = this._context.Ebooks.FirstOrDefault(e => e.ID == id);
+            ebook.RatingsAVG = this.GetRatingsAverage(ebook.ID);
+            return ebook;
         }
         public async Task<Ebook> GetEmptyAsync(int? id)
         {
@@ -151,6 +189,7 @@ namespace CBProject.Repositories
             var ebook = await _context.Ebooks.FindAsync(id);
             if (ebook == null)
                 throw new ArgumentNullException(nameof(ebook));
+            ebook.RatingsAVG = await this.GetRatingsAverageAsync(ebook.ID);
             return ebook;
 
         }
@@ -160,7 +199,7 @@ namespace CBProject.Repositories
         }
         public async Task<ICollection<Ebook>> GetAllBySearchAsync(string search)
         {
-            return await this._context.Ebooks
+            var ebooks = await this._context.Ebooks
                 .Where(e => e.Category.Name.Contains(search) ||
                             e.Content.Contains(search) ||
                             e.Creator.FirstName.Contains(search) ||
@@ -169,6 +208,11 @@ namespace CBProject.Repositories
                             e.Description.Contains(search) ||
                             e.Title.Contains(search))
                             .ToListAsync();
+            foreach(var ebook in ebooks)
+            {
+                ebook.RatingsAVG = await this.GetRatingsAverageAsync(ebook.ID);
+            }
+            return ebooks;
         }
         public IQueryable<Ebook> GetAllBySearch(IQueryable<Ebook> ebooksQ,string search)
         {

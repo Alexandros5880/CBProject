@@ -5,6 +5,12 @@
 @using CBProject.Models
 
 
+
+@section styles {
+    <link rel="stylesheet" href="~/Content/Lessons.css" />
+}
+
+
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 
@@ -137,7 +143,6 @@
         <div class="col-lg-12" style="text-align:center;">
             <nav>
                 <ul class="pagination pagination-lg justify-content-center pagination-content">
-
                 </ul>
             </nav>
         </div>
@@ -146,39 +151,39 @@
 
 
 @*
-<div class="row" style="margin-top: 50px !important; margin-bottom: 50px !important;">
-    <!-- Filters SlideBar -->
-    <div class="col-md-2">
-        <br />
-        <div id="subscription-container">
-            @Html.ActionLink("Subscribe Now", "Subscribe", "SubscriptionPackages", null, new { @class = "subscribe-button" })
+    <div class="row" style="margin-top: 50px !important; margin-bottom: 50px !important;">
+        <!-- Filters SlideBar -->
+        <div class="col-md-2">
+            <br />
+            <div id="subscription-container">
+                @Html.ActionLink("Subscribe Now", "Subscribe", "SubscriptionPackages", null, new { @class = "subscribe-button" })
+            </div>
         </div>
-    </div>
-    <!-- Main Content -->
-    <div class="col-md-10">
-        <div class="container-fluid">
-            <div class="grey-row">
-                <div class="container">
-                    <br />
-                    <br />
+        <!-- Main Content -->
+        <div class="col-md-10">
+            <div class="container-fluid">
+                <div class="grey-row">
+                    <div class="container">
+                        <br />
+                        <br />
 
-                    <div class="row contents">
+                        <div class="row contents">
 
+                        </div>
+
+                        <br />
+                        <br />
                     </div>
-
-                    <br />
-                    <br />
-                </div>
-                <div class="col-lg-12">
-                    <nav>
-                        <ul class="pagination pagination-lg justify-content-center pagination-content">
-                        </ul>
-                    </nav>
+                    <div class="col-lg-12">
+                        <nav>
+                            <ul class="pagination pagination-lg justify-content-center pagination-content">
+                            </ul>
+                        </nav>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 *@
 
 
@@ -202,7 +207,7 @@
             });
 
             // Load The First Items Whe Page Is Loading
-            searchTop(ebooks, videos, lessonsRatings, createdDate, search, page);      
+            searchTop(ebooks, videos, lessonsRatings, createdDate, search, page);
 
             // Search Button Top Clicks
             $(document.body).on('click', 'button', function () {
@@ -308,48 +313,48 @@
                     data.ebooks.forEach(ebook => {
                         getCategory(ebook.categoryId, function (category) {
                             $(".contents").append(`
-                                <div class="col-md-4 ourHolder" id="ourHolder">
-                                    <input type="hidden" id="category" name="category" value="${category.id}">
-                                    <input type="hidden" id="content" name="content" value="${ebook.id}">
-                                    <input type="hidden" id="content-type" name="content-type" value="ebook">
-                                    <div class="card item" id="card-video">
-                                        <div style="width:100%; text-align:center; margin-top: 5%;">
-                                            <img alt="Cover Foto" src="${ebook.ebookImagePath}" style="height:150px;" />
-                                            <h4 style="margin-top: 5%;">${ebook.title}</h4>
-                                        </div>
-                                        <div class="card-body text-center">
-                                            <p class="card-text"> ${ebook.description} </p>
-                                            <p class="card-text"> ${ebook.title}  </p>
-                                            <br />
-                                            <button class="btn btn-card btn-lg details">Details</button>
-                                            <button class="btn btn-card-play btn-lg btn-open-modal" data-toggle="modal" data-target="#modal-fullscreen-xl">
-                                                Read
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Ebook Modal -->
-                                <div class="modal modal-fullscreen-xl" id="modal-fullscreen-xl" tabindex="-1" role="dialog" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title">${ebook.title}</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
+                                    <div class="col-md-4 ourHolder" id="ourHolder">
+                                        <input type="hidden" id="category" name="category" value="${category.id}">
+                                        <input type="hidden" id="content" name="content" value="${ebook.id}">
+                                        <input type="hidden" id="content-type" name="content-type" value="ebook">
+                                        <div class="card item" id="card-video">
+                                            <div style="width:100%; text-align:center; margin-top: 5%;">
+                                                <img alt="Cover Foto" src="${ebook.ebookImagePath}" style="height:150px;" />
+                                                <h4 style="margin-top: 5%;">${ebook.title}</h4>
+                                            </div>
+                                            <div class="card-body text-center">
+                                                <p class="card-text"> ${ebook.description} </p>
+                                                <p class="card-text"> ${ebook.title}  </p>
+                                                <br />
+                                                <button class="btn btn-card btn-lg details">Details</button>
+                                                <button class="btn btn-card btn-lg btn-open-modal" data-toggle="modal" data-target="#modal-fullscreen-xl">
+                                                    Read
                                                 </button>
                                             </div>
-                                            <div class="modal-body">
-                                                <div class="embed-responsive embed-responsive-16by9">
-                                                    <embed src='${ebook.ebookFilePath} width:"300px;" height="300px" />
+                                        </div>
+                                    </div>
+                                    <!-- Ebook Modal -->
+                                    <div class="modal modal-fullscreen-xl" id="modal-fullscreen-xl" tabindex="-1" role="dialog" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">${ebook.title}</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
                                                 </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <div class="modal-body">
+                                                    <div class="embed-responsive embed-responsive-16by9">
+                                                        <embed src='${ebook.ebookFilePath} width:"300px;" height="300px" />
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            `);
+                                `);
                         });
                     });
                 }
@@ -374,35 +379,35 @@
                                         <p><img class="img-icon-index" src="../assets/images/icons/icon-video.png" alt="video" /> hours on-demand video  </p>
                                         <br />
                                         <button class="btn btn-card btn-lg details">Details</button>
-                                        <button class="btn btn-card-play btn-lg btn-open-modal more" data-toggle="modal" data-target="#modal-fullscreen-xl">
+                                        <button class="btn btn-card btn-lg btn-open-modal more" data-toggle="modal" data-target="#modal-fullscreen-xl">
                                             Play
                                         </button>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Video Modal -->
-                            <div class="modal modal-fullscreen-xl" id="modal-fullscreen-xl" tabindex="-1" role="dialog" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">${video.title}</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="embed-responsive embed-responsive-16by9">
-                                                <iframe class="embed-responsive-item" src="${video.videoPath}" allowfullscreen></iframe>
+                                <!-- Video Modal -->
+                                <div class="modal modal-fullscreen-xl" id="modal-fullscreen-xl" tabindex="-1" role="dialog" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">${video.title}</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
                                             </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <div class="modal-body">
+                                                <div class="embed-responsive embed-responsive-16by9">
+                                                    <iframe class="embed-responsive-item" src="${video.videoPath}" allowfullscreen></iframe>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            `
+                                `
                             );
                         });
                     });
