@@ -156,15 +156,6 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Description)
                 </th>
-                @if (access == RoleLevel.FULL || access == RoleLevel.PLUSSFULL)
-                {
-                    <th>
-                        @Html.DisplayNameFor(model => model.Thumbnail)
-                    </th>
-                }
-                <th>
-                    @Html.DisplayNameFor(model => model.UploadDate)
-                </th>
                 <th>
                     Cover
                 </th>
@@ -172,8 +163,9 @@
                     @Html.DisplayNameFor(model => model.Creator)
                 </th>
                 <th>
-                    Category
+                    @Html.DisplayNameFor(model => model.UploadDate)
                 </th>
+
                 <th>
                     Rating
                 </th>
@@ -184,91 +176,7 @@
         <tbody>
         </tbody>
 
-        @foreach (var item in Model)
-        {
-            if (float.IsNaN(item.Rate))
-            {
-                item.Rate = 0.0f;
-            }
-            <tr>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                @if (access == RoleLevel.FULL || access == RoleLevel.PLUSSFULL)
-                {
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Thumbnail)
-                    </td>
-                }
-                <td>
-                    @Html.DisplayFor(modelItem => item.UploadDate)
-                </td>
-                <td>
-                    <img alt="Cover Foto" src="@item.EbookImagePath" style="height:100px;" />
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Creator.FullName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Category.Name)
-                </td>
-                <td>
-                    @using (Html.BeginForm("AddRate", "Ebooks", new { ebookId = item.ID }, FormMethod.Post, new { id = "ebook-rating-form" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        @Html.HiddenFor(model => item.ID)
-                        <input id="input-1"
-                               name="rate"
-                               class="rating rating-loading"
-                               data-min="0"
-                               data-max="5"
-                               data-step="0.1"
-                               value="@Html.DisplayFor(modelItem => item.Rate)"> <!-- onchange="$('#ebook-rating-form').submit()" -->
-                        <input type="submit" value="Submit" />
-                    }
-                </td>
-                <td>
-                    @if (access == RoleLevel.FULL)
-                    {
-                        <button type="button" id="tag-modal-button-ebook" class="btn btn-dark tag-modal-button-ebook" data-toggle="modal" data-target="#tag-modal-ebook" data-id="@item.ID">Tag</button>
-                        <button type="button" id="comment-modal-button-ebook" class="btn btn-primary comment-modal-button-ebook" data-toggle="modal" data-target="#review-modal-ebook" data-id="@item.ID">Comment</button>
-                        <button type="button" id="details-modal-button-ebook" class="btn btn-info details-modal-button-ebook" data-toggle="modal" data-target="#details-modal-ebook" data-id="@item.ID">Details</button>
-                        <button type="button" id="edit-modal-button-ebook" class="btn btn-success edit-modal-button-ebook" data-toggle="modal" data-target="#edit-modal-ebook" data-id="@item.ID">Edit</button>
-                        <button type="button" id="delete-modal-button-ebook" class="btn btn-danger delete-modal-button-ebook" data-toggle="modal" data-target="#delete-modal-ebook" data-id="@item.ID">Delete</button>
-                    }
-                    else if (access == RoleLevel.PLUSSFULL)
-                    {
-                        <button type="button" id="comment-modal-button-ebook" class="btn btn-primary comment-modal-button-ebook" data-toggle="modal" data-target="#review-modal-ebook" data-id="@item.ID">Comment</button>
-                        <button type="button" id="edit-modal-ebook" class="btn btn-success edit-modal-button-ebook" data-toggle="modal" data-target="#edit-modal-ebook" data-id="@item.ID">Edit</button>
-                        <button type="button" id="details-modal-button-ebook" class="btn btn-info details-modal-button-ebook" data-toggle="modal" data-target="#details-modal-ebook" data-id="@item.ID">Details</button>
-                        <button type="button" id="delete-modal-button-ebook" class="btn btn-danger delete-modal-button-ebook" data-toggle="modal" data-target="#delete-modal-ebook" data-id="@item.ID">Delete</button>
-                    }
-                    else if (access == RoleLevel.MIDDLE)
-                    {
-                        <button type="button" class="btn btn-info details-modal-button-ebook" data-toggle="modal" data-target="#review-modal-ebook" data-id="@item.ID">Details</button>
-                        <button type="button" id="edit-modal-ebook" class="btn btn-success edit-modal-button-ebook" data-toggle="modal" data-target="#edit-modal-ebook" data-id="@item.ID">Edit</button>
-                        <button type="button" id="details-modal-button-ebook" class="btn btn-info details-modal-button-ebook" data-toggle="modal" data-target="#details-modal-ebook" data-id="@item.ID">Details</button>
-                        <button type="button" id="delete-modal-button-ebook" id="delete-modal-button-ebook" class="btn btn-danger delete-modal-button-ebook" data-toggle="modal" data-target="#delete-modal-ebook" data-id="@item.ID">Delete</button>
-                    }
-                    else if (access == RoleLevel.LOW)
-                    {
-                        <button type="button" id="comment-modal-button-ebook" class="btn btn-primary comment-modal-button-ebook" data-toggle="modal" data-target="#review-modal-ebook" data-id="@item.ID">Comment</button>
-                    }
-                    else if (access == RoleLevel.SUPERLOW)
-                    {
-                        <button type="button" id="comment-modal-button-ebook" class="btn btn-primary comment-modal-button-ebook" data-toggle="modal" data-target="#review-modal-ebook" data-id="@item.ID">Comment</button>
-                    }
-                    @*@Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |*@
-                    @*@Html.ActionLink("Delete", "Delete", new { id = item.ID })*@
-                </td>
-            </tr>
-        }
     </table>
 
 
@@ -358,29 +266,93 @@
         </div>
     </div>
 
-
-
-
-
-
 </div>
-
-
-
-
-
-
-
-
-
 
 @section scripts{
     <script>
+        $(document).ready(function () {
+            var table = $("#ebooks").DataTable({
+                ajax: {
+                    url: "/api/Ebook/all",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "title",
+                        render: function (data, type, ebook) {
+                            return `<p>${ebook.title}</a>`;
+                        }
+                    },
+                    {
+                        data: "Decription",
+                        render: function (data, type, ebook) {
+                            return `<a>${ebook.description}</a>`;
+                        }
+                    },
+                    {
+                        data: "creator",
+                        render: function (data, type, ebook) {
+                            var fullName = "";
+                            getUserByIdSync(ebook.creatorId, function (creator) {
+                                fullName = creator.fullName;
+                            });
+                            return "<a>" + fullName + "</a>";
+                        }
+                    },
+                  
+                    {
+                        data: "UplaodDate",
+                        render: function (data, type, ebook) {
+                            return `<a>${ebook.uploadDate}</a>`;
+                        }
+                    },
 
+                    {
+                        data: "Cover Photo",
+                        render: function (data, type, ebook) {
+                            return `<img alt="Cover Foto" src="${ebook.ebookImagePath}" style="height: 77px;"/>`;
+                        }
+                    },
+
+                    {
+                        data: "Rating",
+                        render: function (data, type, ebook) {
+                            return `
+                                    <form id="ebook-rating-form" method="post" action="/Ebooks/AddRate">
+                                        <input name="rate"
+                                               class="rating rating-loading rate"
+                                               data-min="0"
+                                               data-max="5"
+                                               data-step="0.1"
+                                               value="${ebook.ratingsAVG}">
+                                        <input type="submit" value="Submit" />
+                                    </form>
+                                `;
+                        }
+                    },
+                    {
+                        data: "Buttons",
+                        render: function (data, type, ebook) {
+                            return `
+                                    <button type="button" id="tag-modal-button-ebook" class="btn btn-dark tag-modal-button-ebook" data-toggle="modal" data-target="#tag-modal-ebook" data-id="${ebook.id}">Tag</button>
+                                    <button type="button" id="comment-modal-button-ebook" class="btn btn-primary comment-modal-button-ebook" data-toggle="modal" data-target="#review-modal-ebook" data-id="${ebook.id}">Comment</button>
+                                    <button type="button" id="details-modal-button-ebook" class="btn btn-info details-modal-button-ebook" data-toggle="modal" data-target="#details-modal-ebook" data-id="${ebook.id}">Details</button>
+                                    <button type="button" id="edit-modal-button-ebook" class="btn btn-success edit-modal-button-ebook" data-toggle="modal" data-target="#edit-modal-ebook" data-id="${ebook.id}">Edit</button>
+                                    <button type="button" id="delete-modal-button-ebook" class="btn btn-danger btn-delete delete-modal-button-ebook" data-toggle="modal" data-target="#delete-modal-ebook" data-id="${ebook.id}">Delete</button>
+                                `;
+                        }
+                    }
+                ],
+                createdRow: function (row, data, dataIndex) {
+
+                    // any manipulation in the row element
+                    var ratingInput = $(row).find('.rating');
+                    $(ratingInput).rating();
+
+                }
+            });
+        });
     </script>
 
     <script src="~/Scripts/Ratting.js"></script>
 }
-
-
-
