@@ -43,7 +43,9 @@ namespace CBProject.Repositories
         public ICollection<Ebook> GetAll()
         {
             return _context.Ebooks
-                .Include(c => c.Category).ToList();
+                .Include(c => c.Creator)
+                .Include(c => c.Category)
+                .ToList();
         }
         public void Delete(int? id)
         {
@@ -96,7 +98,9 @@ namespace CBProject.Repositories
         {
 
             return await _context.Ebooks
-                .Include(c => c.Category).ToListAsync();
+                .Include(c => c.Creator)
+                .Include(c => c.Category)
+                .ToListAsync();
         }
         public IQueryable<Ebook> GetAllQuerable()
         {

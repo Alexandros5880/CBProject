@@ -81,6 +81,19 @@ function getUserById(id, callback) {
         }
     });
 }
+function getUserByIdSync(id, callback) {
+    $.ajax({
+        type: "GET",
+        async: false,
+        url: "/api/user?userId=" + id,
+        success: function (data) {
+            callback(data);
+        },
+        error: function (error) {
+            return error;
+        }
+    });
+}
 
 function getLogedUser(callback) {
     $.ajax({
