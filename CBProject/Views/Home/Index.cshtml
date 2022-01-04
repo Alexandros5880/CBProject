@@ -11,13 +11,22 @@
 
 
 
+@section styles {
+    <link rel="stylesheet" href="~/Content/Lessons.css" />
+    <link rel="stylesheet" href="~/Content/Ratting.css">
+}
+
+
+@Scripts.Render("~/bundles/jquery")
+
+
 @section fullWidth{
 
     <div class="row">
         <div class="col-md-7 col-sm-7 col-sm-offset-1 col-md-offset-1 col-xs-12 col-xs-offset-1 text animate__fadeInLeft">
-            <p id="home-big-title"  class="animate__animated animate__fadeInLeft ">What do you want to learn todaty?</p>
+            <p id="home-big-title" class="animate__animated animate__fadeInLeft ">What do you want to learn todaty?</p>
             <br />
-            <p  class="animate__animated animate__fadeInLeft">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+            <p class="animate__animated animate__fadeInLeft">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
             <br />
             <div class="row">
                 <div class="col-md-6 col-sm-7 col-xs-8 home-search-bar">
@@ -91,29 +100,12 @@
 
             </div>
 
-            @*@foreach (var ebook in Model.Ebooks.Take(4))
-            {
-                <div class="col-md-3 ourHolder" data-item="@ebook.Category">
-                    <div class="card item" id="card-ebook">
-                        <img alt="Cover Foto" src="@ebook.EbookImagePath" style="height: 150px; text-align: center;" />
-                        <hr />
-                    <img class="card-img-top" style="width:100%" src="~/img/@Url.Content(video.Thumbnail)" alt="Card image cap">
-                    <div class="card-body ebook-card">
-                            <p><b>@ebook.Title</b></p>
-                            <p>@ebook.Description</p>
-                            <br />
-                            <a href="@Url.Action("PublicDetails", "Ebooks", new { id = ebook.ID })">More</a>
-                        </div>
-                    </div>
-                </div>
-            }*@
-
         </div>
     </div>
 </div>
 
 <!-- Paynment Packages -->
-<div >
+<div>
     <br />
     <br />
     <div class="container">
@@ -155,10 +147,10 @@
                     if (d.master) {
                         $("#filter-tab").append(
                             `
-                                <li>
-                                    <a class="nav-link active category-tab" aria-current="page" data-value="${d.id}">${d.name}</a>
-                                </li>
-                            `
+                                            <li>
+                                                <a class="nav-link active category-tab" aria-current="page" data-value="${d.id}">${d.name}</a>
+                                            </li>
+                                        `
                         );
                     }
                 });
@@ -170,22 +162,22 @@
                 data.forEach(d => {
                     $(".plans").append(
                         `
-                            <div class="col-md-4">
-                                <div class="card card-plan text-center">
+                                        <div class="col-md-4">
+                                            <div class="card card-plan text-center">
 
-                                    <div class="card-body">
-                                        <h5 class="card-title">${d.description}</h5>
-                                        <hr />
-                                        <h4 class="price">${d.price}€<small> / year</small> </h4>
-                                        <br />
-                                        <p class="card-text"><img class="img-icon-tik" src="/img/icons-tik.png" alt="tik" /> Duration: ${d.duration} </p>
-                                        <p class="card-text"><img class="img-icon-tik" src="/img/icons-tik.png" alt="tik" /> Started: ${d.startDate} </p>
-                                        <br />
-                                        <a class="btn btn-green buy-button" data-value="${d.id}" data-toggle="modal" data-target=".paymentModal">Buy</a>
-                                    </div>
-                                </div>
-                            </div>
-                        `
+                                                <div class="card-body">
+                                                    <h5 class="card-title">${d.description}</h5>
+                                                    <hr />
+                                                    <h4 class="price">${d.price}€<small> / year</small> </h4>
+                                                    <br />
+                                                    <p class="card-text"><img class="img-icon-tik" src="/img/icons-tik.png" alt="tik" /> Duration: ${d.duration} </p>
+                                                    <p class="card-text"><img class="img-icon-tik" src="/img/icons-tik.png" alt="tik" /> Started: ${d.startDate} </p>
+                                                    <br />
+                                                    <a class="btn btn-green buy-button" data-value="${d.id}" data-toggle="modal" data-target=".paymentModal">Buy</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    `
                     );
                 });
             });
@@ -248,74 +240,100 @@
                 // console.log(video);
                 $("#videos-home").append(
                     `
-                                <div class="col-md-3 ourHolder" ">
-                                    <input type="hidden" id="category" name="category" value="${video.category.id}">
-                                    <input type="hidden" id="content" name="content" value="${video.id}">
-                                    <input type="hidden" id="content-type" name="content-type" value="video">
-                                    <div class="card item" id="card-video">
+                    <div class="col-md-3 ourHolder" ">
+                        <input type="hidden" id="category" name="category" value="${video.category.id}">
+                        <input type="hidden" id="content" name="content" value="${video.id}">
+                        <input type="hidden" id="content-type" name="content-type" value="video">
+                        <div class="card item" id="card-video">
+                            <iframe class="embed-responsive-item" src="${video.videoPath}" autoplay="false" allowfullscreen></iframe>
+                            <!--<img alt="Cover Foto" src="${video.videoImagePath}" style="width:100%;" />-->
+                            <p><b>${video.title}</b></p>
+                            <hr/>
+                            <div class="card-body">
+                                <p><img class="img-icon-index" src="../assets/images/icons/icons-person.png" alt="person" /> Programming with  </p>
+                                <p><img class="img-icon-index" src="../assets/images/icons/icon-video.png" alt="video" /> hours on-demand video  </p>
+                                <p>${video.uploadDate.split("T")[0]}</p>
+                                <form id="video-rating-form" method="post" action="/Videos/AddRate">
+                                    <input type="hidden" id="videoId" name="videoId" value="${video.id}">
+                                    <input name="rate"
+                                            class="rating rating-loading rate"
+                                            data-min="0"
+                                            data-max="5"
+                                            data-step="0.1"
+                                            value="${video.ratingsAVG}">
+                                    <!--<input type="submit" value="Submit" />-->
+                                </form>
+                                <br />
+                                <button class="btn btn-purple btn-lg details">Details</button>
+                                <button class="btn btn-green btn-lg btn-open-modal more" data-toggle="modal" data-target="#video-modal-fullscreen-xl">
+                                    Play
+                                </button>
+                            </div>
+                        </div>
+                    </div>
 
-                                             <iframe class="embed-responsive-item" src="${video.videoPath}" autoplay="false" allowfullscreen></iframe>
-                                           <!--<img alt="Cover Foto" src="${video.videoImagePath}" style="width:100%;" />-->
-                                            <p><b>${video.title}</b></p>
-                                         <hr/>
-                                        <div class="card-body">
-
-                                       <p><img class="img-icon-index" src="../assets/images/icons/icons-person.png" alt="person" /> Programming with  </p>
-                                            <p><img class="img-icon-index" src="../assets/images/icons/icon-video.png" alt="video" /> hours on-demand video  </p>
-                                            <br />
-                                            <button class="btn btn-purple btn-lg details">Details</button>
-                                            <button class="btn btn-green btn-lg btn-open-modal more" data-toggle="modal" data-target="#video-modal-fullscreen-xl">
-                                                Play
-                                            </button>
-                                        </div>
+                    <!-- Video Modal -->
+                    <div class="modal modal-fullscreen-xl" id="video-modal-fullscreen-xl" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">${video.title}</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="embed-responsive embed-responsive-16by9">
+                                        <iframe class="embed-responsive-item" src="${video.videoPath}" autoplay="false" allowfullscreen></iframe>
                                     </div>
                                 </div>
-
-                                <!-- Video Modal -->
-                                <div class="modal modal-fullscreen-xl" id="video-modal-fullscreen-xl" tabindex="-1" role="dialog" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title">${video.title}</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="embed-responsive embed-responsive-16by9">
-                                                    <iframe class="embed-responsive-item" src="${video.videoPath}" autoplay="false" allowfullscreen></iframe>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 </div>
-                                `
+                            </div>
+                        </div>
+                    </div>
+                    `
                 );
+                var ratingInput = $('input[name="rate"]');
+                $(ratingInput).rating();
             });
             data.ebooks.forEach(ebook => {
                 // console.log(ebook.ebookFilePath);
                 $("#ebooks-home").append(
                     `
-                        <div class="col-md-3 ourHolder" data-item="${ebook.category}">
-                            <div class="card item" id="card-ebook">
-                                <img alt="Cover Foto" src="${ebook.ebookImagePath}" style="height: 150px; text-align: center;" />
-                                <hr />
-                            <!--<img class="card-img-top" style="width:100%" src="~/img/${ebook.thumbnail}" alt="Card image cap">-->
-                            <div class="card-body ebook-card">
-                                    <p><b>${ebook.title}</b></p>
-                                    <p>${ebook.description}</p>
-                                    <br />
-                                    <a href="/Ebooks/PublicDetails/${ebook.id}">More</a>
-                                </div>
+                    <div class="col-md-3 ourHolder" data-item="${ebook.category}">
+                        <div class="card item" id="card-ebook">
+                            <img alt="Cover Foto" src="${ebook.ebookImagePath}" style="height: 150px; text-align: center;" />
+                            <hr />
+                        <!--<img class="card-img-top" style="width:100%" src="~/img/${ebook.thumbnail}" alt="Card image cap">-->
+                        <div class="card-body ebook-card">
+                                <p><b>${ebook.title}</b></p>
+                                <p>${ebook.description}</p>
+                                <p>${ebook.uploadDate.split("T")[0]}</p>
+                                <form id="ebook-rating-form" method="post" action="/Ebooks/AddRate">
+                                    <input type="hidden" id="ebookId" name="ebookId" value="${ebook.id}">
+                                    <input name="rate"
+                                            class="rating rating-loading rate"
+                                            data-min="0"
+                                            data-max="5"
+                                            data-step="0.1"
+                                            value="${ebook.ratingsAVG}">
+                                    <!--<input type="submit" value="Submit" />-->
+                                </form>
+                                <br />
+                                <a href="/Ebooks/PublicDetails/${ebook.id}">More</a>
                             </div>
                         </div>
+                    </div>
                     `
                 );
+                var ratingInput = $('input[name="rate"]');
+                $(ratingInput).rating();
             });
         }
 
     </script>
+
+    <script src="~/Scripts/Ratting.js"></script>
 }

@@ -113,6 +113,22 @@ namespace CBProject.Repositories
         {
             return await _context.Categories.ToListAsync();
         }
+        public ICollection<Category> GetAllChiled(int categoryId)
+        {
+            var chiledCategoriesIds = this._categoriesToCategoriesRepo
+                                                .GetAllOtherWhereParentId(categoryId);
+            return this.GetAllQueryable()
+                                            .Where(c => chiledCategoriesIds.Contains(c.ID))
+                                            .ToList();
+        }
+        public async Task<ICollection<Category>> GetAllChiledAsync(int categoryId)
+        {
+            var chiledCategoriesIds = await this._categoriesToCategoriesRepo
+                                                .GetAllOtherWhereParentIdAsync(categoryId);
+            return await this.GetAllQueryable()
+                    .Where(c => chiledCategoriesIds.Contains(c.ID))
+                    .ToListAsync();
+        }
         public IQueryable<Category> GetAllQueryable()
         {
             return this._context.Categories
