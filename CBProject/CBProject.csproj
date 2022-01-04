@@ -1295,6 +1295,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Buttons.css" />
     <Content Include="Content\Contact.css" />
     <Content Include="Content\DataTables\css\autoFill.bootstrap.css" />
     <Content Include="Content\DataTables\css\autoFill.bootstrap.min.css" />
@@ -1456,6 +1457,7 @@
     <Content Include="Content\Details.css" />
     <Content Include="Content\Lessons.css" />
     <Content Include="Content\Login.css" />
+    <Content Include="Content\Manage.css" />
     <Content Include="Content\Ratting.css" />
     <Content Include="Content\Subscribe.css" />
     <Content Include="fonts\boxicons.svg" />

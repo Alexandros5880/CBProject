@@ -145,15 +145,7 @@ a:hover {
     margin-top: 17%;
 }
 
-.btn-search {
-    color: white;
-    background-color: #6d77ff;
-}
 
-    .btn-search:hover {
-        color: white;
-        background-color: #5b65e8;
-    }
 .grey-row {
     background-color: #F0F0F0; /*light-grey*/
 }
@@ -186,35 +178,12 @@ a:hover {
     padding: 0px 10px 15px 10px;
 }
 
-    .card-body a {
-        font-weight: bold;
-        width: 25%;
-    }
-
-.btn-card {
-    background-color: #6d77ff;
-    color: white;
-    border: 2px solid #5B65E8;
-    font-size: 15px;
-    padding: 5px 10px;
-}
-.btn-card-play {
-    background-color: #52d2c4;
-    color: white;
-    border: 2px solid #2FB8A9;
-    font-size: 15px;
-    padding: 5px 10px;
-}
-    .btn-card-play:hover {
-        background-color: #2FB8A9;
-        color: white;
-    }
+.card-body a {
+    font-weight: bold;
+    width: 25%;
+ }
 
 
-    .btn-card:hover {
-        background-color: #5B65E8;
-        color: white;
-    }
 #card-video iframe {
     width: 100%;
 }
@@ -275,17 +244,7 @@ a:hover {
     width: 20px;
 }
 
-.btn-card-plan {
-    background-color: #52d2c4;
-    color: white;
-}
 
-    .btn-card-plan:hover {
-        background-color: #2FB8A9;
-        color: white;
-        border-bottom: 3px solid #26978a;
-        border-right: 3px solid #26978a;
-    }
 
 .card-plan:hover {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 15px 40px 0 rgba(0, 0, 0, 0.19);

@@ -6,11 +6,18 @@
 
 
 
-<body>
-    <h2 style="margin-top: 50px;">Account Profile</h2>
-    <br />
-    <hr />
+
+   <div class="row">
+       <div class="col-md-12" id="profile-title">
+           <h2><strong>Account Profile</strong></h2>
+           <br />
+           <hr />
+       </div>
+   </div>
+
+ 
     <div class="container">
+     
         <div class="row">
             <div class="col-md-3 col-md-offset-1 col-sm-3 col-sm-offset-0">
                 @if (@Model.User.ImagePath != null)
@@ -18,14 +25,14 @@
                     <img class="userImage" src="@Model.User.ImagePath" style="width:100%" alt="Avatar" />
                 }
             </div>
-            <div class="col-md-4 col-md-offset-1 col-sm-4 col-sm-offset-0">
+            <div class="col-md-6 col-md-offset-1 col-sm-4 col-sm-offset-0">
                 <p class="text-success">@ViewBag.StatusMessage</p>
                 <div>
-                    <dl class="dl-horizontal">
+                    <dl class="dl-horizontal user-profile">
                         <dt>
                         </dt>
-                        <dd class="" style="text-align:left;">
-                            @Html.ActionLink("Edit User", "Edit", "Users", new { id = Model.User.Id }, new { @class = "btn btn-secondary btn-edit-user" })
+                        <dd style="margin-bottom:3%">
+                            @Html.ActionLink("Edit User", "Edit", "Users", new { id = Model.User.Id }, new { @class = "btn btn-secondary btn-green" })
                         </dd>
 
                         <dt>
@@ -116,7 +123,7 @@
                         <dd>
                             @if (Model.HasPassword)
                             {
-                                @Html.ActionLink("Change your password", "ChangePassword", null, new { @class = "btn btn-secondary" })
+                                @Html.ActionLink("Change your password", "ChangePassword", null, new { @class = "change-password" })
                             }
                             else
                             {
@@ -133,34 +140,6 @@
     </div>
 
 
-    <style>
-
-         .userImage {
-             float: right;
-             margin-top: 50px;
-             margin-right: 50px;
-         }
-
-         body{
-             text-align:center;
-         }
-
-         .profile-img {
-             text-align: left;
-         }
-
-        .profile-img img {
-            width: 50%;
-            height: 50%;
-        }
-
-        /*.dl-horizontal > dd {
-            text-align: left;
-        }*/
-
-    </style>
-
-</body>
 
 @*
     <h2>@ViewBag.Title.</h2>

@@ -1,0 +1,47 @@
+﻿.btn-search {
+    color: white;
+    background-color: #6d77ff;
+}
+
+.btn-search:hover {
+      color: white;
+      background-color: #5b65e8;
+ }
+
+.btn-card-plan {
+    background-color: #52d2c4;
+    color: white;
+}
+
+.btn-card-plan:hover {
+    background-color: #2FB8A9;
+    color: white;
+    border-bottom: 3px solid #26978a;
+    border-right: 3px solid #26978a;
+ }
+
+.btn-purple {
+    background-color: #6d77ff;
+    color: white;
+    border: 2px solid #5B65E8;
+    font-size: 15px;
+    padding: 5px 10px;
+}
+
+.btn-green {
+    background-color: #52d2c4;
+    color: white;
+    border: 2px solid #2FB8A9;
+    font-size: 15px;
+    padding: 5px 10px;
+}
+
+.btn-green:hover {
+      background-color: #2FB8A9;
+     color: white;
+}
+
+.btn-purple:hover {
+    background-color: #5B65E8;
+    color: white;
+}

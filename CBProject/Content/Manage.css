@@ -1,0 +1,34 @@
+﻿.userImage {
+    float: right;
+    margin-top: 50px;
+    margin-right: 50px;
+}
+
+#profile-title h2{
+    margin-top:3%;
+    text-align:center;
+    
+}
+
+.profile-img {
+    text-align: left;
+}
+
+.profile-img img {
+        width: 50%;
+        height: 50%;
+    }
+
+.change-password {
+    font-size: 16px;
+    color: #2FB8A9;
+    font-weight:700;
+}
+
+.user-profile{
+    margin-bottom:15%;
+}
+
+.user-profile > :first-child{
+    margin-bottom:3%;
+}
