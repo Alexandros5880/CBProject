@@ -8,7 +8,10 @@
 
 @section styles {
     <link rel="stylesheet" href="~/Content/Lessons.css" />
+    <link rel="stylesheet" href="~/Content/Ratting.css">
 }
+
+
 
 
 @{
@@ -80,48 +83,50 @@
 
 
 
+@Scripts.Render("~/bundles/jquery")
 
-    <!-- Filters Top Nav -->
-    <nav class="navbar navbar-light bg-light justify-content-between lessons-top-navbar">
-        <h3 id="lessons-big-title" class="animate__animated animate__fadeInLeft">Chillin and searching something...</h3>
-        <div class="row lessons-top-grid">
-            <div class="col-sm-8">
-                <div class="form-inline lessons-top-nav-filters-buttons">
-                    <span class="dropdown left-filter">
-                        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-                            <span class="glyphicon glyphicon-filter"></span>
-                            Filter
-                            <span class="glyphicon glyphicon-menu-down"></span>
-                        </button>
-                        <ul class="dropdown-menu left-filter-menu">
-                            <li class="ebooks-filter"><a href="#" class="ebooks-filter">Ebooks</a></li>
-                            <li class="videos-filter"><a href="#" class="videos-filter">Videos</a></li>
-                        </ul>
-                    </span>
-                    <span class="dropdown right-filter">
-                        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-                            <span class="glyphicon glyphicon-sort-by-attributes"></span>
-                            Sort By
-                            <span class="glyphicon glyphicon-menu-down"></span>
-                        </button>
-                        <ul class="dropdown-menu right-filter-menu">
-                            <li class="lessons-ratings"><a href="#" class="lessons-ratings">Rating</a></li>
-                            <li class="created-date"><a href="#" class="created-date">Created Date</a></li>
-                        </ul>
-                    </span>
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <div class="form-inline search-top-input">
-                    <input id="lessons-top-search-input" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-search search-top-button" type='button'>
-                        Search
-                        <i class="fa fa-search"></i>
+
+<!-- Filters Top Nav -->
+<nav class="navbar navbar-light bg-light justify-content-between lessons-top-navbar">
+    <h3 id="lessons-big-title" class="animate__animated animate__fadeInLeft">Chillin and searching something...</h3>
+    <div class="row lessons-top-grid">
+        <div class="col-sm-8">
+            <div class="form-inline lessons-top-nav-filters-buttons">
+                <span class="dropdown left-filter">
+                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                        <span class="glyphicon glyphicon-filter"></span>
+                        Filter
+                        <span class="glyphicon glyphicon-menu-down"></span>
                     </button>
-                </div>
+                    <ul class="dropdown-menu left-filter-menu">
+                        <li class="ebooks-filter"><a href="#" class="ebooks-filter">Ebooks</a></li>
+                        <li class="videos-filter"><a href="#" class="videos-filter">Videos</a></li>
+                    </ul>
+                </span>
+                <span class="dropdown right-filter">
+                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                        <span class="glyphicon glyphicon-sort-by-attributes"></span>
+                        Sort By
+                        <span class="glyphicon glyphicon-menu-down"></span>
+                    </button>
+                    <ul class="dropdown-menu right-filter-menu">
+                        <li class="lessons-ratings"><a href="#" class="lessons-ratings">Rating</a></li>
+                        <li class="created-date"><a href="#" class="created-date">Created Date</a></li>
+                    </ul>
+                </span>
             </div>
         </div>
-    </nav>
+        <div class="col-sm-4">
+            <div class="form-inline search-top-input">
+                <input id="lessons-top-search-input" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-search search-top-button" type='button'>
+                    Search
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</nav>
 
 
 
@@ -299,6 +304,7 @@
 
             // Contents Render UI Function
             function render(data, videos, ebooks) {
+                // ratingsAVG, uploadDate
                 if (lessonsRatings) {
                     $(".lessons-ratings").addClass("active");
                     $(".created-date").removeClass("active");
@@ -313,49 +319,63 @@
                     data.ebooks.forEach(ebook => {
                         getCategory(ebook.categoryId, function (category) {
                             $(".contents").append(`
-                                    <div class="col-md-3 ourHolder" id="ourHolder">
-                                        <input type="hidden" id="category" name="category" value="${category.id}">
-                                        <input type="hidden" id="content" name="content" value="${ebook.id}">
-                                        <input type="hidden" id="content-type" name="content-type" value="ebook">
-                                        <div class="card item" id="card-video">
-                                            <div style="width:100%; text-align:center; margin-top: 5%;">
-                                                <img alt="Cover Foto" src="${ebook.ebookImagePath}" style="height:150px;" />
-                                                <hr>
-                                                <h4 style="margin-top: 5%;"><b>${ebook.title}</b></h4>
-                                            </div>
-                                            <div class="card-body text-center">
-                                                <p class="card-text"> ${ebook.description} </p>
-                                                <p class="card-text"> ${ebook.title}  </p>
-                                                <br />
-                                                <button class="btn btn-purple btn-lg details">Details</button>
-                                                <button class="btn btn-green btn-lg btn-open-modal" data-toggle="modal" data-target="#modal-fullscreen-xl">
-                                                    Read
+                                <div class="col-md-3 ourHolder" id="ourHolder">
+                                    <input type="hidden" id="category" name="category" value="${category.id}">
+                                    <input type="hidden" id="content" name="content" value="${ebook.id}">
+                                    <input type="hidden" id="content-type" name="content-type" value="ebook">
+                                    <div class="card item" id="card-video">
+                                        <div style="width:100%; text-align:center; margin-top: 5%;">
+                                            <img alt="Cover Foto" src="${ebook.ebookImagePath}" style="height:150px;" />
+                                            <hr>
+                                            <h4 style="margin-top: 5%;"><b>${ebook.title}</b></h4>
+                                            <p><p>${ebook.uploadDate.split("T")[0]}</p></p>
+                                        </div>
+                                        <div class="card-body text-center">
+                                            <p class="card-text"> ${ebook.description} </p>
+                                            <p class="card-text"> ${ebook.title}  </p>
+                                            <br />
+                                            <form id="ebook-rating-form" method="post" action="/Ebooks/AddRate">
+                                                <input type="hidden" id="ebookId" name="ebookId" value="${ebook.id}">
+                                                <input name="rate"
+                                                        class="rating rating-loading rate"
+                                                        data-min="0"
+                                                        data-max="5"
+                                                        data-step="0.1"
+                                                        value="${ebook.ratingsAVG}">
+                                                <input type="submit" value="Submit" />
+                                            </form>
+                                            <br />
+                                            <button class="btn btn-purple btn-lg details">Details</button>
+                                            <button class="btn btn-green btn-lg btn-open-modal" data-toggle="modal" data-target="#modal-fullscreen-xl">
+                                                Read
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Ebook Modal -->
+                                <div class="modal modal-fullscreen-xl" id="modal-fullscreen-xl" tabindex="-1" role="dialog" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">${ebook.title}</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <!-- Ebook Modal -->
-                                    <div class="modal modal-fullscreen-xl" id="modal-fullscreen-xl" tabindex="-1" role="dialog" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title">${ebook.title}</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
+                                            <div class="modal-body">
+                                                <div class="embed-responsive embed-responsive-16by9">
+                                                    <embed src='${ebook.ebookFilePath} width:"300px;" height="300px" />
                                                 </div>
-                                                <div class="modal-body">
-                                                    <div class="embed-responsive embed-responsive-16by9">
-                                                        <embed src='${ebook.ebookFilePath} width:"300px;" height="300px" />
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                             </div>
                                         </div>
                                     </div>
-                                `);
+                                </div>
+                            `);
+                            var ratingInput = $('input[name="rate"]');
+                            $(ratingInput).rating();
                         });
                     });
                 }
@@ -376,10 +396,21 @@
                                         <hr>
                                         <!--<img alt="Cover Foto" src="${video.videoImagePath}" style="width:100%;" />-->
                                         <p><b>${video.title}</b></p>
+                                        <p>${video.uploadDate.split("T")[0]}</p>
                                         <div class="card-body">
-     <p><b>${video.ratting}</b></p>
                                             <p><img class="img-icon-index" src="../assets/images/icons/icons-person.png" alt="person" /> Programming with  </p>
                                             <p><img class="img-icon-index" src="../assets/images/icons/icon-video.png" alt="video" /> hours on-demand video  </p>
+                                            <br />
+                                            <form id="video-rating-form" method="post" action="/Videos/AddRate">
+                                                <input type="hidden" id="videoId" name="videoId" value="${video.id}">
+                                                <input name="rate"
+                                                        class="rating rating-loading rate"
+                                                        data-min="0"
+                                                        data-max="5"
+                                                        data-step="0.1"
+                                                        value="${video.ratingsAVG}">
+                                                <input type="submit" value="Submit" />
+                                            </form>
                                             <br />
                                             <button class="btn btn-purple btn-lg details">Details</button>
                                             <button class="btn btn-green btn-lg btn-open-modal more" data-toggle="modal" data-target="#modal-fullscreen-xl">
@@ -412,6 +443,8 @@
                                 </div>
                                 `
                             );
+                            var ratingInput = $('input[name="rate"]');
+                            $(ratingInput).rating();
                         });
                     });
                 }
@@ -451,4 +484,6 @@
 
         });
     </script>
+
+    <script src="~/Scripts/Ratting.js"></script>
 }

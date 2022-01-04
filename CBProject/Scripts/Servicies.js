@@ -27,7 +27,7 @@ function getContentsByCategoryName(categoryName, callback) {
 }
 
 function getProductsByFilters(sendData, callback) {
-    console.log(JSON.stringify(sendData));
+    //console.log(JSON.stringify(sendData));
     $.ajax({
         type: "POST",
         url: "/api/products/search/filters",

@@ -319,6 +319,7 @@
                         render: function (data, type, ebook) {
                             return `
                                     <form id="ebook-rating-form" method="post" action="/Ebooks/AddRate">
+                                        <input type="hidden" id="ebookId" name="ebookId" value="${ebook.id}">
                                         <input name="rate"
                                                class="rating rating-loading rate"
                                                data-min="0"
@@ -344,11 +345,9 @@
                     }
                 ],
                 createdRow: function (row, data, dataIndex) {
-
                     // any manipulation in the row element
                     var ratingInput = $(row).find('.rating');
                     $(ratingInput).rating();
-
                 }
             });
         });
