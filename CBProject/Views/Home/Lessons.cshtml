@@ -313,14 +313,15 @@
                     data.ebooks.forEach(ebook => {
                         getCategory(ebook.categoryId, function (category) {
                             $(".contents").append(`
-                                    <div class="col-md-4 ourHolder" id="ourHolder">
+                                    <div class="col-md-3 ourHolder" id="ourHolder">
                                         <input type="hidden" id="category" name="category" value="${category.id}">
                                         <input type="hidden" id="content" name="content" value="${ebook.id}">
                                         <input type="hidden" id="content-type" name="content-type" value="ebook">
                                         <div class="card item" id="card-video">
                                             <div style="width:100%; text-align:center; margin-top: 5%;">
                                                 <img alt="Cover Foto" src="${ebook.ebookImagePath}" style="height:150px;" />
-                                                <h4 style="margin-top: 5%;">${ebook.title}</h4>
+                                                <hr>
+                                                <h4 style="margin-top: 5%;"><b>${ebook.title}</b></h4>
                                             </div>
                                             <div class="card-body text-center">
                                                 <p class="card-text"> ${ebook.description} </p>
@@ -372,9 +373,11 @@
                                     <input type="hidden" id="content-type" name="content-type" value="video">
                                     <div class="card item" id="card-video">
                                         <iframe class="embed-responsive-item" src="${video.videoPath}" allowfullscreen></iframe>
+                                        <hr>
                                         <!--<img alt="Cover Foto" src="${video.videoImagePath}" style="width:100%;" />-->
                                         <p><b>${video.title}</b></p>
                                         <div class="card-body">
+     <p><b>${video.ratting}</b></p>
                                             <p><img class="img-icon-index" src="../assets/images/icons/icons-person.png" alt="person" /> Programming with  </p>
                                             <p><img class="img-icon-index" src="../assets/images/icons/icon-video.png" alt="video" /> hours on-demand video  </p>
                                             <br />

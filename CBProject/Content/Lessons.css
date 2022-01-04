@@ -27,13 +27,13 @@ a:hover {
 }
 
 */
-
-
-
-
-.lessons-top-navbar {
-    padding-top: 57px !important;
+#card-video p{
+    text-align:center;
 }
+.card-body {
+    text-align: center;
+}
+    
 
 #lessons-big-title {
     margin-left: 33px;
@@ -44,6 +44,8 @@ a:hover {
     background-color: #5b65e8;
     border-color: #5b65e8;
 }
+
+
 
 @media only screen and (min-width: 773px) {
     .lessons-top-nav-filters-buttons {
