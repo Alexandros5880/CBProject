@@ -33,7 +33,10 @@ a:hover {
 .card-body {
     text-align: center;
 }
-    
+
+.dropdown-menu > .active > a {
+    background-color: #5b65e8;
+}
 
 #lessons-big-title {
     margin-left: 33px;
