@@ -297,8 +297,10 @@
     <Compile Include="Models\EntityModels\TagToVideo.cs" />
     <Compile Include="Models\HelperModels\AddRequirement.cs" />
     <Compile Include="Models\HelperModels\CreatePaymentAPI.cs" />
+    <Compile Include="Models\HelperModels\EbookRateAPI.cs" />
     <Compile Include="Models\HelperModels\OrderApiModel.cs" />
     <Compile Include="Models\HelperModels\Products.cs" />
+    <Compile Include="Models\HelperModels\VideoRateAPI.cs" />
     <Compile Include="Models\Interfaces\IApplicationDbContext.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />

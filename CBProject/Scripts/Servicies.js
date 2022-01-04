@@ -273,6 +273,18 @@ function getEbook(id, callback) {
         }
     });
 }
+function ebookAddRate(id, rate, callback) {
+    $.ajax({
+        type: "GET",
+        url: `/api/Ebook/AddRate/${id}/${rate}`,
+        success: function (data) {
+            callback(data);
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+}
 
 function getVideos(callback) {
     $.ajax({
@@ -314,6 +326,18 @@ function getVideo(id, callback) {
     $.ajax({
         type: "GET",
         url: "/api/video?id=" + id,
+        success: function (data) {
+            callback(data);
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+}
+function videoAddRate(id, rate, callback) {
+    $.ajax({
+        type: "GET",
+        url: `/api/Video/AddRate/${id}/${rate}`,
         success: function (data) {
             callback(data);
         },

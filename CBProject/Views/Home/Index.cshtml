@@ -253,14 +253,16 @@
                                 <p><img class="img-icon-index" src="../assets/images/icons/icons-person.png" alt="person" /> Programming with  </p>
                                 <p><img class="img-icon-index" src="../assets/images/icons/icon-video.png" alt="video" /> hours on-demand video  </p>
                                 <p>${video.uploadDate.split("T")[0]}</p>
-                                <form id="video-rating-form" method="post" action="/Videos/AddRate">
+                                <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+                                <form id="video-rating-form" method="post" action="/api/Video/AddRate" target="dummyframe">
                                     <input type="hidden" id="videoId" name="videoId" value="${video.id}">
                                     <input name="rate"
                                             class="rating rating-loading rate"
                                             data-min="0"
                                             data-max="5"
                                             data-step="0.1"
-                                            value="${video.ratingsAVG}">
+                                            value="${video.ratingsAVG}"
+                                            onchange="this.form.submit()">
                                     <!--<input type="submit" value="Submit" />-->
                                 </form>
                                 <br />
@@ -295,6 +297,17 @@
                     </div>
                     `
                 );
+                $("#video-rating-form").submit(function (e) {
+                    e.preventDefault();
+                    $.ajax({
+                        url: '/api/Video/AddRate',
+                        type: 'post',
+                        data: $('#video-rating-form').serialize(),
+                        success: function () {
+                            // Whatever you want to do after the form is successfully submitted
+                        }
+                    });
+                });
                 var ratingInput = $('input[name="rate"]');
                 $(ratingInput).rating();
             });
@@ -311,14 +324,16 @@
                                 <p><b>${ebook.title}</b></p>
                                 <p>${ebook.description}</p>
                                 <p>${ebook.uploadDate.split("T")[0]}</p>
-                                <form id="ebook-rating-form" method="post" action="/Ebooks/AddRate">
+                                <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+                                <form id="ebook-rating-form" method="post" action="/api/Ebook/AddRate" target="dummyframe">
                                     <input type="hidden" id="ebookId" name="ebookId" value="${ebook.id}">
                                     <input name="rate"
                                             class="rating rating-loading rate"
                                             data-min="0"
                                             data-max="5"
                                             data-step="0.1"
-                                            value="${ebook.ratingsAVG}">
+                                            value="${ebook.ratingsAVG}"
+                                            onchange="this.form.submit()">
                                     <!--<input type="submit" value="Submit" />-->
                                 </form>
                                 <br />

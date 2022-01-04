@@ -334,15 +334,17 @@
                                             <p class="card-text"> ${ebook.description} </p>
                                             <p class="card-text"> ${ebook.title}  </p>
                                             <br />
-                                            <form id="ebook-rating-form" method="post" action="/Ebooks/AddRate">
+                                            <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+                                            <form id="ebook-rating-form" method="post" action="/api/Ebook/AddRate" target="dummyframe">
                                                 <input type="hidden" id="ebookId" name="ebookId" value="${ebook.id}">
                                                 <input name="rate"
                                                         class="rating rating-loading rate"
                                                         data-min="0"
                                                         data-max="5"
                                                         data-step="0.1"
-                                                        value="${ebook.ratingsAVG}">
-                                                <input type="submit" value="Submit" />
+                                                        value="${ebook.ratingsAVG}"
+                                                        onchange="this.form.submit()">
+                                                <!--<input type="submit" value="Submit" />-->
                                             </form>
                                             <br />
                                             <button class="btn btn-purple btn-lg details">Details</button>
@@ -401,15 +403,17 @@
                                             <p><img class="img-icon-index" src="../assets/images/icons/icons-person.png" alt="person" /> Programming with  </p>
                                             <p><img class="img-icon-index" src="../assets/images/icons/icon-video.png" alt="video" /> hours on-demand video  </p>
                                             <br />
-                                            <form id="video-rating-form" method="post" action="/Videos/AddRate">
+                                            <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+                                            <form id="video-rating-form" method="post" action="/api/Video/AddRate" target="dummyframe">
                                                 <input type="hidden" id="videoId" name="videoId" value="${video.id}">
                                                 <input name="rate"
                                                         class="rating rating-loading rate"
                                                         data-min="0"
                                                         data-max="5"
                                                         data-step="0.1"
-                                                        value="${video.ratingsAVG}">
-                                                <input type="submit" value="Submit" />
+                                                        value="${video.ratingsAVG}"
+                                                        onchange="this.form.submit()">
+                                                <!--<input type="submit" value="Submit" />-->
                                             </form>
                                             <br />
                                             <button class="btn btn-purple btn-lg details">Details</button>

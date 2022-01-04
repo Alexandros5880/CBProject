@@ -1,7 +1,9 @@
 ﻿using CBProject.HelperClasses;
 using CBProject.HelperClasses.Interfaces;
 using CBProject.Models;
+using CBProject.Models.HelperModels;
 using CBProject.Repositories;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -86,6 +88,17 @@ namespace CBProject.Controllers.API
             var query = this._videosRepository.GetAllQueryable();
             var myPage = Pagination.Page(query.OrderBy(c => c.ID), number, StaticImfo.PageSize);
             return Ok(myPage);
+        }
+
+        [HttpPost]
+        [Route("api/Video/AddRate")]
+        public async Task<IHttpActionResult> AddRate([FromBody] VideoRateAPI model)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                await this._videosRepository.AddRatingAsync(model.VideoId, User.Identity.GetUserId(), model.Rate);
+            }
+            return Ok();
         }
 
         protected override void Dispose(bool disposing)
