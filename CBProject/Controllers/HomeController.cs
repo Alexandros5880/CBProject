@@ -6,6 +6,8 @@ using CBProject.Models.ViewModels;
 using CBProject.Repositories;
 using CBProject.Repositories.IdentityRepos;
 using CBProject.Repositories.IdentityRepos.Interfaces;
+using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -52,6 +54,18 @@ namespace CBProject.Controllers
         }
         public async Task<ActionResult> Contact()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                ApplicationUser user = await this._usersRepo.GetAsync(User.Identity.GetUserId());
+                ContactViewModel contact = new ContactViewModel()
+                {
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Phone = user.PhoneNumber,
+                    Email = user.Email
+                };
+                return View(contact);
+            }
             return View();
         }
         [HttpPost]
@@ -77,7 +91,8 @@ namespace CBProject.Controllers
                     Email = contact.Email,
                     Phone = contact.Phone,
                     Subject = contact.Subject,
-                    Message = contact.Message
+                    Message = contact.Message,
+                    UploatedDate = DateTime.Today
                 };
             }
             else
@@ -86,7 +101,8 @@ namespace CBProject.Controllers
                 {
                     User = user,
                     Subject = contact.Subject,
-                    Message = contact.Message
+                    Message = contact.Message,
+                    UploatedDate = DateTime.Today
                 };
             }
             this._messagesRepository.Add(message);

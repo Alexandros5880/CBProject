@@ -388,7 +388,7 @@
                     data.videos.forEach(video => {
                         getCategory(video.categoryId, function (category) {
                             getUserById(video.creatorId, function (creator) {
-                                console.log(video);
+                                // console.log(video);
                                 $(".contents").append(
                                     `
                                 <div class="col-md-3 ourHolder" ">

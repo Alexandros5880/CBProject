@@ -319,7 +319,7 @@
             data.ebooks.slice(0, 4).forEach(ebook => {
                 getCategory(ebook.categoryId, function (category) {
                     getUserById(ebook.creatorId, function (creator) {
-                        console.log(ebook.ebookImagePath);
+                        //console.log(ebook.ebookImagePath);
                         $("#ebooks-home").append(
                             `
                             <div class="col-md-3 ourHolder" data-item="${ebook.category}">
