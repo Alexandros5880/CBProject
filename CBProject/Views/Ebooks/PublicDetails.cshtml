@@ -27,7 +27,20 @@
                 <div class="col-md-10" id="stars">
                     @if (User.Identity.IsAuthenticated)
                     {
-                        using (Html.BeginForm("AddRate", "Ebooks", new { ebookId = Model.ID }, FormMethod.Post, new { id = "ebook-rating-form" }))
+                        <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+                        <form id="ebook-rating-form" method="post" action="/api/Ebook/AddRate" target="dummyframe">
+                            <input type="hidden" id="ebookId" name="ebookId" value="@Model.ID">
+                            <input name="rate"
+                                   class="rating rating-loading rate"
+                                   data-min="0"
+                                   data-max="5"
+                                   data-step="0.1"
+                                   value="@Model.Rate"
+                                   onchange="this.form.submit()">
+                            <!--<input type="submit" value="Submit" />-->
+                        </form>
+
+                        @*using (Html.BeginForm("AddRate", "Ebooks", new { ebookId = Model.ID }, FormMethod.Post, new { id = "ebook-rating-form" }))
                         {
                             @Html.AntiForgeryToken()
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -42,7 +55,7 @@
                                    value="@Model.Rate">
 
                             <input type="submit" value="Submit" />
-                        }
+                        }*@
                     }
                     else
                     {
@@ -56,10 +69,10 @@
                                disabled="disabled">
                     }
                     @*<span class="fa fa-star checked "></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>*@
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star"></span>
+        <span class="fa fa-star"></span>*@
                 </div>
             </div>
             <button type="button" class="btn justify-content-end btn-subscribe">Subscribe Now</button>

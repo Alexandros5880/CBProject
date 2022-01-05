@@ -486,7 +486,7 @@ namespace CBProject.HelperClasses
         {
             try
             {
-                TimeSpan span = new TimeSpan(0, 0, 0, 0, 56);
+                TimeSpan span = new TimeSpan(0, 0, 0, 3, 56);
 
                 var video_1 = new Video()
                 {

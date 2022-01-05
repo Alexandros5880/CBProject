@@ -8,7 +8,7 @@ namespace CBProject.Models
     public class Rating
     {
         public int ID { get; set; }
-        [Range(0, 10)]
+        [Range(0, 5)]
         public float Rate { get; set; }
         [ForeignKey("Rater")]
         public string RaterId { get; set; }
