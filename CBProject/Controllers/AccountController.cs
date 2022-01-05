@@ -21,13 +21,11 @@ namespace CBProject.Controllers
         private ApplicationUserManager _userManager;
         private UsersRepo _usersRepo;
         private readonly RolesRepo _rolesRepo;
-
         public AccountController(IUsersRepo usersRepo, IRolesRepo rolesRepo)
         {
             this._usersRepo = (UsersRepo)usersRepo;
             this._rolesRepo = (RolesRepo)rolesRepo;
         }
-
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IUsersRepo usersRepo, IRolesRepo rolesRepo)
         {
             this.UserManager = userManager;
@@ -35,7 +33,6 @@ namespace CBProject.Controllers
             this._usersRepo = (UsersRepo)usersRepo;
             this._rolesRepo = (RolesRepo)rolesRepo;
         }
-
         public ApplicationSignInManager SignInManager
         {
             get
@@ -47,7 +44,6 @@ namespace CBProject.Controllers
                 _signInManager = value;
             }
         }
-
         public ApplicationUserManager UserManager
         {
             get
@@ -59,18 +55,12 @@ namespace CBProject.Controllers
                 _userManager = value;
             }
         }
-
-        //
-        // GET: /Account/Login
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
-
-        //
-        // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -172,9 +162,6 @@ namespace CBProject.Controllers
                 return View(model);
             }
         }
-
-        //
-        // GET: /Account/VerifyCode
         [AllowAnonymous]
         public async Task<ActionResult> VerifyCode(string provider, string returnUrl, bool rememberMe)
         {
@@ -185,9 +172,6 @@ namespace CBProject.Controllers
             }
             return View(new VerifyCodeViewModel { Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe });
         }
-
-        //
-        // POST: /Account/VerifyCode
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -215,17 +199,11 @@ namespace CBProject.Controllers
                     return View(model);
             }
         }
-
-        //
-        // GET: /Account/Register
         [AllowAnonymous]
         public ActionResult Register()
         {
             return View();
         }
-
-        //
-        // POST: /Account/Register
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -274,9 +252,6 @@ namespace CBProject.Controllers
                 return View(model);
             }
         }
-
-        //
-        // GET: /Account/ConfirmEmail
         [AllowAnonymous]
         public async Task<ActionResult> ConfirmEmail(string userId, string code)
         {
@@ -287,17 +262,11 @@ namespace CBProject.Controllers
             var result = await UserManager.ConfirmEmailAsync(userId, code);
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
-
-        //
-        // GET: /Account/ForgotPassword
         [AllowAnonymous]
         public ActionResult ForgotPassword()
         {
             return View();
         }
-
-        //
-        // POST: /Account/ForgotPassword
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -323,25 +292,16 @@ namespace CBProject.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
-
-        //
-        // GET: /Account/ForgotPasswordConfirmation
         [AllowAnonymous]
         public ActionResult ForgotPasswordConfirmation()
         {
             return View();
         }
-
-        //
-        // GET: /Account/ResetPassword
         [AllowAnonymous]
         public ActionResult ResetPassword(string code)
         {
             return code == null ? View("Error") : View();
         }
-
-        //
-        // POST: /Account/ResetPassword
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -367,17 +327,11 @@ namespace CBProject.Controllers
             AddErrors(result);
             return View();
         }
-
-        //
-        // GET: /Account/ResetPasswordConfirmation
         [AllowAnonymous]
         public ActionResult ResetPasswordConfirmation()
         {
             return View();
         }
-
-        //
-        // POST: /Account/ExternalLogin
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -386,9 +340,6 @@ namespace CBProject.Controllers
             // Request a redirect to the external login provider
             return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl }));
         }
-
-        //
-        // GET: /Account/SendCode
         [AllowAnonymous]
         public async Task<ActionResult> SendCode(string returnUrl, bool rememberMe)
         {
@@ -401,9 +352,6 @@ namespace CBProject.Controllers
             var factorOptions = userFactors.Select(purpose => new SelectListItem { Text = purpose, Value = purpose }).ToList();
             return View(new SendCodeViewModel { Providers = factorOptions, ReturnUrl = returnUrl, RememberMe = rememberMe });
         }
-
-        //
-        // POST: /Account/SendCode
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -421,9 +369,6 @@ namespace CBProject.Controllers
             }
             return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl, RememberMe = model.RememberMe });
         }
-
-        //
-        // GET: /Account/ExternalLoginCallback
         [AllowAnonymous]
         public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
         {
@@ -451,9 +396,6 @@ namespace CBProject.Controllers
                     return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
             }
         }
-
-        //
-        // POST: /Account/ExternalLoginConfirmation
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -490,9 +432,6 @@ namespace CBProject.Controllers
             ViewBag.ReturnUrl = returnUrl;
             return View(model);
         }
-
-        //
-        // POST: /Account/LogOff
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
@@ -500,15 +439,11 @@ namespace CBProject.Controllers
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Home");
         }
-
-        //
-        // GET: /Account/ExternalLoginFailure
         [AllowAnonymous]
         public ActionResult ExternalLoginFailure()
         {
             return View();
         }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -528,7 +463,6 @@ namespace CBProject.Controllers
 
             base.Dispose(disposing);
         }
-
         #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";

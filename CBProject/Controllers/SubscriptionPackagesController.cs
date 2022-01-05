@@ -24,7 +24,6 @@ namespace CBProject.Controllers
             this._peynmentRepo = unitOfWork.Payments;
 
         }
-        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Index()
         {
             return View(await this._subscriptionRepo.GetAllAsync());
@@ -33,7 +32,6 @@ namespace CBProject.Controllers
         {
             return View();
         }
-        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
@@ -47,7 +45,6 @@ namespace CBProject.Controllers
             }
             return View(subscriptionPackage);
         }
-        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Create()
         {
             var viewModel = new SubscriptionPackageViewModel();
@@ -74,7 +71,6 @@ namespace CBProject.Controllers
             }
             return View(subscriptionPackageViewModel);
         }
-        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -121,7 +117,6 @@ namespace CBProject.Controllers
             }
             return View(subscriptionPackageViewModel);
         }
-        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)

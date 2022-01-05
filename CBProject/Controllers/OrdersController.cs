@@ -11,19 +11,15 @@ namespace CBProject.Controllers
     public class OrdersController : Controller
     {
         private readonly OrdersRepository _ordersRepository;
-
         public OrdersController(IUnitOfWork unitOfWork)
         {
             this._ordersRepository = unitOfWork.Orders;
         }
-        // GET: Orders
         public async Task<ActionResult> Index()
         {
             var orders = await this._ordersRepository.GetAllAsync();
             return View(orders);
         }
-
-        // GET: Orders/Details/5
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
@@ -37,16 +33,10 @@ namespace CBProject.Controllers
             }
             return View(order);
         }
-
-        // GET: Orders/Create
         public ActionResult Create()
         {
             return View();
         }
-
-        // POST: Orders/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(Order order)
@@ -60,8 +50,6 @@ namespace CBProject.Controllers
 
             return View(order);
         }
-
-        // GET: Orders/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -75,10 +63,6 @@ namespace CBProject.Controllers
             }
             return View(order);
         }
-
-        // POST: Orders/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(Order order)
@@ -91,8 +75,6 @@ namespace CBProject.Controllers
             }
             return View(order);
         }
-
-        // GET: Orders/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
@@ -106,8 +88,6 @@ namespace CBProject.Controllers
             }
             return View(order);
         }
-
-        // POST: Orders/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
@@ -116,7 +96,6 @@ namespace CBProject.Controllers
             await this._ordersRepository.SaveAsync();
             return RedirectToAction("Index");
         }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

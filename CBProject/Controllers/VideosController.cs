@@ -79,7 +79,6 @@ namespace CBProject.Controllers
             viewModel.Requirements = await this._videoRepo.GetRequirementsAsync(video.ID);
             return View(viewModel);
         }
-        [Authorize(Roles = "Admin, ContentCreator")]
         public async Task<ActionResult> Create()
         {
             var viewModel = new VideoViewModel();
@@ -88,6 +87,7 @@ namespace CBProject.Controllers
             viewModel.UploadDate = DateTime.Today;
             return View(viewModel);
         }
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(VideoViewModel viewModel, HttpPostedFileBase VideoImageFile, HttpPostedFileBase VideoFile)
@@ -121,7 +121,7 @@ namespace CBProject.Controllers
             }
             return View(viewModel);
         }
-        [Authorize(Roles = "Admin, ContentCreator")]
+        [Authorize]
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -196,7 +196,6 @@ namespace CBProject.Controllers
             }
             return View(viewModel);
         }
-        [Authorize(Roles = "Admin, ContentCreator")]
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
