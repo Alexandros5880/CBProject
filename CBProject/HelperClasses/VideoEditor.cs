@@ -6,10 +6,10 @@ using System;
 
 namespace CBProject.HelperClasses
 {
-    public class VideoEditor
+    public static class VideoEditor
     {
 
-        public void CreateThambnail(string input, string output)
+        public static void CreateThambnail(string input, string output)
         {
             var inputFile = new MediaFile { Filename = input };
             var outputFile = new MediaFile { Filename = output };
@@ -24,7 +24,7 @@ namespace CBProject.HelperClasses
             }
         }
 
-        public TimeSpan Duration(string path)
+        public static TimeSpan Duration(string path)
         {
             var inputFile = new MediaFile { Filename = path };
 

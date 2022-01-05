@@ -26,8 +26,7 @@ namespace CBProject.Controllers
         private readonly ReviewsRepository _reviewRepo;
         private readonly RatingsRepository _ratingsRepo;
         private RequirementsRepository _requirementsRepo;
-        private readonly VideoEditor _videoEditor;
-        public VideosController(IUnitOfWork unitOfWork, IUsersRepo usersRepo, VideoEditor videoEditor)
+        public VideosController(IUnitOfWork unitOfWork, IUsersRepo usersRepo)
         {
             this._videoRepo = unitOfWork.Videos;
             this._usersRepo = (UsersRepo)usersRepo;
@@ -36,7 +35,6 @@ namespace CBProject.Controllers
             this._reviewRepo = unitOfWork.Reviews;
             this._ratingsRepo = unitOfWork.Ratings;
             this._requirementsRepo = unitOfWork.Requirements;
-            this._videoEditor = videoEditor;
         }
         [Authorize]
         public async Task<ActionResult> Index()
@@ -60,7 +58,7 @@ namespace CBProject.Controllers
             viewModel.Rate = sum / ratings.Count;
             viewModel.Requirements = await this._videoRepo.GetRequirementsAsync(id);
             var videoPath = Server.MapPath($"~{viewModel.VideoPath}");
-            viewModel.Duration = this._videoEditor.Duration(videoPath);
+            viewModel.Duration = VideoEditor.Duration(videoPath);
             return View("PublicDetails", viewModel);
         }
         [Authorize]

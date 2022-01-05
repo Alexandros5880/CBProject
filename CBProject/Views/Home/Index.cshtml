@@ -316,7 +316,7 @@
                 });
                 
             });
-            data.ebooks.forEach(ebook => {
+            data.ebooks.slice(0, 4).forEach(ebook => {
                 getCategory(ebook.categoryId, function (category) {
                     getUserById(ebook.creatorId, function (creator) {
                         // console.log(ebook.ebookFilePath);

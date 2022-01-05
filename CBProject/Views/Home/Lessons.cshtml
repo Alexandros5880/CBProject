@@ -388,6 +388,7 @@
                     data.videos.forEach(video => {
                         getCategory(video.categoryId, function (category) {
                             getUserById(video.creatorId, function (creator) {
+                                console.log(video);
                                 $(".contents").append(
                                     `
                                 <div class="col-md-3 ourHolder" ">
@@ -428,27 +429,27 @@
                                     </div>
                                 </div>
 
-                                <!-- Video Modal -->
-                                <div class="modal modal-fullscreen-xl" id="modal-fullscreen-xl" tabindex="-1" role="dialog" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title">${video.title}</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="embed-responsive embed-responsive-16by9">
-                                                    <iframe class="embed-responsive-item" src="${video.videoPath}" allowfullscreen></iframe>
+                                    <!-- Video Modal -->
+                                    <div class="modal modal-fullscreen-xl" id="modal-fullscreen-xl" tabindex="-1" role="dialog" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">${video.title}</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
                                                 </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <div class="modal-body">
+                                                    <div class="embed-responsive embed-responsive-16by9">
+                                                        <iframe class="embed-responsive-item" src="${video.videoPath}" allowfullscreen></iframe>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
                                 `
                                 );
                                 var ratingInput = $('input[name="rate"]');

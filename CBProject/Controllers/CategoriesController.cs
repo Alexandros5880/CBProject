@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using CBProject.HelperClasses.Interfaces;
+using CBProject.Models;
 using CBProject.Models.EntityModels;
 using CBProject.Models.ViewModels;
 using CBProject.Repositories;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -52,6 +54,7 @@ namespace CBProject.Controllers
             if (ModelState.IsValid)
             {
                 var category = Mapper.Map<CategoryViewModel, Category>(categoryViewModel);
+                category.Videos = new List<Video>();
                 if (categoryViewModel.AddCategories != null && categoryViewModel.AddCategories.Count > 0)
                 {
                     await this._categories.AddCategoriesAsync(category, categoryViewModel.AddCategories);
@@ -60,7 +63,8 @@ namespace CBProject.Controllers
                 {
                     foreach(var videoId in categoryViewModel.AddVideos)
                     {
-                        category.Videos.Add(await this._videos.GetAsync(videoId));
+                        var video = await this._videos.GetAsync(videoId);
+                        category.Videos.Add(video);
                     }
                 }
                 this._categories.Add(category);

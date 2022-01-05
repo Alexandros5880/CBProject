@@ -134,6 +134,12 @@ namespace CBProject.Controllers.API
             var ebooks = await this._unitOfWork.Ebooks.GetAllBySearch(ebooksQ, search).ToListAsync();
             var videos = await this._unitOfWork.Videos.GetAllBySearch(videosQ, search).ToListAsync();
 
+            //foreach (var video in videos)
+            //{
+            //    var videoPath = System.Web.HttpContext.Current.Server.MapPath($"~{video.VideoPath}");
+            //    video.Duration = VideoEditor.Duration(videoPath);
+            //}
+
             if (filters.CreatedDate)
             {
                 ebooks = ebooks.OrderBy(e => e.UploadDate).ToList();

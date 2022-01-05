@@ -1,4 +1,5 @@
-﻿using CBProject.HelperClasses.Interfaces;
+﻿using CBProject.HelperClasses;
+using CBProject.HelperClasses.Interfaces;
 using CBProject.Models;
 using CBProject.Models.EntityModels;
 using CBProject.Repositories.Interfaces;
@@ -35,7 +36,8 @@ namespace CBProject.Repositories
         {
             if(video == null)
                 throw new ArgumentNullException(nameof(video));
-
+            var videoPath = System.Web.HttpContext.Current.Server.MapPath($"~{video.VideoPath}");
+            video.Duration = VideoEditor.Duration(videoPath);
             this._context.Videos.Add(video);
         }
         public void Delete(int? id)
