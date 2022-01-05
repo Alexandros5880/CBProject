@@ -39,7 +39,7 @@ namespace CBProject.Controllers
             viewModel.MyCategories = await _categories.GetMyAllAsync(category.ID);
             return View(viewModel);
         }
-        [Authorize(Roles ="Admin")]
+        [Authorize]
         public async Task<ActionResult> Create()
         {
             var viewModel = new CategoryViewModel();
@@ -74,7 +74,7 @@ namespace CBProject.Controllers
 
             return View(categoryViewModel);
         }
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)

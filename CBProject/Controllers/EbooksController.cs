@@ -84,7 +84,7 @@ namespace CBProject.Controllers
             viewModel.Requirements = await this._ebooksRepository.GetRequirementsAsync(ebook.ID);
             return View(viewModel);
         }
-        [Authorize(Roles = "Admin, ContentCreator")]
+        [Authorize]
         public async Task<ActionResult> Create()
         {
             var userId = User.Identity.GetUserId();
@@ -130,7 +130,7 @@ namespace CBProject.Controllers
             }
             return View(viewModel);
         }
-        [Authorize(Roles = "Admin, ContentCreator")]
+        [Authorize]
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -209,7 +209,7 @@ namespace CBProject.Controllers
             
             return View(viewModel);
         }
-        [Authorize(Roles = "Admin, ContentCreator")]
+        [Authorize]
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
@@ -263,7 +263,6 @@ namespace CBProject.Controllers
             await this._ebooksRepository.AddRatingAsync(ebookId, User.Identity.GetUserId(), rate);
             return RedirectToAction("Index");
         }
-
         [Authorize]
         public async Task<ActionResult> _Details(int? id)
         {
@@ -364,7 +363,6 @@ namespace CBProject.Controllers
             viewModel.Requirements = await this._ebooksRepository.GetRequirementsAsync(ebook.ID);
             return PartialView("_Tag", viewModel);
         }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)
