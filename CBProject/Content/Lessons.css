@@ -27,12 +27,7 @@ a:hover {
 }
 
 */
-#card-video p{
-    text-align:center;
-}
-.card-body {
-    text-align: center;
-}
+.raiting-card{font-size:0.5em !important;}
 
 .dropdown-menu > .active > a {
     background-color: #5b65e8;

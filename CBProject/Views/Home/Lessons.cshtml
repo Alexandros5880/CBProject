@@ -324,18 +324,14 @@
                                     <input type="hidden" id="category" name="category" value="${category.id}">
                                     <input type="hidden" id="content" name="content" value="${ebook.id}">
                                     <input type="hidden" id="content-type" name="content-type" value="ebook">
-                                    <div class="card item" id="card-video">
-                                        <div style="width:100%; text-align:center; margin-top: 5%;">
-                                            <img alt="Cover Foto" src="${ebook.ebookImagePath}" style="height:150px;" />
-                                            <hr>
-                                            <h4 style="margin-top: 5%;"><b>${ebook.title}</b></h4>
-                                            <p>${category.name}</p>
-                                            <p>${creator.fullName}</p>
-                                            <p>${ebook.uploadDate.split("T")[0]}</p>
-                                        </div>
-                                        <div class="card-body text-center">
-                                            <p class="card-text"> ${ebook.description} </p>
-                                            <p class="card-text"> ${ebook.title}  </p>
+                                    <div class="card item" id="card-ebook">
+                                     <img class="card-book-img" alt="Cover Foto" src="${ebook.ebookImagePath}" style="height: 150px; text-align: center;" />
+                                    <p style="text-align:center;margin-top:14px;"><b>${ebook.title}</b>
+                                    <hr />
+                                        <div class="card-body ">
+                                           <p><img class="img-icon-index" src="../assets/images/icons/icons-person.png" alt="person" />  ${creator.fullName}</p>
+                                  
+                                            <p><img class="img-icon-index" src="../assets/images/icons/icon-calendar.png" alt="video" /><small> ${ebook.uploadDate.split("T")[0]} </small></p>
                                             <br />
                                             <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
                                             <form id="ebook-rating-form" method="post" action="/api/Ebook/AddRate" target="dummyframe">
@@ -400,21 +396,22 @@
                                     <input type="hidden" id="content-type" name="content-type" value="video">
                                     <div class="card item" id="card-video">
                                         <iframe class="embed-responsive-item" src="${video.videoPath}" allowfullscreen></iframe>
-                                        <hr>
                                         <!--<img alt="Cover Foto" src="${video.videoImagePath}" style="width:100%;" />-->
-                                        <p><b>${video.title}</b></p>
-                                        <p>${category.name}</p>
-                                        <p>${creator.fullName}</p>
-                                        <p>${video.uploadDate.split("T")[0]}</p>
+                                        <p style="text-align:center;margin-top:14px;"><b>${video.title}</b></p>
+                                         <hr>
+                                     
                                         <div class="card-body">
-                                            <p><img class="img-icon-index" src="../assets/images/icons/icons-person.png" alt="person" /> Programming with  </p>
+                                             
+                                            <p><img class="img-icon-index" src="../assets/images/icons/icons-person.png" alt="person" />  ${creator.fullName}</p>
                                             <p><img class="img-icon-index" src="../assets/images/icons/icon-video.png" alt="video" /> hours on-demand video  </p>
-                                            <br />
+                                            <p><img class="img-icon-index" src="../assets/images/icons/icon-calendar.png" alt="video" /> <small>  ${video.uploadDate.split("T")[0]}</small>  </p>
+                                          
                                             <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
-                                            <form id="video-rating-form" method="post" action="/api/Video/AddRate" target="dummyframe">
+                                           
+                                          <form id="video-rating-form" method="post" action="/api/Video/AddRate" target="dummyframe">
                                                 <input type="hidden" id="videoId" name="videoId" value="${video.id}">
                                                 <input name="rate"
-                                                        class="rating rating-loading rate"
+                                                        class="rating rating-loading rate raiting-card"
                                                         data-min="0"
                                                         data-max="5"
                                                         data-step="0.1"
@@ -422,7 +419,7 @@
                                                         onchange="this.form.submit()">
                                                 <!--<input type="submit" value="Submit" />-->
                                             </form>
-                                            <br />
+                                          <br>
                                             <button class="btn btn-purple btn-lg details">Details</button>
                                             <button class="btn btn-green btn-lg btn-open-modal more" data-toggle="modal" data-target="#modal-fullscreen-xl">
                                                 Play

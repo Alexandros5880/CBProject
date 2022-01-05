@@ -171,7 +171,7 @@
                                                     <h4 class="price">${d.price}€<small> / year</small> </h4>
                                                     <br />
                                                     <p class="card-text"><img class="img-icon-tik" src="/img/icons-tik.png" alt="tik" /> Duration: ${d.duration} </p>
-                                                    <p class="card-text"><img class="img-icon-tik" src="/img/icons-tik.png" alt="tik" /> Started: ${d.startDate} </p>
+                                                    <p class="card-text"><img class="img-icon-tik" src="/img/icons-tik.png" alt="tik" /> Started: ${d.startDate.split("T")[0]} </p>
                                                     <br />
                                                     <a class="btn btn-green buy-button" data-value="${d.id}" data-toggle="modal" data-target=".paymentModal">Buy</a>
                                                 </div>
@@ -246,17 +246,15 @@
                                 <input type="hidden" id="category" name="category" value="${video.category.id}">
                                 <input type="hidden" id="content" name="content" value="${video.id}">
                                 <input type="hidden" id="content-type" name="content-type" value="video">
-                                <div class="card item" id="card-video" style="text-align: center;">
+                                <div class="card item" id="card-video">
                                     <iframe class="embed-responsive-item" src="${video.videoPath}" autoplay="false" allowfullscreen></iframe>
                                     <!--<img alt="Cover Foto" src="${video.videoImagePath}" style="width:100%;" />-->
-                                    <b>${video.title}</b>
-                                    <hr/>
+                                     <p style="text-align:center;margin-top:14px;"><b>${video.title}</b></p>
+                                         <hr>
                                     <div class="card-body">
-                                        <p><img class="img-icon-index" src="../assets/images/icons/icons-person.png" alt="person" /> Programming with  </p>
-                                        <p><img class="img-icon-index" src="../assets/images/icons/icon-video.png" alt="video" /> hours on-demand video  </p>
-                                        <p>${category.name}</p>
-                                        <p>${creator.fullName}</p>
-                                        <p>${video.uploadDate.split("T")[0]}</p>
+                                         <p><img class="img-icon-index" src="../assets/images/icons/icons-person.png" alt="person" />  ${creator.fullName}</p>
+                                            <p><img class="img-icon-index" src="../assets/images/icons/icon-video.png" alt="video" /> hours on-demand video  </p>
+                                            <p><img class="img-icon-index" src="../assets/images/icons/icon-calendar.png" alt="video" /> <small>  ${video.uploadDate.split("T")[0]}</small>  </p>
                                         <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
                                         <form id="video-rating-form" method="post" action="/api/Video/AddRate" target="dummyframe">
                                             <input type="hidden" id="videoId" name="videoId" value="${video.id}">
@@ -325,16 +323,17 @@
                         $("#ebooks-home").append(
                             `
                             <div class="col-md-3 ourHolder" data-item="${ebook.category}">
-                                <div class="card item" id="card-ebook" style="text-align: center;">
-                                    <img alt="Cover Foto" src="${ebook.ebookImagePath}" style="height: 150px; text-align: center;" />
-                                    <b>${ebook.title}</b>
+                                <div class="card item" id="card-ebook">
+                                    <img class="card-book-img" alt="Cover Foto" src="${ebook.ebookImagePath}" style="height: 150px; text-align: center;" />
+                                    <p style="text-align:center;margin-top:14px;"><b>${ebook.title}</b>
                                     <hr />
                                 <!--<img class="card-img-top" style="width:100%" src="~/img/${ebook.thumbnail}" alt="Card image cap">-->
                                 <div class="card-body ebook-card">
-                                        <p>${ebook.description}</p>
-                                        <p>${category.name}</p>
-                                        <p>${creator.fullName}</p>
-                                        <p>${ebook.uploadDate.split("T")[0]}</p>
+                                           
+                                            <p><img class="img-icon-index" src="../assets/images/icons/icons-person.png" alt="person" />  ${creator.fullName}</p>
+                                           
+                                            <p><img class="img-icon-index" src="../assets/images/icons/icon-calendar.png" alt="video" /><small> ${ebook.uploadDate.split("T")[0]} </small></p>
+                                       
                                         <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
                                         <form id="ebook-rating-form" method="post" action="/api/Ebook/AddRate" target="dummyframe">
                                             <input type="hidden" id="ebookId" name="ebookId" value="${ebook.id}">
@@ -348,7 +347,9 @@
                                             <!--<input type="submit" value="Submit" />-->
                                         </form>
                                         <br />
-                                        <a href="/Ebooks/PublicDetails/${ebook.id}">More</a>
+                                        <br/>
+                                        <a href="/Ebooks/PublicDetails/${ebook.id}">Details</a>
+                                      
                                     </div>
                                 </div>
                             </div>

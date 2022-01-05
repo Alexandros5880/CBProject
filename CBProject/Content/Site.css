@@ -201,7 +201,7 @@ a:hover {
 #best-sellers{
     margin-top:8%;
 }
-#card-ebook img{
+.card-book-img {
     display: block;
     margin-left: auto;
     margin-right: auto;
