@@ -8,7 +8,7 @@ namespace CBProject.Models.EntityModels
         public string Name { get; set; }
         public ICollection<CategoryToCategory> CategoriesToCategories { get; set; }
         public bool Master { get; set; }
-        public ICollection<Video> Videos { get; internal set; }
-        public ICollection<Ebook> Ebooks { get; internal set; }
+        public ICollection<Video> Videos { get; set; }
+        public ICollection<Ebook> Ebooks { get; set; }
     }
 }

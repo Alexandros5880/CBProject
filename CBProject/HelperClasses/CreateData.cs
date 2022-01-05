@@ -486,6 +486,8 @@ namespace CBProject.HelperClasses
         {
             try
             {
+                TimeSpan span = new TimeSpan(0, 0, 0, 0, 56);
+
                 var video_1 = new Video()
                 {
                     ID = 1,
@@ -495,6 +497,7 @@ namespace CBProject.HelperClasses
                     VideoPath = StaticImfo.VideoPath + "video.mp4",
                     Description = "mvc_ep_1",
                     UploadDate = DateTime.Today,
+                    Duration = span,
                     Creator = this._context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
                     Category = this._context.Categories.FirstOrDefault(cat => cat.Name.Equals("FRAMEWORK")),
                     Url = "www.mvc_ep_1.com"
@@ -508,6 +511,7 @@ namespace CBProject.HelperClasses
                     VideoPath = StaticImfo.VideoPath + "video.mp4",
                     Description = "mvc_ep_2",
                     UploadDate = DateTime.Today,
+                    Duration = span,
                     Creator = this._context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
                     Category = this._context.Categories.FirstOrDefault(cat => cat.Name.Equals("FRAMEWORK")),
                     Url = "www.mvc_ep_2.com"
@@ -521,6 +525,7 @@ namespace CBProject.HelperClasses
                     VideoPath = StaticImfo.VideoPath + "video.mp4",
                     Description = "mvc_ep_",
                     UploadDate = DateTime.Today,
+                    Duration = span,
                     Creator = this._context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
                     Category = this._context.Categories.FirstOrDefault(cat => cat.Name.Equals("FRAMEWORK")),
                     Url = "www.mvc_ep_3.com"
@@ -534,6 +539,7 @@ namespace CBProject.HelperClasses
                     VideoPath = StaticImfo.VideoPath + "video.mp4",
                     Description = "xamarin_ep_1",
                     UploadDate = DateTime.Today,
+                    Duration = span,
                     Creator = this._context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
                     Category = this._context.Categories.FirstOrDefault(cat => cat.Name.Equals("CORE")),
                     Url = "www.xamarin_ep_1.com"
@@ -547,6 +553,7 @@ namespace CBProject.HelperClasses
                     VideoPath = StaticImfo.VideoPath + "video.mp4",
                     Description = "xamarin_ep_2",
                     UploadDate = DateTime.Today,
+                    Duration = span,
                     Creator = this._context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
                     Category = this._context.Categories.FirstOrDefault(cat => cat.Name.Equals("CORE")),
                     Url = "www.xamarin_ep_2.com"
@@ -560,6 +567,7 @@ namespace CBProject.HelperClasses
                     VideoPath = StaticImfo.VideoPath + "video.mp4",
                     Description = "xamarin_ep_3",
                     UploadDate = DateTime.Today,
+                    Duration = span,
                     Creator = this._context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
                     Category = this._context.Categories.FirstOrDefault(cat => cat.Name.Equals("CORE")),
                     Url = "www.xamarin_ep_3.com"
@@ -573,6 +581,7 @@ namespace CBProject.HelperClasses
                     VideoPath = StaticImfo.VideoPath + "video.mp4",
                     Description = "wpf_ep_1",
                     UploadDate = DateTime.Today,
+                    Duration = span,
                     Creator = this._context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
                     Category = this._context.Categories.FirstOrDefault(cat => cat.Name.Equals("CORE")),
                     Url = "www.wpf_ep_1.com"
@@ -586,6 +595,7 @@ namespace CBProject.HelperClasses
                     VideoPath = StaticImfo.VideoPath + "video.mp4",
                     Description = "wpf_ep_2",
                     UploadDate = DateTime.Today,
+                    Duration = span,
                     Creator = this._context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
                     Category = this._context.Categories.FirstOrDefault(cat => cat.Name.Equals("CORE")),
                     Url = "www.wpf_ep_2.com"
@@ -599,6 +609,7 @@ namespace CBProject.HelperClasses
                     VideoPath = StaticImfo.VideoPath + "video.mp4",
                     Description = "wpf_ep_3",
                     UploadDate = DateTime.Today,
+                    Duration = span,
                     Creator = this._context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
                     Category = this._context.Categories.FirstOrDefault(cat => cat.Name.Equals("CORE")),
                     Url = "wpf_ep_3"
@@ -612,6 +623,7 @@ namespace CBProject.HelperClasses
                     VideoPath = StaticImfo.VideoPath + "video.mp4",
                     Description = "C++",
                     UploadDate = DateTime.Today,
+                    Duration = span,
                     Creator = this._context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
                     Category = this._context.Categories.FirstOrDefault(cat => cat.Name.Equals(".NET")),
                     Url = "www.c++.com"
@@ -625,6 +637,7 @@ namespace CBProject.HelperClasses
                     VideoPath = StaticImfo.VideoPath + "video.mp4",
                     Description = "C#",
                     UploadDate = DateTime.Today,
+                    Duration = span,
                     Creator = this._context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
                     Category = this._context.Categories.FirstOrDefault(cat => cat.Name.Equals(".NET")),
                     Url = "www.c#.com"
@@ -638,6 +651,7 @@ namespace CBProject.HelperClasses
                     VideoPath = StaticImfo.VideoPath + "video.mp4",
                     Description = "visual basic",
                     UploadDate = DateTime.Today,
+                    Duration = span,
                     Creator = this._context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
                     Category = this._context.Categories.FirstOrDefault(cat => cat.Name.Equals(".NET")),
                     Url = "www.visulabasic.com"

@@ -193,6 +193,7 @@ namespace CBProject.Migrations
                         CategoryId = c.Int(nullable: false),
                         Url = c.String(),
                         RatingsAVG = c.Single(nullable: false),
+                        Duration = c.Time(nullable: false, precision: 7),
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.Categories", t => t.CategoryId, cascadeDelete: true)

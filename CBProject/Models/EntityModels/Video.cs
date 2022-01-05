@@ -25,6 +25,7 @@ namespace CBProject.Models
         public Category Category { get; set; }
         public string Url { get; set; }
         public float RatingsAVG { get; set; }
+        public TimeSpan Duration { get; set; }
         public ICollection<TagToVideo> TagsToVideos { get; set; }
         public ICollection<RatingToVideo> RatingsToVideos { get; set; }
         public ICollection<ReviewToVideo> ReviewToVideos { get; set; }

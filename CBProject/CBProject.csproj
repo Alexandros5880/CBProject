@@ -274,9 +274,9 @@
     <Compile Include="HelperClasses\StaticImfo.cs" />
     <Compile Include="HelperClasses\UnitOfWork.cs" />
     <Compile Include="HelperClasses\VideoEditor.cs" />
-    <Compile Include="Migrations\202201051047166_Initial.cs" />
-    <Compile Include="Migrations\202201051047166_Initial.Designer.cs">
-      <DependentUpon>202201051047166_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\202201051130549_Initial.cs" />
+    <Compile Include="Migrations\202201051130549_Initial.Designer.cs">
+      <DependentUpon>202201051130549_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -332,6 +332,7 @@
     <Compile Include="Repositories\IdentityRepos\Interfaces\IUsersRepo.cs" />
     <Compile Include="Repositories\IdentityRepos\RolesRepo.cs" />
     <Compile Include="Repositories\IdentityRepos\UsersRepo.cs" />
+    <Compile Include="Repositories\MessagesRepository.cs" />
     <Compile Include="Repositories\OrdersRepository.cs" />
     <Compile Include="Repositories\PaymentsRepository.cs" />
     <Compile Include="Repositories\RatingsRepository.cs" />
@@ -2018,8 +2019,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202201051047166_Initial.resx">
-      <DependentUpon>202201051047166_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202201051130549_Initial.resx">
+      <DependentUpon>202201051130549_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

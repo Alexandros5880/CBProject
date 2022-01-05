@@ -43,7 +43,7 @@
     <div class="form-group videos" style="display:@(Model.Master ? "none":"block")">
         @Html.Label("Add Videos:", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.ListBoxFor(model => model.AddVideos, new SelectList(Model.OtherVideos, "Id", "Name"), new { @class = "form-control" })
+            @Html.ListBoxFor(model => model.AddVideos, new SelectList(Model.OtherVideos, "Id", "Title"), new { @class = "form-control" })
         </div>
     </div>
 

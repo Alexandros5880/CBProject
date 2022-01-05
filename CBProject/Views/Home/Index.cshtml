@@ -257,6 +257,7 @@
                                         <p>${category.name}</p>
                                         <p>${creator.fullName}</p>
                                         <p>${video.uploadDate.split("T")[0]}</p>
+                                        <p><b>Duration: </b>${video.duration}</p>
                                         <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
                                         <form id="video-rating-form" method="post" action="/api/Video/AddRate" target="dummyframe">
                                             <input type="hidden" id="videoId" name="videoId" value="${video.id}">
@@ -318,7 +319,7 @@
                 });
                 
             });
-            data.ebooks.forEach(ebook => {
+            data.ebooks.slice(0, 4).forEach(ebook => {
                 getCategory(ebook.categoryId, function (category) {
                     getUserById(ebook.creatorId, function (creator) {
                         // console.log(ebook.ebookFilePath);
