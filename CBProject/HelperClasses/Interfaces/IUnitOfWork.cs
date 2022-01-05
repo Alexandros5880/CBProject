@@ -32,5 +32,6 @@ namespace CBProject.HelperClasses.Interfaces
         ReviewsToVideosRepository ReviewsToVideos { get; }
         TagsToEbooksRepository TagsToEbooks { get; }
         TagsToVideosRepository TagsToVideos { get; }
+        MessagesRepository Messages { get; }
     }
 }

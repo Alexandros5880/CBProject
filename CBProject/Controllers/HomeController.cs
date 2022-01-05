@@ -19,6 +19,7 @@ namespace CBProject.Controllers
         private CategoriesRepository _categoriesRepo;
         private VideosRepository _videosRepository;
         private readonly RequirementsRepository _requirementsRepository;
+        private readonly MessagesRepository _messagesRepository;
         public HomeController(IUnitOfWork unitOfWork, IUsersRepo usersRepo)
         {
             this._ebooksRepository = unitOfWork.Ebooks;
@@ -26,6 +27,7 @@ namespace CBProject.Controllers
             this._videosRepository = unitOfWork.Videos;
             this._usersRepo = (UsersRepo)usersRepo;
             this._requirementsRepository = unitOfWork.Requirements;
+            this._messagesRepository = unitOfWork.Messages;
         }
         public async Task<ActionResult> Index()
         {
@@ -62,6 +64,33 @@ namespace CBProject.Controllers
             }
             HelperClasses.EmailService email = new HelperClasses.EmailService();
             await email.SendEmailContact(contact);
+            // Find Sender If Exists
+            var user = await this._usersRepo.GetByEmailAsync(contact.Email);
+            // Create Message
+            ContactMessage message;
+            if (user == null)
+            {
+                message = new ContactMessage()
+                {
+                    FirstName = contact.FirstName,
+                    LastName = contact.LastName,
+                    Email = contact.Email,
+                    Phone = contact.Phone,
+                    Subject = contact.Subject,
+                    Message = contact.Message
+                };
+            }
+            else
+            {
+                message = new ContactMessage()
+                {
+                    User = user,
+                    Subject = contact.Subject,
+                    Message = contact.Message
+                };
+            }
+            this._messagesRepository.Add(message);
+            await this._messagesRepository.SaveAsync();
             return View();
         }
         public async Task<ActionResult> Lessons()
