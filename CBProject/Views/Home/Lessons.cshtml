@@ -318,7 +318,8 @@
                     $(".contents").empty();
                     data.ebooks.forEach(ebook => {
                         getCategory(ebook.categoryId, function (category) {
-                            $(".contents").append(`
+                            getUserById(ebook.creatorId, function (creator) {
+                                $(".contents").append(`
                                 <div class="col-md-3 ourHolder" id="ourHolder">
                                     <input type="hidden" id="category" name="category" value="${category.id}">
                                     <input type="hidden" id="content" name="content" value="${ebook.id}">
@@ -328,7 +329,9 @@
                                             <img alt="Cover Foto" src="${ebook.ebookImagePath}" style="height:150px;" />
                                             <hr>
                                             <h4 style="margin-top: 5%;"><b>${ebook.title}</b></h4>
-                                            <p><p>${ebook.uploadDate.split("T")[0]}</p></p>
+                                            <p>${category.name}</p>
+                                            <p>${creator.fullName}</p>
+                                            <p>${ebook.uploadDate.split("T")[0]}</p>
                                         </div>
                                         <div class="card-body text-center">
                                             <p class="card-text"> ${ebook.description} </p>
@@ -376,8 +379,9 @@
                                     </div>
                                 </div>
                             `);
-                            var ratingInput = $('input[name="rate"]');
-                            $(ratingInput).rating();
+                                var ratingInput = $('input[name="rate"]');
+                                $(ratingInput).rating();
+                            });
                         });
                     });
                 }
@@ -387,8 +391,9 @@
                     $(".contents").empty();
                     data.videos.forEach(video => {
                         getCategory(video.categoryId, function (category) {
-                            $(".contents").append(
-                                `
+                            getUserById(video.creatorId, function (creator) {
+                                $(".contents").append(
+                                    `
                                 <div class="col-md-3 ourHolder" ">
                                     <input type="hidden" id="category" name="category" value="${category.id}">
                                     <input type="hidden" id="content" name="content" value="${video.id}">
@@ -398,6 +403,8 @@
                                         <hr>
                                         <!--<img alt="Cover Foto" src="${video.videoImagePath}" style="width:100%;" />-->
                                         <p><b>${video.title}</b></p>
+                                        <p>${category.name}</p>
+                                        <p>${creator.fullName}</p>
                                         <p>${video.uploadDate.split("T")[0]}</p>
                                         <div class="card-body">
                                             <p><img class="img-icon-index" src="../assets/images/icons/icons-person.png" alt="person" /> Programming with  </p>
@@ -446,9 +453,10 @@
                                     </div>
                                 </div>
                                 `
-                            );
-                            var ratingInput = $('input[name="rate"]');
-                            $(ratingInput).rating();
+                                );
+                                var ratingInput = $('input[name="rate"]');
+                                $(ratingInput).rating();
+                            });
                         });
                     });
                 }

@@ -237,114 +237,127 @@
             $("#ebooks-home").empty();
             $("#ebooks-home");
             data.videos.forEach(video => {
-                // console.log(video);
-                $("#videos-home").append(
-                    `
-                    <div class="col-md-3 ourHolder" ">
-                        <input type="hidden" id="category" name="category" value="${video.category.id}">
-                        <input type="hidden" id="content" name="content" value="${video.id}">
-                        <input type="hidden" id="content-type" name="content-type" value="video">
-                        <div class="card item" id="card-video">
-                            <iframe class="embed-responsive-item" src="${video.videoPath}" autoplay="false" allowfullscreen></iframe>
-                            <!--<img alt="Cover Foto" src="${video.videoImagePath}" style="width:100%;" />-->
-                            <p><b>${video.title}</b></p>
-                            <hr/>
-                            <div class="card-body">
-                                <p><img class="img-icon-index" src="../assets/images/icons/icons-person.png" alt="person" /> Programming with  </p>
-                                <p><img class="img-icon-index" src="../assets/images/icons/icon-video.png" alt="video" /> hours on-demand video  </p>
-                                <p>${video.uploadDate.split("T")[0]}</p>
-                                <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
-                                <form id="video-rating-form" method="post" action="/api/Video/AddRate" target="dummyframe">
-                                    <input type="hidden" id="videoId" name="videoId" value="${video.id}">
-                                    <input name="rate"
-                                            class="rating rating-loading rate"
-                                            data-min="0"
-                                            data-max="5"
-                                            data-step="0.1"
-                                            value="${video.ratingsAVG}"
-                                            onchange="this.form.submit()">
-                                    <!--<input type="submit" value="Submit" />-->
-                                </form>
-                                <br />
-                                <button class="btn btn-purple btn-lg details">Details</button>
-                                <button class="btn btn-green btn-lg btn-open-modal more" data-toggle="modal" data-target="#video-modal-fullscreen-xl">
-                                    Play
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Video Modal -->
-                    <div class="modal modal-fullscreen-xl" id="video-modal-fullscreen-xl" tabindex="-1" role="dialog" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">${video.title}</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="embed-responsive embed-responsive-16by9">
-                                        <iframe class="embed-responsive-item" src="${video.videoPath}" autoplay="false" allowfullscreen></iframe>
+                getCategory(video.categoryId, function (category) {
+                    getUserById(video.creatorId, function (creator) {
+                        // console.log(video);
+                        $("#videos-home").append(
+                            `
+                            <div class="col-md-3 ourHolder" ">
+                                <input type="hidden" id="category" name="category" value="${video.category.id}">
+                                <input type="hidden" id="content" name="content" value="${video.id}">
+                                <input type="hidden" id="content-type" name="content-type" value="video">
+                                <div class="card item" id="card-video" style="text-align: center;">
+                                    <iframe class="embed-responsive-item" src="${video.videoPath}" autoplay="false" allowfullscreen></iframe>
+                                    <!--<img alt="Cover Foto" src="${video.videoImagePath}" style="width:100%;" />-->
+                                    <b>${video.title}</b>
+                                    <hr/>
+                                    <div class="card-body">
+                                        <p><img class="img-icon-index" src="../assets/images/icons/icons-person.png" alt="person" /> Programming with  </p>
+                                        <p><img class="img-icon-index" src="../assets/images/icons/icon-video.png" alt="video" /> hours on-demand video  </p>
+                                        <p>${category.name}</p>
+                                        <p>${creator.fullName}</p>
+                                        <p>${video.uploadDate.split("T")[0]}</p>
+                                        <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+                                        <form id="video-rating-form" method="post" action="/api/Video/AddRate" target="dummyframe">
+                                            <input type="hidden" id="videoId" name="videoId" value="${video.id}">
+                                            <input name="rate"
+                                                    class="rating rating-loading rate"
+                                                    data-min="0"
+                                                    data-max="5"
+                                                    data-step="0.1"
+                                                    value="${video.ratingsAVG}"
+                                                    onchange="this.form.submit()">
+                                            <!--<input type="submit" value="Submit" />-->
+                                        </form>
+                                        <br />
+                                        <button class="btn btn-purple btn-lg details">Details</button>
+                                        <button class="btn btn-green btn-lg btn-open-modal more" data-toggle="modal" data-target="#video-modal-fullscreen-xl">
+                                            Play
+                                        </button>
                                     </div>
                                 </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+
+                            <!-- Video Modal -->
+                            <div class="modal modal-fullscreen-xl" id="video-modal-fullscreen-xl" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">${video.title}</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="embed-responsive embed-responsive-16by9">
+                                                <iframe class="embed-responsive-item" src="${video.videoPath}" autoplay="false" allowfullscreen></iframe>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    `
-                );
-                $("#video-rating-form").submit(function (e) {
-                    e.preventDefault();
-                    $.ajax({
-                        url: '/api/Video/AddRate',
-                        type: 'post',
-                        data: $('#video-rating-form').serialize(),
-                        success: function () {
-                            // Whatever you want to do after the form is successfully submitted
-                        }
+                            `
+                        );
+                        $("#video-rating-form").submit(function (e) {
+                            e.preventDefault();
+                            $.ajax({
+                                url: '/api/Video/AddRate',
+                                type: 'post',
+                                data: $('#video-rating-form').serialize(),
+                                success: function () {
+                                    // Whatever you want to do after the form is successfully submitted
+                                }
+                            });
+                        });
+                        var ratingInput = $('input[name="rate"]');
+                        $(ratingInput).rating();
                     });
                 });
-                var ratingInput = $('input[name="rate"]');
-                $(ratingInput).rating();
+                
             });
             data.ebooks.forEach(ebook => {
-                // console.log(ebook.ebookFilePath);
-                $("#ebooks-home").append(
-                    `
-                    <div class="col-md-3 ourHolder" data-item="${ebook.category}">
-                        <div class="card item" id="card-ebook">
-                            <img alt="Cover Foto" src="${ebook.ebookImagePath}" style="height: 150px; text-align: center;" />
-                            <hr />
-                        <!--<img class="card-img-top" style="width:100%" src="~/img/${ebook.thumbnail}" alt="Card image cap">-->
-                        <div class="card-body ebook-card">
-                                <p><b>${ebook.title}</b></p>
-                                <p>${ebook.description}</p>
-                                <p>${ebook.uploadDate.split("T")[0]}</p>
-                                <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
-                                <form id="ebook-rating-form" method="post" action="/api/Ebook/AddRate" target="dummyframe">
-                                    <input type="hidden" id="ebookId" name="ebookId" value="${ebook.id}">
-                                    <input name="rate"
-                                            class="rating rating-loading rate"
-                                            data-min="0"
-                                            data-max="5"
-                                            data-step="0.1"
-                                            value="${ebook.ratingsAVG}"
-                                            onchange="this.form.submit()">
-                                    <!--<input type="submit" value="Submit" />-->
-                                </form>
-                                <br />
-                                <a href="/Ebooks/PublicDetails/${ebook.id}">More</a>
+                getCategory(ebook.categoryId, function (category) {
+                    getUserById(ebook.creatorId, function (creator) {
+                        // console.log(ebook.ebookFilePath);
+                        $("#ebooks-home").append(
+                            `
+                            <div class="col-md-3 ourHolder" data-item="${ebook.category}">
+                                <div class="card item" id="card-ebook" style="text-align: center;">
+                                    <img alt="Cover Foto" src="${ebook.ebookImagePath}" style="height: 150px; text-align: center;" />
+                                    <b>${ebook.title}</b>
+                                    <hr />
+                                <!--<img class="card-img-top" style="width:100%" src="~/img/${ebook.thumbnail}" alt="Card image cap">-->
+                                <div class="card-body ebook-card">
+                                        <p>${ebook.description}</p>
+                                        <p>${category.name}</p>
+                                        <p>${creator.fullName}</p>
+                                        <p>${ebook.uploadDate.split("T")[0]}</p>
+                                        <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+                                        <form id="ebook-rating-form" method="post" action="/api/Ebook/AddRate" target="dummyframe">
+                                            <input type="hidden" id="ebookId" name="ebookId" value="${ebook.id}">
+                                            <input name="rate"
+                                                    class="rating rating-loading rate"
+                                                    data-min="0"
+                                                    data-max="5"
+                                                    data-step="0.1"
+                                                    value="${ebook.ratingsAVG}"
+                                                    onchange="this.form.submit()">
+                                            <!--<input type="submit" value="Submit" />-->
+                                        </form>
+                                        <br />
+                                        <a href="/Ebooks/PublicDetails/${ebook.id}">More</a>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    `
-                );
-                var ratingInput = $('input[name="rate"]');
-                $(ratingInput).rating();
+                            `
+                        );
+                        var ratingInput = $('input[name="rate"]');
+                        $(ratingInput).rating();
+                    });
+                });
             });
         }
 
