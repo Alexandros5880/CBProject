@@ -5,7 +5,7 @@
 }
 
 .main-details-row {
-    background-color: #82C0CC;
+    background-color: #95c4cd;
 }
 
 .product-title{
@@ -47,7 +47,7 @@
     }
 .details-bar {
     background-color: #ececec;
-    margin-top: -16%;
+    margin-top: -15%;
     border-radius: 10px;
     margin-bottom: 3%;
 }
@@ -75,14 +75,14 @@
 @media screen and (max-width: 1580px) and (min-width: 1000px) {
     .details-bar {
       
-        margin-top: -24%;
+        margin-top: -16%;
        
     }
 }
 
 @media screen and (max-width: 999px) and (min-width: 768px) {
     .details-bar {
-        margin-top: -33%;
+        margin-top: -26%;
     }
 
     .product-title {

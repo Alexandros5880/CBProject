@@ -42,18 +42,18 @@
                             <!--<input type="submit" value="Submit" />-->
                         </form>
                         @*using (Html.BeginForm("AddRate", "Videos", new { videoId = Model.ID }, FormMethod.Post, new { id = "video-rating-form" }))
-                        {
-                            @Html.AntiForgeryToken()
-                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                            @Html.HiddenFor(model => Model.ID)
-                            <input name="rate"
-                                    class="rating rating-loading"
-                                    data-min="0"
-                                    data-max="5"
-                                    data-step="0.1"
-                                    value="@Model.Rate">
-                            <input type="submit" value="Submit" />
-                        }*@
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => Model.ID)
+                        <input name="rate"
+                                class="rating rating-loading"
+                                data-min="0"
+                                data-max="5"
+                                data-step="0.1"
+                                value="@Model.Rate">
+                        <input type="submit" value="Submit" />
+                    }*@
                     }
                     else
                     {
@@ -67,14 +67,14 @@
                                disabled="disabled">
                     }
                     @*<span class="fa fa-star checked "></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>*@
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>*@
                 </div>
             </div>
             <button type="button" class="btn justify-content-end btn-subscribe">Subscribe Now</button>
-            <button type="button" class="btn justify-content-end btn-subscribe" data-toggle="modal" data-target="#@Html.DisplayFor(model=> model.ID)">Play</button>
+            <button style="margin-bottom:3%" type="button" class="btn justify-content-end btn-green" data-toggle="modal" data-target="#@Html.DisplayFor(model=> model.ID)">Play</button>
 
         </div>
     </div>
@@ -182,7 +182,7 @@
                         </div>
                     </div>
                     <button type="button" class="btn justify-content-end btn-subscribe">Subscribe Now</button>
-                    <button type="button" class="btn justify-content-end btn-subscribe" data-toggle="modal" data-target="#@Html.DisplayFor(model=> model.ID)">Play</button>
+                    <button style="margin-bottom:3%" type="button" class="btn justify-content-end btn-green" data-toggle="modal" data-target="#@Html.DisplayFor(model=> model.ID)">Play</button>
 
                 </div>
             </div>

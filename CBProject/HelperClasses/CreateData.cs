@@ -380,8 +380,8 @@ namespace CBProject.HelperClasses
                 Ebook ebook2 = new Ebook()
                 {
                     ID = 2,
-                    Title = "WPF",
-                    Description = "User Interface Framework",
+                    Title = "ASP.NET Core 5",
+                    Description = "ASP.NET Core 5 for Beginners: Kick-start your ASP.NET web development journey with the help of step-by-step tutorials and examples",
                     Thumbnail = "Thubnail",
                     EbookImagePath = StaticImfo.EbooksImagesPath + "ebook_2.jpg",
                     EbookFilePath = StaticImfo.EbooksFilesPath + "ebook_2",
@@ -393,15 +393,15 @@ namespace CBProject.HelperClasses
                 Ebook ebook3 = new Ebook()
                 {
                     ID = 3,
-                    Title = "XAMARIN",
-                    Description = "Cros Platform Framework. (Windows, Linux, Mac, IOS)",
+                    Title = "Xamarin UI Development",
+                    Description = "Mastering Xamarin UI Development",
                     Thumbnail = "Thubnail",
                     EbookImagePath = StaticImfo.EbooksImagesPath + "ebook_3.jpg",
                     EbookFilePath = StaticImfo.EbooksFilesPath + "ebook_3",
                     Url = "url",
                     UploadDate = DateTime.Today,
                     Creator = this._context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
-                    Category = this._context.Categories.FirstOrDefault(c => c.Name.Equals("CORE"))
+                    Category = this._context.Categories.FirstOrDefault(c => c.Name.Equals("XAMARIN"))
                 };
                 Ebook ebook4 = new Ebook()
                 {
@@ -419,8 +419,8 @@ namespace CBProject.HelperClasses
                 Ebook ebook5 = new Ebook()
                 {
                     ID = 5,
-                    Title = "MVC",
-                    Description = "User Interface Framework",
+                    Title = "Development Of Windows",
+                    Description = "The Development Of Windows Presentation Foundation: Basics And Must-Know Information: Wpf Development On Linux",
                     Thumbnail = "Thubnail",
                     EbookImagePath = StaticImfo.EbooksImagesPath + "ebook_5.jpg",
                     EbookFilePath = StaticImfo.EbooksFilesPath + "ebook_5",
@@ -445,11 +445,11 @@ namespace CBProject.HelperClasses
                 Ebook ebook7 = new Ebook()
                 {
                     ID = 7,
-                    Title = "EntityFramework",
-                    Description = "User Interface Framework",
+                    Title = "Microservices with .Net Core",
+                    Description = "Architect your .NET applications by breaking them into really small pieces - microservices - using this practical, example-based guide",
                     Thumbnail = "Thubnail",
-                    EbookImagePath = StaticImfo.EbooksImagesPath + "ebook_7.jpg",
-                    EbookFilePath = StaticImfo.EbooksFilesPath + "ebook_7",
+                    EbookImagePath = StaticImfo.EbooksImagesPath + "ebook_4.jpg",
+                    EbookFilePath = StaticImfo.EbooksFilesPath + "ebook_4",
                     Url = "url",
                     UploadDate = DateTime.Today,
                     Creator = this._context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
