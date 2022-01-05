@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CBProject.Models.EntityModels
 {
@@ -14,5 +16,7 @@ namespace CBProject.Models.EntityModels
         public string Email { get; set; }
         public string Subject { get; set; }
         public string Message { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime UploatedDate { get; set; }
     }
 }

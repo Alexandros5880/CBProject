@@ -367,6 +367,7 @@ namespace CBProject.Migrations
                         Email = c.String(),
                         Subject = c.String(),
                         Message = c.String(),
+                        UploatedDate = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId)
