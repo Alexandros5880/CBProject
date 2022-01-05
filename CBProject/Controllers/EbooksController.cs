@@ -18,7 +18,7 @@ using System.Web.Mvc;
 
 namespace CBProject.Controllers
 {
-    public class EbooksController : Controller
+    public class EbooksController : Controller, IDisposable
     {
         private EbooksRepository _ebooksRepository;
         private CategoriesRepository _categoriesRepository;
@@ -43,23 +43,7 @@ namespace CBProject.Controllers
         [Authorize]
         public async Task<ActionResult> Index()
         {
-            //var ebooks = await this._ebooksRepository.GetAllAsync();
-            //var categories = await this._categoriesRepository.GetAllAsync();
 
-            //List<EbookViewModel> viewModels = new List<EbookViewModel>();
-            //foreach (var ebook in ebooks)
-            //{
-            //    var viewModel = Mapper.Map<Ebook, EbookViewModel>(ebook);
-            //    viewModel.Categories = new SelectList(categories, "ID", "Name");
-            //    var users = await this._usersRepo.GetAllAsync();
-            //    viewModel.Users = new SelectList(users, "Id", "FullName");
-            //    viewModel.Category = ebook.Category;
-            //    //viewModel.Creator = ebook.Creator;
-            //    viewModel.Rate = ebook.RatingsAVG;
-            //    viewModel.Requirements = await this._ebooksRepository.GetRequirementsAsync(ebook.ID);
-            //    viewModels.Add(viewModel);
-            //}
-            //return View(viewModels);
             return View();
         }
         public async Task<ActionResult> PublicDetails(int? id)

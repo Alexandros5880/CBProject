@@ -249,6 +249,7 @@
     <Compile Include="Controllers\API\TagToVideoController.cs" />
     <Compile Include="Controllers\API\UserController.cs" />
     <Compile Include="Controllers\API\VideoController.cs" />
+    <Compile Include="Controllers\ContactMessagesController.cs" />
     <Compile Include="Controllers\EbooksController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -274,9 +275,9 @@
     <Compile Include="HelperClasses\StaticImfo.cs" />
     <Compile Include="HelperClasses\UnitOfWork.cs" />
     <Compile Include="HelperClasses\VideoEditor.cs" />
-    <Compile Include="Migrations\202201051309144_Initial.cs" />
-    <Compile Include="Migrations\202201051309144_Initial.Designer.cs">
-      <DependentUpon>202201051309144_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\202201051404001_Initial.cs" />
+    <Compile Include="Migrations\202201051404001_Initial.Designer.cs">
+      <DependentUpon>202201051404001_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -1921,6 +1922,8 @@
     <Content Include="Views\Orders\Create.cshtml" />
     <Content Include="Views\Orders\Edit.cshtml" />
     <Content Include="Views\Orders\Delete.cshtml" />
+    <Content Include="Views\ContactMessages\Index.cshtml" />
+    <Content Include="Views\ContactMessages\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2019,8 +2022,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202201051309144_Initial.resx">
-      <DependentUpon>202201051309144_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202201051404001_Initial.resx">
+      <DependentUpon>202201051404001_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

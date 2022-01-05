@@ -91,7 +91,7 @@ namespace CBProject.Models
         public DbSet<Tag> Tags { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Order> Orders { get; set; }
-        public DbSet<ContactMessage> Messages { get; set; }
+        public DbSet<ContactMessage> ContactMessages { get; set; }
         public DbSet<Requirement> Requirements { get; set; }
         public DbSet<TagToVideo> TagsToVideos { get; set; }
         public DbSet<TagToEbook> TagsToEbooks { get; set; }

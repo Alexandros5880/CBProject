@@ -2,10 +2,11 @@
   "title": "Dashboard | Skote - Admin & Dashboard Template",
   "t-menu": "Menu",
 
+  "t-messages": "Messages",
   "t-orders": "Orders",
   "t-wallet": "Wallet",
   "t-related": "Related",
-  "t-requirements":  "Requirements",
+  "t-requirements": "Requirements",
   "t-home": "Home",
   "t-lessons": "Lessons",
   "t-manage": "Manage",

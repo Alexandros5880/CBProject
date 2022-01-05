@@ -22,7 +22,7 @@ namespace CBProject.Repositories
         {
             if (obj == null)
                 throw new ArgumentNullException(nameof(obj));
-            this._context.Messages.Add(obj);
+            this._context.ContactMessages.Add(obj);
         }
         public void Delete(int? id)
         {
@@ -31,7 +31,7 @@ namespace CBProject.Repositories
             var obj = this.Get(id);
             if (obj == null)
                 throw new ArgumentNullException(nameof(obj));
-            this._context.Messages.Remove(obj);
+            this._context.ContactMessages.Remove(obj);
         }
         public async Task DeleteAsync(int? id)
         {
@@ -40,13 +40,13 @@ namespace CBProject.Repositories
             var obj = await this.GetAsync(id);
             if (obj == null)
                 throw new ArgumentNullException(nameof(obj));
-            this._context.Messages.Remove(obj);
+            this._context.ContactMessages.Remove(obj);
         }
         public ContactMessage Get(int? id)
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
-            var obj = this._context.Messages
+            var obj = this._context.ContactMessages
                             .Include(m => m.User)
                             .FirstOrDefault(m => m.ID == id);
             if (obj == null)
@@ -55,33 +55,39 @@ namespace CBProject.Repositories
         }
         public ICollection<ContactMessage> GetAll()
         {
-            return this._context.Messages
+            return this._context.ContactMessages
+                                .OrderBy(m => m.UploatedDate)
                                 .Include(m => m.User)
                                 .ToList();
         }
         public async Task<ICollection<ContactMessage>> GetAllAsync()
         {
-            return await this._context.Messages
+            return await this._context.ContactMessages
+                                    .OrderBy(m => m.UploatedDate)
                                     .Include(m => m.User)
                                     .ToListAsync();
         }
         public ICollection<ContactMessage> GetAllEmpty()
         {
-            return this._context.Messages.ToList();
+            return this._context.ContactMessages
+                            .OrderBy(m => m.UploatedDate)
+                            .ToList();
         }
         public async Task<ICollection<ContactMessage>> GetAllEmptyAsync()
         {
-            return await this._context.Messages.ToListAsync();
+            return await this._context.ContactMessages
+                                    .OrderBy(m => m.UploatedDate)
+                                    .ToListAsync();
         }
         public IQueryable<ContactMessage> GetAllQueryable()
         {
-            return this._context.Messages;
+            return this._context.ContactMessages;
         }
         public async Task<ContactMessage> GetAsync(int? id)
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
-            var obj = await this._context.Messages
+            var obj = await this._context.ContactMessages
                                         .Include(m => m.User)
                                         .FirstOrDefaultAsync(m => m.ID == id);
             if (obj == null)
@@ -92,7 +98,7 @@ namespace CBProject.Repositories
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
-            var obj = this._context.Messages
+            var obj = this._context.ContactMessages
                                         .FirstOrDefault(m => m.ID == id);
             if (obj == null)
                 throw new ArgumentNullException(nameof(obj));
@@ -102,7 +108,7 @@ namespace CBProject.Repositories
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
-            var obj = await this._context.Messages
+            var obj = await this._context.ContactMessages
                                         .FirstOrDefaultAsync(m => m.ID == id);
             if (obj == null)
                 throw new ArgumentNullException(nameof(obj));
