@@ -260,7 +260,7 @@ namespace CBProject.Controllers.API
                                              .Select(r => r.Id)
                                              .ToListAsync();
             var users = await this._usersRepo
-                                    .GetAllQuerable()
+                                    .GetAllQueryable()
                                     .Where(u => rolesIds.Any() ? u.Roles.Select(r => r.RoleId).Intersect(rolesIds).Any() : false)
                                     .ToListAsync();
             if (users.Count > 0)

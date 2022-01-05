@@ -355,6 +355,23 @@ namespace CBProject.Migrations
                 .Index(t => t.EbookId);
             
             CreateTable(
+                "dbo.ContactMessages",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        UserId = c.String(maxLength: 128),
+                        FirstName = c.String(),
+                        LastName = c.String(),
+                        Phone = c.String(),
+                        Email = c.String(),
+                        Subject = c.String(),
+                        Message = c.String(),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.AspNetUsers", t => t.UserId)
+                .Index(t => t.UserId);
+            
+            CreateTable(
                 "dbo.AspNetRoles",
                 c => new
                     {
@@ -370,6 +387,7 @@ namespace CBProject.Migrations
         public override void Down()
         {
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
+            DropForeignKey("dbo.ContactMessages", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.RequirementToEbooks", "RequirementId", "dbo.Requirements");
             DropForeignKey("dbo.RequirementToEbooks", "EbookId", "dbo.Ebooks");
             DropForeignKey("dbo.Ebooks", "CreatorId", "dbo.AspNetUsers");
@@ -402,6 +420,7 @@ namespace CBProject.Migrations
             DropForeignKey("dbo.CategoryToCategories", "MasterCategoryId", "dbo.Categories");
             DropForeignKey("dbo.CategoryToCategories", "ChiledCategoryId", "dbo.Categories");
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
+            DropIndex("dbo.ContactMessages", new[] { "UserId" });
             DropIndex("dbo.RequirementToEbooks", new[] { "EbookId" });
             DropIndex("dbo.RequirementToEbooks", new[] { "RequirementId" });
             DropIndex("dbo.TagToEbooks", new[] { "EbookId" });
@@ -436,6 +455,7 @@ namespace CBProject.Migrations
             DropIndex("dbo.CategoryToCategories", new[] { "ChiledCategoryId" });
             DropIndex("dbo.CategoryToCategories", new[] { "MasterCategoryId" });
             DropTable("dbo.AspNetRoles");
+            DropTable("dbo.ContactMessages");
             DropTable("dbo.RequirementToEbooks");
             DropTable("dbo.TagToEbooks");
             DropTable("dbo.Tags");

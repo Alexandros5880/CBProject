@@ -35,6 +35,7 @@ namespace CBProject.HelperClasses
         public ReviewsToVideosRepository ReviewsToVideos { get; protected set; }
         public TagsToEbooksRepository TagsToEbooks { get; protected set; }
         public TagsToVideosRepository TagsToVideos { get; protected set; }
+        public MessagesRepository Messages { get; protected set; }
         public UnitOfWork(IApplicationDbContext context)
         {
             this.Context = (ApplicationDbContext)context;
@@ -61,6 +62,7 @@ namespace CBProject.HelperClasses
             this.ReviewsToVideos = new ReviewsToVideosRepository(this);
             this.TagsToEbooks = new TagsToEbooksRepository(this);
             this.TagsToVideos = new TagsToVideosRepository(this);
+            this.Messages = new MessagesRepository(this);
         }
         protected virtual void Dispose(bool disposing)
         {
@@ -91,6 +93,7 @@ namespace CBProject.HelperClasses
                     this.ReviewsToVideos.Dispose();
                     this.TagsToEbooks.Dispose();
                     this.TagsToVideos.Dispose();
+                    this.Messages.Dispose();
                 }
                 disposedValue = true;
             }
