@@ -240,6 +240,7 @@
                         data: "Cover Photo",
                         render: function (data, type, video) {
                             return `
+                                    ${video.videoImagePath}
                                     <img alt="Cover Foto" src="${video.videoImagePath}" style="height: 77px;"/>
                                     `;
                         }
