@@ -182,7 +182,6 @@
                 });
             });
 
-
             // Get Videos And Ebooks With Category 'CORE'
             getContentsByCategoryName("CORE", function (data) {
                 render(data);
@@ -239,7 +238,40 @@
             data.videos.forEach(video => {
                 getCategory(video.categoryId, function (category) {
                     getUserById(video.creatorId, function (creator) {
-                        // console.log(video);
+                        var userAuthorized = @User.Identity.IsAuthenticated.ToString().ToLower();
+                                var ratingFor;
+                                if (userAuthorized) {
+                                    ratingFor = `
+                                        <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+                                        <form id="video-rating-form" method="post" action="/api/Video/AddRate" target="dummyframe">
+                                            <input type="hidden" id="videoId" name="videoId" value="${video.id}">
+                                            <input name="rate"
+                                                    class="rating rating-loading rate raiting-card"
+                                                    data-min="0"
+                                                    data-max="5"
+                                                    data-step="0.1"
+                                                    value="${video.ratingsAVG}"
+                                                    onchange="this.form.submit()">
+                                            <!--<input type="submit" value="Submit" />-->
+                                        </form>
+                                        `
+                                } else {
+                                    ratingFor = `
+                                        <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+                                        <form id="video-rating-form" method="post" action="/api/Video/AddRate" target="dummyframe">
+                                            <input type="hidden" id="videoId" name="videoId" value="${video.id}">
+                                            <input name="rate"
+                                                    class="rating rating-loading rate raiting-card"
+                                                    data-min="0"
+                                                    data-max="5"
+                                                    data-step="0.1"
+                                                    value="${video.ratingsAVG}"
+                                                    disabled
+                                                    onchange="this.form.submit()">
+                                            <!--<input type="submit" value="Submit" />-->
+                                        </form>
+                                        `
+                                }
                         $("#videos-home").append(
                             `
                             <div class="col-md-3 ourHolder" ">
@@ -255,18 +287,7 @@
                                          <p><img class="img-icon-index" src="../assets/images/icons/icons-person.png" alt="person" />  ${creator.fullName}</p>
                                             <p><img class="img-icon-index" src="../assets/images/icons/icon-video.png" alt="video" /> hours on-demand video  </p>
                                             <p><img class="img-icon-index" src="../assets/images/icons/icon-calendar.png" alt="video" /> <small>  ${video.uploadDate.split("T")[0]}</small>  </p>
-                                        <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
-                                        <form id="video-rating-form" method="post" action="/api/Video/AddRate" target="dummyframe">
-                                            <input type="hidden" id="videoId" name="videoId" value="${video.id}">
-                                            <input name="rate"
-                                                    class="rating rating-loading rate"
-                                                    data-min="0"
-                                                    data-max="5"
-                                                    data-step="0.1"
-                                                    value="${video.ratingsAVG}"
-                                                    onchange="this.form.submit()">
-                                            <!--<input type="submit" value="Submit" />-->
-                                        </form>
+                                        `+ ratingFor+`
                                         <br />
                                         <button class="btn btn-purple btn-lg details">Details</button>
                                         <button class="btn btn-green btn-lg btn-open-modal more" data-toggle="modal" data-target="#video-modal-fullscreen-xl">
@@ -314,23 +335,15 @@
                         $(ratingInput).rating();
                     });
                 });
-                
+
             });
             data.ebooks.slice(0, 4).forEach(ebook => {
                 getCategory(ebook.categoryId, function (category) {
                     getUserById(ebook.creatorId, function (creator) {
-                        //console.log(ebook.ebookImagePath);
-                        $("#ebooks-home").append(
-                            `
-                            <div class="col-md-3 ourHolder" data-item="${ebook.category}">
-                                <div class="card item" id="card-ebook">
-                                    <img class="card-book-img" alt="Cover Foto" src="${ebook.ebookImagePath}" style="height: 150px; text-align: center;" />
-                                    <p style="text-align:center;margin-top:14px;"><b>${ebook.title}</b>
-                                    <hr />
-                                <!--<img class="card-img-top" style="width:100%" src="~/img/${ebook.thumbnail}" alt="Card image cap">-->
-                                <div class="card-body ebook-card">
-                                        <p><img class="img-icon-index" src="../assets/images/icons/icons-person.png" alt="person" />  ${creator.fullName}</p>
-                                        <p><img class="img-icon-index" src="../assets/images/icons/icon-calendar.png" alt="video" /><small> ${ebook.uploadDate.split("T")[0]} </small></p>
+                        var userAuthorized = @User.Identity.IsAuthenticated.ToString().ToLower();
+                                var ratingFor;
+                                if (userAuthorized) {
+                                    ratingFor = `
                                         <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
                                         <form id="ebook-rating-form" method="post" action="/api/Ebook/AddRate" target="dummyframe">
                                             <input type="hidden" id="ebookId" name="ebookId" value="${ebook.id}">
@@ -343,10 +356,40 @@
                                                     onchange="this.form.submit()">
                                             <!--<input type="submit" value="Submit" />-->
                                         </form>
+                                        `
+                                } else {
+                                    ratingFor = `
+                                        <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+                                        <form id="ebook-rating-form" method="post" action="/api/Ebook/AddRate" target="dummyframe">
+                                            <input type="hidden" id="ebookId" name="ebookId" value="${ebook.id}">
+                                            <input name="rate"
+                                                    class="rating rating-loading rate"
+                                                    data-min="0"
+                                                    data-max="5"
+                                                    data-step="0.1"
+                                                    value="${ebook.ratingsAVG}"
+                                                    disabled
+                                                    onchange="this.form.submit()">
+                                            <!--<input type="submit" value="Submit" />-->
+                                        </form>
+                                    `
+                                }
+                        $("#ebooks-home").append(
+                            `
+                            <div class="col-md-3 ourHolder" data-item="${ebook.category}">
+                                <div class="card item" id="card-ebook">
+                                    <img class="card-book-img" alt="Cover Foto" src="${ebook.ebookImagePath}" style="height: 150px; text-align: center;" />
+                                    <p style="text-align:center;margin-top:14px;"><b>${ebook.title}</b>
+                                    <hr />
+                                <!--<img class="card-img-top" style="width:100%" src="~/img/${ebook.thumbnail}" alt="Card image cap">-->
+                                <div class="card-body ebook-card">
+                                        <p><img class="img-icon-index" src="../assets/images/icons/icons-person.png" alt="person" />  ${creator.fullName}</p>
+                                        <p><img class="img-icon-index" src="../assets/images/icons/icon-calendar.png" alt="video" /><small> ${ebook.uploadDate.split("T")[0]} </small></p>
+                                        `+ ratingFor +`
                                         <br />
                                         <br/>
                                         <a href="/Ebooks/PublicDetails/${ebook.id}">Details</a>
-                                      
+
                                     </div>
                                 </div>
                             </div>

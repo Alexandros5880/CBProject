@@ -497,8 +497,10 @@ function createPayment(payment, callback) {
 
 
 // Other Functions
+
+// Redirect or to Video PublicDetails or to Ebook PublicDetails
 function redirectToGuestDetails(categoryId, contentId, contentType) {
-    console.log(contentType);
+    //console.log(contentType);
     if (contentType === "ebook") {
         window.location.href = '/Ebooks/PublicDetails/' + contentId;
     } else if (contentType === "video") {
@@ -506,13 +508,14 @@ function redirectToGuestDetails(categoryId, contentId, contentType) {
     }
 }
 
+// First When You Buy Package If You are not logged gor to login else to buy a package
 function createOrder(packageId) {
     getSubscriptionPackage(packageId, function (package) {
         getLogedUser(function (user) {
             if (user !== "null") {
                 payPayPal(user, package);
             } else {
-                window.location.href = "/Account/Register";
+                window.location.href = "/Account/Login";
             }
         });
     });
