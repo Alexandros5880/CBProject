@@ -188,6 +188,14 @@
                 }
             });
 
+            // Search Enter Event
+            $('#lessons-top-search-input').keypress(function (event) {
+                if (event.keyCode == 13) {
+                    var search = $("#lessons-top-search-input").val();
+                    searchTop(ebooks, videos, lessonsRatings, createdDate, search, page);
+                }
+            });
+
             // Filter By Ebooks
             $(document.body).on('click', 'a', function () {
                 if (this.classList.contains('ebooks-filter')) {

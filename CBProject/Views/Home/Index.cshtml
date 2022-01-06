@@ -227,6 +227,16 @@
                 }
             });
 
+            // Search Enter Event
+            $('#search-input').keypress(function (event) {
+                if (event.keyCode == 13) {
+                    var categoryName = $("#search-input").val();
+                    getContentsByCategoryName(categoryName, function (data) {
+                        render(data);
+                    });
+                }
+            });
+
         })
 
         // Render UI Function
@@ -235,7 +245,7 @@
             $("#videos-home");
             $("#ebooks-home").empty();
             $("#ebooks-home");
-            data.videos.forEach(video => {
+            data.videos.slice(0, 4).forEach(video => {
                 getCategory(video.categoryId, function (category) {
                     getUserById(video.creatorId, function (creator) {
                         var userAuthorized = @User.Identity.IsAuthenticated.ToString().ToLower();
