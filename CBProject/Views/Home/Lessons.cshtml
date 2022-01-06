@@ -184,7 +184,11 @@
             $(document.body).on('click', 'button', function () {
                 if (this.classList.contains('search-top-button')) {
                     var search = $("#lessons-top-search-input").val();
-                    searchTop(ebooks, videos, lessonsRatings, createdDate, search, page);
+                    if (search.length != 0) {
+                        searchTop(ebooks, videos, lessonsRatings, createdDate, search, null, true);
+                    } else {
+                        searchTop(ebooks, videos, lessonsRatings, createdDate, search, 1);
+                    }
                 }
             });
 
@@ -192,7 +196,11 @@
             $('#lessons-top-search-input').keypress(function (event) {
                 if (event.keyCode == 13) {
                     var search = $("#lessons-top-search-input").val();
-                    searchTop(ebooks, videos, lessonsRatings, createdDate, search, page);
+                    if (search.length != 0) {
+                        searchTop(ebooks, videos, lessonsRatings, createdDate, search, null, true);
+                    } else {
+                        searchTop(ebooks, videos, lessonsRatings, createdDate, search, 1);
+                    }
                 }
             });
 
@@ -236,7 +244,7 @@
             $(document.body).on('click', 'a', function () {
                 if (this.classList.contains('pagenation-link')) {
                     page = $(this).data("id");
-                    $(".search-top-button").click();
+                    searchTop(ebooks, videos, lessonsRatings, createdDate, search, page);
                 }
             });
 
@@ -261,7 +269,7 @@
 
 
             // Search
-            function searchTop(ebooks, videos, lessonsRatings, createdDate, search, page) {
+            function searchTop(ebooks, videos, lessonsRatings, createdDate, search, page = null, renderPagenation = false) {
                 var sendData = {
                     ebooks: ebooks,
                     videos: videos,
@@ -271,13 +279,12 @@
                     page: page
                 };
                 getProductsByFilters(sendData, function (response_data) {
-                    //console.log(response_data);
-                    render(response_data, videos, ebooks);
+                    render(response_data, videos, ebooks, renderPagenation);
                 });
             };
 
             // Contents Render UI Function
-            function render(data, videos, ebooks) {
+            function render(data, videos, ebooks, renderPagination = false) {
                 // ratingsAVG, uploadDate
                 if (lessonsRatings) {
                     $(".lessons-ratings").addClass("active");
@@ -290,6 +297,13 @@
                     $(".ebooks-filter").addClass("active");
                     $(".videos-filter").removeClass("active");
                     $(".contents").empty();
+                    if (renderPagination) {
+                        getPageSize(function (pagesize) {
+                            var pages = data.ebooks.length / pagesize;
+                            pages = pages === 0 ? 1 : pages;
+                            RenderPaginationButtons(pages);
+                        });
+                    }
                     data.ebooks.forEach(ebook => {
                         getCategory(ebook.categoryId, function (category) {
                             getUserById(ebook.creatorId, function (creator) {
@@ -378,12 +392,20 @@
                                 $(ratingInput).rating();
                             });
                         });
-                    });
+                    });   
                 }
                 if (data.videos && videos) {
                     $(".ebooks-filter").removeClass("active");
                     $(".videos-filter").addClass("active");
                     $(".contents").empty();
+                    if (renderPagination) {
+                        getPageSize(function (pagesize) {
+                            console.log(pagesize);
+                            var pages = data.videos.length / pagesize;
+                            pages = pages === 0 ? 1 : pages;
+                            RenderPaginationButtons(pages);
+                        });
+                    }
                     data.videos.forEach(video => {
                         getCategory(video.categoryId, function (category) {
                             getUserById(video.creatorId, function (creator) {
@@ -485,7 +507,9 @@
                     //var contentType = $(this).find("input[name=content-type]").val();
                     //redirectToCategoriesLessons(categoryId, contentId, contentType);
                 });
-                updatePaginationButtons();
+                if (!renderPagination) {
+                    updatePaginationButtons();
+                }
             }
 
             // Pagination Buttons Render
@@ -504,11 +528,13 @@
             // Render Pagination Buttons
             function RenderPaginationButtons(pages) {
                 $(".pagination-content").empty();
-                for (i = 1; i <= pages; i++) {
-                    if (i == page) {
-                        $(".pagination-content").append(`<li class="page-item active"><a class="pagenation-link" data-id=${i}>${i}</a></li>`);
-                    } else {
-                        $(".pagination-content").append(`<li class="page-item"><a class="pagenation-link" data-id=${i}>${i}</a></li>`);
+                if (pages > 1) {
+                    for (i = 1; i <= pages; i++) {
+                        if (i == page) {
+                            $(".pagination-content").append(`<li class="page-item active"><a class="pagenation-link" data-id=${i}>${i}</a></li>`);
+                        } else {
+                            $(".pagination-content").append(`<li class="page-item"><a class="pagenation-link" data-id=${i}>${i}</a></li>`);
+                        }
                     }
                 }
             }

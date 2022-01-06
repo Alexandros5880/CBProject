@@ -41,6 +41,19 @@ function getProductsByFilters(sendData, callback) {
     });
 }
 
+function getPageSize(callback) {
+    $.ajax({
+        type: "GET",
+        url: "/api/pagesize",
+        success: function (data) {
+            callback(data);
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+}
+
 function getSubscriptionPackages(callback) {
     $.ajax({
         type: "GET",

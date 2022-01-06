@@ -128,17 +128,15 @@ namespace CBProject.Controllers.API
             var ebooksQ = this._unitOfWork.Ebooks.GetAllQuerable();
             var videosQ = this._unitOfWork.Videos.GetAllQuerable();
 
-            ebooksQ = Pagination.Page(ebooksQ.OrderBy(e => e.ID), filters.Page, StaticImfo.PageSize);
-            videosQ = Pagination.Page(videosQ.OrderBy(v => v.ID), filters.Page, StaticImfo.PageSize);
+            if (filters.Page != null) {
+                int page = (int) filters.Page;
+                ebooksQ = Pagination.Page(ebooksQ.OrderBy(e => e.ID), page, StaticImfo.PageSize);
+                videosQ = Pagination.Page(videosQ.OrderBy(v => v.ID), page, StaticImfo.PageSize);
+            }
+            
 
             var ebooks = await this._unitOfWork.Ebooks.GetAllBySearch(ebooksQ, search).ToListAsync();
             var videos = await this._unitOfWork.Videos.GetAllBySearch(videosQ, search).ToListAsync();
-
-            //foreach (var video in videos)
-            //{
-            //    var videoPath = System.Web.HttpContext.Current.Server.MapPath($"~{video.VideoPath}");
-            //    video.Duration = VideoEditor.Duration(videoPath);
-            //}
 
             if (filters.CreatedDate)
             {
@@ -160,6 +158,12 @@ namespace CBProject.Controllers.API
             };
 
             return Ok(products);
+        }
+        [HttpGet]
+        [Route("api/pagesize")]
+        public async Task<IHttpActionResult> GetPageSize()
+        {
+            return Ok(StaticImfo.PageSize);
         }
         [HttpGet]
         [Route("api/products/packages")]
