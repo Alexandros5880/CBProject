@@ -8,33 +8,25 @@ namespace CBProject.HelperClasses
 {
     public static class VideoEditor
     {
-
-        public static void CreateThambnail(string input, string output)
+        public static void CreateThambnail(string input, string output, int second)
         {
             var inputFile = new MediaFile { Filename = input };
             var outputFile = new MediaFile { Filename = output };
-
             using (var engine = new Engine())
             {
                 engine.GetMetadata(inputFile);
-
-                // Saves the frame located on the 15th second of the video.
-                var options = new ConversionOptions { Seek = TimeSpan.FromSeconds(15) };
+                var options = new ConversionOptions { Seek = TimeSpan.FromSeconds(second) };
                 engine.GetThumbnail(inputFile, outputFile, options);
             }
         }
-
         public static TimeSpan Duration(string path)
         {
             var inputFile = new MediaFile { Filename = path };
-
             using (var engine = new Engine())
             {
                 engine.GetMetadata(inputFile);
             }
-
             return inputFile.Metadata.Duration;
         }
-
     }
 }

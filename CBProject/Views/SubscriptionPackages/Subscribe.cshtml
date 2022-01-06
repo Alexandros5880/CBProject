@@ -53,6 +53,7 @@
             getSubscriptionPackages(function (data) {
                 $(".plans").empty();
                 data.forEach(d => {
+                    console.log(d);
                     $(".plans").append(
                         `
                         <div class="col-md-4">
@@ -63,11 +64,10 @@
                                     <h4 class="price">${d.price}€<small> / year</small> </h4>
                                     <br />
                                     <p class="card-text"><img class="img-icon-tik" src="/img/icons-tik.png" alt="tik" /> Duration: ${d.duration} </p>
-                                    <p class="card-text"><img class="img-icon-tik" src="/img/icons-tik.png" alt="tik" /> Started: ${d.startDate} </p>
+                                    <p class="card-text"><img class="img-icon-tik" src="/img/icons-tik.png" alt="tik" /> Started: ${d.startDate.split("T")[0]} </p>
                                      <p class="card-text"><img class="img-icon-tik" src="/img/icons-tik.png" alt="tik" /> Mobile app access </p>
                                      <p class="card-text"><img class="img-icon-tik" src="/img/icons-tik.png" alt="tik" /> Access to 6,500+ courses</p>
-                                       <p class="card-text"><img class="img-icon-tik" src="/img/icons-tik.png" alt="tik" /> Custom topics </p>
-
+                                    <p class="card-text"><img class="img-icon-tik" src="/img/icons-tik.png" alt="tik" /> Custom topics </p>
                                     <br />
                                     <a class="btn btn-card-plan buy-button" data-value="${d.id}" data-toggle="modal" data-target=".paymentModal">Buy</a>
                                 </div>
