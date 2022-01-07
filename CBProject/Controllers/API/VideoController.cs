@@ -101,6 +101,17 @@ namespace CBProject.Controllers.API
             return Ok();
         }
 
+        [HttpPost]
+        [Route("api/Video/AddComment")]
+        public async Task<IHttpActionResult> AddComment([FromBody] VideoCommentAPI model)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                await this._videosRepository.AddReviewAsync(model.VideoId, User.Identity.GetUserId(), model.Comment);
+            }
+            return Ok();
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

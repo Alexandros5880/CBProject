@@ -12,10 +12,14 @@ namespace CBProject.Controllers.API
     public class ReviewController : ApiController, IDisposable
     {
         private readonly ReviewsRepository _reviewsRepository;
+        private readonly VideosRepository _videosRepository;
+        private readonly EbooksRepository _ebookRepository;
 
         public ReviewController(IUnitOfWork unitOfWork)
         {
             this._reviewsRepository = unitOfWork.Reviews;
+            this._videosRepository = unitOfWork.Videos;
+            this._ebookRepository = unitOfWork.Ebooks;
         }
 
         // GET api/Review
@@ -88,11 +92,33 @@ namespace CBProject.Controllers.API
             return Ok(myPage);
         }
 
+        [HttpGet]
+        [Route("api/Review/video/{id}")]
+        public async Task<IHttpActionResult> GetReviewsByVideo(int? id)
+        {
+            if (id == null)
+                return BadRequest();
+            var reviews = await this._videosRepository.GetReviewsAsync(id);
+            return Ok(reviews);
+        }
+
+        [HttpGet]
+        [Route("api/Review/ebook/{id}")]
+        public async Task<IHttpActionResult> GetReviewsByEbook(int? id)
+        {
+            if (id == null)
+                return BadRequest();
+            var reviews = await this._ebookRepository.GetReviewsAsync(id);
+            return Ok(reviews);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
                 this._reviewsRepository.Dispose();
+                this._videosRepository.Dispose();
+                this._ebookRepository.Dispose();
             }
             base.Dispose(disposing);
         }

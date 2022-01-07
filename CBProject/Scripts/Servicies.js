@@ -12,7 +12,6 @@ function getContentsByCategoryId(categoryId, callback) {
         }
     });
 }
-
 function getContentsByCategoryName(categoryName, callback) {
     $.ajax({
         type: "GET",
@@ -67,7 +66,6 @@ function getSubscriptionPackages(callback) {
         }
     });
 }
-
 function getSubscriptionPackage(id, callback) {
     return $.ajax({
         type: "GET",
@@ -107,7 +105,6 @@ function getUserByIdSync(id, callback) {
         }
     });
 }
-
 function getLogedUser(callback) {
     $.ajax({
         type: "GET",
@@ -117,6 +114,18 @@ function getLogedUser(callback) {
         },
         error: function (error) {
             return error;
+        }
+    });
+}
+function getUsersByRoleName(roleName, callback) {
+    $.ajax({
+        type: "GET",
+        url: "/api/users/role?rolename=" + roleName,
+        success: function (data) {
+            callback(data);
+        },
+        error: function (error) {
+            console.log(error);
         }
     });
 }
@@ -133,7 +142,6 @@ function getCategories(callback) {
         }
     });
 }
-
 function getCategory(id, callback) {
     $.ajax({
         type: "GET",
@@ -146,7 +154,6 @@ function getCategory(id, callback) {
         }
     });
 }
-
 function getCategoriesMaster(callback) {
     $.ajax({
         type: "GET",
@@ -159,7 +166,6 @@ function getCategoriesMaster(callback) {
         }
     });
 }
-
 function getCategoriesNoMaster(callback) {
     $.ajax({
         type: "GET",
@@ -185,24 +191,10 @@ function getTags(callback) {
         }
     });
 }
-
 function getTag(id, callback) {
     $.ajax({
         type: "GET",
         url: "/api/tag?id=" + id,
-        success: function (data) {
-            callback(data);
-        },
-        error: function (error) {
-            console.log(error);
-        }
-    });
-}
-
-function getUsersByRoleName(roleName, callback) {
-    $.ajax({
-        type: "GET",
-        url: "/api/users/role?rolename=" + roleName,
         success: function (data) {
             callback(data);
         },
@@ -224,11 +216,34 @@ function getReviews(callback) {
         }
     });
 }
-
 function getReview(id, callback) {
     $.ajax({
         type: "GET",
         url: "/api/review?id=" + id,
+        success: function (data) {
+            callback(data);
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+}
+function getReviewsByVideo(id, callback) {
+    $.ajax({
+        type: "GET",
+        url: `/api/Review/video/${id}`,
+        success: function (data) {
+            callback(data);
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+}
+function getReviewsByEbook(id, callback) {
+    $.ajax({
+        type: "GET",
+        url: `/api/Review/ebook/${id}`,
         success: function (data) {
             callback(data);
         },
@@ -387,7 +402,6 @@ function getPayments(callback) {
         }
     });
 }
-
 function getPayment(id, callback) {
     $.ajax({
         type: "GET",
@@ -416,7 +430,6 @@ function addEbookRequarement(id, content, callback) {
         }
     });
 }
-
 function removeEbookRequarement(id, contentId, callback) {
     $.ajax({
         type: "GET",
@@ -445,7 +458,6 @@ function addVideoRequarement(id, content, callback) {
         }
     });
 }
-
 function removeVideoRequarement(id, contentId, callback) {
     $.ajax({
         type: "GET",

@@ -1,5 +1,6 @@
 ﻿using CBProject.HelperClasses;
 using CBProject.HelperClasses.Interfaces;
+using CBProject.Models;
 using CBProject.Models.EntityModels;
 using CBProject.Models.HelperModels;
 using CBProject.Repositories;
@@ -97,6 +98,17 @@ namespace CBProject.Controllers.API
             if (User.Identity.IsAuthenticated)
             {
                 await this._ebooksRepository.AddRatingAsync(model.EbookId, User.Identity.GetUserId(), model.Rate);
+            }
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("api/Ebook/AddComment")]
+        public async Task<IHttpActionResult> AddComment([FromBody] EbookCommentAPI model)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                await this._ebooksRepository.AddReviewAsync(model.EbookId, User.Identity.GetUserId(), model.Comment);
             }
             return Ok();
         }

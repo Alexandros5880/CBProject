@@ -10,7 +10,10 @@
     }
 }
 
-<link rel="stylesheet" href="~/Content/Ratting.css">
+@section styles {
+    <link rel="stylesheet" href="~/Content/Ratting.css">
+    <link rel="stylesheet" href="~/Content/PublickDetails_Comments.css">
+}
 
 <!-- Ttile Content with rating (ligth blue color) -->
 <div class="main-details-row">
@@ -53,7 +56,7 @@
             </div>
             <div class="subscribe-div">
                 @*<button type="button" class="btn justify-content-end btn-subscribe">Subscribe Now</button>
-                <button style="margin-bottom:3%; margin-left: 1%;" type="button" class="btn justify-content-end btn-green" data-toggle="modal" data-target="#@Model.ID">Play</button>*@
+                    <button style="margin-bottom:3%; margin-left: 1%;" type="button" class="btn justify-content-end btn-green" data-toggle="modal" data-target="#@Model.ID">Play</button>*@
             </div>
         </div>
     </div>
@@ -134,7 +137,7 @@
                     </div>
                     <div class="subscribe-div">
                         @*<button type="button" class="btn justify-content-end btn-subscribe">Subscribe Now</button>
-                        <button style="margin-bottom:3%; margin-left: 1%;" type="button" class="btn justify-content-end btn-green" data-toggle="modal" data-target="#@Model.ID">Play</button>*@
+                            <button style="margin-bottom:3%; margin-left: 1%;" type="button" class="btn justify-content-end btn-green" data-toggle="modal" data-target="#@Model.ID">Play</button>*@
                     </div>
                 </div>
             </div>
@@ -211,12 +214,93 @@
 
 
 
+<!-- Show Comments / Add Comment -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-10 col-sm-offset-1" id="logout">
+            <div class="page-header">
+                <h3 class="reviews">Leave your comment</h3>
+            </div>
+            <div class="comment-tabs">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="active"><a href="#comments-logout" role="tab" data-toggle="tab"><h4 class="reviews text-capitalize">Comments</h4></a></li>
+                    <li><a href="#add-comment" role="tab" data-toggle="tab"><h4 class="reviews text-capitalize">Add comment</h4></a></li>
+                </ul>
+                <div class="tab-content">
+                    <!-- Comments -->
+                    <div class="tab-pane active" id="comments-logout">
+                        <ul class="media-list" id="comments-list">
+                        </ul>
+                    </div>
+                    <!-- Add Comment -->
+                    <div class="tab-pane" id="add-comment">
+                        <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+                        <form action="/api/Video/AddComment" method="post" class="form-horizontal" id="commentForm" role="form" target="dummyframe">
+                            <div class="form-group" id="comment-group-form">
+                                <label for="comment" class="col-sm-2 control-label">Comment</label>
+                                <div class="col-sm-10" id="comment-input-col">
+                                    <input type="hidden" id="videoId" name="videoId" value="@Model.ID">
+                                    <textarea class="form-control" name="comment" id="addComment" rows="5"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button class="btn btn-success btn-circle text-uppercase" type="submit" id="submitComment"><span class="glyphicon glyphicon-send"></span> Summit comment</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<br />
+<br />
+<br />
+
+
 
 
 
 @section scripts {
     <script>
         $(document).ready(function () {
+
+            var id = "@Html.Raw(Model.ID)";
+
+            // Load Comments
+            getReviewsByVideo(id, function (reviews) {
+                reviews.slice(0, 4).forEach(function (review) {
+                    getUserById(review.reviewerId, function (user) {
+                        var imagePath = user.imagePath;
+                        var fullname = user.fullName;
+                        var comment = review.comment;
+                        $('#comments-list').append(
+                            `
+                            <li class="media">
+                                <a class="pull-left" href="#">
+                                    <img class="media-object img-circle" src="${imagePath}" alt="profile" height="50">
+                                </a>
+                                <div class="media-body">
+                                    <div class="well well-lg">
+                                        <h5 class="media-heading text-uppercase reviews">${fullname}</h5>
+                                        <p class="media-comment">
+                                            ${comment}
+                                        </p>
+                                    </div>
+                                </div>
+                            </li>
+                            `
+                        );
+                    });
+                });
+            });
 
             var subscribe = `<button type="button" class="btn justify-content-end btn-subscribe">Subscribe Now</button>`;
             var play = `<button style="margin-bottom:3%; margin-left: 1%;" type="button" class="btn justify-content-end btn-green" data-toggle="modal" data-target="#${@Model.ID}">Play</button>`;

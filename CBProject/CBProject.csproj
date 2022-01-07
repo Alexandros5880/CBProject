@@ -282,6 +282,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\EbookCommentAPI.cs" />
     <Compile Include="Models\EntityModels\Category.cs" />
     <Compile Include="Models\EntityModels\CategoryToCategory.cs" />
     <Compile Include="Models\EntityModels\ContactMessage.cs" />
@@ -312,6 +313,7 @@
     <Compile Include="Models\EntityModels\Review.cs" />
     <Compile Include="Models\EntityModels\Tag.cs" />
     <Compile Include="Models\EntityModels\Video.cs" />
+    <Compile Include="Models\VideoCommentAPI.cs" />
     <Compile Include="Models\ViewModels\ApplicationUserViewModel.cs" />
     <Compile Include="Models\ViewModels\CategoryViewModel.cs" />
     <Compile Include="Models\ViewModels\ContactViewModel.cs" />
@@ -1465,6 +1467,7 @@
     <Content Include="Content\Lessons.css" />
     <Content Include="Content\Login.css" />
     <Content Include="Content\Manage.css" />
+    <Content Include="Content\PublickDetails_Comments.css" />
     <Content Include="Content\Ratting.css" />
     <Content Include="Content\Subscribe.css" />
     <Content Include="fonts\boxicons.svg" />
