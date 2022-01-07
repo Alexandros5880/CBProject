@@ -128,10 +128,7 @@
     </div>
 </nav>
 
-
-
-
-
+<!-- Main Content With Videos/Ebooks -->
 <div class="container-fluid main-content">
     <div class="grey-row">
         <div class="container">
@@ -161,6 +158,8 @@
 @section scripts {
     <script>
         $(document).ready(function () {
+
+            var userAuthorized = @User.Identity.IsAuthenticated.ToString().ToLower();
 
             var ebooks = false;
             var videos = true;
@@ -258,7 +257,7 @@
                 }
             });
 
-            // When Or Card Item Od Every Viedo Or Ebook Clicked
+            // When Or Card Item Od Every Video Or Ebook Clicked
             $(".ourHolder").on("click", function () {
                 //var categoryId = $(this).find("input[type=hidden]").val();
                 //var contentId = $(this).find("input[name=content]").val();
@@ -282,6 +281,9 @@
                     render(response_data, videos, ebooks, renderPagenation);
                 });
             };
+
+
+
 
             // Contents Render UI Function
             function render(data, videos, ebooks, renderPagination = false) {
@@ -307,92 +309,93 @@
                     data.ebooks.forEach(ebook => {
                         getCategory(ebook.categoryId, function (category) {
                             getUserById(ebook.creatorId, function (creator) {
-                                var userAuthorized = @User.Identity.IsAuthenticated.ToString().ToLower();
-                                var ratingFor;
-                                if (userAuthorized) {
-                                    ratingFor = `
-                                        <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
-                                        <form id="ebook-rating-form" method="post" action="/api/Ebook/AddRate" target="dummyframe">
-                                            <input type="hidden" id="ebookId" name="ebookId" value="${ebook.id}">
-                                            <input name="rate"
-                                                    class="rating rating-loading rate"
-                                                    data-min="0"
-                                                    data-max="5"
-                                                    data-step="0.1"
-                                                    value="${ebook.ratingsAVG}"
-                                                    onchange="this.form.submit()">
-                                            <!--<input type="submit" value="Submit" />-->
-                                        </form>
+                                getPDF(ebook.ebookFilePath, function(pdfFile) {
+                                    var userAuthorized = @User.Identity.IsAuthenticated.ToString().ToLower();
+                                    var ratingFor;
+                                    if (userAuthorized) {
+                                        ratingFor = `
+                                            <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+                                            <form id="ebook-rating-form" method="post" action="/api/Ebook/AddRate" target="dummyframe">
+                                                <input type="hidden" id="ebookId" name="ebookId" value="${ebook.id}">
+                                                <input name="rate"
+                                                        class="rating rating-loading rate"
+                                                        data-min="0"
+                                                        data-max="5"
+                                                        data-step="0.1"
+                                                        value="${ebook.ratingsAVG}"
+                                                        onchange="this.form.submit()">
+                                                <!--<input type="submit" value="Submit" />-->
+                                            </form>
+                                            `
+                                    } else {
+                                        ratingFor = `
+                                            <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+                                            <form id="ebook-rating-form" method="post" action="/api/Ebook/AddRate" target="dummyframe">
+                                                <input type="hidden" id="ebookId" name="ebookId" value="${ebook.id}">
+                                                <input name="rate"
+                                                        class="rating rating-loading rate"
+                                                        data-min="0"
+                                                        data-max="5"
+                                                        data-step="0.1"
+                                                        value="${ebook.ratingsAVG}"
+                                                        disabled
+                                                        onchange="this.form.submit()">
+                                                <!--<input type="submit" value="Submit" />-->
+                                            </form>
                                         `
-                                } else {
-                                    ratingFor = `
-                                        <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
-                                        <form id="ebook-rating-form" method="post" action="/api/Ebook/AddRate" target="dummyframe">
-                                            <input type="hidden" id="ebookId" name="ebookId" value="${ebook.id}">
-                                            <input name="rate"
-                                                    class="rating rating-loading rate"
-                                                    data-min="0"
-                                                    data-max="5"
-                                                    data-step="0.1"
-                                                    value="${ebook.ratingsAVG}"
-                                                    disabled
-                                                    onchange="this.form.submit()">
-                                            <!--<input type="submit" value="Submit" />-->
-                                        </form>
-                                    `
-                                }
-                                $(".contents").append(`
-                                <div class="col-md-3 ourHolder" id="ourHolder">
-                                    <input type="hidden" id="category" name="category" value="${category.id}">
-                                    <input type="hidden" id="content" name="content" value="${ebook.id}">
-                                    <input type="hidden" id="content-type" name="content-type" value="ebook">
-                                    <div class="card item" id="card-ebook">
-                                     <img class="card-book-img" alt="Cover Foto" src="${ebook.ebookImagePath}" style="height: 150px; text-align: center;" />
-                                    <p style="text-align:center;margin-top:14px;"><b>${ebook.title}</b>
-                                    <hr />
-                                        <div class="card-body ">
-                                           <p><img class="img-icon-index" src="../assets/images/icons/icons-person.png" alt="person" />  ${creator.fullName}</p>
+                                    }
+                                    $(".contents").append(`
+                                        <div class="col-md-3 ourHolder" id="ourHolder">
+                                            <input type="hidden" id="category" name="category" value="${category.id}">
+                                            <input type="hidden" id="content" name="content" value="${ebook.id}">
+                                            <input type="hidden" id="content-type" name="content-type" value="ebook">
+                                            <div class="card item" id="card-ebook">
+                                             <img class="card-book-img" alt="Cover Foto" src="${ebook.ebookImagePath}" style="height: 150px; text-align: center;" />
+                                            <p style="text-align:center;margin-top:14px;"><b>${ebook.title}</b>
+                                            <hr />
+                                                <div class="card-body ">
+                                                   <p><img class="img-icon-index" src="../assets/images/icons/icons-person.png" alt="person" />  ${creator.fullName}</p>
 
-                                            <p><img class="img-icon-index" src="../assets/images/icons/icon-calendar.png" alt="video" /><small> ${ebook.uploadDate.split("T")[0]} </small></p>
-                                            <br />
-                                            `
-                                            + ratingFor +
-                                            `
-                                            <br />
-                                            <button class="btn btn-purple btn-lg details">Details</button>
-                                            <button class="btn btn-green btn-lg btn-open-modal" data-toggle="modal" data-target="#modal-fullscreen-xl">
-                                                Read
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Ebook Modal -->
-                                <div class="modal modal-fullscreen-xl" id="modal-fullscreen-xl" tabindex="-1" role="dialog" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title">${ebook.title}</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="embed-responsive embed-responsive-16by9">
-                                                    <embed src='${ebook.ebookFilePath} width:"300px;" height="300px" />
+                                                    <p><img class="img-icon-index" src="../assets/images/icons/icon-calendar.png" alt="video" /><small> ${ebook.uploadDate.split("T")[0]} </small></p>
+                                                    <br />
+                                                    `
+                                                    + ratingFor +
+                                                    `
+                                                    <br />
+                                                    <button class="btn btn-purple btn-lg details">Details</button>
+                                                    ${getButtonRead()}
                                                 </div>
                                             </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        </div>
+                                        <!-- Ebook Modal -->
+
+
+                                        <div  id="modal-fullscreen-xl" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg" style="width: 90%;">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <div class="row">
+                                                            <div class="col-md-1">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-body" style="text-align:center;">
+                                                        ` + getPdfFile(pdfFile) + `
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            `);
-                                var ratingInput = $('input[name="rate"]');
-                                $(ratingInput).rating();
+                                    `);
+                                    var ratingInput = $('input[name="rate"]');
+                                    $(ratingInput).rating();
+
+                                });
                             });
                         });
-                    });   
+                    });
                 }
                 if (data.videos && videos) {
                     $(".ebooks-filter").removeClass("active");
@@ -454,9 +457,7 @@
                                             <!--<img alt="Cover Foto" src="${video.videoImagePath}" style="width:100%;" />-->
                                             <p style="text-align:center;margin-top:14px;"><b>${video.title}</b></p>
                                              <hr>
-
                                             <div class="card-body">
-
                                                 <p><img class="img-icon-index" src="../assets/images/icons/icons-person.png" alt="person" />  ${creator.fullName}</p>
                                                 <p><img class="img-icon-index" src="../assets/images/icons/icon-video.png" alt="video" /> hours on-demand video  </p>
                                                 <p><img class="img-icon-index" src="../assets/images/icons/icon-calendar.png" alt="video" /> <small>  ${video.uploadDate.split("T")[0]}</small>  </p>
@@ -465,9 +466,7 @@
                                                 `
                                               <br>
                                                 <button class="btn btn-purple btn-lg details">Details</button>
-                                                <button class="btn btn-green btn-lg btn-open-modal more" data-toggle="modal" data-target="#modal-fullscreen-xl">
-                                                    Play
-                                                </button>
+                                                ${getButtonPlay()}
                                             </div>
                                         </div>
                                     </div>
@@ -539,6 +538,40 @@
                 }
             }
 
+            // Function Get Button Play Bases if user is logged in
+            function getButtonPlay() {
+                if (userAuthorized) {
+                    return `
+                            <button class="btn btn-green btn-lg btn-open-modal more" data-toggle="modal" data-target="#modal-fullscreen-xl">
+                                Play
+                            </button>
+                            `;
+                } else {
+                    return ``;
+                }
+            }
+
+            // Function Get Button Read Bases if user is logged in
+            function getButtonRead() {
+                if (userAuthorized) {
+                    return `
+                            <button class="btn btn-green btn-lg btn-open-modal" data-toggle="modal" data-target="#modal-fullscreen-xl">
+                                Read
+                            </button>
+                            `;
+                } else {
+                    return ``;
+                }
+            }
+
+            // Get PdfFile
+            function getPdfFile(pdfFile) {
+                if (pdfFile.length > 0) {
+                    return `<embed src="@Url.Content("${pdfFile}")" style="width:100%; height:87vh;"/>`;
+                } else {
+                    return `<h3 class='text-danger'>No File Found.</h3>`;
+                }
+            }
         });
     </script>
 

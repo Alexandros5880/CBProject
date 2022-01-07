@@ -298,6 +298,21 @@ function ebookAddRate(id, rate, callback) {
         }
     });
 }
+function getPDF(file, callback) {
+    $.ajax({
+        type: "POST",
+        url: `/api/ebook/pdf`,
+        data: {
+            file: file
+        },
+        success: function (data) {
+            callback(data);
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+};
 
 function getVideos(callback) {
     $.ajax({

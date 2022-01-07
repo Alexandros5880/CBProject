@@ -306,6 +306,22 @@ namespace CBProject.Controllers.API
                 return NotFound();
             return Ok(await this._unitOfWork.Ebooks.GetAsync(id));
         }
+        [HttpPost]
+        [Route("api/ebook/pdf")]
+        public async Task<IHttpActionResult> GetEbookPDF(EbookPdfAPI model)
+        {
+            if (model.File == null)
+                return NotFound();
+            var absolutePath = System.Web.Hosting.HostingEnvironment.MapPath(model.File);
+            if (System.IO.File.Exists(absolutePath))
+            {
+                return Ok(Url.Content(absolutePath));
+            }
+            else
+            {
+                return Ok("");
+            }
+        }
         [HttpGet]
         [Route("api/videos")]
         public async Task<IHttpActionResult> GetVideos()
