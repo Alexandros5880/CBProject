@@ -23,10 +23,7 @@
             <br />
             <p class="product-description"> @Html.DisplayFor(model => model.Description)</p>
             <div class="row">
-                <div class="col-md-1 raiting">
-                    <p id="raiting"><b>Rating</b></p>
-                </div>
-                <div class="col-md-10" id="stars">
+                <div class="col-md-12" id="stars">
                     @if (User.Identity.IsAuthenticated)
                     {
                         <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
@@ -54,15 +51,13 @@
                     }
                 </div>
             </div>
-
             <div class="subscribe-div">
-                
+                @*<button type="button" class="btn justify-content-end btn-subscribe">Subscribe Now</button>
+                <button style="margin-bottom:3%; margin-left: 1%;" type="button" class="btn justify-content-end btn-green" data-toggle="modal" data-target="#@Model.ID">Read</button>*@
             </div>
-            
         </div>
     </div>
 </div>
-
 
 <!-- Modal Raed -->
 <div id="@Html.DisplayFor(model=> model.ID)" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -94,13 +89,10 @@
     </div>
 </div>
 
-
-
-<!-- Left Card with image INCLUDES && REQUIREMENTS -->
 <div class="row">
+    <!-- Left Card with image INCLUDES && REQUIREMENTS -->
     <div class="col-md-3 col-md-offset-2 col-sm-4 col-sm-offset-0 details-bar">
         <img src=" @Html.DisplayFor(model => model.EbookImagePath)" style="width: 50%; margin-top: 5%; display: block; margin-left: auto; margin-right: auto;" alt="Card image cap" />
-
         <!-----------MOBILE ONLY---------->
         <div class="main-details-row-mobile">
             <div class="row ">
@@ -109,7 +101,6 @@
                 </div>
                 <div class="col-md-5 col-md-offset-1 col-sm-5">
                     <p class="product-title"> @Html.DisplayFor(model => model.Title)</p>
-
                     <p class="product-description"> @Html.DisplayFor(model => model.Description)</p>
                     <div class="row">
                         <div class="col-md-1 raiting">
@@ -143,26 +134,21 @@
                             }
                         </div>
                     </div>
-
                     <div class="subscribe-div">
-                        
+                        @*<button type="button" class="btn justify-content-end btn-subscribe">Subscribe Now</button>
+                        <button style="margin-bottom:3%; margin-left: 1%;" type="button" class="btn justify-content-end btn-green" data-toggle="modal" data-target="#@Model.ID">Read</button>*@
                     </div>
-
                 </div>
             </div>
         </div>
-
         <!-----------MOBILE ONLY - END---------->
-
         <hr style="border-top: 1px solid #c1c1c1;" />
         <h5><b>INCLUDES</b></h5>
         <p><img class="img-icon-index" src="~/img/icons-person.png" alt="person" /> Programming with <b>@Html.DisplayFor(model => model.Creator.FullName)</b>  </p>
         <p><img class="img-icon-index" src="~/img/icon-book.png" alt="video" /> 250 pages  </p>
         <p><img class="img-icon-index" src="~/img/icons-calendar.png" alt="person" /> Upload Date <b>@Html.DisplayFor(model => model.UploadDate)</b> </p>
         <p><img class="img-icon-index" src="~/img/icon-category.png" alt="video" /> Book category: @Html.DisplayFor(model => model.Category.Name) </p>
-
         <hr style="border-top: 1px solid #c1c1c1;" />
-
         <h5><b>REQUIREMENTS</b></h5>
         <ul>
             @foreach (var req in Model.Requirements)
@@ -170,10 +156,8 @@
                 <li><p>@req.Content</p></li>
             }
         </ul>
-
         <br />
     </div>
-
     <!-- Collapsible Groups -->
     <div class="col-md-5 col-sm-8">
         <div id="accordion">
@@ -230,44 +214,43 @@
 
 @section scripts {
     <script>
-
         $(document).ready(function () {
 
-            // Whene Subscribe Button Clicks
-            $(document.body).on('click', 'button', function () {
-                if (this.classList.contains('btn-subscribe')) {
-                    window.location.href = '/SubscriptionPackages/Subscribe';
-                }
-            });
+            var subscribe = `<button type="button" class="btn justify-content-end btn-subscribe">Subscribe Now</button>`;
+            var read = `<button style="margin-bottom:3%; margin-left: 1%;" type="button" class="btn justify-content-end btn-green" data-toggle="modal" data-target="#${@Model.ID}">Read</button>`;
 
             $(".rating").addClass("already_set");
 
-
-
-
-
             // If User has SubscriptionBackage Disable Subscribe else Enable
             var userAuthorized = @User.Identity.IsAuthenticated.ToString().ToLower();
-            var userId = @HttpContext.Current.User.Identity.GetUserId();
-            //console.log(userId);
-            getUserById(userId, function (user) {
-                console.log(user);
-
-                var subscribe = `<button type="button" class="btn justify-content-end btn-subscribe">Subscribe Now</button>`;
-                var read = `<button style="margin-bottom:3%; margin-left: 1%;" type="button" class="btn justify-content-end btn-green" data-toggle="modal" data-target="#${@Model.ID}">Read</button>`;
-
-                if (user.subscriptionPackage !== null) {
-                    $('.subscribe-div').empty();
-                    $('.subscribe-div').append(read);
-                } else {
-                    $('.subscribe-div').append(subscribe);
-                    $('.subscribe-div').append(read);
-                }
-
-
-
-            });
-
+            if (userAuthorized) {
+                getLogedUser(function (user) {
+                    getUserById(user.id, function (user) {
+                        if (user.subscriptionPackage !== null) {
+                            $('.subscribe-div').empty();
+                            $('.subscribe-div').append(read);
+                        } else {
+                            $('.subscribe-div').append(subscribe);
+                            $('.subscribe-div').append(read);
+                        }
+                        // Whene Subscribe Button Clicks goes to subscription package
+                        $(document.body).on('click', 'button', function () {
+                            if (this.classList.contains('btn-subscribe')) {
+                                window.location.href = '/SubscriptionPackages/Subscribe';
+                            }
+                        });
+                    });
+                });
+            } else {
+                $('.subscribe-div').empty();
+                $('.subscribe-div').append(subscribe);
+                // Whene Subscribe Button Clicks goes to Login Page
+                $(document.body).on('click', 'button', function () {
+                    if (this.classList.contains('btn-subscribe')) {
+                        window.location.href = '/Account/Login';
+                    }
+                });
+            }
 
         });
     </script>
