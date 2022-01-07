@@ -9,7 +9,8 @@
 }
 
 .product-title{
-    margin-top:10%;
+    margin-top:7%;
+  
     font-size:33px;
     color:white;
     font-weight:600;
@@ -26,7 +27,7 @@
 
 .raiting, #stars{
     padding:0px !important;
-    margin:1% 0 2% 0;
+    margin:1% 0 4% 0;
 }
 
 .checked {
@@ -39,15 +40,15 @@
     color: white;
     margin-bottom: 3%;
 }
-    .btn-subscribe:hover {
-        background-color: #5b65e8;
-        color: white;
-        border: 2px solid #5B65E8;
-        margin-bottom: 3%;
-    }
+.btn-subscribe:hover {
+      background-color: #5b65e8;
+      color: white;
+      border: 2px solid #5B65E8;
+      margin-bottom: 3%;
+}
 .details-bar {
     background-color: #ececec;
-    margin-top: -15%;
+    margin-top: -11%;
     border-radius: 10px;
     margin-bottom: 3%;
 }
@@ -69,20 +70,18 @@
    
 }
 
-#accordion{
-    margin-top:5%;
+#accordion {
+    margin-top: 5%;
 }
 @media screen and (max-width: 1580px) and (min-width: 1000px) {
     .details-bar {
-      
-        margin-top: -16%;
-       
+        margin-top: -12%;
     }
 }
 
 @media screen and (max-width: 999px) and (min-width: 768px) {
     .details-bar {
-        margin-top: -26%;
+        margin-top: -17%;
     }
 
     .product-title {
