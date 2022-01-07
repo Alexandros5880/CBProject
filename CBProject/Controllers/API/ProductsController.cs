@@ -72,17 +72,23 @@ namespace CBProject.Controllers.API
                 return NotFound();
             var category = await this._unitOfWork.Categories
                         .GetAsync(id);
-            var chiledCategories = await this._unitOfWork.Categories
-                                                .GetAllChiledAsync(category.ID);
-            var categories = chiledCategories;
-            categories.Add(category);
-            var categoriesIds = categories.Select(c => c.ID);
-            var videos = await this._unitOfWork.Videos.GetAllQuerable()
-                        .Where(v => categoriesIds.Contains(v.CategoryId))
-                        .ToListAsync();
-            var ebooks = await this._unitOfWork.Ebooks.GetAllQuerable()
-                        .Where(v => categoriesIds.Contains(v.CategoryId))
-                        .ToListAsync();
+
+            //var chiledCategories = await this._unitOfWork.Categories
+            //                                    .GetAllChiledAsync(category.ID);
+            //var categories = chiledCategories;
+            //categories.Add(category);
+            //var categoriesIds = categories.Select(c => c.ID);
+            //var videos = await this._unitOfWork.Videos.GetAllQuerable()
+            //            .Where(v => categoriesIds.Contains(v.CategoryId))
+            //            .ToListAsync();
+            //var ebooks = await this._unitOfWork.Ebooks.GetAllQuerable()
+            //            .Where(v => categoriesIds.Contains(v.CategoryId))
+            //            .ToListAsync();
+
+
+            var ebooks = await this._unitOfWork.Ebooks.GetAllByCategoryNameAsync(category.Name);
+            var videos = await this._unitOfWork.Videos.GetAllByCategoryNameAsync(category.Name);
+
             var products = new
             {
                 Videos = videos,
@@ -98,17 +104,22 @@ namespace CBProject.Controllers.API
                 return NotFound();
             var category = await this._unitOfWork.Categories
                         .GetByNameAsync(name);
-            var chiledCategories = await this._unitOfWork.Categories
-                                                .GetAllChiledAsync(category.ID);
-            var categories = chiledCategories;
-            categories.Add(category);
-            var categoriesIds = categories.Select(c => c.ID);
-            var videos = await this._unitOfWork.Videos.GetAllQuerable()
-                        .Where(v => categoriesIds.Contains(v.CategoryId))
-                        .ToListAsync();
-            var ebooks = await this._unitOfWork.Ebooks.GetAllQuerable()
-                        .Where(v => categoriesIds.Contains(v.CategoryId))
-                        .ToListAsync();
+
+            //var chiledCategories = await this._unitOfWork.Categories
+            //                                    .GetAllChiledAsync(category.ID);
+            //var categories = chiledCategories;
+            //categories.Add(category);
+            //var categoriesIds = categories.Select(c => c.ID);
+            //var videos = await this._unitOfWork.Videos.GetAllQuerable()
+            //            .Where(v => categoriesIds.Contains(v.CategoryId))
+            //            .ToListAsync();
+            //var ebooks = await this._unitOfWork.Ebooks.GetAllQuerable()
+            //            .Where(v => categoriesIds.Contains(v.CategoryId))
+            //            .ToListAsync();
+
+            var ebooks = await this._unitOfWork.Ebooks.GetAllByCategoryNameAsync(category.Name);
+            var videos = await this._unitOfWork.Videos.GetAllByCategoryNameAsync(category.Name);
+
             var products = new
             {
                 Videos = videos,

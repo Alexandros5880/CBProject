@@ -164,7 +164,7 @@
 
 
 
-
+<!-- Main Container With Videos/Ebooks -->
 <div class="container-fluid main-content">
     <div class="grey-row">
         <div class="container">
@@ -231,6 +231,7 @@
                 if (this.classList.contains('search-top-button')) {
                     var search = $("#lessons-top-search-input").val();
                     if (search.length != 0) {
+                        page = 1;
                         searchTop(ebooks, videos, lessonsRatings, createdDate, search, null, true);
                     } else {
                         searchTop(ebooks, videos, lessonsRatings, createdDate, search, 1);
