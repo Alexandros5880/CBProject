@@ -86,6 +86,38 @@
 @Scripts.Render("~/bundles/jquery")
 
 
+
+<script type="text/javascript">
+    $(function () {
+
+        // Open Read Ebooks Modal
+        $("body").on('click', '#ebook-modal-button', function () {
+            var id = $(this).attr('data-id');
+            $.ajax({
+                url: '/Home/_Read/' + id,
+                type: 'GET',
+                success: function (response) {
+                    $('.modal-ebook-read').html(response);
+                }
+            });
+        });
+
+        // Open Watch Video Modal
+        $("body").on('click', '#video-modal-button', function () {
+            var id = $(this).attr('data-id');
+            $.ajax({
+                url: '/Home/_Watch/' + id,
+                type: 'GET',
+                success: function (response) {
+                    $('.modal-ebook-read').html(response);
+                }
+            });
+        });
+
+    });
+</script>
+
+
 <!-- Filters Top Nav -->
 <nav class="navbar navbar-light bg-light justify-content-between lessons-top-navbar">
     <h3 id="lessons-big-title" class="animate__animated animate__fadeInLeft">Chillin and searching something...</h3>
@@ -152,6 +184,17 @@
 </div>
 
 
+
+
+
+<!-- Ebook Modal -->
+<div id="modal-fullscreen-xl" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" style="width: 90%;">
+        <div class="modal-content modal-ebook-read">
+            
+        </div>
+    </div>
+</div>
 
 
 
@@ -306,7 +349,9 @@
                             RenderPaginationButtons(pages);
                         });
                     }
+                    var counter = 0;
                     data.ebooks.forEach(ebook => {
+                        counter++;
                         getCategory(ebook.categoryId, function (category) {
                             getUserById(ebook.creatorId, function (creator) {
                                 getPDF(ebook.ebookFilePath, function(pdfFile) {
@@ -355,7 +400,6 @@
                                             <hr />
                                                 <div class="card-body ">
                                                    <p><img class="img-icon-index" src="../assets/images/icons/icons-person.png" alt="person" />  ${creator.fullName}</p>
-
                                                     <p><img class="img-icon-index" src="../assets/images/icons/icon-calendar.png" alt="video" /><small> ${ebook.uploadDate.split("T")[0]} </small></p>
                                                     <br />
                                                     `
@@ -363,28 +407,7 @@
                                                     `
                                                     <br />
                                                     <button class="btn btn-purple btn-lg details">Details</button>
-                                                    ${getButtonRead()}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Ebook Modal -->
-
-
-                                        <div  id="modal-fullscreen-xl" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-lg" style="width: 90%;">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <div class="row">
-                                                            <div class="col-md-1">
-                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                    <span aria-hidden="true">&times;</span>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-body" style="text-align:center;">
-                                                        ` + getPdfFile(pdfFile) + `
-                                                    </div>
+                                                    ` + displayReadButton(userAuthorized, ebook.id) + `
                                                 </div>
                                             </div>
                                         </div>
@@ -466,29 +489,7 @@
                                                 `
                                               <br>
                                                 <button class="btn btn-purple btn-lg details">Details</button>
-                                                ${getButtonPlay()}
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Video Modal -->
-                                    <div class="modal modal-fullscreen-xl" id="modal-fullscreen-xl" tabindex="-1" role="dialog" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title">${video.title}</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="embed-responsive embed-responsive-16by9">
-                                                        <iframe class="embed-responsive-item" src="${video.videoPath}" allowfullscreen></iframe>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                </div>
+                                                ` + displayPlayButton(userAuthorized, video.id) + `
                                             </div>
                                         </div>
                                     </div>
@@ -538,38 +539,25 @@
                 }
             }
 
-            // Function Get Button Play Bases if user is logged in
-            function getButtonPlay() {
+            // Display or Not Read Button of Ebooks
+            function displayReadButton(userAuthorized, id) {
                 if (userAuthorized) {
-                    return `
-                            <button class="btn btn-green btn-lg btn-open-modal more" data-toggle="modal" data-target="#modal-fullscreen-xl">
-                                Play
-                            </button>
-                            `;
-                } else {
-                    return ``;
-                }
-            }
-
-            // Function Get Button Read Bases if user is logged in
-            function getButtonRead() {
-                if (userAuthorized) {
-                    return `
-                            <button class="btn btn-green btn-lg btn-open-modal" data-toggle="modal" data-target="#modal-fullscreen-xl">
+                    return `<button id="ebook-modal-button" class="btn btn-green btn-lg btn-open-modal" data-toggle="modal" data-target="#modal-fullscreen-xl" data-id="${id}">
                                 Read
-                            </button>
-                            `;
+                            </button>`;
                 } else {
                     return ``;
                 }
             }
 
-            // Get PdfFile
-            function getPdfFile(pdfFile) {
-                if (pdfFile.length > 0) {
-                    return `<embed src="@Url.Content("${pdfFile}")" style="width:100%; height:87vh;"/>`;
+            // Display or Not Play Button of Videos
+            function displayPlayButton(userAuthorized, id) {
+                if (userAuthorized) {
+                    return `<button id="video-modal-button" class="btn btn-green btn-lg btn-open-modal more" data-toggle="modal" data-target="#modal-fullscreen-xl" data-id="${id}">
+                                Play
+                            </button>`;
                 } else {
-                    return `<h3 class='text-danger'>No File Found.</h3>`;
+                    return ``;
                 }
             }
         });

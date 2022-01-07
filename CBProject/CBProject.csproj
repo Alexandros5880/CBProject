@@ -1929,6 +1929,8 @@
     <Content Include="Views\ContactMessages\Delete.cshtml" />
     <Content Include="Views\ContactMessages\Edit.cshtml" />
     <Content Include="Views\ContactMessages\Create.cshtml" />
+    <Content Include="Views\Home\_Read.cshtml" />
+    <Content Include="Views\Home\_Watch.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

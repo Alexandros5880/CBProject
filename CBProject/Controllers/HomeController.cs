@@ -9,6 +9,7 @@ using CBProject.Repositories.IdentityRepos.Interfaces;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -117,5 +118,36 @@ namespace CBProject.Controllers
         {
             return View();
         }
+
+        public async Task<ActionResult> _Read(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Ebook ebook = await this._ebooksRepository.GetAsync(id);
+            if (ebook == null)
+            {
+                return HttpNotFound();
+            }
+            var viewModel = Mapper.Map<Ebook, EbookViewModel>(ebook);
+            return PartialView("_Read", viewModel);
+        }
+
+        public async Task<ActionResult> _Watch(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Video video = await this._videosRepository.GetAsync(id);
+            if (video == null)
+            {
+                return HttpNotFound();
+            }
+            var viewModel = Mapper.Map<Video, VideoViewModel>(video);
+            return PartialView("_Watch", viewModel);
+        }
+
     }
 }
