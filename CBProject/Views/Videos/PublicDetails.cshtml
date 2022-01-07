@@ -20,9 +20,11 @@
         </div>
         <div class="col-md-5 col-md-offset-1 col-sm-5">
             <p class="product-title"> @Html.DisplayFor(model => model.Title)</p>
-            <br />
+
+      
             <p class="product-description"> @Html.DisplayFor(model => model.Description)</p>
             <div class="row">
+               
                 <div class="col-md-12" id="stars">
                     @if (User.Identity.IsAuthenticated)
                     {
@@ -101,10 +103,8 @@
                     <p class="product-title"> @Html.DisplayFor(model => model.Title)</p>
                     <p class="product-description"> @Html.DisplayFor(model => model.Description)</p>
                     <div class="row">
-                        <div class="col-md-1 raiting">
-                            <p id="raiting"><b>Rating</b></p>
-                        </div>
-                        <div class="col-md-10" id="stars">
+                      
+                        <div class="col-md-12" id="stars">
                             @if (User.Identity.IsAuthenticated)
                             {
                                 <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
