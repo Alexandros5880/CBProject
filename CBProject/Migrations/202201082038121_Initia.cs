@@ -3,7 +3,7 @@ namespace CBProject.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Initial : DbMigration
+    public partial class Initia : DbMigration
     {
         public override void Up()
         {
@@ -361,7 +361,6 @@ namespace CBProject.Migrations
                 c => new
                     {
                         ID = c.Int(nullable: false, identity: true),
-                        UserId = c.String(maxLength: 128),
                         FirstName = c.String(),
                         LastName = c.String(),
                         Phone = c.String(),
@@ -370,9 +369,7 @@ namespace CBProject.Migrations
                         Message = c.String(),
                         UploatedDate = c.DateTime(nullable: false),
                     })
-                .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.AspNetUsers", t => t.UserId)
-                .Index(t => t.UserId);
+                .PrimaryKey(t => t.ID);
             
             CreateTable(
                 "dbo.AspNetRoles",
@@ -390,7 +387,6 @@ namespace CBProject.Migrations
         public override void Down()
         {
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
-            DropForeignKey("dbo.ContactMessages", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.RequirementToEbooks", "RequirementId", "dbo.Requirements");
             DropForeignKey("dbo.RequirementToEbooks", "EbookId", "dbo.Ebooks");
             DropForeignKey("dbo.Ebooks", "CreatorId", "dbo.AspNetUsers");
@@ -423,7 +419,6 @@ namespace CBProject.Migrations
             DropForeignKey("dbo.CategoryToCategories", "MasterCategoryId", "dbo.Categories");
             DropForeignKey("dbo.CategoryToCategories", "ChiledCategoryId", "dbo.Categories");
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
-            DropIndex("dbo.ContactMessages", new[] { "UserId" });
             DropIndex("dbo.RequirementToEbooks", new[] { "EbookId" });
             DropIndex("dbo.RequirementToEbooks", new[] { "RequirementId" });
             DropIndex("dbo.TagToEbooks", new[] { "EbookId" });

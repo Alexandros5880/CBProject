@@ -303,9 +303,7 @@
                                         `+ ratingFor+`
                                         <br />
                                         <button class="btn btn-purple btn-lg details">Details</button>
-                                        <button class="btn btn-green btn-lg btn-open-modal more" data-toggle="modal" data-target="#video-modal-fullscreen-xl">
-                                            Play
-                                        </button>
+                                        ` + displayPlayButton(userAuthorized, video.id) + `
                                     </div>
                                 </div>
                             </div>
@@ -357,39 +355,39 @@
                 getCategory(ebook.categoryId, function (category) {
                     getUserById(ebook.creatorId, function (creator) {
                         var userAuthorized = @User.Identity.IsAuthenticated.ToString().ToLower();
-                                var ratingFor;
-                                if (userAuthorized) {
-                                    ratingFor = `
-                                        <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
-                                        <form id="ebook-rating-form" method="post" action="/api/Ebook/AddRate" target="dummyframe">
-                                            <input type="hidden" id="ebookId" name="ebookId" value="${ebook.id}">
-                                            <input name="rate"
-                                                    class="rating rating-loading rate"
-                                                    data-min="0"
-                                                    data-max="5"
-                                                    data-step="0.1"
-                                                    value="${ebook.ratingsAVG}"
-                                                    onchange="this.form.submit()">
-                                            <!--<input type="submit" value="Submit" />-->
-                                        </form>
-                                        `
-                                } else {
-                                    ratingFor = `
-                                        <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
-                                        <form id="ebook-rating-form" method="post" action="/api/Ebook/AddRate" target="dummyframe">
-                                            <input type="hidden" id="ebookId" name="ebookId" value="${ebook.id}">
-                                            <input name="rate"
-                                                    class="rating rating-loading rate"
-                                                    data-min="0"
-                                                    data-max="5"
-                                                    data-step="0.1"
-                                                    value="${ebook.ratingsAVG}"
-                                                    disabled
-                                                    onchange="this.form.submit()">
-                                            <!--<input type="submit" value="Submit" />-->
-                                        </form>
-                                    `
-                                }
+                        var ratingFor;
+                        if (userAuthorized) {
+                            ratingFor = `
+                                <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+                                <form id="ebook-rating-form" method="post" action="/api/Ebook/AddRate" target="dummyframe">
+                                    <input type="hidden" id="ebookId" name="ebookId" value="${ebook.id}">
+                                    <input name="rate"
+                                            class="rating rating-loading rate"
+                                            data-min="0"
+                                            data-max="5"
+                                            data-step="0.1"
+                                            value="${ebook.ratingsAVG}"
+                                            onchange="this.form.submit()">
+                                    <!--<input type="submit" value="Submit" />-->
+                                </form>
+                                `
+                        } else {
+                            ratingFor = `
+                                <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+                                <form id="ebook-rating-form" method="post" action="/api/Ebook/AddRate" target="dummyframe">
+                                    <input type="hidden" id="ebookId" name="ebookId" value="${ebook.id}">
+                                    <input name="rate"
+                                            class="rating rating-loading rate"
+                                            data-min="0"
+                                            data-max="5"
+                                            data-step="0.1"
+                                            value="${ebook.ratingsAVG}"
+                                            disabled
+                                            onchange="this.form.submit()">
+                                    <!--<input type="submit" value="Submit" />-->
+                                </form>
+                            `
+                        }
                         $("#ebooks-home").append(
                             `
                             <div class="col-md-3 ourHolder" data-item="${ebook.category}">
@@ -416,6 +414,19 @@
                     });
                 });
             });
+
+
+            // Display or Not Play Button of Videos
+            function displayPlayButton(userAuthorized, id) {
+                if (userAuthorized) {
+                    return `
+                            <button class="btn btn-green btn-lg btn-open-modal more" data-toggle="modal" data-target="#video-modal-fullscreen-xl">
+                                Play
+                            </button>`;
+                } else {
+                    return ``;
+                }
+            }
         }
 
     </script>

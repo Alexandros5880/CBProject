@@ -84,30 +84,16 @@ namespace CBProject.Controllers
             // Find Sender If Exists
             var user = await this._usersRepo.GetByEmailAsync(contact.Email);
             // Create Message
-            ContactMessage message;
-            if (user == null)
+            ContactMessage message = new ContactMessage()
             {
-                message = new ContactMessage()
-                {
-                    FirstName = contact.FirstName,
-                    LastName = contact.LastName,
-                    Email = contact.Email,
-                    Phone = contact.Phone,
-                    Subject = contact.Subject,
-                    Message = contact.Message,
-                    UploatedDate = DateTime.Today
-                };
-            }
-            else
-            {
-                message = new ContactMessage()
-                {
-                    User = user,
-                    Subject = contact.Subject,
-                    Message = contact.Message,
-                    UploatedDate = DateTime.Today
-                };
-            }
+                FirstName = contact.FirstName,
+                LastName = contact.LastName,
+                Email = contact.Email,
+                Phone = contact.Phone,
+                Subject = contact.Subject,
+                Message = contact.Message,
+                UploatedDate = DateTime.Today
+            };
             this._messagesRepository.Add(message);
             await this._messagesRepository.SaveAsync();
             return View();
