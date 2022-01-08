@@ -271,6 +271,7 @@
     <Compile Include="HelperClasses\Compares\RatingCompare.cs" />
     <Compile Include="HelperClasses\CreateData.cs" />
     <Compile Include="HelperClasses\EmailService.cs" />
+    <Compile Include="HelperClasses\File.cs" />
     <Compile Include="HelperClasses\Pagination.cs" />
     <Compile Include="HelperClasses\Interfaces\IUnitOfWork.cs" />
     <Compile Include="HelperClasses\StaticImfo.cs" />

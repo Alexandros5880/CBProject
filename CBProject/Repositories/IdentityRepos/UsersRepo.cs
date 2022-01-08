@@ -67,6 +67,10 @@ namespace CBProject.Repositories.IdentityRepos
                 throw new Exception("In Users repo delete method id is empty.");
             var user = this.Get(id);
             this.RemoveRoles(user);
+            var cvPath = System.Web.HttpContext.Current.Server.MapPath($"~/{user.CVPath}");
+            File.DeleteFile(cvPath);
+            var imagePath = System.Web.HttpContext.Current.Server.MapPath($"~/{user.ImagePath}");
+            File.DeleteFile(imagePath);
             this._manager.UserManager.Delete(user);
         }
         public async Task<IdentityResult> DeleteRealAsync(string id)
@@ -75,6 +79,10 @@ namespace CBProject.Repositories.IdentityRepos
                 throw new Exception("In Users repo delete method id is empty.");
             var user = this.Get(id);
             this.RemoveRoles(user);
+            var cvPath = System.Web.HttpContext.Current.Server.MapPath($"~/{user.CVPath}");
+            File.DeleteFile(cvPath);
+            var imagePath = System.Web.HttpContext.Current.Server.MapPath($"~/{user.ImagePath}");
+            File.DeleteFile(imagePath);
             return await this._manager.UserManager.DeleteAsync(user);
         }
         public void FinalDelete(string id)

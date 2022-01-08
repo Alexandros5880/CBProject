@@ -375,7 +375,7 @@ namespace CBProject.HelperClasses
                     Url = "url",
                     UploadDate = DateTime.Today,
                     Creator = this._context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
-                    Category = this._context.Categories.FirstOrDefault(c => c.Name.Equals(".NET"))
+                    Category = this._context.Categories.FirstOrDefault(c => c.Name.Equals("MVC"))
                 };
                 Ebook ebook2 = new Ebook()
                 {
@@ -388,7 +388,7 @@ namespace CBProject.HelperClasses
                     Url = "url",
                     UploadDate = DateTime.Today,
                     Creator = this._context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
-                    Category = this._context.Categories.FirstOrDefault(c => c.Name.Equals("CORE"))
+                    Category = this._context.Categories.FirstOrDefault(c => c.Name.Equals("WPF"))
                 };
                 Ebook ebook3 = new Ebook()
                 {
@@ -414,7 +414,7 @@ namespace CBProject.HelperClasses
                     Url = "url",
                     UploadDate = DateTime.Today,
                     Creator = this._context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
-                    Category = this._context.Categories.FirstOrDefault(c => c.Name.Equals(".NET"))
+                    Category = this._context.Categories.FirstOrDefault(c => c.Name.Equals("XAMARIN"))
                 };
                 Ebook ebook5 = new Ebook()
                 {
@@ -427,7 +427,7 @@ namespace CBProject.HelperClasses
                     Url = "url",
                     UploadDate = DateTime.Today,
                     Creator = this._context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
-                    Category = this._context.Categories.FirstOrDefault(c => c.Name.Equals("CORE"))
+                    Category = this._context.Categories.FirstOrDefault(c => c.Name.Equals("MVC"))
                 };
                 Ebook ebook6 = new Ebook()
                 {
@@ -440,7 +440,7 @@ namespace CBProject.HelperClasses
                     Url = "url",
                     UploadDate = DateTime.Today,
                     Creator = this._context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
-                    Category = this._context.Categories.FirstOrDefault(c => c.Name.Equals("FRAMEWORK"))
+                    Category = this._context.Categories.FirstOrDefault(c => c.Name.Equals("WPF"))
                 };
                 Ebook ebook7 = new Ebook()
                 {
@@ -453,7 +453,7 @@ namespace CBProject.HelperClasses
                     Url = "url",
                     UploadDate = DateTime.Today,
                     Creator = this._context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
-                    Category = this._context.Categories.FirstOrDefault(c => c.Name.Equals("CORE"))
+                    Category = this._context.Categories.FirstOrDefault(c => c.Name.Equals("XAMARIN"))
                 };
                 Ebook ebook8 = new Ebook()
                 {
@@ -466,7 +466,7 @@ namespace CBProject.HelperClasses
                     Url = "url",
                     UploadDate = DateTime.Today,
                     Creator = this._context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
-                    Category = this._context.Categories.FirstOrDefault(c => c.Name.Equals("FRAMEWORK"))
+                    Category = this._context.Categories.FirstOrDefault(c => c.Name.Equals("WPF"))
                 };
                 this._context.Ebooks.Add(ebook1);
                 this._context.Ebooks.Add(ebook2);
@@ -484,34 +484,33 @@ namespace CBProject.HelperClasses
         }
         public void CreateVideo()
         {
-            Random random = new Random();
-            for (int i = 1; i < 13; i++)
-            {
-                var videoAbsolutePath = $"{StaticImfo.CurrentPath}\\{StaticImfo.VideoFilesFolder}\\video{i}.mp4";
-                var thumbnailAbsolutePath = $"{StaticImfo.CurrentPath}\\{StaticImfo.VideoImagePath}video_{i}_thambnail.jpg";
-                string thumbnailPath = $"{StaticImfo.VideoImagePath}video_{i}_thambnail.jpg";
-                VideoEditor.CreateThambnail(videoAbsolutePath, thumbnailAbsolutePath, 1);
-                var duration = VideoEditor.Duration(videoAbsolutePath);
-                int categoryId = random.Next(0, 6);
-                this._context.Videos.Add(new Video()
-                {
-                    ID = i,
-                    Title = $"MVC_EP_{i}",
-                    Thumbnail = thumbnailPath,
-                    VideoImagePath = StaticImfo.VideoImagePath + $"video_{i}.jpg",
-                    VideoPath = StaticImfo.VideoPath + $"video{i}.mp4",
-                    Description = $"mvc_ep_{i}",
-                    UploadDate = DateTime.Today,
-                    Duration = duration,
-                    Creator = this._context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
-                    Category = this._context.Categories.FirstOrDefault(c => c.ID == categoryId),
-                    Url = $"www.mvc_ep_{i}.com"
-                });
-            }
-            this._context.SaveChanges();
             try
             {
-                
+                Random random = new Random();
+                for (int i = 1; i < 13; i++)
+                {
+                    var videoAbsolutePath = $"{StaticImfo.CurrentPath}\\{StaticImfo.VideoFilesFolder}\\video{i}.mp4";
+                    var thumbnailAbsolutePath = $"{StaticImfo.CurrentPath}\\{StaticImfo.VideoImagePath}video_{i}_thambnail.jpg";
+                    string thumbnailPath = $"{StaticImfo.VideoImagePath}video_{i}_thambnail.jpg";
+                    VideoEditor.CreateThambnail(videoAbsolutePath, thumbnailAbsolutePath, 1);
+                    var duration = VideoEditor.Duration(videoAbsolutePath);
+                    int categoryId = random.Next(4, 7);
+                    this._context.Videos.Add(new Video()
+                    {
+                        ID = i,
+                        Title = $"MVC_EP_{i}",
+                        Thumbnail = thumbnailPath,
+                        VideoImagePath = StaticImfo.VideoImagePath + $"video{i}.jpg",
+                        VideoPath = StaticImfo.VideoPath + $"video{i}.mp4",
+                        Description = $"mvc_ep_{i}",
+                        UploadDate = DateTime.Today,
+                        Duration = duration,
+                        Creator = this._context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
+                        Category = this._context.Categories.FirstOrDefault(c => c.Master == false && c.ID == categoryId),
+                        Url = $"www.mvc_ep_{i}.com"
+                    });
+                }
+                this._context.SaveChanges();
             }
             catch (Exception ex)
             {

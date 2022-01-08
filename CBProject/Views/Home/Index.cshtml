@@ -144,7 +144,7 @@
             getCategories(function (data) {
                 $("#filter-tab").empty();
                 data.forEach(d => {
-                    if (d.master) {
+                    if (!d.master) {
                         $("#filter-tab").append(
                             `
                                 <li>
@@ -182,8 +182,8 @@
                 });
             });
 
-            // Get Videos And Ebooks With Category 'CORE'
-            getContentsByCategoryName("CORE", function (data) {
+            // Get Videos And Ebooks With Category 'MVC'
+            getContentsByCategoryName("MVC", function (data) {
                 render(data);
             });
 
