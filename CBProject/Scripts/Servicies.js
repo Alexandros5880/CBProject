@@ -584,3 +584,14 @@ function removeRequarements(modelId, contentId, type) {
         });
     }
 }
+
+function parseDateTime(date) {
+    var Y = date.split("T")[0].split("-")[0];
+    var M = date.split("T")[0].split("-")[1];
+    var D = date.split("T")[0].split("-")[2];
+    var h = date.split("T")[1].split(".")[0].split(":")[0];
+    var m = date.split("T")[1].split(".")[0].split(":")[1];
+    var s = date.split("T")[1].split(".")[0].split(":")[2];
+    var ms = date.split("T")[1].split(".")[1];
+    return new Date(Y, M, D, h, m, s, ms);
+}

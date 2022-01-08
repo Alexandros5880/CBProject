@@ -285,6 +285,7 @@ namespace CBProject.Migrations
                         ID = c.Int(nullable: false, identity: true),
                         ReviewerId = c.String(maxLength: 128),
                         Comment = c.String(),
+                        CreatedDate = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.AspNetUsers", t => t.ReviewerId)

@@ -424,7 +424,8 @@ namespace CBProject.Repositories
             var review = new Review()
             {
                 Reviewer = reviewer,
-                Comment = comment
+                Comment = comment,
+                CreatedDate = DateTime.Now
             };
             this._context.Reviews.Add(review);
             await this._context.SaveChangesAsync();

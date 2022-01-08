@@ -223,7 +223,7 @@
             </div>
             <div class="comment-tabs">
                 <ul class="nav nav-tabs" role="tablist">
-                    <li class="active"><a href="#comments-logout" role="tab" data-toggle="tab"><h4 class="reviews text-capitalize">Comments</h4></a></li>
+                    <li class="active"><a href="#comments-logout" id="comments-tab" role="tab" data-toggle="tab"><h4 class="reviews text-capitalize">Comments</h4></a></li>
                     @if (User.Identity.IsAuthenticated)
                     {
                         <li><a href="#add-comment" role="tab" data-toggle="tab"><h4 class="reviews text-capitalize">Add comment</h4></a></li>
@@ -282,8 +282,12 @@
 
             // Load Comments
             getReviewsByVideo(id, function (reviews) {
-                reviews.slice(0, 4).forEach(function (review) {
-                    getUserById(review.reviewerId, function (user) {
+                reviews.reverse();
+                // Select First 4
+                reviews = reviews.slice(0, 4);
+                $('#comments-list').empty();
+                reviews.forEach(function (review) {
+                    getUserByIdSync(review.reviewerId, function (user) {
                         var imagePath = user.imagePath;
                         var fullname = user.fullName;
                         var comment = review.comment;
@@ -295,7 +299,10 @@
                                 </a>
                                 <div class="media-body">
                                     <div class="well well-lg">
-                                        <h5 class="media-heading text-uppercase reviews">${fullname}</h5>
+                                        <div class="row">
+                                            <h5 class="media-heading text-uppercase reviews col-md-7">${fullname}</h5>
+                                            <h6 class="col-md-5">${review.createdDate.split("T")[0]}&emsp;${review.createdDate.split("T")[1]}</h6>
+                                        </div>
                                         <p class="media-comment">
                                             ${comment}
                                         </p>
@@ -306,6 +313,11 @@
                         );
                     });
                 });
+            });
+
+            $("#commentForm").submit(function () {
+                $("#comments-tab").trigger('click');
+                location.reload();
             });
 
             var subscribe = `<button type="button" class="btn justify-content-end btn-subscribe">Subscribe Now</button>`;
