@@ -1,10 +1,75 @@
-﻿
+﻿@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.EntityFramework
+@using CBProject.Models
+
+<!-- Setup Current User Access Level Security -->
+@{
+    var context = new ApplicationDbContext();
+    var userStore = new UserStore<ApplicationUser, ApplicationRole, string, IdentityUserLogin, IdentityUserRole, IdentityUserClaim>(context);
+    var userManager = new CBProject.ApplicationUserManager(userStore);
+    var currentUser = userManager.FindById(User.Identity.GetUserId());
+    var roleStore = new RoleStore<ApplicationRole>(context);
+    var roleManager = new RoleManager<ApplicationRole>(roleStore);
+
+    var fullName = currentUser.FullName;
+    var userImage = currentUser.ImagePath;
+
+    if (userImage == null || userImage.IsEmpty())
+    {
+        userImage = "\\assets\\images\\users\\anonimus.png";
+    }
+
+    RoleLevel access = RoleLevel.SUPERLOW;
+
+    foreach (var role in currentUser.Roles)
+    {
+        var myRole = roleManager.FindById(role.RoleId);
+        if (myRole.Level == RoleLevel.FULL)
+        {
+            access = myRole.Level;
+        }
+        else if (myRole.Level == RoleLevel.PLUSSFULL)
+        {
+            if (access != RoleLevel.FULL)
+            {
+                access = myRole.Level;
+            }
+        }
+        else if (myRole.Level == RoleLevel.MIDDLE)
+        {
+            if (access != RoleLevel.FULL &&
+                access != RoleLevel.PLUSSFULL)
+            {
+                access = myRole.Level;
+            }
+        }
+        else if (myRole.Level == RoleLevel.LOW)
+        {
+            if (access != RoleLevel.FULL &&
+                access != RoleLevel.PLUSSFULL &&
+                access != RoleLevel.MIDDLE)
+            {
+                access = myRole.Level;
+            }
+        }
+        else if (myRole.Level == RoleLevel.SUPERLOW)
+        {
+            if (access != RoleLevel.FULL &&
+                access != RoleLevel.PLUSSFULL &&
+                access != RoleLevel.MIDDLE &&
+                access != RoleLevel.LOW)
+            {
+                access = myRole.Level;
+            }
+        }
+    }
+}
 
 
 
-
-<link rel="stylesheet" href="~/Content/Ratting.css">
-
+@section styles {
+    <link rel="stylesheet" href="~/Content/Ratting.css">
+}
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -111,9 +176,9 @@
             </tr>
         </thead>
     </table>
-    <br/>
-    <br/>
-    <br/>
+    <br />
+    <br />
+    <br />
 </div>
 
 
@@ -240,9 +305,9 @@
                         data: "Cover Photo",
                         render: function (data, type, video) {
                             return `
-                                    ${video.videoImagePath}
-                                    <img alt="Cover Foto" src="${video.videoImagePath}" style="height: 77px;"/>
-                                    `;
+                                                ${video.videoImagePath}
+                                                <img alt="Cover Foto" src="${video.videoImagePath}" style="height: 77px;"/>
+                                                `;
                         }
                     },
                     {
@@ -261,31 +326,61 @@
                         data: "Rating",
                         render: function (data, type, video) {
                             return `
-                                <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
-                                <form id="video-rating-form" method="post" action="/api/Video/AddRate" target="dummyframe">
-                                    <input type="hidden" id="videoId" name="videoId" value="${video.id}">
-                                    <input name="rate"
-                                            class="rating rating-loading rate"
-                                            data-min="0"
-                                            data-max="5"
-                                            data-step="0.1"
-                                            value="${video.ratingsAVG}"
-                                            onchange="this.form.submit()">
-                                    <!--<input type="submit" value="Submit" />-->
-                                </form>
-                            `;
+                                            <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+                                            <form id="video-rating-form" method="post" action="/api/Video/AddRate" target="dummyframe">
+                                                <input type="hidden" id="videoId" name="videoId" value="${video.id}">
+                                                <input name="rate"
+                                                        class="rating rating-loading rate"
+                                                        data-min="0"
+                                                        data-max="5"
+                                                        data-step="0.1"
+                                                        value="${video.ratingsAVG}"
+                                                        onchange="this.form.submit()">
+                                                <!--<input type="submit" value="Submit" />-->
+                                            </form>
+                                        `;
                         }
                     },
                     {
                         data: "Buttons",
                         render: function (data, type, video) {
-                            return `
-                                <button type="button" id="tag-modal-button-video" class="btn btn-dark tag-modal-button-video" data-toggle="modal" data-target="#tag-modal-video" data-id="${video.id}">Tag</button>
-                                <button type="button" id="comment-modal-button-video" class="btn btn-primary comment-modal-button-video" data-toggle="modal" data-target="#review-modal-video" data-id="${video.id}">Comment</button>
-                                <button type="button" id="details-modal-button-video" class="btn btn-info details-modal-button-video" data-toggle="modal" data-target="#details-modal-video" data-id="${video.id}">Details</button>
-                                <button type="button" id="edit-modal-button-video" class="btn btn-success edit-modal-button-video" data-toggle="modal" data-target="#edit-modal-video" data-id="${video.id}">Edit</button>
-                                <button type="button" id="delete-modal-button-video" class="btn btn-danger btn-delete delete-modal-button-video" data-toggle="modal" data-target="#delete-modal-video" data-id="${video.id}">Delete</button>
-                            `;
+                            var access = "@access.ToString()";
+                            switch (access) {
+                                case "SUPERLOW":
+                                    return `
+                                        <button type="button" id="comment-modal-button-video" class="btn btn-primary comment-modal-button-video" data-toggle="modal" data-target="#review-modal-video" data-id="${video.id}">Comment</button>
+                                        <button type="button" id="details-modal-button-video" class="btn btn-info details-modal-button-video" data-toggle="modal" data-target="#details-modal-video" data-id="${video.id}">Details</button>
+                                    `;
+                                case "LOW":
+                                    return `
+                                        <button type="button" id="comment-modal-button-video" class="btn btn-primary comment-modal-button-video" data-toggle="modal" data-target="#review-modal-video" data-id="${video.id}">Comment</button>
+                                        <button type="button" id="details-modal-button-video" class="btn btn-info details-modal-button-video" data-toggle="modal" data-target="#details-modal-video" data-id="${video.id}">Details</button>
+                                    `;
+                                case "MIDDLE":
+                                    return `
+                                        <button type="button" id="tag-modal-button-video" class="btn btn-dark tag-modal-button-video" data-toggle="modal" data-target="#tag-modal-video" data-id="${video.id}">Tag</button>
+                                        <button type="button" id="comment-modal-button-video" class="btn btn-primary comment-modal-button-video" data-toggle="modal" data-target="#review-modal-video" data-id="${video.id}">Comment</button>
+                                        <button type="button" id="details-modal-button-video" class="btn btn-info details-modal-button-video" data-toggle="modal" data-target="#details-modal-video" data-id="${video.id}">Details</button>
+                                        <button type="button" id="edit-modal-button-video" class="btn btn-success edit-modal-button-video" data-toggle="modal" data-target="#edit-modal-video" data-id="${video.id}">Edit</button>
+                                        <button type="button" id="delete-modal-button-video" class="btn btn-danger btn-delete delete-modal-button-video" data-toggle="modal" data-target="#delete-modal-video" data-id="${video.id}">Delete</button>
+                                    `;
+                                case "PLUSSFULL":
+                                    return `
+                                        <button type="button" id="tag-modal-button-video" class="btn btn-dark tag-modal-button-video" data-toggle="modal" data-target="#tag-modal-video" data-id="${video.id}">Tag</button>
+                                        <button type="button" id="comment-modal-button-video" class="btn btn-primary comment-modal-button-video" data-toggle="modal" data-target="#review-modal-video" data-id="${video.id}">Comment</button>
+                                        <button type="button" id="details-modal-button-video" class="btn btn-info details-modal-button-video" data-toggle="modal" data-target="#details-modal-video" data-id="${video.id}">Details</button>
+                                        <button type="button" id="edit-modal-button-video" class="btn btn-success edit-modal-button-video" data-toggle="modal" data-target="#edit-modal-video" data-id="${video.id}">Edit</button>
+                                        <button type="button" id="delete-modal-button-video" class="btn btn-danger btn-delete delete-modal-button-video" data-toggle="modal" data-target="#delete-modal-video" data-id="${video.id}">Delete</button>
+                                    `;
+                                case "FULL":
+                                    return `
+                                        <button type="button" id="tag-modal-button-video" class="btn btn-dark tag-modal-button-video" data-toggle="modal" data-target="#tag-modal-video" data-id="${video.id}">Tag</button>
+                                        <button type="button" id="comment-modal-button-video" class="btn btn-primary comment-modal-button-video" data-toggle="modal" data-target="#review-modal-video" data-id="${video.id}">Comment</button>
+                                        <button type="button" id="details-modal-button-video" class="btn btn-info details-modal-button-video" data-toggle="modal" data-target="#details-modal-video" data-id="${video.id}">Details</button>
+                                        <button type="button" id="edit-modal-button-video" class="btn btn-success edit-modal-button-video" data-toggle="modal" data-target="#edit-modal-video" data-id="${video.id}">Edit</button>
+                                        <button type="button" id="delete-modal-button-video" class="btn btn-danger btn-delete delete-modal-button-video" data-toggle="modal" data-target="#delete-modal-video" data-id="${video.id}">Delete</button>
+                                    `;
+                            }
                         }
                     }
                 ],

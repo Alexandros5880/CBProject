@@ -362,6 +362,21 @@ namespace CBProject.Controllers.API
                 return NotFound();
             return Ok(await this._unitOfWork.Payments.GetAsync(id));
         }
+        [HttpPost]
+        [Route("api/payment/create")]
+        public async Task<IHttpActionResult> CreatePayment([FromBody] CreatePaymentAPI payment)
+        {
+            Payment paymentDB = new Payment()
+            {
+                UserId = payment.UserId,
+                Price = payment.Price,
+                Tax = payment.Tax,
+                Discount = payment.Discount
+            };
+            this._unitOfWork.Payments.Add(paymentDB);
+            await this._unitOfWork.Payments.SaveAsync();
+            return Ok(paymentDB);
+        }
 
         [HttpPost]
         [Route("api/ebook/requarements/add/{id}")]
@@ -452,22 +467,6 @@ namespace CBProject.Controllers.API
             await this._unitOfWork.Orders.DeleteAsync(id);
             await this._unitOfWork.Orders.SaveAsync();
             return Ok();
-        }
-
-        [HttpPost]
-        [Route("api/payment/create")]
-        public async Task<IHttpActionResult> CreatePayment([FromBody] CreatePaymentAPI payment)
-        {
-            Payment paymentDB = new Payment()
-            {
-                UserId = payment.UserId,
-                Price = payment.Price,
-                Tax = payment.Tax,
-                Discount = payment.Discount
-            };
-            this._unitOfWork.Payments.Add(paymentDB);
-            await this._unitOfWork.Payments.SaveAsync();
-            return Ok(payment);
         }
 
         protected override void Dispose(bool disposing)

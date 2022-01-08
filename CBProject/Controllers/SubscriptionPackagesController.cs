@@ -149,7 +149,7 @@ namespace CBProject.Controllers
 
             // Get Payment And Payments User
             var payment = await this._peynmentRepo.GetAsync(id);
-            var user = payment.User;
+            var user = await this._usersRepo.GetAsync(payment.UserId);
 
             // Add Student Role
             var studentRole = await this._rolesRepo.GetByNameAsync("Student");

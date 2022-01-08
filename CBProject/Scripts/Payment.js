@@ -48,7 +48,7 @@ function payPayPal(user, package) {
                             discount: 0.33
                         };
                         createPayment(payment, function (responsePayment) {
-                            window.location = $"/SubscriptionPackages/AfterPayment/responsePayment.id"
+                            window.location = `/SubscriptionPackages/AfterPayment/${responsePayment.id}`;
                         });
                     });
                 });
