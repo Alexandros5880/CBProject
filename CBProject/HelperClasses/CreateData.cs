@@ -484,191 +484,34 @@ namespace CBProject.HelperClasses
         }
         public void CreateVideo()
         {
+            Random random = new Random();
+            for (int i = 1; i < 13; i++)
+            {
+                var videoAbsolutePath = $"{StaticImfo.CurrentPath}\\{StaticImfo.VideoFilesFolder}\\video{i}.mp4";
+                var thumbnailAbsolutePath = $"{StaticImfo.CurrentPath}\\{StaticImfo.VideoImagePath}video_{i}_thambnail.jpg";
+                string thumbnailPath = $"{StaticImfo.VideoImagePath}video_{i}_thambnail.jpg";
+                VideoEditor.CreateThambnail(videoAbsolutePath, thumbnailAbsolutePath, 1);
+                var duration = VideoEditor.Duration(videoAbsolutePath);
+                int categoryId = random.Next(0, 6);
+                this._context.Videos.Add(new Video()
+                {
+                    ID = i,
+                    Title = $"MVC_EP_{i}",
+                    Thumbnail = thumbnailPath,
+                    VideoImagePath = StaticImfo.VideoImagePath + $"video_{i}.jpg",
+                    VideoPath = StaticImfo.VideoPath + $"video{i}.mp4",
+                    Description = $"mvc_ep_{i}",
+                    UploadDate = DateTime.Today,
+                    Duration = duration,
+                    Creator = this._context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
+                    Category = this._context.Categories.FirstOrDefault(c => c.ID == categoryId),
+                    Url = $"www.mvc_ep_{i}.com"
+                });
+            }
+            this._context.SaveChanges();
             try
             {
-                TimeSpan span = new TimeSpan(0, 0, 0, 3, 56);
-
-                var video_1 = new Video()
-                {
-                    ID = 1,
-                    Title = "MVC_EP_1",
-                    Thumbnail = "mvc_ep_1",
-                    VideoImagePath = StaticImfo.VideoImagePath + "video_1.jpg",
-                    VideoPath = StaticImfo.VideoPath + "video1.mp4",
-                    Description = "mvc_ep_1",
-                    UploadDate = DateTime.Today,
-                    Duration = span,
-                    Creator = this._context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
-                    Category = this._context.Categories.FirstOrDefault(cat => cat.Name.Equals("FRAMEWORK")),
-                    Url = "www.mvc_ep_1.com"
-                };
-                var video_2 = new Video()
-                {
-                    ID = 2,
-                    Title = "MVC_EP_2",
-                    Thumbnail = "mvc_ep_2",
-                    VideoImagePath = StaticImfo.VideoImagePath + "video_2.jpg",
-                    VideoPath = StaticImfo.VideoPath + "video2.mp4",
-                    Description = "mvc_ep_2",
-                    UploadDate = DateTime.Today,
-                    Duration = span,
-                    Creator = this._context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
-                    Category = this._context.Categories.FirstOrDefault(cat => cat.Name.Equals("FRAMEWORK")),
-                    Url = "www.mvc_ep_2.com"
-                };
-                var video_3 = new Video()
-                {
-                    ID = 3,
-                    Title = "MVC_EP_3",
-                    Thumbnail = "mvc_ep_",
-                    VideoImagePath = StaticImfo.VideoImagePath + "video_3.jpg",
-                    VideoPath = StaticImfo.VideoPath + "video3.mp4",
-                    Description = "mvc_ep_",
-                    UploadDate = DateTime.Today,
-                    Duration = span,
-                    Creator = this._context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
-                    Category = this._context.Categories.FirstOrDefault(cat => cat.Name.Equals("FRAMEWORK")),
-                    Url = "www.mvc_ep_3.com"
-                };
-                var video_4 = new Video()
-                {
-                    ID = 4,
-                    Title = "XAMARIN_EP_1",
-                    Thumbnail = "xamarin_ep_1",
-                    VideoImagePath = StaticImfo.VideoImagePath + "video_4.jpg",
-                    VideoPath = StaticImfo.VideoPath + "video4.mp4",
-                    Description = "xamarin_ep_1",
-                    UploadDate = DateTime.Today,
-                    Duration = span,
-                    Creator = this._context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
-                    Category = this._context.Categories.FirstOrDefault(cat => cat.Name.Equals("CORE")),
-                    Url = "www.xamarin_ep_1.com"
-                };
-                var video_5 = new Video()
-                {
-                    ID = 5,
-                    Title = "XAMARIN_EP_2",
-                    Thumbnail = "xamarin_ep_2",
-                    VideoImagePath = StaticImfo.VideoImagePath + "video_5.jpg",
-                    VideoPath = StaticImfo.VideoPath + "video5.mp4",
-                    Description = "xamarin_ep_2",
-                    UploadDate = DateTime.Today,
-                    Duration = span,
-                    Creator = this._context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
-                    Category = this._context.Categories.FirstOrDefault(cat => cat.Name.Equals("CORE")),
-                    Url = "www.xamarin_ep_2.com"
-                };
-                var video_6 = new Video()
-                {
-                    ID = 6,
-                    Title = "XAMARIN_EP_3",
-                    Thumbnail = "xamarin_ep_3",
-                    VideoImagePath = StaticImfo.VideoImagePath + "video_6.png",
-                    VideoPath = StaticImfo.VideoPath + "video6.mp4",
-                    Description = "xamarin_ep_3",
-                    UploadDate = DateTime.Today,
-                    Duration = span,
-                    Creator = this._context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
-                    Category = this._context.Categories.FirstOrDefault(cat => cat.Name.Equals("CORE")),
-                    Url = "www.xamarin_ep_3.com"
-                };
-                var video_7 = new Video()
-                {
-                    ID = 7,
-                    Title = "WPF_EP_1",
-                    Thumbnail = "wpf_ep_1",
-                    VideoImagePath = StaticImfo.VideoImagePath + "video_7.jpg",
-                    VideoPath = StaticImfo.VideoPath + "video7.mp4",
-                    Description = "wpf_ep_1",
-                    UploadDate = DateTime.Today,
-                    Duration = span,
-                    Creator = this._context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
-                    Category = this._context.Categories.FirstOrDefault(cat => cat.Name.Equals("CORE")),
-                    Url = "www.wpf_ep_1.com"
-                };
-                var video_8 = new Video()
-                {
-                    ID = 8,
-                    Title = "WPF_EP_2",
-                    Thumbnail = "wpf_ep_2",
-                    VideoImagePath = StaticImfo.VideoImagePath + "video_8.jpg",
-                    VideoPath = StaticImfo.VideoPath + "video8.mp4",
-                    Description = "wpf_ep_2",
-                    UploadDate = DateTime.Today,
-                    Duration = span,
-                    Creator = this._context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
-                    Category = this._context.Categories.FirstOrDefault(cat => cat.Name.Equals("CORE")),
-                    Url = "www.wpf_ep_2.com"
-                };
-                var video_9 = new Video()
-                {
-                    ID = 9,
-                    Title = "WPF_EP_3",
-                    Thumbnail = "wpf_ep_3",
-                    VideoImagePath = StaticImfo.VideoImagePath + "video_9.jpg",
-                    VideoPath = StaticImfo.VideoPath + "video9.mp4",
-                    Description = "wpf_ep_3",
-                    UploadDate = DateTime.Today,
-                    Duration = span,
-                    Creator = this._context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
-                    Category = this._context.Categories.FirstOrDefault(cat => cat.Name.Equals("CORE")),
-                    Url = "wpf_ep_3"
-                };
-                var video_10 = new Video()
-                {
-                    ID = 10,
-                    Title = "C++",
-                    Thumbnail = "C++",
-                    VideoImagePath = StaticImfo.VideoImagePath + "video_10.jpg",
-                    VideoPath = StaticImfo.VideoPath + "video10.mp4",
-                    Description = "C++",
-                    UploadDate = DateTime.Today,
-                    Duration = span,
-                    Creator = this._context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
-                    Category = this._context.Categories.FirstOrDefault(cat => cat.Name.Equals(".NET")),
-                    Url = "www.c++.com"
-                };
-                var video_11 = new Video()
-                {
-                    ID = 11,
-                    Title = "C#",
-                    Thumbnail = "C#",
-                    VideoImagePath = StaticImfo.VideoImagePath + "video_11.png",
-                    VideoPath = StaticImfo.VideoPath + "video11.mp4",
-                    Description = "C#",
-                    UploadDate = DateTime.Today,
-                    Duration = span,
-                    Creator = this._context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
-                    Category = this._context.Categories.FirstOrDefault(cat => cat.Name.Equals(".NET")),
-                    Url = "www.c#.com"
-                };
-                var video_12 = new Video()
-                {
-                    ID = 12,
-                    Title = "Visual Basic",
-                    Thumbnail = "visualbasic",
-                    VideoImagePath = StaticImfo.VideoImagePath + "video_12.jpg",
-                    VideoPath = StaticImfo.VideoPath + "video12.mp4",
-                    Description = "visual basic",
-                    UploadDate = DateTime.Today,
-                    Duration = span,
-                    Creator = this._context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
-                    Category = this._context.Categories.FirstOrDefault(cat => cat.Name.Equals(".NET")),
-                    Url = "www.visulabasic.com"
-                };
-                this._context.Videos.Add(video_1);
-                this._context.Videos.Add(video_2);
-                this._context.Videos.Add(video_3);
-                this._context.Videos.Add(video_4);
-                this._context.Videos.Add(video_5);
-                this._context.Videos.Add(video_6);
-                this._context.Videos.Add(video_7);
-                this._context.Videos.Add(video_8);
-                this._context.Videos.Add(video_9);
-                this._context.Videos.Add(video_10);
-                this._context.Videos.Add(video_11);
-                this._context.Videos.Add(video_12);
-                this._context.SaveChanges();
+                
             }
             catch (Exception ex)
             {

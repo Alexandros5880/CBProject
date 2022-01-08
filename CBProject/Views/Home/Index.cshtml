@@ -289,7 +289,10 @@
                                 <input type="hidden" id="content" name="content" value="${video.id}">
                                 <input type="hidden" id="content-type" name="content-type" value="video">
                                 <div class="card item" id="card-video">
-                                    <iframe class="embed-responsive-item" src="${video.videoPath}" allowfullscreen controls="0" autoplay="no"></iframe>
+                                    <video class="embed-responsive-item title-video" controls preload="none" poster="${video.thumbnail}" style="width:100%;" controlsList="nodownload">
+                                        <source src="${video.videoPath}" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
                                     <!--<img alt="Cover Foto" src="${video.videoImagePath}" style="width:100%;" />-->
                                      <p style="text-align:center;margin-top:14px;"><b>${video.title}</b></p>
                                          <hr>
@@ -319,7 +322,10 @@
                                         </div>
                                         <div class="modal-body">
                                             <div class="embed-responsive embed-responsive-16by9">
-                                                <iframe class="embed-responsive-item" src="${video.videoPath}" autoplay="false" allowfullscreen></iframe>
+                                                <video class="embed-responsive-item" controls preload="none" poster="${video.thumbnail}" style="width:100%;" controlsList="nodownload">
+                                                    <source src="${video.videoPath}" type="video/mp4">
+                                                    Your browser does not support the video tag.
+                                                </video>
                                             </div>
                                         </div>
                                         <div class="modal-footer">

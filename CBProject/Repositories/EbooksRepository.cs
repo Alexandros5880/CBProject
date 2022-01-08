@@ -22,6 +22,7 @@ namespace CBProject.Repositories
         {
             if (ebook == null)
                 throw new ArgumentNullException(nameof(ebook));
+            ebook.UploadDate = DateTime.Today;
             _context.Ebooks.Add(ebook);
         }
         public void Update(Ebook ebook)

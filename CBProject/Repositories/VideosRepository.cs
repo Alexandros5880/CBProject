@@ -36,8 +36,12 @@ namespace CBProject.Repositories
         {
             if(video == null)
                 throw new ArgumentNullException(nameof(video));
+            video.Thumbnail = $"{StaticImfo.VideoImagePath}{video.Title}_thambnail.jpg";
             var videoPath = System.Web.HttpContext.Current.Server.MapPath($"~{video.VideoPath}");
+            var thumbnailPath = System.Web.HttpContext.Current.Server.MapPath($"~/{video.Thumbnail}");
+            VideoEditor.CreateThambnail(videoPath, thumbnailPath, 1);
             video.Duration = VideoEditor.Duration(videoPath);
+            video.UploadDate = DateTime.Today;
             this._context.Videos.Add(video);
         }
         public void Delete(int? id)

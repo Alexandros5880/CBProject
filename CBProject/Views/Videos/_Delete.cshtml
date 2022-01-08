@@ -25,24 +25,30 @@
                 @Html.DisplayNameFor(model => model.Thumbnail)
             </dt>
 
-            <dd>
+            <dd style="margin: 5px; text-align:center;">
                 @Html.DisplayFor(model => model.Thumbnail)
+                <img alt="video" src="@Html.DisplayFor(model => model.Thumbnail)" height="100" />
             </dd>
 
             <dt>
                 @Html.DisplayNameFor(model => model.VideoImagePath)
             </dt>
 
-            <dd>
+            <dd style="margin: 5px; text-align:center;">
                 @Html.DisplayFor(model => model.VideoImagePath)
+                <img alt="video" src="@Html.DisplayFor(model => model.VideoImagePath)" height="100" />
             </dd>
 
             <dt>
                 @Html.DisplayNameFor(model => model.VideoPath)
             </dt>
 
-            <dd>
+            <dd style="margin: 5px; text-align:center;">
                 @Html.DisplayFor(model => model.VideoPath)
+                <video height="150" controls preload="none" poster="@Html.DisplayFor(model => model.Thumbnail)">
+                    <source src="@Html.DisplayFor(model => model.VideoPath)" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
             </dd>
 
             <dt>
@@ -54,22 +60,6 @@
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.Rate)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Rate)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Content)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Content)
-            </dd>
-
-            <dt>
                 @Html.DisplayNameFor(model => model.UploadDate)
             </dt>
 
@@ -78,19 +68,19 @@
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.CreatorId)
+                @Html.DisplayNameFor(model => model.Creator)
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.CreatorId)
+                @Html.DisplayFor(model => model.Creator.FullName)
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.CategoryId)
+                @Html.DisplayNameFor(model => model.Category)
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.CategoryId)
+                @Html.DisplayFor(model => model.Category.Name)
             </dd>
 
             <dt>
@@ -100,7 +90,6 @@
             <dd>
                 @Html.DisplayFor(model => model.Url)
             </dd>
-
         </dl>
 
         <div class="form-actions no-color">

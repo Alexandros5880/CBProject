@@ -1470,6 +1470,7 @@
     <Content Include="Content\PublickDetails_Comments.css" />
     <Content Include="Content\Ratting.css" />
     <Content Include="Content\Subscribe.css" />
+    <Content Include="Content\Videos.css" />
     <Content Include="fonts\boxicons.svg" />
     <Content Include="fonts\dripicons-v2.svg" />
     <Content Include="fonts\fa-brands-400.svg" />

@@ -1,0 +1,7 @@
+﻿.title-video::-webkit-media-controls-fullscreen-button,
+.title-video::-webkit-media-controls-fullscreen-button,
+.title-video::-webkit-media-controls-play-button,
+.title-video::-webkit-media-controls-pausebutton,
+.title-video::-webkit-media-controls-soundbutton {
+    display: none;
+}

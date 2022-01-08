@@ -14,6 +14,14 @@
 
         <dl class="dl-horizontal">
             <dt>
+                @Html.DisplayNameFor(model => model.Category.Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Category.Name)
+            </dd>
+
+            <dt>
                 @Html.DisplayNameFor(model => model.Title)
             </dt>
 
@@ -30,51 +38,11 @@
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.Thumbnail)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Thumbnail)
-            </dd>
-
-            <dt>
                 @Html.DisplayNameFor(model => model.Url)
             </dt>
 
             <dd>
                 @Html.DisplayFor(model => model.Url)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.EbookImagePath)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.EbookImagePath)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.EbookFilePath)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.EbookFilePath)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Rate)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Rate)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Content)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Content)
             </dd>
 
             <dt>
@@ -86,29 +54,20 @@
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.CategoryId)
+                @Html.DisplayNameFor(model => model.Category)
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.CategoryId)
+                @Html.DisplayFor(model => model.Category.Name)
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.CreatorId)
+                @Html.DisplayNameFor(model => model.Creator)
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.CreatorId)
+                @Html.DisplayFor(model => model.Creator.FullName)
             </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.SearchTerm)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.SearchTerm)
-            </dd>
-
         </dl>
 
         <div class="form-actions no-color">

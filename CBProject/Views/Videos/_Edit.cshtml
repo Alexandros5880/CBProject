@@ -21,41 +21,26 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Thumbnail, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Thumbnail, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Thumbnail, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
         @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+            @*@Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })*@
+            <textarea class="form-control" name="Description" , id="Description" styke="width: 100%;"></textarea>
             @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.UploadDate, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Creator, "Creator", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.UploadDate, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.UploadDate, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.CreatorId, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.CreatorId, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.DropDownListFor(model => model.CreatorId, new SelectList(@Model.OtherUsers, "ID", "FullName"), null, htmlAttributes: new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.CreatorId, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.CategoryId, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.CategoryId, "Category", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.CategoryId, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.DropDownListFor(model => model.CategoryId, new SelectList(@Model.OtherCategory, "ID", "NAME"), null, htmlAttributes: new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -69,14 +54,14 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.VideoImageFile, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.Label("Image", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             <input type="file" name="VideoImageFile" ) />
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.VideoFile, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.Label("Video", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             <input type="file" name="VideoFile" ) />
         </div>
@@ -91,17 +76,18 @@
 }
 
 <div class=" class=" form-horizontal"">
+    <h3>Requrements</h3>
     <div class="form-group">
-        @Html.Label("Add Requrement", htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.Label("Add", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             <textarea class="form-control rounded-0" id="add-requirement-textarea-Video-Partial" rows="2"></textarea>
-            <br />
-            <button class="btn btn-dark" onclick="addRequirements(@Model.ID, $('#add-requirement-textarea-Video-Partial').val(), 'video');">Add</button>
+            <button class="btn btn-dark" onclick="addRequirements(@Model.ID, $('#add-requirement-textarea-Video-Partial').val(), 'video');" style="margin-top: 5px;">Add</button>
+            <br /><br />
         </div>
     </div>
     <br />
     <div class="form-group">
-        @Html.Label("Remove Requirement", htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.Label("Remove", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             <select class="form-control" id="remove-requirement-textarea-Video-Partial">
                 @foreach (var req in Model.Requirements)
@@ -109,8 +95,7 @@
                     <option value="@req.ID">@req.Content</option>
                 }
             </select>
-            <br />
-            <button class="btn btn-dark" onclick="removeRequarements(@Model.ID, $('#remove-requirement-textarea-Video-Partial option:selected').val(), 'video');">Remove</button>
+            <button class="btn btn-dark" onclick="removeRequarements(@Model.ID, $('#remove-requirement-textarea-Video-Partial option:selected').val(), 'video');" style="margin-top: 5px;">Remove</button>
         </div>
     </div>
 </div>
