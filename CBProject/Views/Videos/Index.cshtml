@@ -305,9 +305,8 @@
                         data: "Cover Photo",
                         render: function (data, type, video) {
                             return `
-                                                ${video.videoImagePath}
-                                                <img alt="Cover Foto" src="${video.videoImagePath}" style="height: 77px;"/>
-                                                `;
+                                        <img alt="Cover Foto" src="${video.videoImagePath}" style="height: 77px;"/>
+                                    `;
                         }
                     },
                     {
@@ -326,19 +325,19 @@
                         data: "Rating",
                         render: function (data, type, video) {
                             return `
-                                            <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
-                                            <form id="video-rating-form" method="post" action="/api/Video/AddRate" target="dummyframe">
-                                                <input type="hidden" id="videoId" name="videoId" value="${video.id}">
-                                                <input name="rate"
-                                                        class="rating rating-loading rate"
-                                                        data-min="0"
-                                                        data-max="5"
-                                                        data-step="0.1"
-                                                        value="${video.ratingsAVG}"
-                                                        onchange="this.form.submit()">
-                                                <!--<input type="submit" value="Submit" />-->
-                                            </form>
-                                        `;
+                                    <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+                                    <form id="video-rating-form" method="post" action="/api/Video/AddRate" target="dummyframe">
+                                        <input type="hidden" id="videoId" name="videoId" value="${video.id}">
+                                        <input name="rate"
+                                                class="rating rating-loading rate"
+                                                data-min="0"
+                                                data-max="5"
+                                                data-step="0.1"
+                                                value="${video.ratingsAVG}"
+                                                onchange="this.form.submit()">
+                                        <!--<input type="submit" value="Submit" />-->
+                                    </form>
+                                `;
                         }
                     },
                     {

@@ -17,18 +17,20 @@ namespace CBProject.Controllers
 {
     public class HomeController : Controller
     {
-        private EbooksRepository _ebooksRepository;
-        private UsersRepo _usersRepo;
-        private CategoriesRepository _categoriesRepo;
-        private VideosRepository _videosRepository;
+        private readonly EbooksRepository _ebooksRepository;
+        private readonly UsersRepo _usersRepo;
+        private readonly RolesRepo _rolesRepo;
+        private readonly CategoriesRepository _categoriesRepo;
+        private readonly VideosRepository _videosRepository;
         private readonly RequirementsRepository _requirementsRepository;
         private readonly MessagesRepository _messagesRepository;
-        public HomeController(IUnitOfWork unitOfWork, IUsersRepo usersRepo)
+        public HomeController(IUnitOfWork unitOfWork, IUsersRepo usersRepo, IRolesRepo rolesRepo)
         {
             this._ebooksRepository = unitOfWork.Ebooks;
             this._categoriesRepo = unitOfWork.Categories;
             this._videosRepository = unitOfWork.Videos;
             this._usersRepo = (UsersRepo)usersRepo;
+            this._rolesRepo = (RolesRepo)rolesRepo;
             this._requirementsRepository = unitOfWork.Requirements;
             this._messagesRepository = unitOfWork.Messages;
         }
@@ -118,6 +120,69 @@ namespace CBProject.Controllers
         {
             return View();
         }
+        public async Task<ActionResult> Dashboard()
+        {
+            var userId = User.Identity.GetUserId();
+            var user = await this._usersRepo.GetAsync(userId);
+            RoleLevel access = RoleLevel.SUPERLOW;
+            foreach (var role in user.Roles)
+            {
+                var myRole = await this._rolesRepo.GetAsync(role.RoleId);
+                if (myRole.Level == RoleLevel.FULL)
+                {
+                    access = myRole.Level;
+                }
+                else if (myRole.Level == RoleLevel.PLUSSFULL)
+                {
+                    if (access != RoleLevel.FULL)
+                    {
+                        access = myRole.Level;
+                    }
+                }
+                else if (myRole.Level == RoleLevel.MIDDLE)
+                {
+                    if (access != RoleLevel.FULL &&
+                        access != RoleLevel.PLUSSFULL)
+                    {
+                        access = myRole.Level;
+                    }
+                }
+                else if (myRole.Level == RoleLevel.LOW)
+                {
+                    if (access != RoleLevel.FULL &&
+                        access != RoleLevel.PLUSSFULL &&
+                        access != RoleLevel.MIDDLE)
+                    {
+                        access = myRole.Level;
+                    }
+                }
+                else if (myRole.Level == RoleLevel.SUPERLOW)
+                {
+                    if (access != RoleLevel.FULL &&
+                        access != RoleLevel.PLUSSFULL &&
+                        access != RoleLevel.MIDDLE &&
+                        access != RoleLevel.LOW)
+                    {
+                        access = myRole.Level;
+                    }
+                }
+            }
+            switch (access)
+            {
+                case RoleLevel.SUPERLOW:
+                    return RedirectToAction("Index", "Home");
+                case RoleLevel.LOW:
+                    return RedirectToAction("Index", "Ebooks");
+                case RoleLevel.MIDDLE:
+                    return RedirectToAction("Index", "Ebooks");
+                case RoleLevel.PLUSSFULL:
+                    return RedirectToAction("Index", "Roles");
+                case RoleLevel.FULL:
+                    return RedirectToAction("Index", "Users");
+                default:
+                    return RedirectToAction("Index", "Home");
+            }
+        }
 
         public async Task<ActionResult> _Read(int? id)
         {
@@ -133,7 +198,6 @@ namespace CBProject.Controllers
             var viewModel = Mapper.Map<Ebook, EbookViewModel>(ebook);
             return PartialView("_Read", viewModel);
         }
-
         public async Task<ActionResult> _Watch(int? id)
         {
             if (id == null)

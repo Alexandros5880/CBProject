@@ -124,26 +124,20 @@ namespace CBProject.Controllers
                 switch (result)
                 {
                     case SignInStatus.Success:
-                        if (access == RoleLevel.FULL)
+                        switch (access)
                         {
-                            //return RedirectToAction("Index", "Users");
-                            return RedirectToAction("Index", "Home");
-                        }
-                        else if (access == RoleLevel.PLUSSFULL)
-                        {
-                            return RedirectToAction("Index", "Users");
-                        }
-                        else if (access == RoleLevel.MIDDLE)
-                        {
-                            return RedirectToAction("Index", "Videos");
-                        }
-                        else if (access == RoleLevel.LOW)
-                        {
-                            return RedirectToAction("Index", "Videos");
-                        }
-                        else if (access == RoleLevel.SUPERLOW)
-                        {
-                            return RedirectToAction("Index", "Home");
+                            case RoleLevel.SUPERLOW:
+                                return RedirectToAction("Index", "Home");
+                            case RoleLevel.LOW:
+                                return RedirectToAction("Index", "Ebooks");
+                            case RoleLevel.MIDDLE:
+                                return RedirectToAction("Index", "Ebooks");
+                            case RoleLevel.PLUSSFULL:
+                                return RedirectToAction("Index", "Roles");
+                            case RoleLevel.FULL:
+                                return RedirectToAction("Index", "Users");
+                            default:
+                                return RedirectToAction("Index", "Home");
                         }
                         return RedirectToLocal(returnUrl);
                     case SignInStatus.LockedOut:

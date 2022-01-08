@@ -139,7 +139,6 @@ namespace CBProject.Controllers
             await this._subscriptionRepo.SaveAsync();
             return RedirectToAction("Index");
         }
-
         public async Task<ActionResult> AfterPayment(int? id)
         {
             if (id == null)
@@ -153,7 +152,9 @@ namespace CBProject.Controllers
 
             // Add Student Role
             var studentRole = await this._rolesRepo.GetByNameAsync("Student");
+            var guestRole = await this._rolesRepo.GetByNameAsync("Guest");
             this._usersRepo.AddRole(user, studentRole);
+            this._usersRepo.RemoveRole(user, guestRole);
 
             return RedirectToAction("Index", "Home");
         }
