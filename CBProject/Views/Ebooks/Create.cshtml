@@ -87,27 +87,6 @@
     </div>
 
     <div class="form-group">
-        @Html.Label("Add Tags:", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.ListBoxFor(model => model.AddTags, new SelectList(Model.OtherTags, "Id", "Title"), new { @class = "form-control" })
-        </div>
-    </div>
-
-    @*<div class="form-group">
-            @Html.Label("Add Reviews:", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.ListBoxFor(model => model.AddReviews, new SelectList(Model.OtherReviews, "Id", "Comment"), new { @class = "form-control" })
-            </div>
-        </div>*@
-
-    <div class="form-group">
-        @Html.Label("Add Ratings:", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.ListBoxFor(model => model.AddRatings, new SelectList(Model.OtherRatings, "Id", "Comment"), new { @class = "form-control" })
-        </div>
-    </div>
-
-    <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" value="Create" class="btn btn-default" />
         </div>

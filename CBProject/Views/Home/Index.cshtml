@@ -289,13 +289,13 @@
                                 <input type="hidden" id="content" name="content" value="${video.id}">
                                 <input type="hidden" id="content-type" name="content-type" value="video">
                                 <div class="card item" id="card-video">
-                                    <iframe class="embed-responsive-item" src="${video.videoPath}" autoplay="false" allowfullscreen></iframe>
+                                    <iframe class="embed-responsive-item" src="${video.videoPath}" allowfullscreen controls="0" autoplay="no"></iframe>
                                     <!--<img alt="Cover Foto" src="${video.videoImagePath}" style="width:100%;" />-->
                                      <p style="text-align:center;margin-top:14px;"><b>${video.title}</b></p>
                                          <hr>
                                     <div class="card-body">
                                          <p><img class="img-icon-index" src="../assets/images/icons/icons-person.png" alt="person" />  ${creator.fullName}</p>
-                                            <p><img class="img-icon-index" src="../assets/images/icons/icon-video.png" alt="video" /> ${video.duration} Hours  </p>
+                                            <p><img class="img-icon-index" src="../assets/images/icons/icon-video.png" alt="video" /> ${video.duration.split(".")[0]} Hours  </p>
                                             <p><img class="img-icon-index" src="../assets/images/icons/icon-calendar.png" alt="video" /> <small>  ${video.uploadDate.split("T")[0]}</small>  </p>
                                         `+ ratingFor+`
                                         <br />

@@ -104,7 +104,8 @@ namespace CBProject.Controllers.API
                 return NotFound();
             var category = await this._unitOfWork.Categories
                         .GetByNameAsync(name);
-
+            if (category == null)
+                return Ok();
             //var chiledCategories = await this._unitOfWork.Categories
             //                                    .GetAllChiledAsync(category.ID);
             //var categories = chiledCategories;

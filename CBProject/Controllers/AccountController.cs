@@ -158,7 +158,7 @@ namespace CBProject.Controllers
             }
             else
             {
-                ModelState.AddModelError("", "This user was deactivated.");
+                ModelState.AddModelError("", "Invalid login attempt.");
                 return View(model);
             }
         }

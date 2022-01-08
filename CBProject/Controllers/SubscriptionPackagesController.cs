@@ -14,15 +14,16 @@ namespace CBProject.Controllers
 {
     public class SubscriptionPackagesController : Controller
     {
-        private SubscriptionPackageRepository _subscriptionRepo;
-        private UsersRepo _usersRepo;
-        private PaymentsRepository _peynmentRepo;
-        public SubscriptionPackagesController(IUnitOfWork unitOfWork, IUsersRepo usersRepo)
+        private readonly SubscriptionPackageRepository _subscriptionRepo;
+        private readonly UsersRepo _usersRepo;
+        private readonly RolesRepo _rolesRepo;
+        private readonly PaymentsRepository _peynmentRepo;
+        public SubscriptionPackagesController(IUnitOfWork unitOfWork, IUsersRepo usersRepo, IRolesRepo rolesRepo)
         {
             this._subscriptionRepo = unitOfWork.SubscriptionPackages;
             this._usersRepo = (UsersRepo)usersRepo;
+            this._rolesRepo = (RolesRepo)rolesRepo;
             this._peynmentRepo = unitOfWork.Payments;
-
         }
         public async Task<ActionResult> Index()
         {
@@ -138,12 +139,31 @@ namespace CBProject.Controllers
             await this._subscriptionRepo.SaveAsync();
             return RedirectToAction("Index");
         }
+
+        public async Task<ActionResult> AfterPayment(int? id)
+        {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+
+            // Get Payment And Payments User
+            var payment = await this._peynmentRepo.GetAsync(id);
+            var user = payment.User;
+
+            // Add Student Role
+            var studentRole = await this._rolesRepo.GetByNameAsync("Student");
+            this._usersRepo.AddRole(user, studentRole);
+
+            return RedirectToAction("Index", "Home");
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
                 this._subscriptionRepo.Dispose();
                 this._usersRepo.Dispose();
+                this._rolesRepo.Dispose();
                 this._peynmentRepo.Dispose();
             }
             base.Dispose(disposing);

@@ -633,7 +633,7 @@ namespace CBProject.HelperClasses
                     ID = 11,
                     Title = "C#",
                     Thumbnail = "C#",
-                    VideoImagePath = StaticImfo.VideoImagePath + "video_11.jpg",
+                    VideoImagePath = StaticImfo.VideoImagePath + "video_11.png",
                     VideoPath = StaticImfo.VideoPath + "video1.mp4",
                     Description = "C#",
                     UploadDate = DateTime.Today,
