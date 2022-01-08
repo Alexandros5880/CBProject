@@ -162,8 +162,6 @@
     </nav>
 </div>
 
-
-
 <!-- Main Container With Videos/Ebooks -->
 <div class="container-fluid main-content">
     <div class="grey-row">
@@ -187,10 +185,6 @@
     </div>
 </div>
 
-
-
-
-
 <!-- Ebook Modal -->
 <div id="modal-fullscreen-xl" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" style="width: 90%;">
@@ -205,6 +199,11 @@
 @section scripts {
     <script>
         $(document).ready(function () {
+
+            // When Modal Close Stop Video
+            $('#modal-fullscreen-xl').on('hidden.bs.modal', function () {
+                $(".myvideo").trigger('pause');
+            })
 
             var userAuthorized = @User.Identity.IsAuthenticated.ToString().ToLower();
 
