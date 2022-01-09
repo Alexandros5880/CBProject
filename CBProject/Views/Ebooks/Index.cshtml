@@ -302,7 +302,7 @@
                     {
                         data: "title",
                         render: function (data, type, ebook) {
-                            return `<p>${ebook.title}</a>`;
+                            return "<a href='/Ebooks/Edit/" + ebook.id + "'>" + ebook.title + "</a>";
                         }
                     },
                     {
