@@ -393,7 +393,7 @@
                 // Whene Subscribe Button Clicks goes to Login Page
                 $(document.body).on('click', 'button', function () {
                     if (this.classList.contains('btn-subscribe')) {
-                        window.location.href = '/Account/Login';
+                        window.location.href = '/Account/Login?returnUrl=SubscriptionPackages/Subscribe';
                     }
                 });
             }

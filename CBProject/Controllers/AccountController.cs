@@ -124,6 +124,11 @@ namespace CBProject.Controllers
                 switch (result)
                 {
                     case SignInStatus.Success:
+                        if (returnUrl != null || returnUrl.Length > 0)
+                        {
+                            var url = returnUrl.Split('/');
+                            return RedirectToAction(url[1], url[0]);
+                        }
                         switch (access)
                         {
                             case RoleLevel.SUPERLOW:
@@ -139,7 +144,6 @@ namespace CBProject.Controllers
                             default:
                                 return RedirectToAction("Index", "Home");
                         }
-                        return RedirectToLocal(returnUrl);
                     case SignInStatus.LockedOut:
                         return View("Lockout");
                     case SignInStatus.RequiresVerification:
