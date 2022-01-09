@@ -155,7 +155,8 @@ namespace CBProject.Controllers
             var guestRole = await this._rolesRepo.GetByNameAsync("Guest");
             this._usersRepo.AddRole(user, studentRole);
             this._usersRepo.RemoveRole(user, guestRole);
-
+            HelperClasses.EmailService email = new HelperClasses.EmailService();
+            await email.SendEmailReceipt(user);
             return RedirectToAction("Index", "Home");
         }
         protected override void Dispose(bool disposing)
