@@ -378,6 +378,8 @@
     <Content Include="assets\fonts\fa-brands-400.svg" />
     <Content Include="assets\fonts\fa-regular-400.svg" />
     <Content Include="assets\fonts\fa-solid-900.svg" />
+    <Content Include="assets\images\ap.jpg" />
+    <Content Include="assets\images\apl.jpg" />
     <Content Include="assets\images\bg-auth-overlay.png" />
     <Content Include="assets\images\brands\bitbucket.png" />
     <Content Include="assets\images\brands\dribbble.png" />
@@ -405,6 +407,7 @@
     <Content Include="assets\images\crypto\blog\img-3.jpg" />
     <Content Include="assets\images\crypto\features-img\img-1.png" />
     <Content Include="assets\images\crypto\features-img\img-2.png" />
+    <Content Include="assets\images\dg.jpg" />
     <Content Include="assets\images\error-img.png" />
     <Content Include="assets\images\favicon.ico" />
     <Content Include="assets\images\flags\french.jpg" />
