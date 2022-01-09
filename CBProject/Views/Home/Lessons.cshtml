@@ -187,7 +187,7 @@
 
 <!-- Ebook Modal -->
 <div id="modal-fullscreen-xl" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" style="width: 90%;">
+    <div class="modal-dialog modal-lg" style="width: 50%;">
         <div class="modal-content modal-ebook-read">
             
         </div>
@@ -354,11 +354,23 @@
                         });
                     }
                     var counter = 0;
+                    // Ebooks Sorting
+                    if (lessonsRatings) {
+                        data.ebooks.sort(function (a, b) {
+                            return b.ratingsAVG - a.ratingsAVG;
+                        });
+                    } else if (createdDate) {
+                        data.ebooks.sort(function (a, b) {
+                            var date_a = parseDateTime(a.uploadDate);
+                            var date_b = parseDateTime(b.uploadDate);
+                            return date_b - date_a;
+                        });
+                    }
                     data.ebooks.forEach(ebook => {
                         counter++;
-                        getCategory(ebook.categoryId, function (category) {
-                            getUserById(ebook.creatorId, function (creator) {
-                                getPDF(ebook.ebookFilePath, function(pdfFile) {
+                        getCategorySync(ebook.categoryId, function (category) {
+                            getUserByIdSync(ebook.creatorId, function (creator) {
+                                getPDFSync(ebook.ebookFilePath, function(pdfFile) {
                                     var userAuthorized = @User.Identity.IsAuthenticated.ToString().ToLower();
                                     var ratingFor;
                                     if (userAuthorized) {
@@ -436,9 +448,21 @@
                             RenderPaginationButtons(pages);
                         });
                     }
+                    // Videos Sorting
+                    if (lessonsRatings) {
+                        data.videos.sort(function (a, b) {
+                            return b.ratingsAVG - a.ratingsAVG;
+                        });
+                    } else if (createdDate) {
+                        data.videos.sort(function (a, b) {
+                            var date_a = parseDateTime(a.uploadDate);
+                            var date_b = parseDateTime(b.uploadDate);
+                            return date_b - date_a;
+                        });
+                    }
                     data.videos.forEach(video => {
-                        getCategory(video.categoryId, function (category) {
-                            getUserById(video.creatorId, function (creator) {
+                        getCategorySync(video.categoryId, function (category) {
+                            getUserByIdSync(video.creatorId, function (creator) {
                                 var userAuthorized = @User.Identity.IsAuthenticated.ToString().ToLower();
                                 var ratingFor;
                                 if (userAuthorized) {
