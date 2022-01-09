@@ -306,11 +306,12 @@
             $("#ebooks-home").empty();
             $("#ebooks-home");
             data.videos.sort(function (a, b) {
-                return b.ratingsAVG - a.ratingsAVG;
+                return a.ratingsAVG - b.ratingsAVG;
             });
+            data.videos.reverse();
             data.videos.slice(0, 4).forEach(video => {
-                getCategory(video.categoryId, function (category) {
-                    getUserById(video.creatorId, function (creator) {
+                getCategorySync(video.categoryId, function (category) {
+                    getUserByIdSync(video.creatorId, function (creator) {
                         var userAuthorized = @User.Identity.IsAuthenticated.ToString().ToLower();
                                 var ratingFor;
                                 if (userAuthorized) {
@@ -390,11 +391,12 @@
 
             });
             data.ebooks.sort(function (a, b) {
-                return b.ratingsAVG - a.ratingsAVG;
+                return a.ratingsAVG - b.ratingsAVG;
             });
+            data.ebooks.reverse();
             data.ebooks.slice(0, 4).forEach(ebook => {
-                getCategory(ebook.categoryId, function (category) {
-                    getUserById(ebook.creatorId, function (creator) {
+                getCategorySync(ebook.categoryId, function (category) {
+                    getUserByIdSync(ebook.creatorId, function (creator) {
                         var userAuthorized = @User.Identity.IsAuthenticated.ToString().ToLower();
                         var ratingFor;
                         if (userAuthorized) {
