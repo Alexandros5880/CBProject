@@ -58,9 +58,6 @@ function payPayPal(user, package) {
             onCancel: function (data) {
                 var order = JSON.parse(localStorage.getItem('order'));
                 localStorage.removeItem('order');
-                //deleteOrder(order.id, function (response) {
-                //    console.log("Delete Ok.");
-                //});
                 order.isCanceled = true;
                 console.log("Before Update Order");
                 console.log(order);
@@ -72,11 +69,9 @@ function payPayPal(user, package) {
                     isCanceled: order.isCanceled,
                     isCanceledByError: order.isCanceledByError
                 }
-                //console.log("Update Order");
                 updateOrder(myorder, function (responseOrder) {
-                    //console.log("Order Canceled.");
+                    window.location.href = "/SubscriptionPackages/Subscribe";
                 });
-                //window.location.href = "/SubscriptionPackages/Subscribe";
             },
 
             // On Transactions Error
@@ -124,3 +119,27 @@ function createNewOrder(user, package) {
     });
 }
 
+
+$(document).ready(function () {
+
+    // When close payment modal
+    $('.paymentModal').on('hidden.bs.modal', function () {
+        var order = JSON.parse(localStorage.getItem('order'));
+        localStorage.removeItem('order');
+        order.isCanceled = true;
+        console.log("Before Update Order");
+        console.log(order);
+        var myorder = {
+            id: order.id,
+            userId: order.userId,
+            subscriptionId: order.subscriptionPackageId,
+            isClose: order.isClose,
+            isCanceled: order.isCanceled,
+            isCanceledByError: order.isCanceledByError
+        }
+        updateOrder(myorder, function (responseOrder) {
+            window.location.href = "/SubscriptionPackages/Subscribe";
+        });
+    });
+
+});
