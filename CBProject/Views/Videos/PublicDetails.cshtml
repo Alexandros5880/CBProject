@@ -10,6 +10,39 @@
     }
 }
 
+
+
+@Scripts.Render("~/bundles/jquery")
+
+
+<script type="text/javascript">
+    $(function () {
+
+        // Open Read Ebook Modal
+        $("body").on('click', '#ebook-modal-button', function () {
+            getLogedUser(function (user) {
+                var access = false;
+                user.roles.forEach(function (role) {
+                    getRoleSync(role.roleId, function (role) {
+                        console.log(role.level);
+                        if (role.level > 0) {
+                            access = true;
+                        }
+                    });
+                });
+                if (access) {
+
+                } else {
+                    $('#@Html.DisplayFor(model=> model.ID)').modal('toggle');
+                    window.location = "/SubscriptionPackages/Subscribe";
+                }
+            });
+        });
+
+    });
+</script>
+
+
 @section styles {
     <link rel="stylesheet" href="~/Content/Ratting.css">
     <link rel="stylesheet" href="~/Content/PublickDetails_Comments.css">
@@ -24,10 +57,10 @@
         <div class="col-md-5 col-md-offset-1 col-sm-5">
             <p class="product-title"> @Html.DisplayFor(model => model.Title)</p>
 
-      
+
             <p class="product-description"> @Html.DisplayFor(model => model.Description)</p>
             <div class="row">
-               
+
                 <div class="col-md-12" id="stars">
                     @if (User.Identity.IsAuthenticated)
                     {
@@ -58,7 +91,7 @@
             </div>
             <div class="subscribe-div">
                 @*<button type="button" class="btn justify-content-end btn-subscribe">Subscribe Now</button>
-                <button style="margin-bottom:3%; margin-left: 1%;" type="button" class="btn justify-content-end btn-green" data-toggle="modal" data-target="#@Model.ID">Play</button>*@
+                    <button style="margin-bottom:3%; margin-left: 1%;" type="button" class="btn justify-content-end btn-green" data-toggle="modal" data-target="#@Model.ID">Play</button>*@
             </div>
         </div>
     </div>
@@ -143,7 +176,7 @@
                     </div>
                     <div class="subscribe-div">
                         @*<button type="button" class="btn justify-content-end btn-subscribe">Subscribe Now</button>
-                        <button style="margin-bottom:3%; margin-left: 1%;" type="button" class="btn justify-content-end btn-green" data-toggle="modal" data-target="#@Model.ID">Play</button>*@
+                            <button style="margin-bottom:3%; margin-left: 1%;" type="button" class="btn justify-content-end btn-green" data-toggle="modal" data-target="#@Model.ID">Play</button>*@
                     </div>
                 </div>
             </div>
@@ -332,7 +365,7 @@
             });
 
             var subscribe = `<button type="button" class="btn justify-content-end btn-subscribe">Subscribe Now</button>`;
-            var play = `<button style="margin-bottom:3%; margin-left: 1%;" type="button" class="btn justify-content-end btn-green" data-toggle="modal" data-target="#${@Model.ID}">Play</button>`;
+            var play = `<button id="ebook-modal-button" style="margin-bottom:3%; margin-left: 1%;" type="button" class="btn justify-content-end btn-green" data-toggle="modal" data-target="#${@Model.ID}">Play</button>`;
 
             // If User has SubscriptionBackage Disable Subscribe else Enable
             var userAuthorized = @User.Identity.IsAuthenticated.ToString().ToLower();

@@ -93,11 +93,26 @@
         // Open Read Ebooks Modal
         $("body").on('click', '#ebook-modal-button', function () {
             var id = $(this).attr('data-id');
-            $.ajax({
-                url: '/Home/_Read/' + id,
-                type: 'GET',
-                success: function (response) {
-                    $('.modal-ebook-read').html(response);
+            getLogedUser(function (user) {
+                var access = false;
+                user.roles.forEach(function (role) {
+                    getRoleSync(role.roleId, function (role) {
+                        console.log(role.level);
+                        if (role.level > 0) {
+                            access = true;
+                        }
+                    });
+                });
+                if (access) {
+                    $.ajax({
+                        url: '/Home/_Read/' + id,
+                        type: 'GET',
+                        success: function (response) {
+                            $('.modal-ebook-read').html(response);
+                        }
+                    });
+                } else {
+                    window.location = "/SubscriptionPackages/Subscribe";
                 }
             });
         });
@@ -105,11 +120,26 @@
         // Open Watch Video Modal
         $("body").on('click', '#video-modal-button', function () {
             var id = $(this).attr('data-id');
-            $.ajax({
-                url: '/Home/_Watch/' + id,
-                type: 'GET',
-                success: function (response) {
-                    $('.modal-ebook-read').html(response);
+            getLogedUser(function (user) {
+                var access = false;
+                user.roles.forEach(function (role) {
+                    getRoleSync(role.roleId, function (role) {
+                        console.log(role.level);
+                        if (role.level > 0) {
+                            access = true;
+                        }
+                    });
+                });
+                if (access) {
+                    $.ajax({
+                        url: '/Home/_Watch/' + id,
+                        type: 'GET',
+                        success: function (response) {
+                            $('.modal-ebook-read').html(response);
+                        }
+                    });
+                } else {
+                    window.location = "/SubscriptionPackages/Subscribe";
                 }
             });
         });

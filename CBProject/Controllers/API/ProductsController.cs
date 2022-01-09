@@ -219,6 +219,37 @@ namespace CBProject.Controllers.API
             }
         }
         [HttpGet]
+        [Route("api/users/role")]
+        public async Task<IHttpActionResult> GetUsersByRole(string rolename)
+        {
+            if (rolename == null)
+                return NotFound();
+            var rolesIds = await this._rolesRepo
+                                             .GetAllQuerable()
+                                             .Where(r => r.Name.Equals(rolename))
+                                             .Select(r => r.Id)
+                                             .ToListAsync();
+            var users = await this._usersRepo
+                                    .GetAllQueryable()
+                                    .Where(u => rolesIds.Any() ? u.Roles.Select(r => r.RoleId).Intersect(rolesIds).Any() : false)
+                                    .ToListAsync();
+            if (users.Count > 0)
+                return Ok(users);
+            else
+                return Ok("null");
+        }
+        [HttpGet]
+        [Route("api/role")]
+        public async Task<IHttpActionResult> GetRoleById(string id)
+        {
+            if (id == null)
+                return NotFound();
+            var role = await this._rolesRepo.GetAsync(id);
+            if (role == null)
+                return NotFound();
+            return Ok(role);
+        }
+        [HttpGet]
         [Route("api/categories")]
         public async Task<IHttpActionResult> GetCategories()
         {
@@ -269,26 +300,6 @@ namespace CBProject.Controllers.API
             if (id == null)
                 return NotFound();
             return Ok(await this._unitOfWork.Tags.GetAsync(id));
-        }
-        [HttpGet]
-        [Route("api/users/role")]
-        public async Task<IHttpActionResult> GetUsersByRole(string rolename)
-        {
-            if (rolename == null)
-                return NotFound();
-            var rolesIds = await this._rolesRepo
-                                             .GetAllQuerable()
-                                             .Where(r => r.Name.Equals(rolename))
-                                             .Select(r => r.Id)
-                                             .ToListAsync();
-            var users = await this._usersRepo
-                                    .GetAllQueryable()
-                                    .Where(u => rolesIds.Any() ? u.Roles.Select(r => r.RoleId).Intersect(rolesIds).Any() : false)
-                                    .ToListAsync();
-            if (users.Count > 0)
-                return Ok(users);
-            else
-                return Ok("null");
         }
         [HttpGet]
         [Route("api/reviews")]

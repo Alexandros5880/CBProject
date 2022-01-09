@@ -130,6 +130,32 @@ function getUsersByRoleName(roleName, callback) {
     });
 }
 
+function getRole(id, callback) {
+    $.ajax({
+        type: "GET",
+        url: "/api/role?id=" + id,
+        success: function (data) {
+            callback(data);
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+}
+function getRoleSync(id, callback) {
+    $.ajax({
+        type: "GET",
+        async: false,
+        url: "/api/role?id=" + id,
+        success: function (data) {
+            callback(data);
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+}
+
 function getCategories(callback) {
     $.ajax({
         type: "GET",
