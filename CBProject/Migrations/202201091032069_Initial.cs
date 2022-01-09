@@ -3,7 +3,7 @@ namespace CBProject.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Initia : DbMigration
+    public partial class Initial : DbMigration
     {
         public override void Up()
         {
@@ -38,7 +38,6 @@ namespace CBProject.Migrations
                         ID = c.Int(nullable: false, identity: true),
                         Title = c.String(),
                         Description = c.String(),
-                        Thumbnail = c.String(),
                         EbookImagePath = c.String(),
                         EbookFilePath = c.String(),
                         Url = c.String(),

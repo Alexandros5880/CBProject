@@ -1,6 +1,6 @@
 namespace CBProject.Migrations
 {
-    using CBProject.HelperClasses;
+    using CBProject.HelperClassesm;
     using System.Data.Entity.Migrations;
 
     internal sealed class Configuration : DbMigrationsConfiguration<CBProject.Models.ApplicationDbContext>
@@ -12,17 +12,15 @@ namespace CBProject.Migrations
 
         protected override void Seed(CBProject.Models.ApplicationDbContext context)
         {
-            var createData = new CreateData(context);
-            createData.CreateUsersAndRoles();
-            createData.CreateCategories();
-            createData.CreateSubscriptionPackages();
-            createData.CreateEbook();
-            createData.CreateVideo();
-            createData.CreateTags();
-            createData.CreateRating();
-            createData.CreateReview();
-            createData.CreateRequiremenets();
-            //createData.Dispose();
+            CreateData.CreateUsersAndRoles(context);
+            CreateData.CreateCategories(context);
+            CreateData.CreateSubscriptionPackages(context);
+            CreateData.CreateEbook(context);
+            CreateData.CreateVideo(context);
+            CreateData.CreateTags(context);
+            CreateData.CreateRating(context);
+            CreateData.CreateReview(context);
+            CreateData.CreateRequiremenets(context);
         }
     }
 }
