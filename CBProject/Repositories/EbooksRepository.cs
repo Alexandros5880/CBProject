@@ -131,8 +131,6 @@ namespace CBProject.Repositories
         public async Task<ICollection<Ebook>> GetAllByCategoryNameAsync(string name)
         {
             var ebooks = await _context.Ebooks
-                .Include(e => e.Creator)
-                .Include(e => e.Category)
                 .Where(e => e.Category.Name.Equals(name))
                 .ToListAsync();
             foreach(var ebook in ebooks)

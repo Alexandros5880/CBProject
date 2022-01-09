@@ -13,10 +13,12 @@ function getContentsByCategoryId(categoryId, callback) {
     });
 }
 function getContentsByCategoryName(categoryName, callback) {
+    console.log(categoryName);
     $.ajax({
         type: "GET",
         url: "/api/products/contenst/bycategory?name=" + categoryName,
         success: function (data) {
+            console.log("Here");
             callback(data);
         },
         error: function (error) {

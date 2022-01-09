@@ -247,8 +247,6 @@ namespace CBProject.Repositories
         public async Task<ICollection<Video>> GetAllByCategoryNameAsync(string name)
         {
             var videos = await this._context.Videos
-                .Include(v => v.Category)
-                .Include(v => v.Creator)
                 .Where(v => v.Category.Name.Equals(name))
                 .ToListAsync();
             foreach(var video in videos)
