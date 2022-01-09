@@ -154,6 +154,19 @@ function getCategory(id, callback) {
         }
     });
 }
+function getCategorySync(id, callback) {
+    $.ajax({
+        type: "GET",
+        async: false,
+        url: "/api/category?id=" + id,
+        success: function (data) {
+            callback(data);
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+}
 function getCategoriesMaster(callback) {
     $.ajax({
         type: "GET",
@@ -317,6 +330,22 @@ function getPDF(file, callback) {
     $.ajax({
         type: "POST",
         url: `/api/ebook/pdf`,
+        data: {
+            file: file
+        },
+        success: function (data) {
+            callback(data);
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+};
+function getPDFSync(file, callback) {
+    $.ajax({
+        type: "POST",
+        url: `/api/ebook/pdf`,
+        async: false,
         data: {
             file: file
         },
@@ -594,4 +623,10 @@ function parseDateTime(date) {
     var s = date.split("T")[1].split(".")[0].split(":")[2];
     var ms = date.split("T")[1].split(".")[1];
     return new Date(Y, M, D, h, m, s, ms);
+}
+
+function compaire(a, b) {
+    if (a == b) return 0;
+    if (a < b) return -1;
+    if (a > b) return 1;
 }

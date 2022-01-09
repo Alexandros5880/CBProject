@@ -172,6 +172,8 @@
 
         $(document).ready(function () {
 
+            var defaultCategoryName = "MVC";
+
             // When Modal Close Stop Video
             $('#video-modal-fullscreen-xl').on('hidden.bs.modal', function () {
                 $(".myvideo").trigger('pause');
@@ -220,7 +222,7 @@
             });
 
             // Get Videos And Ebooks With Category 'MVC'
-            getContentsByCategoryName("MVC", function (data) {
+            getContentsByCategoryName(defaultCategoryName, function (data) {
                 render(data);
             });
 
@@ -258,6 +260,9 @@
             $(document.body).on('click', 'button', function () {
                 if (this.classList.contains('search')) {
                     var categoryName = $("#search-input").val();
+                    if (categoryName.length == 0) {
+                        var categoryName = defaultCategoryName;
+                    }
                     getContentsByCategoryName(categoryName, function (data) {
                         render(data);
                     });
@@ -268,6 +273,9 @@
             $('#search-input').keypress(function (event) {
                 if (event.keyCode == 13) {
                     var categoryName = $("#search-input").val();
+                    if (categoryName.length == 0) {
+                        var categoryName = defaultCategoryName;
+                    }
                     getContentsByCategoryName(categoryName, function (data) {
                         render(data);
                     });
@@ -282,6 +290,9 @@
             $("#videos-home");
             $("#ebooks-home").empty();
             $("#ebooks-home");
+            data.videos.sort(function (a, b) {
+                return b.ratingsAVG - a.ratingsAVG;
+            });
             data.videos.slice(0, 4).forEach(video => {
                 getCategory(video.categoryId, function (category) {
                     getUserById(video.creatorId, function (creator) {
@@ -362,6 +373,9 @@
                     });
                 });
 
+            });
+            data.ebooks.sort(function (a, b) {
+                return b.ratingsAVG - a.ratingsAVG;
             });
             data.ebooks.slice(0, 4).forEach(ebook => {
                 getCategory(ebook.categoryId, function (category) {

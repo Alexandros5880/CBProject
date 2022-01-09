@@ -32,45 +32,16 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @if (item.User != null)
-            {
-                @Html.DisplayFor(modelItem => item.User.FirstName)
-            }
-            else
-            {
-                @Html.DisplayFor(modelItem => item.FirstName)
-            }
-
+            @Html.DisplayFor(modelItem => item.FirstName)
         </td>
         <td>
-            @if (item.User != null)
-            {
-                @Html.DisplayFor(modelItem => item.User.LastName)
-            }
-            else
-            {
-                @Html.DisplayFor(modelItem => item.LastName)
-            }
+            @Html.DisplayFor(modelItem => item.LastName)
         </td>
         <td>
-            @if (item.User != null)
-            {
-                @Html.DisplayFor(modelItem => item.User.PhoneNumber)
-            }
-            else
-            {
-                @Html.DisplayFor(modelItem => item.Phone)
-            }
+            @Html.DisplayFor(modelItem => item.Phone)
         </td>
         <td>
-            @if (item.User != null)
-            {
-                @Html.DisplayFor(modelItem => item.User.Email)
-            }
-            else
-            {
-                @Html.DisplayFor(modelItem => item.Email)
-            }
+            @Html.DisplayFor(modelItem => item.Email)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Subject)
