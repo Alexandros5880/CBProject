@@ -150,33 +150,6 @@ namespace CBProject.Migrations
                 .PrimaryKey(t => t.ID);
             
             CreateTable(
-                "dbo.Payments",
-                c => new
-                    {
-                        ID = c.Int(nullable: false, identity: true),
-                        UserId = c.String(maxLength: 128),
-                        Price = c.Decimal(nullable: false, precision: 18, scale: 2),
-                        Tax = c.Double(nullable: false),
-                        Discount = c.Double(nullable: false),
-                    })
-                .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.AspNetUsers", t => t.UserId)
-                .Index(t => t.UserId);
-            
-            CreateTable(
-                "dbo.AspNetUserRoles",
-                c => new
-                    {
-                        UserId = c.String(nullable: false, maxLength: 128),
-                        RoleId = c.String(nullable: false, maxLength: 128),
-                    })
-                .PrimaryKey(t => new { t.UserId, t.RoleId })
-                .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
-                .ForeignKey("dbo.AspNetRoles", t => t.RoleId, cascadeDelete: true)
-                .Index(t => t.UserId)
-                .Index(t => t.RoleId);
-            
-            CreateTable(
                 "dbo.Videos",
                 c => new
                     {
@@ -342,6 +315,33 @@ namespace CBProject.Migrations
                 .Index(t => t.EbookId);
             
             CreateTable(
+                "dbo.Payments",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        UserId = c.String(maxLength: 128),
+                        Price = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        Tax = c.Double(nullable: false),
+                        Discount = c.Double(nullable: false),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.AspNetUsers", t => t.UserId)
+                .Index(t => t.UserId);
+            
+            CreateTable(
+                "dbo.AspNetUserRoles",
+                c => new
+                    {
+                        UserId = c.String(nullable: false, maxLength: 128),
+                        RoleId = c.String(nullable: false, maxLength: 128),
+                    })
+                .PrimaryKey(t => new { t.UserId, t.RoleId })
+                .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
+                .ForeignKey("dbo.AspNetRoles", t => t.RoleId, cascadeDelete: true)
+                .Index(t => t.UserId)
+                .Index(t => t.RoleId);
+            
+            CreateTable(
                 "dbo.RequirementToEbooks",
                 c => new
                     {
@@ -381,6 +381,32 @@ namespace CBProject.Migrations
                 .PrimaryKey(t => t.Id)
                 .Index(t => t.Name, unique: true, name: "RoleNameIndex");
             
+            CreateTable(
+                "dbo.SubscriptionPackageEbooks",
+                c => new
+                    {
+                        SubscriptionPackage_ID = c.Int(nullable: false),
+                        Ebook_ID = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => new { t.SubscriptionPackage_ID, t.Ebook_ID })
+                .ForeignKey("dbo.SubscriptionPackages", t => t.SubscriptionPackage_ID, cascadeDelete: true)
+                .ForeignKey("dbo.Ebooks", t => t.Ebook_ID, cascadeDelete: true)
+                .Index(t => t.SubscriptionPackage_ID)
+                .Index(t => t.Ebook_ID);
+            
+            CreateTable(
+                "dbo.VideoSubscriptionPackages",
+                c => new
+                    {
+                        Video_ID = c.Int(nullable: false),
+                        SubscriptionPackage_ID = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => new { t.Video_ID, t.SubscriptionPackage_ID })
+                .ForeignKey("dbo.Videos", t => t.Video_ID, cascadeDelete: true)
+                .ForeignKey("dbo.SubscriptionPackages", t => t.SubscriptionPackage_ID, cascadeDelete: true)
+                .Index(t => t.Video_ID)
+                .Index(t => t.SubscriptionPackage_ID);
+            
         }
         
         public override void Down()
@@ -389,10 +415,16 @@ namespace CBProject.Migrations
             DropForeignKey("dbo.RequirementToEbooks", "RequirementId", "dbo.Requirements");
             DropForeignKey("dbo.RequirementToEbooks", "EbookId", "dbo.Ebooks");
             DropForeignKey("dbo.Ebooks", "CreatorId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.Payments", "UserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.Orders", "UserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.Orders", "SubscriptionPackageId", "dbo.SubscriptionPackages");
             DropForeignKey("dbo.TagToVideos", "VideoId", "dbo.Videos");
             DropForeignKey("dbo.TagToVideos", "TagId", "dbo.Tags");
             DropForeignKey("dbo.TagToEbooks", "TagId", "dbo.Tags");
             DropForeignKey("dbo.TagToEbooks", "EbookId", "dbo.Ebooks");
+            DropForeignKey("dbo.VideoSubscriptionPackages", "SubscriptionPackage_ID", "dbo.SubscriptionPackages");
+            DropForeignKey("dbo.VideoSubscriptionPackages", "Video_ID", "dbo.Videos");
             DropForeignKey("dbo.ReviewToVideos", "VideoId", "dbo.Videos");
             DropForeignKey("dbo.ReviewToVideos", "ReviewId", "dbo.Reviews");
             DropForeignKey("dbo.ReviewToEbooks", "ReviewId", "dbo.Reviews");
@@ -407,19 +439,24 @@ namespace CBProject.Migrations
             DropForeignKey("dbo.Ratings", "RaterId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Videos", "CreatorId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Videos", "CategoryId", "dbo.Categories");
-            DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.Payments", "UserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.Orders", "UserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.Orders", "SubscriptionPackageId", "dbo.SubscriptionPackages");
             DropForeignKey("dbo.AspNetUsers", "SubscriptionPackage_ID", "dbo.SubscriptionPackages");
+            DropForeignKey("dbo.SubscriptionPackageEbooks", "Ebook_ID", "dbo.Ebooks");
+            DropForeignKey("dbo.SubscriptionPackageEbooks", "SubscriptionPackage_ID", "dbo.SubscriptionPackages");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Ebooks", "CategoryId", "dbo.Categories");
             DropForeignKey("dbo.CategoryToCategories", "MasterCategoryId", "dbo.Categories");
             DropForeignKey("dbo.CategoryToCategories", "ChiledCategoryId", "dbo.Categories");
+            DropIndex("dbo.VideoSubscriptionPackages", new[] { "SubscriptionPackage_ID" });
+            DropIndex("dbo.VideoSubscriptionPackages", new[] { "Video_ID" });
+            DropIndex("dbo.SubscriptionPackageEbooks", new[] { "Ebook_ID" });
+            DropIndex("dbo.SubscriptionPackageEbooks", new[] { "SubscriptionPackage_ID" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropIndex("dbo.RequirementToEbooks", new[] { "EbookId" });
             DropIndex("dbo.RequirementToEbooks", new[] { "RequirementId" });
+            DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
+            DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
+            DropIndex("dbo.Payments", new[] { "UserId" });
             DropIndex("dbo.TagToEbooks", new[] { "EbookId" });
             DropIndex("dbo.TagToEbooks", new[] { "TagId" });
             DropIndex("dbo.TagToVideos", new[] { "VideoId" });
@@ -438,9 +475,6 @@ namespace CBProject.Migrations
             DropIndex("dbo.RatingToVideos", new[] { "RatingId" });
             DropIndex("dbo.Videos", new[] { "CategoryId" });
             DropIndex("dbo.Videos", new[] { "CreatorId" });
-            DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
-            DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
-            DropIndex("dbo.Payments", new[] { "UserId" });
             DropIndex("dbo.Orders", new[] { "SubscriptionPackageId" });
             DropIndex("dbo.Orders", new[] { "UserId" });
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
@@ -451,9 +485,13 @@ namespace CBProject.Migrations
             DropIndex("dbo.Ebooks", new[] { "CreatorId" });
             DropIndex("dbo.CategoryToCategories", new[] { "ChiledCategoryId" });
             DropIndex("dbo.CategoryToCategories", new[] { "MasterCategoryId" });
+            DropTable("dbo.VideoSubscriptionPackages");
+            DropTable("dbo.SubscriptionPackageEbooks");
             DropTable("dbo.AspNetRoles");
             DropTable("dbo.ContactMessages");
             DropTable("dbo.RequirementToEbooks");
+            DropTable("dbo.AspNetUserRoles");
+            DropTable("dbo.Payments");
             DropTable("dbo.TagToEbooks");
             DropTable("dbo.Tags");
             DropTable("dbo.TagToVideos");
@@ -466,8 +504,6 @@ namespace CBProject.Migrations
             DropTable("dbo.Ratings");
             DropTable("dbo.RatingToVideos");
             DropTable("dbo.Videos");
-            DropTable("dbo.AspNetUserRoles");
-            DropTable("dbo.Payments");
             DropTable("dbo.SubscriptionPackages");
             DropTable("dbo.Orders");
             DropTable("dbo.AspNetUserLogins");

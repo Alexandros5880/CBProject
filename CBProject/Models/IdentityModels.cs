@@ -52,6 +52,14 @@ namespace CBProject.Models
         public bool TermsAndConditionsAcception { get; set; }
         public bool IsInactive { get; set; }
         public SubscriptionPackage SubscriptionPackage { get; set; }
+        [NotMapped]
+        public bool Subscribed
+        {
+            get
+            {
+                return this.SubscriptionPackage != null;
+            }
+        }
         public ICollection<Video> Videos { get; set; }
         public ICollection<Ebook> Ebooks { get; set; }
         public ICollection<Order> Orders { get; set; }

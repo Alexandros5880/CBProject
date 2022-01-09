@@ -13,10 +13,12 @@ update:
 	git push origin BackUp
 
 backup:
+	git branch -d BackUp
+	git branch BackUp
+	git push origin BackUp
+
+master:
 	git push origin Alexandros
 	git branch -d master
 	git branch master
 	git push origin master
-	git branch -d BackUp
-	git branch BackUp
-	git push origin BackUp
