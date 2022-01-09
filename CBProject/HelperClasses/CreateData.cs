@@ -569,5 +569,26 @@ namespace CBProject.HelperClassesm
             }
             context.SaveChanges();
         }
+        public static void CreateSubscriptionWithEbooksAndVideos(ApplicationDbContext context)
+        {
+            // make 15 ebooks/videos private five for every package
+            int ebookId = 1;
+            int videoId = 1;
+            foreach (var package in context.SubcriptionPackages.ToList())
+            {
+                for (int i = 1; i <= 5; i++)
+                {
+                    package.Ebooks.Add(context.Ebooks.FirstOrDefault(e => e.ID == ebookId));
+                    ebookId++;
+                }
+                for (int i = 1; i <= 5; i++)
+                {
+                    package.Videos.Add(context.Videos.FirstOrDefault(v => v.ID == videoId));
+                    videoId++;
+                }
+                context.Entry(package).State = System.Data.Entity.EntityState.Modified;
+            }
+            context.SaveChanges();
+        }
     }
 }

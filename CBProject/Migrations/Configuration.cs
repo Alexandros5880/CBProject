@@ -21,6 +21,7 @@ namespace CBProject.Migrations
             CreateData.CreateRating(context);
             CreateData.CreateReview(context);
             CreateData.CreateRequiremenets(context);
+            CreateData.CreateSubscriptionWithEbooksAndVideos(context);
         }
     }
 }
