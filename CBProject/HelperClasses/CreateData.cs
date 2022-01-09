@@ -316,7 +316,7 @@ namespace CBProject.HelperClasses
                 {
                     ID = 1,
                     Description = "Basic",
-                    Price = 100,
+                    Price = 33,
                     Duration = 23.33f,
                     MyUsers = new List<ApplicationUser>()
                     {
@@ -329,7 +329,7 @@ namespace CBProject.HelperClasses
                 {
                     ID = 2,
                     Description = "Advance",
-                    Price = 100,
+                    Price = 77,
                     Duration = 23.33f,
                     MyUsers = new List<ApplicationUser>()
                     {
