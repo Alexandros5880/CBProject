@@ -1,9 +1,13 @@
 ﻿// Request To All Api Controllers Service
 
-function getContentsByCategoryId(categoryId, callback) {
+function getContentsByCategoryId(categoryId, subscriptionPackageId = null, callback) {
     $.ajax({
-        type: "GET",
-        url: "/api/products/contenst/bycategory?id=" + categoryId,
+        type: "POST",
+        data: {
+            categoryId: categoryId,
+            sabscriptionPackageId: subscriptionPackageId
+        },
+        url: `/api/products/contenst/bycategoryid`,
         success: function (data) {
             callback(data);
         },
@@ -12,13 +16,15 @@ function getContentsByCategoryId(categoryId, callback) {
         }
     });
 }
-function getContentsByCategoryName(categoryName, callback) {
-    console.log(categoryName);
+function getContentsByCategoryName(categoryName, subscriptionPackageId = null, callback) {
     $.ajax({
-        type: "GET",
-        url: "/api/products/contenst/bycategory?name=" + categoryName,
+        type: "POST",
+        data: {
+            categoryName: categoryName,
+            sabscriptionPackageId: subscriptionPackageId
+        },
+        url: `/api/products/contenst/bycategoryname`,
         success: function (data) {
-            console.log("Here");
             callback(data);
         },
         error: function (error) {
@@ -110,6 +116,19 @@ function getUserByIdSync(id, callback) {
 function getLogedUser(callback) {
     $.ajax({
         type: "GET",
+        url: "/api/logged/user",
+        success: function (data) {
+            callback(data);
+        },
+        error: function (error) {
+            return error;
+        }
+    });
+}
+function getLogedUserSync(callback) {
+    $.ajax({
+        type: "GET",
+        async: false,
         url: "/api/logged/user",
         success: function (data) {
             callback(data);
@@ -657,4 +676,13 @@ function compaire(a, b) {
     if (a == b) return 0;
     if (a < b) return -1;
     if (a > b) return 1;
+}
+
+// Function displays if subscribed or not
+function isSubscribed(bool) {
+    if (bool) {
+        return `<img src="/img/checked.jpg" alt="subscribed" class="rounded" style="height:17px;">`;
+    } else {
+        return ``;
+    }
 }

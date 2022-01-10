@@ -448,9 +448,9 @@
                                                    <p><img class="img-icon-index" src="../assets/images/icons/icons-person.png" alt="person" />  ${creator.fullName}</p>
                                                     <p><img class="img-icon-index" src="../assets/images/icons/icon-calendar.png" alt="video" /><small> ${ebook.uploadDate.split("T")[0]} </small></p>
                                                     <br />
-                                                    `
-                                                    + ratingFor +
-                                                    `
+                                                    ` + ratingFor + `
+                                                    ` + isSubscribed(ebook.subscribed) + `
+                                                    <br />
                                                     <br />
                                                     <button class="btn btn-purple btn-lg details">Details</button>
                                                     ` + displayReadButton(userAuthorized, ebook.id) + `
@@ -545,9 +545,9 @@
                                                 <p><img class="img-icon-index" src="../assets/images/icons/icons-person.png" alt="person" />  ${creator.fullName}</p>
                                                 <p><img class="img-icon-index" src="../assets/images/icons/icon-video.png" alt="video" />${video.duration} Hours </p>
                                                 <p><img class="img-icon-index" src="../assets/images/icons/icon-calendar.png" alt="video" /> <small>  ${video.uploadDate.split("T")[0]}</small>  </p>
-                                                `
-                                                + ratingFor +
-                                                `
+                                                ` + ratingFor + `
+                                                ` + isSubscribed(video.subscribed) + `
+                                                <br />
                                               <br>
                                                 <button class="btn btn-purple btn-lg details">Details</button>
                                                 ` + displayPlayButton(userAuthorized, video.id) + `

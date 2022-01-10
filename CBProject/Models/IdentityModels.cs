@@ -51,15 +51,6 @@ namespace CBProject.Models
         public bool NewsletterAcception { get; set; }
         public bool TermsAndConditionsAcception { get; set; }
         public bool IsInactive { get; set; }
-        public SubscriptionPackage SubscriptionPackage { get; set; }
-        [NotMapped]
-        public bool Subscribed
-        {
-            get
-            {
-                return this.SubscriptionPackage != null;
-            }
-        }
         public ICollection<Video> Videos { get; set; }
         public ICollection<Ebook> Ebooks { get; set; }
         public ICollection<Order> Orders { get; set; }
@@ -101,6 +92,7 @@ namespace CBProject.Models
         public DbSet<Order> Orders { get; set; }
         public DbSet<ContactMessage> ContactMessages { get; set; }
         public DbSet<Requirement> Requirements { get; set; }
+        public DbSet<UserSubscriptionPackage> UsersSubscriptionPackages { get; set; }
         public DbSet<TagToVideo> TagsToVideos { get; set; }
         public DbSet<TagToEbook> TagsToEbooks { get; set; }
         public DbSet<RatingToEbook> RatingsToEbooks { get; set; }

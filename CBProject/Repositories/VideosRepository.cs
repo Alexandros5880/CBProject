@@ -244,16 +244,35 @@ namespace CBProject.Repositories
             }
             return videos;
         }
-        public async Task<ICollection<Video>> GetAllByCategoryNameAsync(string name)
+        public async Task<ICollection<Video>> GetAllByCategoryNameAsync(string name, int? packageId)
         {
+
+            var package = await this._context.SubcriptionPackages
+                                    .Include(s => s.Videos)
+                                    .Include(s => s.Ebooks)
+                                    .Include(s => s.Orders)
+                                    .FirstOrDefaultAsync(p => p.ID == packageId);
+
+            // Get All Free Videos
             var videos = await this._context.Videos
-                .Where(v => v.Category.Name.Equals(name))
+                .Where(v => v.Category.Name.Equals(name) && !v.SubscriptionPackages.Any())
                 .ToListAsync();
-            foreach(var video in videos)
+
+            // Get All Packages Videos
+            if (package != null)
+            {
+                foreach (var video in package.Videos)
+                {
+                    videos.Add(video);
+                }
+            }
+
+            // Get Average Of Ratings
+            foreach (var video in videos.ToList())
             {
                 video.RatingsAVG = await this.GetRatingsAverageAsync(video.ID);
             }
-            return videos;
+            return videos.ToList(); ;
         }
         public async Task<ICollection<Video>> GetAllEmptyAsync()
         {

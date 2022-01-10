@@ -7,6 +7,8 @@
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var root = @Url.Content("~");
 }
 
 
@@ -185,9 +187,22 @@
 @section scripts {
     <script>
 
+
+
+
+        // Default Category Name
+        var defaultCategoryName = "MVC";
+
         $(document).ready(function () {
 
-            var defaultCategoryName = "MVC";
+            // Get Logged User and hes SubscriptionPakage
+            var userAuthorized = @User.Identity.IsAuthenticated.ToString().ToLower();
+            var loggedUser = null;
+            if (userAuthorized) {
+                getLogedUserSync(function (user) {
+                    loggedUser = user;
+                });
+            }
 
             // When Modal Close Stop Video
             $('#video-modal-fullscreen-xl').on('hidden.bs.modal', function () {
@@ -236,10 +251,8 @@
                 });
             });
 
-            // Get Videos And Ebooks With Category 'MVC'
-            getContentsByCategoryName(defaultCategoryName, function (data) {
-                render(data);
-            });
+            // Get Videos And Ebooks With Category Name BY Default
+            getDataByCatName(defaultCategoryName);
 
             // When Details Button Clicked
             $(document.body).on('click', 'button', function () {
@@ -265,9 +278,7 @@
             $(document.body).on('click', 'a', function () {
                 if (this.classList.contains('category-tab')) {
                     var categoryId = $(this).data('value');
-                    getContentsByCategoryId(categoryId, function (data) {
-                        render(data)
-                    });
+                    getDataByCatId(categoryId);
                 }
             });
 
@@ -278,199 +289,226 @@
                     if (categoryName.length == 0) {
                         var categoryName = defaultCategoryName;
                     }
-                    getContentsByCategoryName(categoryName, function (data) {
-                        render(data);
-                    });
+                    getDataByCatName(categoryName);
                 }
             });
 
-            // Search Enter Event
+            // Search Enter EventgetDataByCatName
             $('#search-input').keypress(function (event) {
                 if (event.keyCode == 13) {
                     var categoryName = $("#search-input").val();
                     if (categoryName.length == 0) {
                         var categoryName = defaultCategoryName;
                     }
-                    getContentsByCategoryName(categoryName, function (data) {
+                    getDataByCatName(categoryName);
+                }
+            });
+
+
+            // Get Ebooks / Videos By Category Name
+            function getDataByCatName(categoryName) {
+                if (loggedUser) {
+                    getContentsByCategoryName(categoryName, loggedUser.subscriptionPackage.id, function (data) {
+                        render(data);
+                    });
+                } else {
+                    getContentsByCategoryName(categoryName, null, function (data) {
                         render(data);
                     });
                 }
-            });
+                
+            }
 
-        })
-
-        // Render UI Function
-        function render(data) {
-            $("#videos-home").empty();
-            $("#videos-home");
-            $("#ebooks-home").empty();
-            $("#ebooks-home");
-            data.videos.sort(function (a, b) {
-                return a.ratingsAVG - b.ratingsAVG;
-            });
-            data.videos.reverse();
-            data.videos.slice(0, 4).forEach(video => {
-                getCategorySync(video.categoryId, function (category) {
-                    getUserByIdSync(video.creatorId, function (creator) {
-                        var userAuthorized = @User.Identity.IsAuthenticated.ToString().ToLower();
-                                var ratingFor;
-                                if (userAuthorized) {
-                                    ratingFor = `
-                                        <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
-                                        <form id="video-rating-form" method="post" action="/api/Video/AddRate" target="dummyframe">
-                                            <input type="hidden" id="videoId" name="videoId" value="${video.id}">
-                                            <input name="rate"
-                                                    class="rating rating-loading rate raiting-card"
-                                                    data-min="0"
-                                                    data-max="5"
-                                                    data-step="0.1"
-                                                    value="${video.ratingsAVG}"
-                                                    onchange="this.form.submit()">
-                                            <!--<input type="submit" value="Submit" />-->
-                                        </form>
-                                        `
-                                } else {
-                                    ratingFor = `
-                                        <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
-                                        <form id="video-rating-form" method="post" action="/api/Video/AddRate" target="dummyframe">
-                                            <input type="hidden" id="videoId" name="videoId" value="${video.id}">
-                                            <input name="rate"
-                                                    class="rating rating-loading rate raiting-card"
-                                                    data-min="0"
-                                                    data-max="5"
-                                                    data-step="0.1"
-                                                    value="${video.ratingsAVG}"
-                                                    disabled
-                                                    onchange="this.form.submit()">
-                                            <!--<input type="submit" value="Submit" />-->
-                                        </form>
-                                        `
-                                }
-                        $("#videos-home").append(
-                            `
-                            <div class="col-md-3 ourHolder" ">
-                                <input type="hidden" id="category" name="category" value="${video.category.id}">
-                                <input type="hidden" id="content" name="content" value="${video.id}">
-                                <input type="hidden" id="content-type" name="content-type" value="video">
-                                <div class="card item" id="card-video">
-                                    <video class="embed-responsive-item title-video" controls preload="none" poster="${video.thumbnail}" style="width:100%;" controlsList="nodownload">
-                                        <source src="${video.videoPath}" type="video/mp4">
-                                        Your browser does not support the video tag.
-                                    </video>
-                                    <!--<img alt="Cover Foto" src="${video.videoImagePath}" style="width:100%;" />-->
-                                     <p style="text-align:center;margin-top:14px;"><b>${video.title}</b></p>
-                                         <hr>
-                                    <div class="card-body">
-                                         <p><img class="img-icon-index" src="../assets/images/icons/icons-person.png" alt="person" />  ${creator.fullName}</p>
-                                            <p><img class="img-icon-index" src="../assets/images/icons/icon-video.png" alt="video" /> ${video.duration.split(".")[0]} Hours  </p>
-                                            <p><img class="img-icon-index" src="../assets/images/icons/icon-calendar.png" alt="video" /> <small>  ${video.uploadDate.split("T")[0]}</small>  </p>
-                                        `+ ratingFor+`
-                                        <br />
-                                        <button class="btn btn-purple btn-lg details">Details</button>
-                                        ` + displayPlayButton(userAuthorized, video.id) + `
-                                    </div>
-                                </div>
-                            </div>
-                            `
-                        );
-                        $("#video-rating-form").submit(function (e) {
-                            e.preventDefault();
-                            $.ajax({
-                                url: '/api/Video/AddRate',
-                                type: 'post',
-                                data: $('#video-rating-form').serialize(),
-                                success: function () {
-                                    // Whatever you want to do after the form is successfully submitted
-                                }
-                            });
-                        });
-                        var ratingInput = $('input[name="rate"]');
-                        $(ratingInput).rating();
+            // Get Ebooks / Videos By Category Id
+            function getDataByCatId(categoryId) {
+                if (loggedUser) {
+                    getContentsByCategoryId(categoryId, loggedUser.subscriptionPackage.id, function (data) {
+                        render(data)
                     });
-                });
-
-            });
-            data.ebooks.sort(function (a, b) {
-                return a.ratingsAVG - b.ratingsAVG;
-            });
-            data.ebooks.reverse();
-            data.ebooks.slice(0, 4).forEach(ebook => {
-                getCategorySync(ebook.categoryId, function (category) {
-                    getUserByIdSync(ebook.creatorId, function (creator) {
-                        var userAuthorized = @User.Identity.IsAuthenticated.ToString().ToLower();
-                        var ratingFor;
-                        if (userAuthorized) {
-                            ratingFor = `
-                                <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
-                                <form id="ebook-rating-form" method="post" action="/api/Ebook/AddRate" target="dummyframe">
-                                    <input type="hidden" id="ebookId" name="ebookId" value="${ebook.id}">
-                                    <input name="rate"
-                                            class="rating rating-loading rate"
-                                            data-min="0"
-                                            data-max="5"
-                                            data-step="0.1"
-                                            value="${ebook.ratingsAVG}"
-                                            onchange="this.form.submit()">
-                                    <!--<input type="submit" value="Submit" />-->
-                                </form>
-                                `
-                        } else {
-                            ratingFor = `
-                                <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
-                                <form id="ebook-rating-form" method="post" action="/api/Ebook/AddRate" target="dummyframe">
-                                    <input type="hidden" id="ebookId" name="ebookId" value="${ebook.id}">
-                                    <input name="rate"
-                                            class="rating rating-loading rate"
-                                            data-min="0"
-                                            data-max="5"
-                                            data-step="0.1"
-                                            value="${ebook.ratingsAVG}"
-                                            disabled
-                                            onchange="this.form.submit()">
-                                    <!--<input type="submit" value="Submit" />-->
-                                </form>
-                            `
-                        }
-                        $("#ebooks-home").append(
-                            `
-                            <div class="col-md-3 ourHolder" data-item="${ebook.category}">
-                                <div class="card item" id="card-ebook">
-                                    <img class="card-book-img" alt="Cover Foto" src="${ebook.ebookImagePath}" style="height: 150px; text-align: center;" />
-                                    <p style="text-align:center;margin-top:14px;"><b>${ebook.title}</b>
-                                    <hr />
-                                <!--<img class="card-img-top" style="width:100%" src="~/img/${ebook.thumbnail}" alt="Card image cap">-->
-                                <div class="card-body ebook-card">
-                                        <p><img class="img-icon-index" src="../assets/images/icons/icons-person.png" alt="person" />  ${creator.fullName}</p>
-                                        <p><img class="img-icon-index" src="../assets/images/icons/icon-calendar.png" alt="video" /><small> ${ebook.uploadDate.split("T")[0]} </small></p>
-                                        `+ ratingFor +`
-                                        <br />
-                                        <br/>
-                                        <a href="/Ebooks/PublicDetails/${ebook.id}">Details</a>
-
-                                    </div>
-                                </div>
-                            </div>
-                            `
-                        );
-                        var ratingInput = $('input[name="rate"]');
-                        $(ratingInput).rating();
-                    });
-                });
-            });
-
-
-            // Display or Not Play Button of Videos
-            function displayPlayButton(userAuthorized, id) {
-                if (userAuthorized) {
-                    return `
-                            <button id="video-modal-button" class="btn btn-green btn-lg btn-open-modal more" data-toggle="modal" data-target="#video-modal-fullscreen-xl" data-id="${id}">
-                                Play
-                            </button>`;
                 } else {
-                    return ``;
+                    getContentsByCategoryId(categoryId, null, function (data) {
+                        render(data)
+                    });
                 }
             }
-        }
+
+            // Render UI Function
+            function render(data) {
+                $("#videos-home").empty();
+                $("#videos-home");
+                $("#ebooks-home").empty();
+                $("#ebooks-home");
+                data.videos.sort(function (a, b) {
+                    return a.ratingsAVG - b.ratingsAVG;
+                });
+                data.videos.reverse();
+                data.videos.slice(0, 4).forEach(video => {
+                    getCategorySync(video.categoryId, function (category) {
+                        getUserByIdSync(video.creatorId, function (creator) {
+                            var ratingFor;
+                            if (userAuthorized) {
+                                ratingFor = `
+                                    <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+                                    <form id="video-rating-form" method="post" action="/api/Video/AddRate" target="dummyframe">
+                                        <input type="hidden" id="videoId" name="videoId" value="${video.id}">
+                                        <input name="rate"
+                                                class="rating rating-loading rate raiting-card"
+                                                data-min="0"
+                                                data-max="5"
+                                                data-step="0.1"
+                                                value="${video.ratingsAVG}"
+                                                onchange="this.form.submit()">
+                                        <!--<input type="submit" value="Submit" />-->
+                                    </form>
+                                    `
+                            } else {
+                                ratingFor = `
+                                    <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+                                    <form id="video-rating-form" method="post" action="/api/Video/AddRate" target="dummyframe">
+                                        <input type="hidden" id="videoId" name="videoId" value="${video.id}">
+                                        <input name="rate"
+                                                class="rating rating-loading rate raiting-card"
+                                                data-min="0"
+                                                data-max="5"
+                                                data-step="0.1"
+                                                value="${video.ratingsAVG}"
+                                                disabled
+                                                onchange="this.form.submit()">
+                                        <!--<input type="submit" value="Submit" />-->
+                                    </form>
+                                    `
+                            }
+                            $("#videos-home").append(
+                                `
+                                <div class="col-md-3 ourHolder" ">
+                                    <input type="hidden" id="category" name="category" value="${video.categoryId}">
+                                    <input type="hidden" id="content" name="content" value="${video.id}">
+                                    <input type="hidden" id="content-type" name="content-type" value="video">
+                                    <div class="card item" id="card-video">
+                                        <video class="embed-responsive-item title-video" controls preload="none" poster="${video.thumbnail}" style="width:100%;" controlsList="nodownload">
+                                            <source src="${video.videoPath}" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                        <!--<img alt="Cover Foto" src="${video.videoImagePath}" style="width:100%;" />-->
+                                         <p style="text-align:center;margin-top:14px;"><b>${video.title}</b></p>
+                                             <hr>
+                                        <div class="card-body">
+                                             <p><img class="img-icon-index" src="../assets/images/icons/icons-person.png" alt="person" />  ${creator.fullName}</p>
+                                                <p><img class="img-icon-index" src="../assets/images/icons/icon-video.png" alt="video" /> ${video.duration.split(".")[0]} Hours  </p>
+                                                <p><img class="img-icon-index" src="../assets/images/icons/icon-calendar.png" alt="video" /> <small>  ${video.uploadDate.split("T")[0]}</small>  </p>
+                                            `+ ratingFor +`
+                                            ` + isSubscribed(video.subscribed) + `
+                                            <br />
+                                            <br />
+                                            <button class="btn btn-purple btn-lg details">Details</button>
+                                            ` + displayPlayButton(userAuthorized, video.id) + `
+                                        </div>
+                                    </div>
+                                </div>
+                                `
+                            );
+                            $("#video-rating-form").submit(function (e) {
+                                e.preventDefault();
+                                $.ajax({
+                                    url: '/api/Video/AddRate',
+                                    type: 'post',
+                                    data: $('#video-rating-form').serialize(),
+                                    success: function () {
+                                        // Whatever you want to do after the form is successfully submitted
+                                    }
+                                });
+                            });
+                            var ratingInput = $('input[name="rate"]');
+                            $(ratingInput).rating();
+                        });
+                    });
+
+                });
+                data.ebooks.sort(function (a, b) {
+                    return a.ratingsAVG - b.ratingsAVG;
+                });
+                data.ebooks.reverse();
+                data.ebooks.slice(0, 4).forEach(ebook => {
+                    getCategorySync(ebook.categoryId, function (category) {
+                        getUserByIdSync(ebook.creatorId, function (creator) {
+                            var userAuthorized = @User.Identity.IsAuthenticated.ToString().ToLower();
+                            var ratingFor;
+                            if (userAuthorized) {
+                                ratingFor = `
+                                    <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+                                    <form id="ebook-rating-form" method="post" action="/api/Ebook/AddRate" target="dummyframe">
+                                        <input type="hidden" id="ebookId" name="ebookId" value="${ebook.id}">
+                                        <input name="rate"
+                                                class="rating rating-loading rate"
+                                                data-min="0"
+                                                data-max="5"
+                                                data-step="0.1"
+                                                value="${ebook.ratingsAVG}"
+                                                onchange="this.form.submit()">
+                                        <!--<input type="submit" value="Submit" />-->
+                                    </form>
+                                    `
+                            } else {
+                                ratingFor = `
+                                    <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+                                    <form id="ebook-rating-form" method="post" action="/api/Ebook/AddRate" target="dummyframe">
+                                        <input type="hidden" id="ebookId" name="ebookId" value="${ebook.id}">
+                                        <input name="rate"
+                                                class="rating rating-loading rate"
+                                                data-min="0"
+                                                data-max="5"
+                                                data-step="0.1"
+                                                value="${ebook.ratingsAVG}"
+                                                disabled
+                                                onchange="this.form.submit()">
+                                        <!--<input type="submit" value="Submit" />-->
+                                    </form>
+                                `
+                            }
+                            $("#ebooks-home").append(
+                                `
+                                <div class="col-md-3 ourHolder" data-item="${ebook.category}">
+                                    <div class="card item" id="card-ebook">
+                                        <img class="card-book-img" alt="Cover Foto" src="${ebook.ebookImagePath}" style="height: 150px; text-align: center;" />
+                                        <p style="text-align:center;margin-top:14px;"><b>${ebook.title}</b>
+                                        <hr />
+                                    <!--<img class="card-img-top" style="width:100%" src="~/img/${ebook.thumbnail}" alt="Card image cap">-->
+                                    <div class="card-body ebook-card">
+                                            <p><img class="img-icon-index" src="../assets/images/icons/icons-person.png" alt="person" />  ${creator.fullName}</p>
+                                            <p><img class="img-icon-index" src="../assets/images/icons/icon-calendar.png" alt="video" /><small> ${ebook.uploadDate.split("T")[0]} </small></p>
+                                            `+ ratingFor +`
+                                            ` + isSubscribed(ebook.subscribed) + `
+                                            <br />
+                                            <br />
+                                            <a href="/Ebooks/PublicDetails/${ebook.id}">Details</a>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                `
+                            );
+                            var ratingInput = $('input[name="rate"]');
+                            $(ratingInput).rating();
+                        });
+                    });
+                });
+
+
+                // Display or Not Play Button of Videos
+                function displayPlayButton(userAuthorized, id) {
+                    if (userAuthorized) {
+                        return `
+                                <button id="video-modal-button" class="btn btn-green btn-lg btn-open-modal more" data-toggle="modal" data-target="#video-modal-fullscreen-xl" data-id="${id}">
+                                    Play
+                                </button>`;
+                    } else {
+                        return ``;
+                    }
+                }
+            }
+
+
+        })
 
     </script>
 
