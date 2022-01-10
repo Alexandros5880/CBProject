@@ -187,7 +187,7 @@
                 <th>Description</th>
                 <th>Upload Date</th>
                 <th>Rating</th>
-                <th>Package</th>
+                <th>Packages</th>
                 <th></th>
             </tr>
         </thead>
@@ -319,10 +319,7 @@
             })
 
             var table = $("#videos").DataTable({
-                ajax: {
-                    url: `/api/Video/product/all?packageId=${loggedUser.subscriptionPackage.id}`,
-                    dataSrc: ""
-                },
+                ajax: makeCall(),
                 columns: [
                     {
                         data: "title",
@@ -380,9 +377,9 @@
                         }
                     },
                     {
-                        data: "Package",
+                        data: "Packages",
                         render: function (data, type, video) {
-                            return isSubscribed(video.subscribed, loggedUser.subscriptionPackage);
+                            return getPackages(video.subscribed, video.subscriptionPackages);
                         }
                     },
                     {
@@ -439,6 +436,25 @@
 
                 }
             });
+
+
+            function makeCall() {
+                if (loggedUser.subscriptionPackage != null && loggedUser.subscriptionPackage != undefined) {
+                    console.log(loggedUser);
+                    return {
+                        url: `/api/Video/product/all?userId=${loggedUser.id}&packageId=${loggedUser.subscriptionPackage.id}`,
+                        dataSrc: ""
+                    }
+                }
+                else {
+                    return {
+                        url: `/api/Video/user/all?userId=${loggedUser.id}`,
+                        dataSrc: ""
+                    }
+                }
+            }
+
+
         });
     </script>
 

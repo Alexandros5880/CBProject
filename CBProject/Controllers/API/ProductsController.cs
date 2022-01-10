@@ -203,7 +203,7 @@ namespace CBProject.Controllers.API
                 if (userSub != null)
                 {
                     package = await this._unitOfWork.SubscriptionPackages
-                                                    .GetAsync(userSub.ID);
+                                                    .GetEmptyAsync(userSub.ID);
                 }
                 ApplicationUserViewModel viewModel = Mapper.Map<ApplicationUser, ApplicationUserViewModel>(user);
                 viewModel.SubscriptionPackage = package;

@@ -50,6 +50,7 @@ function payPayPal(user, package) {
                         createPayment(payment, function (responsePayment) {
                             var order = JSON.parse(localStorage.getItem('order'));
                             localStorage.removeItem('order');
+                            alert("Payment is Done!");
                             window.location = `/SubscriptionPackages/AfterPayment?paymentId=${responsePayment.id}&orderId=${order.id}`;
                         });
                     });

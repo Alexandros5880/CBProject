@@ -201,8 +201,10 @@
             if (userAuthorized) {
                 getLogedUserSync(function (user) {
                     loggedUser = user;
+                    console.log(loggedUser);
                 });
             }
+            
 
             // When Modal Close Stop Video
             $('#video-modal-fullscreen-xl').on('hidden.bs.modal', function () {

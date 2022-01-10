@@ -3,8 +3,11 @@ using CBProject.HelperClasses.Interfaces;
 using CBProject.Models;
 using CBProject.Models.HelperModels;
 using CBProject.Repositories;
+using CBProject.Repositories.IdentityRepos;
+using CBProject.Repositories.IdentityRepos.Interfaces;
 using Microsoft.AspNet.Identity;
 using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -14,10 +17,14 @@ namespace CBProject.Controllers.API
     public class VideoController : ApiController, IDisposable
     {
         private readonly VideosRepository _videosRepository;
+        private readonly UsersRepo _usersRepo;
+        private readonly RolesRepo _rolesRepo;
 
-        public VideoController(IUnitOfWork unitOfWork)
+        public VideoController(IUnitOfWork unitOfWork, IUsersRepo usersRepo, IRolesRepo rolesRepo)
         {
             this._videosRepository = unitOfWork.Videos;
+            this._usersRepo = (UsersRepo)usersRepo;
+            this._rolesRepo = (RolesRepo)rolesRepo;
         }
 
         // GET api/Video
@@ -31,11 +38,48 @@ namespace CBProject.Controllers.API
 
         // Get All Free And By Product
         [HttpGet]
-        [Route("api/Video/product/all")]
-        public async Task<IHttpActionResult> GetByProduct(int? packageId)
+        [Route("api/Video/user/all")]
+        public async Task<IHttpActionResult> GetAll(string userId)
         {
-            var videos = await this._videosRepository.GetAllByPackageAsync(packageId);
-            return Ok(videos);
+            if (userId == null)
+                return BadRequest();
+
+            var user = await this._usersRepo.GetAsync(userId);
+            if ( this._usersRepo.GetRoles(user).Contains("Admin") )
+            {
+                var videos = await this._videosRepository.GetAllEmptyAsync();
+                return Ok(videos);
+            } else
+            {
+                var videos = await this._videosRepository
+                                        .GetAllQueryable()
+                                        .Where(v => !v.SubscriptionPackages.Any())
+                                        .ToListAsync();
+                return Ok(videos);
+            }
+        }
+
+        // Get All Free And By Product
+        [HttpGet]
+        [Route("api/Video/product/all")]
+        public async Task<IHttpActionResult> GetByProduct(string userId, int? packageId)
+        {
+            if (userId == null)
+                return BadRequest();
+            if (packageId == null)
+                return BadRequest();
+
+            var user = await this._usersRepo.GetAsync(userId);
+            if (this._usersRepo.GetRoles(user).Contains("Admin"))
+            {
+                var videos = await this._videosRepository.GetAllEmptyAsync();
+                return Ok(videos);
+            }
+            else
+            {
+                var videos = await this._videosRepository.GetAllByPackageAsync(packageId);
+                return Ok(videos);
+            }
         }
 
         // GET api/Video/5
@@ -126,6 +170,8 @@ namespace CBProject.Controllers.API
             if (disposing)
             {
                 this._videosRepository.Dispose();
+                this._usersRepo.Dispose();
+                this._rolesRepo.Dispose();
             }
             base.Dispose(disposing);
         }

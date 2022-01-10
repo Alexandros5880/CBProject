@@ -687,3 +687,16 @@ function isSubscribed(bool, package = null) {
         return ``;
     }
 }
+// Function displays if subscribed or not
+function getPackages(bool, packages = null) {
+    if (bool && packages.length > 0) {
+        var html = `<ul>`;
+        packages.forEach(function (package) {
+            html += `<li>${package.description}</li>`;
+        });
+        html += `</ul>`
+        return html;
+    } else {
+        return ``;
+    }
+}

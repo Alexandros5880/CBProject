@@ -183,7 +183,7 @@
                 <th>UploadDate</th>
                 <th>Cover</th>
                 <th>Rating</th>
-                <th>Package</th>
+                <th>Packages</th>
                 <th></th>
             </tr>
         </thead>
@@ -305,10 +305,7 @@
             }
 
             var table = $("#ebooks").DataTable({
-                ajax: {
-                    url: `/api/Ebook/product/all?packageId=${loggedUser.subscriptionPackage.id}`,
-                    dataSrc: ""
-                },
+                ajax: makeCall(),
                 columns: [
                     {
                         data: "title",
@@ -366,9 +363,9 @@
                         }
                     },
                     {
-                        data: "Package",
+                        data: "Packages",
                         render: function (data, type, ebook) {
-                            return isSubscribed(ebook.subscribed, loggedUser.subscriptionPackage);
+                            return getPackages(ebook.subscribed, ebook.subscriptionPackages);
                         }
                     },
                     {
@@ -425,6 +422,24 @@
                     $(ratingInput).rating();
                 }
             });
+
+
+            function makeCall() {
+                if (loggedUser.subscriptionPackage != null && loggedUser.subscriptionPackage != undefined) {
+                    console.log(loggedUser);
+                    return {
+                        url: `/api/Ebook/product/all?userId=${loggedUser.id}&packageId=${loggedUser.subscriptionPackage.id}`,
+                        dataSrc: ""
+                    }
+                }
+                else {
+                    return {
+                        url: `/api/Ebook/user/all?userId=${loggedUser.id}`,
+                        dataSrc: ""
+                    }
+                }
+            }
+
         });
     </script>
 

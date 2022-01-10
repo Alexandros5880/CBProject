@@ -27,7 +27,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-              @Html.ActionLink("CodeMe", "Index", "Home", new { area = "" }, new { @class = "navbar-brand  logo" })
+                @Html.ActionLink("CodeMe", "Index", "Home", new { area = "" }, new { @class = "navbar-brand  logo" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -43,9 +43,9 @@
     </div>
     @RenderSection("fullWidth", required: false)
 
+
     <div class="container-fluid body-content">
         @RenderBody()
-
         <footer>
             <div class="container">
                 <div class="row footer-row">
@@ -65,7 +65,7 @@
                         <p>@Html.ActionLink("Basic", "Subscribe", "SubscriptionPackages")</p>
                         <p>@Html.ActionLink("Advance", "Subscribe", "SubscriptionPackages")</p>
                         <p>@Html.ActionLink("Premium", "Subscribe", "SubscriptionPackages")</p>
-                      
+
                     </div>
                     <div class="col-md-2 col-sm-2 col-xs-2 footer-text" id="social">
                         <p><b>Social</b></p>
@@ -74,7 +74,7 @@
                     </div>
                 </div>
             </div>
-          
+
             <p style="text-align:center;margin-top:3%;">&copy; @DateTime.Now.Year - CodeMe</p>
             <br />
         </footer>

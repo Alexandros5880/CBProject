@@ -167,6 +167,7 @@ namespace CBProject.Repositories
 
             // Get All Free Videos
             var ebooks = await this._context.Ebooks
+                        .Include(e => e.SubscriptionPackages)
                         .Where(e => !e.SubscriptionPackages.Any())
                         .ToListAsync();
 
