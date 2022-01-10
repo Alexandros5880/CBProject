@@ -22,39 +22,6 @@
 @Scripts.Render("~/bundles/jquery")
 
 
-<script type="text/javascript">
-    $(function () {
-
-        // Open Watch Video Modal
-        $("body").on('click', '#video-modal-button', function () {
-            var id = $(this).attr('data-id');
-            getLogedUser(function (user) {
-                var access = false;
-                user.roles.forEach(function (role) {
-                    getRoleSync(role.roleId, function (role) {
-                        console.log(role.level);
-                        if (role.level > 0) {
-                            access = true;
-                        }
-                    });
-                });
-                if (access) {
-                    $.ajax({
-                        url: '/Home/_Watch/' + id,
-                        type: 'GET',
-                        success: function (response) {
-                            $('.modal-video-play').html(response);
-                        }
-                    });
-                } else {
-                    window.location = "/SubscriptionPackages/Subscribe";
-                }
-            });
-        });
-
-    });
-</script>
-
 
 @section fullWidth{
 
@@ -199,9 +166,9 @@
             var userAuthorized = @User.Identity.IsAuthenticated.ToString().ToLower();
             var loggedUser = null;
             if (userAuthorized) {
+                console.log("Here");
                 getLogedUserSync(function (user) {
                     loggedUser = user;
-                    console.log(loggedUser);
                 });
             }
             
@@ -210,6 +177,30 @@
             $('#video-modal-fullscreen-xl').on('hidden.bs.modal', function () {
                 $(".myvideo").trigger('pause');
             })
+
+            // Open Watch Video Modal
+            $("body").on('click', '#video-modal-button', function () {
+                var id = $(this).attr('data-id');
+                var access = false;
+                loggedUser.roles.forEach(function (role) {
+                    getRoleSync(role.roleId, function (role) {
+                        if (role.level > 0) {
+                            access = true;
+                        }
+                    });
+                });
+                if (access) {
+                    $.ajax({
+                        url: '/Home/_Watch/' + id,
+                        type: 'GET',
+                        success: function (response) {
+                            $('.modal-video-play').html(response);
+                        }
+                    });
+                } else {
+                    window.location = "/SubscriptionPackages/Subscribe";
+                }
+            });
 
             // Load Categories
             getCategories(function (data) {
@@ -259,10 +250,11 @@
             // When Details Button Clicked
             $(document.body).on('click', 'button', function () {
                 if (this.classList.contains('details')) {
-                    var categoryId = $(this).parent().parent().parent().find("input[type=hidden]").val();
-                    var contentId = $(this).parent().parent().parent().find("input[name=content]").val();
-                    var contentType = $(this).parent().parent().parent().find("input[name=content-type]").val();
-                    redirectToGuestDetails(categoryId, contentId, contentType);
+                    console.log("Details Pressed.");
+                    var contentType = $(this).parent().parent().parent().parent().find("input[name=content-type]").val();
+                    contentId = $(this).data("id");
+                    console.log(`contentId: ${contentId}   contentType: ${contentType}`);
+                    redirectToGuestDetails(contentId, contentType);
                 }
             });
 
@@ -402,7 +394,7 @@
                                             ` + isSubscribed(video.subscribed, data.subscriptionPackage) + `
                                             <br />
                                             <br />
-                                            <button class="btn btn-purple btn-lg details">Details</button>
+                                            <button class="btn btn-purple btn-lg details" data-id="${video.id}">Details</button>
                                             ` + displayPlayButton(userAuthorized, video.id) + `
                                         </div>
                                     </div>
@@ -440,6 +432,7 @@
                                     <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
                                     <form id="ebook-rating-form" method="post" action="/api/Ebook/AddRate" target="dummyframe">
                                         <input type="hidden" id="ebookId" name="ebookId" value="${ebook.id}">
+                                        <input type="hidden" id="content-type" name="content-type" value="ebook">
                                         <input name="rate"
                                                 class="rating rating-loading rate"
                                                 data-min="0"
@@ -482,8 +475,7 @@
                                             ` + isSubscribed(ebook.subscribed, data.subscriptionPackage) + `
                                             <br />
                                             <br />
-                                            <a href="/Ebooks/PublicDetails/${ebook.id}">Details</a>
-
+                                            <button class="btn btn-purple btn-lg details" data-id="${ebook.id}">Details</button>
                                         </div>
                                     </div>
                                 </div>
