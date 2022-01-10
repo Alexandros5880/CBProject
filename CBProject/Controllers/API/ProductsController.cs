@@ -77,11 +77,13 @@ namespace CBProject.Controllers.API
 
             var ebooks = await this._unitOfWork.Ebooks.GetAllByCategoryNameAsync(category.Name, param.SabscriptionPackageId);
             var videos = await this._unitOfWork.Videos.GetAllByCategoryNameAsync(category.Name, param.SabscriptionPackageId);
+            var subscriptionPackage = await this._unitOfWork.SubscriptionPackages.GetEmptyAsync(param.SabscriptionPackageId);
 
             var products = new
             {
                 Videos = videos,
-                Ebooks = ebooks
+                Ebooks = ebooks,
+                SubscriptionPackage = subscriptionPackage
             };
             return Ok(products);
         }
@@ -98,11 +100,13 @@ namespace CBProject.Controllers.API
 
             var ebooks = await this._unitOfWork.Ebooks.GetAllByCategoryNameAsync(category.Name, param.SabscriptionPackageId);
             var videos = await this._unitOfWork.Videos.GetAllByCategoryNameAsync(category.Name, param.SabscriptionPackageId);
+            var subscriptionPackage = await this._unitOfWork.SubscriptionPackages.GetEmptyAsync(param.SabscriptionPackageId);
 
             var products = new
             {
                 Videos = videos,
-                Ebooks = ebooks
+                Ebooks = ebooks,
+                SubscriptionPackage = subscriptionPackage
             };
             return Ok(products);
         }
