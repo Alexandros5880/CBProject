@@ -382,6 +382,20 @@ namespace CBProject.Migrations
                 .Index(t => t.Name, unique: true, name: "RoleNameIndex");
             
             CreateTable(
+                "dbo.UserSubscriptionPackages",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        UserId = c.String(maxLength: 128),
+                        SubscriptionPackageId = c.Int(),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.SubscriptionPackages", t => t.SubscriptionPackageId)
+                .ForeignKey("dbo.AspNetUsers", t => t.UserId)
+                .Index(t => t.UserId)
+                .Index(t => t.SubscriptionPackageId);
+            
+            CreateTable(
                 "dbo.SubscriptionPackageEbooks",
                 c => new
                     {
@@ -411,6 +425,8 @@ namespace CBProject.Migrations
         
         public override void Down()
         {
+            DropForeignKey("dbo.UserSubscriptionPackages", "UserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.UserSubscriptionPackages", "SubscriptionPackageId", "dbo.SubscriptionPackages");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
             DropForeignKey("dbo.RequirementToEbooks", "RequirementId", "dbo.Requirements");
             DropForeignKey("dbo.RequirementToEbooks", "EbookId", "dbo.Ebooks");
@@ -451,6 +467,8 @@ namespace CBProject.Migrations
             DropIndex("dbo.VideoSubscriptionPackages", new[] { "Video_ID" });
             DropIndex("dbo.SubscriptionPackageEbooks", new[] { "Ebook_ID" });
             DropIndex("dbo.SubscriptionPackageEbooks", new[] { "SubscriptionPackage_ID" });
+            DropIndex("dbo.UserSubscriptionPackages", new[] { "SubscriptionPackageId" });
+            DropIndex("dbo.UserSubscriptionPackages", new[] { "UserId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropIndex("dbo.RequirementToEbooks", new[] { "EbookId" });
             DropIndex("dbo.RequirementToEbooks", new[] { "RequirementId" });
@@ -487,6 +505,7 @@ namespace CBProject.Migrations
             DropIndex("dbo.CategoryToCategories", new[] { "MasterCategoryId" });
             DropTable("dbo.VideoSubscriptionPackages");
             DropTable("dbo.SubscriptionPackageEbooks");
+            DropTable("dbo.UserSubscriptionPackages");
             DropTable("dbo.AspNetRoles");
             DropTable("dbo.ContactMessages");
             DropTable("dbo.RequirementToEbooks");

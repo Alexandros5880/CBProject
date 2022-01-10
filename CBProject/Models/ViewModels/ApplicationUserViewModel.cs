@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CBProject.Models.EntityModels;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -69,6 +70,16 @@ namespace CBProject.Models.ViewModels
         [Required]
         [StringLength(100, ErrorMessage = "Ener your StreetNumber", MinimumLength = 1)]
         public string StreetNumber { get; set; }
+
+        public int? SubscriptionPackageId { get; set; }
+        public SubscriptionPackage SubscriptionPackage { get; set; }
+        public bool Subscribed
+        {
+            get
+            {
+                return this.SubscriptionPackage != null;
+            }
+        }
 
         public string CVPath { get; set; }
         public HttpPostedFileBase CVFile { get; set; }

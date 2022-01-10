@@ -14,10 +14,12 @@ namespace CBProject.Repositories.IdentityRepos
     public class UsersRepo : IUsersRepo, IDisposable
     {
         private bool disposedValue;
-        private UnitOfWork _manager;
-        public UsersRepo(IUnitOfWork manager)
+        private readonly UnitOfWork _manager;
+        private readonly ApplicationDbContext _context;
+        public UsersRepo(IApplicationDbContext context, IUnitOfWork manager)
         {
             this._manager = (UnitOfWork) manager;
+            this._context = (ApplicationDbContext)context;
         }
         public void Add(ApplicationUser obj)
         {
@@ -145,6 +147,19 @@ namespace CBProject.Repositories.IdentityRepos
                 throw new Exception("In Users repo Get method id is empty.");
             return await this._manager.UserManager.FindByIdAsync(id);
         }
+        public async Task<ApplicationUser> GetUserAsyncMainContext(string id)
+        {
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
+            return await this._context.Users
+                                    .Include(u => u.Ebooks)
+                                    .Include(u => u.Videos)
+                                    .Include(u => u.Orders)
+                                    .Include(u => u.Roles)
+                                    .Include(u => u.Payments)
+                                    .Include(u => u.Logins)
+                                    .FirstOrDefaultAsync(u => u.Id == id);
+        }
         public ApplicationUser GetByEmail(string email)
         {
             if (email.Length == 0)
@@ -257,7 +272,6 @@ namespace CBProject.Repositories.IdentityRepos
             user.NewsletterAcception = obj.NewsletterAcception;
             user.IsInactive = obj.IsInactive;
             user.CreditCardNum = obj.CreditCardNum;
-            user.SubscriptionPackage = obj.SubscriptionPackage;
             user.ContentAccess = obj.ContentAccess;
             user.ImagePath = obj.ImagePath;
             user.CVPath = obj.CVPath;
@@ -285,7 +299,6 @@ namespace CBProject.Repositories.IdentityRepos
             user.NewsletterAcception = obj.NewsletterAcception;
             user.IsInactive = obj.IsInactive;
             user.CreditCardNum = obj.CreditCardNum;
-            user.SubscriptionPackage = obj.SubscriptionPackage;
             user.ContentAccess = obj.ContentAccess;
             user.ImagePath = obj.ImagePath;
             user.CVPath = obj.CVPath;
@@ -316,6 +329,7 @@ namespace CBProject.Repositories.IdentityRepos
                 if (disposing)
                 {
                     this._manager.Dispose();
+                    this._context.Dispose();
                 }
                 disposedValue = true;
             }

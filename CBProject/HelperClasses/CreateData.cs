@@ -13,197 +13,190 @@ namespace CBProject.HelperClassesm
     {
         public static void CreateUsersAndRoles(ApplicationDbContext context)
         {
-            try
+            if (!context.Roles.Any(r => r.Name == "Admin"))
             {
-                if (!context.Roles.Any(r => r.Name == "Admin"))
-                {
-                    var store_1 = new RoleStore<ApplicationRole>(context);
-                    var manager_1 = new RoleManager<ApplicationRole>(store_1);
-                    var role_1 = new ApplicationRole { Name = "Admin", Level = RoleLevel.FULL };
-                    manager_1.Create(role_1);
-                }
-                if (!context.Roles.Any(r => r.Name == "Manager"))
-                {
-                    var store_2 = new RoleStore<ApplicationRole>(context);
-                    var manager_2 = new RoleManager<ApplicationRole>(store_2);
-                    var role_2 = new ApplicationRole { Name = "Manager", Level = RoleLevel.PLUSSFULL };
-                    manager_2.Create(role_2);
-                }
-                if (!context.Roles.Any(r => r.Name == "Teacher"))
-                {
-                    var store_3 = new RoleStore<ApplicationRole>(context);
-                    var manager_3 = new RoleManager<ApplicationRole>(store_3);
-                    var role_3 = new ApplicationRole { Name = "Teacher", Level = RoleLevel.MIDDLE };
-                    manager_3.Create(role_3);
-                }
-                if (!context.Roles.Any(r => r.Name == "Student"))
-                {
-                    var store_4 = new RoleStore<ApplicationRole>(context);
-                    var manager_4 = new RoleManager<ApplicationRole>(store_4);
-                    var role_4 = new ApplicationRole { Name = "Student", Level = RoleLevel.LOW };
-                    manager_4.Create(role_4);
-                }
-                if (!context.Roles.Any(r => r.Name == "Guest"))
-                {
-                    var store_5 = new RoleStore<ApplicationRole>(context);
-                    var manager_5 = new RoleManager<ApplicationRole>(store_5);
-                    var role_5 = new ApplicationRole { Name = "Guest", Level = RoleLevel.SUPERLOW };
-                    manager_5.Create(role_5);
-                }
-
-
-                var user_1 = new ApplicationUser()
-                {
-                    Id = "1",
-                    BirthDate = DateTime.Today.AddYears(-30),
-                    FirstName = "Alexandros_1",
-                    LastName = "Platanios_1",
-                    Email = "alexandrosplatanios1@gmail.com",
-                    UserName = "alexandrosplatanios1@gmail.com",
-                    PhoneNumber = "6949277781",
-                    Password = "Takara0000",
-                    Country = "Greece",
-                    State = "Attica",
-                    City = "Voula",
-                    PostalCode = "16673",
-                    Street = "Fleming",
-                    StreetNumber = "14",
-                    IsInactive = false,
-                    ImagePath = "/assets/images/users/avatar-1.jpg"
-                };
-                var user_2 = new ApplicationUser()
-                {
-                    Id = "2",
-                    BirthDate = DateTime.Today.AddYears(-30),
-                    FirstName = "Alexandros_2",
-                    LastName = "Platanios_2",
-                    Email = "alexandrosplatanios2@gmail.com",
-                    UserName = "alexandrosplatanios2@gmail.com",
-                    PhoneNumber = "6949277782",
-                    Password = "Takara0000",
-                    Country = "Greece",
-                    State = "Attica",
-                    City = "Voula",
-                    PostalCode = "16673",
-                    Street = "Fleming",
-                    StreetNumber = "14",
-                    IsInactive = false,
-                    ImagePath = "/assets/images/users/avatar-2jpg"
-                };
-                var user_3 = new ApplicationUser()
-                {
-                    Id = "3",
-                    BirthDate = DateTime.Today.AddYears(-30),
-                    FirstName = "Alexandros_3",
-                    LastName = "Platanios_3",
-                    Email = "alexandrosplatanios3@gmail.com",
-                    UserName = "alexandrosplatanios3@gmail.com",
-                    PhoneNumber = "6949277783",
-                    Password = "Takara0000",
-                    Country = "Greece",
-                    State = "Attica",
-                    City = "Voula",
-                    PostalCode = "16673",
-                    Street = "Fleming",
-                    StreetNumber = "14",
-                    IsInactive = false,
-                    ImagePath = "/assets/images/users/avatar-3.jpg"
-                };
-                var user_4 = new ApplicationUser()
-                {
-                    Id = "4",
-                    BirthDate = DateTime.Today.AddYears(-30),
-                    FirstName = "Alexandros_4",
-                    LastName = "Platanios_4",
-                    Email = "alexandrosplatanios4@gmail.com",
-                    UserName = "alexandrosplatanios4@gmail.com",
-                    PhoneNumber = "6949277784",
-                    Password = "Takara0000",
-                    Country = "Greece",
-                    State = "Attica",
-                    City = "Voula",
-                    PostalCode = "16673",
-                    Street = "Fleming",
-                    StreetNumber = "14",
-                    IsInactive = false,
-                    ImagePath = "/assets/images/users/avatar-4.jpg"
-                };
-                var user_5 = new ApplicationUser()
-                {
-                    Id = "5",
-                    BirthDate = DateTime.Today.AddYears(-30),
-                    FirstName = "Alexandros_5",
-                    LastName = "Platanios_5",
-                    Email = "alexandrosplatanios5@gmail.com",
-                    UserName = "alexandrosplatanios5@gmail.com",
-                    PhoneNumber = "6949277784",
-                    Password = "Takara0000",
-                    Country = "Greece",
-                    State = "Attica",
-                    City = "Voula",
-                    PostalCode = "16673",
-                    Street = "Fleming",
-                    StreetNumber = "14",
-                    IsInactive = false,
-                    ImagePath = "/assets/images/users/avatar-5.jpg"
-                };
-                var user_6 = new ApplicationUser()
-                {
-                    Id = "6",
-                    BirthDate = DateTime.Today.AddYears(-30),
-                    FirstName = "Antonis",
-                    LastName = "Ploumis",
-                    Email = "ant.ploumis@gmail.com",
-                    UserName = "ant.ploumis@gmail.com",
-                    PhoneNumber = "6945857485",
-                    Password = "Antonis123!",
-                    Country = "Greece",
-                    State = "Attica",
-                    City = "Athens",
-                    PostalCode = "11147",
-                    Street = "Athens",
-                    StreetNumber = "14",
-                    IsInactive = false,
-                    ImagePath = "/assets/images/users/avatar-6.jpg"
-                };
-
-                var store = new UserStore<ApplicationUser, ApplicationRole, string, IdentityUserLogin, IdentityUserRole, IdentityUserClaim>(context);
-                CBProject.ApplicationUserManager manager = new CBProject.ApplicationUserManager(store);
-
-                manager.Create(user_1, user_1.Password);
-                manager.Create(user_2, user_2.Password);
-                manager.Create(user_3, user_3.Password);
-                manager.Create(user_4, user_4.Password);
-                manager.Create(user_5, user_5.Password);
-                manager.Create(user_6, user_6.Password);
-                if (!manager.IsInRole(user_1.Id, "Admin"))
-                {
-                    manager.AddToRole(user_1.Id, "Admin");
-                }
-                if (!manager.IsInRole(user_2.Id, "Manager"))
-                {
-                    manager.AddToRole(user_2.Id, "Manager");
-                }
-                if (!manager.IsInRole(user_3.Id, "Teacher"))
-                {
-                    manager.AddToRole(user_3.Id, "Teacher");
-                }
-                if (!manager.IsInRole(user_4.Id, "Student"))
-                {
-                    manager.AddToRole(user_4.Id, "Student");
-                }
-                if (!manager.IsInRole(user_5.Id, "Admin"))
-                {
-                    manager.AddToRole(user_5.Id, "Admin");
-                }
-                if (!manager.IsInRole(user_6.Id, "Guest"))
-                {
-                    manager.AddToRole(user_6.Id, "Guest");
-                }
+                var store_1 = new RoleStore<ApplicationRole>(context);
+                var manager_1 = new RoleManager<ApplicationRole>(store_1);
+                var role_1 = new ApplicationRole { Name = "Admin", Level = RoleLevel.FULL };
+                manager_1.Create(role_1);
             }
-            catch (Exception ex)
+            if (!context.Roles.Any(r => r.Name == "Manager"))
             {
-                throw new Exception(ex.Message);
+                var store_2 = new RoleStore<ApplicationRole>(context);
+                var manager_2 = new RoleManager<ApplicationRole>(store_2);
+                var role_2 = new ApplicationRole { Name = "Manager", Level = RoleLevel.PLUSSFULL };
+                manager_2.Create(role_2);
+            }
+            if (!context.Roles.Any(r => r.Name == "Teacher"))
+            {
+                var store_3 = new RoleStore<ApplicationRole>(context);
+                var manager_3 = new RoleManager<ApplicationRole>(store_3);
+                var role_3 = new ApplicationRole { Name = "Teacher", Level = RoleLevel.MIDDLE };
+                manager_3.Create(role_3);
+            }
+            if (!context.Roles.Any(r => r.Name == "Student"))
+            {
+                var store_4 = new RoleStore<ApplicationRole>(context);
+                var manager_4 = new RoleManager<ApplicationRole>(store_4);
+                var role_4 = new ApplicationRole { Name = "Student", Level = RoleLevel.LOW };
+                manager_4.Create(role_4);
+            }
+            if (!context.Roles.Any(r => r.Name == "Guest"))
+            {
+                var store_5 = new RoleStore<ApplicationRole>(context);
+                var manager_5 = new RoleManager<ApplicationRole>(store_5);
+                var role_5 = new ApplicationRole { Name = "Guest", Level = RoleLevel.SUPERLOW };
+                manager_5.Create(role_5);
+            }
+
+
+            var user_1 = new ApplicationUser()
+            {
+                Id = "1",
+                BirthDate = DateTime.Today.AddYears(-30),
+                FirstName = "Alexandros_1",
+                LastName = "Platanios_1",
+                Email = "alexandrosplatanios1@gmail.com",
+                UserName = "alexandrosplatanios1@gmail.com",
+                PhoneNumber = "6949277781",
+                Password = "Takara0000",
+                Country = "Greece",
+                State = "Attica",
+                City = "Voula",
+                PostalCode = "16673",
+                Street = "Fleming",
+                StreetNumber = "14",
+                IsInactive = false,
+                ImagePath = "/assets/images/users/avatar-1.jpg"
+            };
+            var user_2 = new ApplicationUser()
+            {
+                Id = "2",
+                BirthDate = DateTime.Today.AddYears(-30),
+                FirstName = "Alexandros_2",
+                LastName = "Platanios_2",
+                Email = "alexandrosplatanios2@gmail.com",
+                UserName = "alexandrosplatanios2@gmail.com",
+                PhoneNumber = "6949277782",
+                Password = "Takara0000",
+                Country = "Greece",
+                State = "Attica",
+                City = "Voula",
+                PostalCode = "16673",
+                Street = "Fleming",
+                StreetNumber = "14",
+                IsInactive = false,
+                ImagePath = "/assets/images/users/avatar-2jpg"
+            };
+            var user_3 = new ApplicationUser()
+            {
+                Id = "3",
+                BirthDate = DateTime.Today.AddYears(-30),
+                FirstName = "Alexandros_3",
+                LastName = "Platanios_3",
+                Email = "alexandrosplatanios3@gmail.com",
+                UserName = "alexandrosplatanios3@gmail.com",
+                PhoneNumber = "6949277783",
+                Password = "Takara0000",
+                Country = "Greece",
+                State = "Attica",
+                City = "Voula",
+                PostalCode = "16673",
+                Street = "Fleming",
+                StreetNumber = "14",
+                IsInactive = false,
+                ImagePath = "/assets/images/users/avatar-3.jpg"
+            };
+            var user_4 = new ApplicationUser()
+            {
+                Id = "4",
+                BirthDate = DateTime.Today.AddYears(-30),
+                FirstName = "Alexandros_4",
+                LastName = "Platanios_4",
+                Email = "alexandrosplatanios4@gmail.com",
+                UserName = "alexandrosplatanios4@gmail.com",
+                PhoneNumber = "6949277784",
+                Password = "Takara0000",
+                Country = "Greece",
+                State = "Attica",
+                City = "Voula",
+                PostalCode = "16673",
+                Street = "Fleming",
+                StreetNumber = "14",
+                IsInactive = false,
+                ImagePath = "/assets/images/users/avatar-4.jpg"
+            };
+            var user_5 = new ApplicationUser()
+            {
+                Id = "5",
+                BirthDate = DateTime.Today.AddYears(-30),
+                FirstName = "Alexandros_5",
+                LastName = "Platanios_5",
+                Email = "alexandrosplatanios5@gmail.com",
+                UserName = "alexandrosplatanios5@gmail.com",
+                PhoneNumber = "6949277784",
+                Password = "Takara0000",
+                Country = "Greece",
+                State = "Attica",
+                City = "Voula",
+                PostalCode = "16673",
+                Street = "Fleming",
+                StreetNumber = "14",
+                IsInactive = false,
+                ImagePath = "/assets/images/users/avatar-5.jpg"
+            };
+            var user_6 = new ApplicationUser()
+            {
+                Id = "6",
+                BirthDate = DateTime.Today.AddYears(-30),
+                FirstName = "Antonis",
+                LastName = "Ploumis",
+                Email = "ant.ploumis@gmail.com",
+                UserName = "ant.ploumis@gmail.com",
+                PhoneNumber = "6945857485",
+                Password = "Antonis123!",
+                Country = "Greece",
+                State = "Attica",
+                City = "Athens",
+                PostalCode = "11147",
+                Street = "Athens",
+                StreetNumber = "14",
+                IsInactive = false,
+                ImagePath = "/assets/images/users/avatar-6.jpg"
+            };
+
+            var store = new UserStore<ApplicationUser, ApplicationRole, string, IdentityUserLogin, IdentityUserRole, IdentityUserClaim>(context);
+            CBProject.ApplicationUserManager manager = new CBProject.ApplicationUserManager(store);
+
+            manager.Create(user_1, user_1.Password);
+            manager.Create(user_2, user_2.Password);
+            manager.Create(user_3, user_3.Password);
+            manager.Create(user_4, user_4.Password);
+            manager.Create(user_5, user_5.Password);
+            manager.Create(user_6, user_6.Password);
+            if (!manager.IsInRole(user_1.Id, "Admin"))
+            {
+                manager.AddToRole(user_1.Id, "Admin");
+            }
+            if (!manager.IsInRole(user_2.Id, "Manager"))
+            {
+                manager.AddToRole(user_2.Id, "Manager");
+            }
+            if (!manager.IsInRole(user_3.Id, "Teacher"))
+            {
+                manager.AddToRole(user_3.Id, "Teacher");
+            }
+            if (!manager.IsInRole(user_4.Id, "Student"))
+            {
+                manager.AddToRole(user_4.Id, "Student");
+            }
+            if (!manager.IsInRole(user_5.Id, "Admin"))
+            {
+                manager.AddToRole(user_5.Id, "Admin");
+            }
+            if (!manager.IsInRole(user_6.Id, "Guest"))
+            {
+                manager.AddToRole(user_6.Id, "Guest");
             }
         }
         public static void CreateCategories(ApplicationDbContext context)

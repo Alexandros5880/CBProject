@@ -30,7 +30,7 @@ function payPayPal(user, package) {
             onApprove(data, actions) {
                 return actions.order.capture().then(details => {
                     var order = JSON.parse(localStorage.getItem('order'));
-                    localStorage.removeItem('order');
+                    //localStorage.removeItem('order');
                     order.isClose = true;
                     var myorder = {
                         id: order.id,
@@ -48,7 +48,9 @@ function payPayPal(user, package) {
                             discount: 0.33
                         };
                         createPayment(payment, function (responsePayment) {
-                            window.location = `/SubscriptionPackages/AfterPayment/${responsePayment.id}`;
+                            var order = JSON.parse(localStorage.getItem('order'));
+                            localStorage.removeItem('order');
+                            window.location = `/SubscriptionPackages/AfterPayment?paymentId=${responsePayment.id}&orderId=${order.id}`;
                         });
                     });
                 });

@@ -128,16 +128,34 @@ namespace CBProject.Repositories
         {
             return this._context.Ebooks;
         }
-        public async Task<ICollection<Ebook>> GetAllByCategoryNameAsync(string name)
+        public async Task<ICollection<Ebook>> GetAllByCategoryNameAsync(string name, int? packageId)
         {
-            var ebooks = await _context.Ebooks
-                .Where(e => e.Category.Name.Equals(name))
-                .ToListAsync();
-            foreach(var ebook in ebooks)
+            var package = await this._context.SubcriptionPackages
+                                    .Include(s => s.Videos)
+                                    .Include(s => s.Ebooks)
+                                    .Include(s => s.Orders)
+                                    .FirstOrDefaultAsync(p => p.ID == packageId);
+
+            // Get All Free Videos
+            var ebooks = await this._context.Ebooks
+                        .Where(e => e.Category.Name.Equals(name) && !e.SubscriptionPackages.Any())
+                        .ToListAsync();
+
+            // Get All Packages Videos
+            if (package != null)
+            {
+                foreach (var ebook in package.Ebooks)
+                {
+                    ebooks.Add(ebook);
+                }
+            }
+
+            // Get Average Of Ratings
+            foreach (var ebook in ebooks.ToList())
             {
                 ebook.RatingsAVG = await this.GetRatingsAverageAsync(ebook.ID);
             }
-            return ebooks;
+            return ebooks.ToList();
         }
         public ICollection<Ebook> GetAllEmpty()
         {
