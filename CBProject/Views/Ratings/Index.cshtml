@@ -1,38 +1,72 @@
-﻿@model IEnumerable<CBProject.Models.Rating>
+﻿<h2>Ratings</h2>
 
-@{
-    ViewBag.Title = "Index";
+
+
+<div class="table-responsive">
+    <table class="table" id="ratings">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Rater</th>
+                <th>Rate</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+
+            // Get Logged User and hes SubscriptionPakage
+            var userAuthorized = @User.Identity.IsAuthenticated.ToString().ToLower();
+            var loggedUser = null;
+            if (userAuthorized) {
+                getLogedUserSync(function (user) {
+                    loggedUser = user;
+                });
+            }
+
+            var table = $("#ratings").DataTable({
+                ajax: {
+                    url: `/api/Rating`,
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "ID",
+                        render: function (data, type, rate) {
+                            return "<a href='/Ratings/Details/" + rate.id + "'>" + rate.id + "</a>";
+                        }
+                    },
+                    {
+                        data: "Rater",
+                        render: function (data, type, rate) {
+                            return "<a href='/Users/Details/" + rate.rater.id + "'>" + rate.rater.fullName + "</a>";
+                        }
+                    }
+                    ,
+                    {
+                        data: "Rate",
+                        render: function (data, type, rate) {
+                            return "<a>" + rate.rate + "</a>";
+                        }
+                    }
+                ],
+                createdRow: function (row, data, dataIndex) {
+                    // any manipulation in the row element
+                    var ratingInput = $(row).find('.rating');
+                    $(ratingInput).rating();
+                }
+            });
+        });
+    </script>
+
+    <script src="~/Scripts/Ratting.js"></script>
 }
-
-<h2>Index</h2>
-
-@*<p>
-    @Html.ActionLink("Create New", "Create")
-</p>*@
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Rater.FirstName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Rate)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Rater.FirstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Rate)
-        </td>
-        <td>
-            @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-        </td>
-    </tr>
-}
-
-</table>
