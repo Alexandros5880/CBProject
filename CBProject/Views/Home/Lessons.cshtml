@@ -335,11 +335,10 @@
             $(document.body).on('click', 'button', function () {
                 if (this.classList.contains('details')) {
                     console.log("Details Pressed.");
-                    var categoryId = $(this).parent().parent().parent().find("input[type=hidden]").val();
-                    var contentId = $(this).parent().parent().parent().parent().find("input[name=content]").val();
                     var contentType = $(this).parent().parent().parent().parent().find("input[name=content-type]").val();
-                    //console.log(`categoryId: ${categoryId}   contentId: ${contentId}   contentType: ${contentType}`);
-                    redirectToGuestDetails(categoryId, contentId, contentType);
+                    contentId = $(this).data("id");
+                    console.log(`contentId: ${contentId}   contentType: ${contentType}`);
+                    redirectToGuestDetails(contentId, contentType);
                 }
             });
 
@@ -475,7 +474,7 @@
                                                     ` + isSubscribed(ebook.subscribed, data.subscriptionPackage) + `
                                                     <br />
                                                     <br />
-                                                    <button class="btn btn-purple btn-lg details">Details</button>
+                                                    <button class="btn btn-purple btn-lg details" data-id="${video.id}">Details</button>
                                                     ` + displayReadButton(userAuthorized, ebook.id) + `
                                                 </div>
                                             </div>
@@ -571,7 +570,7 @@
                                                 ` + isSubscribed(video.subscribed, data.subscriptionPackage) + `
                                                 <br />
                                               <br>
-                                                <button class="btn btn-purple btn-lg details">Details</button>
+                                                <button class="btn btn-purple btn-lg details" data-id="${video.id}">Details</button>
                                                 ` + displayPlayButton(userAuthorized, video.id) + `
                                             </div>
                                         </div>
