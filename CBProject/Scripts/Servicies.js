@@ -679,9 +679,11 @@ function compaire(a, b) {
 }
 
 // Function displays if subscribed or not
-function isSubscribed(bool) {
+function isSubscribed(bool, package) {
     if (bool) {
-        return `<img src="/img/checked.jpg" alt="subscribed" class="rounded" style="height:17px;">`;
+        return `
+                <b>${package.description}<b/>
+                <img src="/img/checked.jpg" alt="subscribed" class="rounded" style="height:17px;">`;
     } else {
         return ``;
     }

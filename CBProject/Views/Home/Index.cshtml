@@ -191,7 +191,7 @@
 
 
         // Default Category Name
-        var defaultCategoryName = "MVC";
+        var defaultCategoryName = "XAMARIN";
 
         $(document).ready(function () {
 
@@ -307,7 +307,7 @@
 
             // Get Ebooks / Videos By Category Name
             function getDataByCatName(categoryName) {
-                if (loggedUser) {
+                if (loggedUser && loggedUser.subscriptionPackage) {
                     getContentsByCategoryName(categoryName, loggedUser.subscriptionPackage.id, function (data) {
                         render(data);
                     });
@@ -321,7 +321,7 @@
 
             // Get Ebooks / Videos By Category Id
             function getDataByCatId(categoryId) {
-                if (loggedUser) {
+                if (loggedUser && loggedUser.subscriptionPackage) {
                     getContentsByCategoryId(categoryId, loggedUser.subscriptionPackage.id, function (data) {
                         render(data)
                     });
@@ -397,7 +397,7 @@
                                                 <p><img class="img-icon-index" src="../assets/images/icons/icon-video.png" alt="video" /> ${video.duration.split(".")[0]} Hours  </p>
                                                 <p><img class="img-icon-index" src="../assets/images/icons/icon-calendar.png" alt="video" /> <small>  ${video.uploadDate.split("T")[0]}</small>  </p>
                                             `+ ratingFor +`
-                                            ` + isSubscribed(video.subscribed) + `
+                                            ` + isSubscribed(video.subscribed, data.subscriptionPackage) + `
                                             <br />
                                             <br />
                                             <button class="btn btn-purple btn-lg details">Details</button>
@@ -477,7 +477,7 @@
                                             <p><img class="img-icon-index" src="../assets/images/icons/icons-person.png" alt="person" />  ${creator.fullName}</p>
                                             <p><img class="img-icon-index" src="../assets/images/icons/icon-calendar.png" alt="video" /><small> ${ebook.uploadDate.split("T")[0]} </small></p>
                                             `+ ratingFor +`
-                                            ` + isSubscribed(ebook.subscribed) + `
+                                            ` + isSubscribed(ebook.subscribed, data.subscriptionPackage) + `
                                             <br />
                                             <br />
                                             <a href="/Ebooks/PublicDetails/${ebook.id}">Details</a>
@@ -491,19 +491,18 @@
                             $(ratingInput).rating();
                         });
                     });
-                });
+                }); 
+            }
 
-
-                // Display or Not Play Button of Videos
-                function displayPlayButton(userAuthorized, id) {
-                    if (userAuthorized) {
-                        return `
+            // Display or Not Play Button of Videos
+            function displayPlayButton(userAuthorized, id) {
+                if (userAuthorized) {
+                    return `
                                 <button id="video-modal-button" class="btn btn-green btn-lg btn-open-modal more" data-toggle="modal" data-target="#video-modal-fullscreen-xl" data-id="${id}">
                                     Play
                                 </button>`;
-                    } else {
-                        return ``;
-                    }
+                } else {
+                    return ``;
                 }
             }
 

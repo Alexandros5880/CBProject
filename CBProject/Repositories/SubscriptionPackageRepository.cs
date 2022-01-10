@@ -90,8 +90,9 @@ namespace CBProject.Repositories
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
-            return await this._context.SubcriptionPackages
-                .FirstAsync(s => s.ID == id);
+            var packages = await this._context.SubcriptionPackages
+                                .FirstOrDefaultAsync(s => s.ID == id);
+            return packages;
         }
         public void Save()
         {
