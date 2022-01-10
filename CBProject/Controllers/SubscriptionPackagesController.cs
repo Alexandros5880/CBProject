@@ -162,9 +162,12 @@ namespace CBProject.Controllers
                                                     .Where(u => u.UserId == user.Id)
                                                     .Select(u => u.SubscriptionPackageId)
                                                     .ToListAsync();
-            foreach (var id in userSabsIds)
+            if(userSabsIds.Count > 0)
             {
-                await this._userSubscriptionPackageRepository.DeleteAsync(id);
+                foreach (var id in userSabsIds)
+                {
+                    await this._userSubscriptionPackageRepository.DeleteAsync(id);
+                }
             }
 
             // Add Subscription Package to User
@@ -175,7 +178,6 @@ namespace CBProject.Controllers
             };
             this._userSubscriptionPackageRepository.Add(userPackage);
             await this._userSubscriptionPackageRepository.SaveAsync();
-
 
             // Add Student Role
             var studentRole = await this._rolesRepo.GetByNameAsync("Student");
