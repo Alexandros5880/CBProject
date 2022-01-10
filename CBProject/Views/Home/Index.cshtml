@@ -22,39 +22,6 @@
 @Scripts.Render("~/bundles/jquery")
 
 
-<script type="text/javascript">
-    $(function () {
-
-        // Open Watch Video Modal
-        $("body").on('click', '#video-modal-button', function () {
-            var id = $(this).attr('data-id');
-            getLogedUser(function (user) {
-                var access = false;
-                user.roles.forEach(function (role) {
-                    getRoleSync(role.roleId, function (role) {
-                        console.log(role.level);
-                        if (role.level > 0) {
-                            access = true;
-                        }
-                    });
-                });
-                if (access) {
-                    $.ajax({
-                        url: '/Home/_Watch/' + id,
-                        type: 'GET',
-                        success: function (response) {
-                            $('.modal-video-play').html(response);
-                        }
-                    });
-                } else {
-                    window.location = "/SubscriptionPackages/Subscribe";
-                }
-            });
-        });
-
-    });
-</script>
-
 
 @section fullWidth{
 
@@ -199,9 +166,9 @@
             var userAuthorized = @User.Identity.IsAuthenticated.ToString().ToLower();
             var loggedUser = null;
             if (userAuthorized) {
+                console.log("Here");
                 getLogedUserSync(function (user) {
                     loggedUser = user;
-                    console.log(loggedUser);
                 });
             }
             
@@ -210,6 +177,30 @@
             $('#video-modal-fullscreen-xl').on('hidden.bs.modal', function () {
                 $(".myvideo").trigger('pause');
             })
+
+            // Open Watch Video Modal
+            $("body").on('click', '#video-modal-button', function () {
+                var id = $(this).attr('data-id');
+                var access = false;
+                loggedUser.roles.forEach(function (role) {
+                    getRoleSync(role.roleId, function (role) {
+                        if (role.level > 0) {
+                            access = true;
+                        }
+                    });
+                });
+                if (access) {
+                    $.ajax({
+                        url: '/Home/_Watch/' + id,
+                        type: 'GET',
+                        success: function (response) {
+                            $('.modal-video-play').html(response);
+                        }
+                    });
+                } else {
+                    window.location = "/SubscriptionPackages/Subscribe";
+                }
+            });
 
             // Load Categories
             getCategories(function (data) {
@@ -260,8 +251,9 @@
             $(document.body).on('click', 'button', function () {
                 if (this.classList.contains('details')) {
                     var categoryId = $(this).parent().parent().parent().find("input[type=hidden]").val();
-                    var contentId = $(this).parent().parent().parent().find("input[name=content]").val();
-                    var contentType = $(this).parent().parent().parent().find("input[name=content-type]").val();
+                    var contentId = $(this).parent().parent().parent().parent().find("input[name=content]").val();
+                    var contentType = $(this).parent().parent().parent().parent().find("input[name=content-type]").val();
+                    //console.log(`categoryId: ${categoryId}   contentId: ${contentId}   contentType: ${contentType}`);
                     redirectToGuestDetails(categoryId, contentId, contentType);
                 }
             });

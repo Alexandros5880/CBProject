@@ -198,12 +198,12 @@ namespace CBProject.Controllers.API
 
                 var userSub = await this._unitOfWork.UserSubscriptionPackages
                                                         .GetAllQueryable()
-                                                        .FirstOrDefaultAsync(u => u.UserId == userId);
+                                                        .FirstOrDefaultAsync(u => u.UserId.Equals(userId));
                 SubscriptionPackage package = null;
                 if (userSub != null)
                 {
                     package = await this._unitOfWork.SubscriptionPackages
-                                                    .GetEmptyAsync(userSub.ID);
+                                                    .GetEmptyAsync(userSub.SubscriptionPackageId);
                 }
                 ApplicationUserViewModel viewModel = Mapper.Map<ApplicationUser, ApplicationUserViewModel>(user);
                 viewModel.SubscriptionPackage = package;
