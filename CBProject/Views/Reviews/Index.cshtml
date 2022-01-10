@@ -4,36 +4,128 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Reviews</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<p>
+        @Html.ActionLink("Create New", "Create")
+    </p>*@
+@*<table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Reviewer.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Comment)
+            </th>
+            <th></th>
+        </tr>
+
+    @foreach (var item in Model) {
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Reviewer.FirstName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Comment)
-        </th>
-        <th></th>
+        <td>
+            @Html.DisplayFor(modelItem => item.Reviewer.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Comment)
+        </td>
+        <td>
+            @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+        </td>
     </tr>
+    }
 
-@foreach (var item in Model) {
-<tr>
-    <td>
-        @Html.DisplayFor(modelItem => item.Reviewer.FirstName)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Comment)
-    </td>
-    <td>
-        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-    </td>
-</tr>
+    </table>*@
+
+
+
+
+
+
+
+
+
+<div class="table-responsive">
+    <table class="table" id="reviews">
+        <thead>
+            <tr>
+                <th>Created</th>
+                <th>Create Date</th>
+                <th>Comment</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+
+
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+
+            // Get Logged User and hes SubscriptionPakage
+            var userAuthorized = @User.Identity.IsAuthenticated.ToString().ToLower();
+            var loggedUser = null;
+            if (userAuthorized) {
+                getLogedUserSync(function (user) {
+                    loggedUser = user;
+                });
+            }
+
+            var table = $("#reviews").DataTable({
+                ajax: {
+                    url: `/api/Review/all`,
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "Created",
+                        render: function (data, type, review) {
+                            return "<a href='/Users/Details/" + review.reviewer.id + "'>" + review.reviewer.fullName + "</a>";
+                        }
+                    },
+                    {
+                        data: "Created Date",
+                        render: function (data, type, review) {
+                            return "<a>" + review.createdDate.split("T")[0] + "&nbsp;&nbsp;&nbsp;" + review.createdDate.split("T")[1] + "</a>";
+                        }
+                    },
+                    {
+                        data: "Decription",
+                        render: function (data, type, ebook) {
+                            return `<p>${ebook.comment}</p>`;
+                        }
+                    }
+                ],
+                createdRow: function (row, data, dataIndex) {
+                    // any manipulation in the row element
+                    var ratingInput = $(row).find('.rating');
+                    $(ratingInput).rating();
+                }
+            });
+        });
+    </script>
+
+    <script src="~/Scripts/Ratting.js"></script>
 }
-
-</table>
