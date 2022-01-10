@@ -1,33 +1,67 @@
-﻿@model IEnumerable<CBProject.Models.EntityModels.Tag>
+﻿<h2>Tags</h2>
 
-@{
-    ViewBag.Title = "Index";
+
+
+
+<div class="table-responsive">
+    <table class="table" id="tags">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tag</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+
+            // Get Logged User and hes SubscriptionPakage
+            var userAuthorized = @User.Identity.IsAuthenticated.ToString().ToLower();
+            var loggedUser = null;
+            if (userAuthorized) {
+                getLogedUserSync(function (user) {
+                    loggedUser = user;
+                });
+            }
+
+            var table = $("#tags").DataTable({
+                ajax: {
+                    url: `/api/Tag/all`,
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "ID",
+                        render: function (data, type, tag) {
+                            return "<a href='/Tags/Details/" + tag.id + "'>" + tag.id + "</a>";
+                        }
+                    },
+                    {
+                        data: "Tag",
+                        render: function (data, type, tag) {
+                            console.log(tag);
+                            return "<a>" + tag.title + "</a>";
+                        }
+                    }
+                ],
+                createdRow: function (row, data, dataIndex) {
+                    // any manipulation in the row element
+                    var ratingInput = $(row).find('.rating');
+                    $(ratingInput).rating();
+                }
+            });
+        });
+    </script>
+
+    <script src="~/Scripts/Ratting.js"></script>
 }
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-<tr>
-    <td>
-        @Html.DisplayFor(modelItem => item.Title)
-    </td>
-    <td>
-        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-    </td>
-</tr>
-}
-
-</table>

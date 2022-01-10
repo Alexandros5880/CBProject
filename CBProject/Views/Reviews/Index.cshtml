@@ -1,63 +1,4 @@
-﻿@model IEnumerable<CBProject.Models.Review>
-
-@{
-    ViewBag.Title = "Index";
-}
-
-<h2>Reviews</h2>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@*<p>
-        @Html.ActionLink("Create New", "Create")
-    </p>*@
-@*<table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Reviewer.FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Comment)
-            </th>
-            <th></th>
-        </tr>
-
-    @foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Reviewer.FirstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Comment)
-        </td>
-        <td>
-            @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-        </td>
-    </tr>
-    }
-
-    </table>*@
-
-
-
-
-
-
-
-
+﻿<h2>Reviews</h2>
 
 <div class="table-responsive">
     <table class="table" id="reviews">
@@ -72,13 +13,6 @@
         </tbody>
     </table>
 </div>
-
-
-
-
-
-
-
 
 @section scripts{
     <script>

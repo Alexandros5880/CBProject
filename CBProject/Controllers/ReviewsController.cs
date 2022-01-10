@@ -24,7 +24,7 @@ namespace CBProject.Controllers
         }
         public async Task<ActionResult> Index()
         {
-            return View(await this._reviewRepo.GetAllAsync());
+            return View();
         }
         public async Task<ActionResult> Details(int? id)
         {
