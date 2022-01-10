@@ -124,28 +124,26 @@ namespace CBProject.Controllers
                 switch (result)
                 {
                     case SignInStatus.Success:
-                        if (access == RoleLevel.FULL)
+                        if (returnUrl != null && returnUrl.Length > 0)
                         {
-                            //return RedirectToAction("Index", "Users");
-                            return RedirectToAction("Index", "Home");
+                            var url = returnUrl.Split('/');
+                            return RedirectToAction(url[1], url[0]);
                         }
-                        else if (access == RoleLevel.PLUSSFULL)
+                        switch (access)
                         {
-                            return RedirectToAction("Index", "Users");
+                            case RoleLevel.SUPERLOW:
+                                return RedirectToAction("Index", "Home");
+                            case RoleLevel.LOW:
+                                return RedirectToAction("Index", "Ebooks");
+                            case RoleLevel.MIDDLE:
+                                return RedirectToAction("Index", "Ebooks");
+                            case RoleLevel.PLUSSFULL:
+                                return RedirectToAction("Index", "Roles");
+                            case RoleLevel.FULL:
+                                return RedirectToAction("Index", "Users");
+                            default:
+                                return RedirectToAction("Index", "Home");
                         }
-                        else if (access == RoleLevel.MIDDLE)
-                        {
-                            return RedirectToAction("Index", "Videos");
-                        }
-                        else if (access == RoleLevel.LOW)
-                        {
-                            return RedirectToAction("Index", "Videos");
-                        }
-                        else if (access == RoleLevel.SUPERLOW)
-                        {
-                            return RedirectToAction("Index", "Home");
-                        }
-                        return RedirectToLocal(returnUrl);
                     case SignInStatus.LockedOut:
                         return View("Lockout");
                     case SignInStatus.RequiresVerification:
@@ -158,7 +156,7 @@ namespace CBProject.Controllers
             }
             else
             {
-                ModelState.AddModelError("", "This user was deactivated.");
+                ModelState.AddModelError("", "Invalid login attempt.");
                 return View(model);
             }
         }

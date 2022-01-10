@@ -1,9 +1,13 @@
 ﻿// Request To All Api Controllers Service
 
-function getContentsByCategoryId(categoryId, callback) {
+function getContentsByCategoryId(categoryId, subscriptionPackageId = null, callback) {
     $.ajax({
-        type: "GET",
-        url: "/api/products/contenst/bycategory?id=" + categoryId,
+        type: "POST",
+        data: {
+            categoryId: categoryId,
+            sabscriptionPackageId: subscriptionPackageId
+        },
+        url: `/api/products/contenst/bycategoryid`,
         success: function (data) {
             callback(data);
         },
@@ -12,11 +16,14 @@ function getContentsByCategoryId(categoryId, callback) {
         }
     });
 }
-
-function getContentsByCategoryName(categoryName, callback) {
+function getContentsByCategoryName(categoryName, subscriptionPackageId = null, callback) {
     $.ajax({
-        type: "GET",
-        url: "/api/products/contenst/bycategory?name=" + categoryName,
+        type: "POST",
+        data: {
+            categoryName: categoryName,
+            sabscriptionPackageId: subscriptionPackageId
+        },
+        url: `/api/products/contenst/bycategoryname`,
         success: function (data) {
             callback(data);
         },
@@ -67,7 +74,6 @@ function getSubscriptionPackages(callback) {
         }
     });
 }
-
 function getSubscriptionPackage(id, callback) {
     return $.ajax({
         type: "GET",
@@ -107,7 +113,6 @@ function getUserByIdSync(id, callback) {
         }
     });
 }
-
 function getLogedUser(callback) {
     $.ajax({
         type: "GET",
@@ -117,6 +122,57 @@ function getLogedUser(callback) {
         },
         error: function (error) {
             return error;
+        }
+    });
+}
+function getLogedUserSync(callback) {
+    $.ajax({
+        type: "GET",
+        async: false,
+        url: "/api/logged/user",
+        success: function (data) {
+            callback(data);
+        },
+        error: function (error) {
+            return error;
+        }
+    });
+}
+function getUsersByRoleName(roleName, callback) {
+    $.ajax({
+        type: "GET",
+        url: "/api/users/role?rolename=" + roleName,
+        success: function (data) {
+            callback(data);
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+}
+
+function getRole(id, callback) {
+    $.ajax({
+        type: "GET",
+        url: "/api/role?id=" + id,
+        success: function (data) {
+            callback(data);
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+}
+function getRoleSync(id, callback) {
+    $.ajax({
+        type: "GET",
+        async: false,
+        url: "/api/role?id=" + id,
+        success: function (data) {
+            callback(data);
+        },
+        error: function (error) {
+            console.log(error);
         }
     });
 }
@@ -133,7 +189,6 @@ function getCategories(callback) {
         }
     });
 }
-
 function getCategory(id, callback) {
     $.ajax({
         type: "GET",
@@ -146,7 +201,19 @@ function getCategory(id, callback) {
         }
     });
 }
-
+function getCategorySync(id, callback) {
+    $.ajax({
+        type: "GET",
+        async: false,
+        url: "/api/category?id=" + id,
+        success: function (data) {
+            callback(data);
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+}
 function getCategoriesMaster(callback) {
     $.ajax({
         type: "GET",
@@ -159,7 +226,6 @@ function getCategoriesMaster(callback) {
         }
     });
 }
-
 function getCategoriesNoMaster(callback) {
     $.ajax({
         type: "GET",
@@ -185,24 +251,10 @@ function getTags(callback) {
         }
     });
 }
-
 function getTag(id, callback) {
     $.ajax({
         type: "GET",
         url: "/api/tag?id=" + id,
-        success: function (data) {
-            callback(data);
-        },
-        error: function (error) {
-            console.log(error);
-        }
-    });
-}
-
-function getUsersByRoleName(roleName, callback) {
-    $.ajax({
-        type: "GET",
-        url: "/api/users/role?rolename=" + roleName,
         success: function (data) {
             callback(data);
         },
@@ -224,11 +276,34 @@ function getReviews(callback) {
         }
     });
 }
-
 function getReview(id, callback) {
     $.ajax({
         type: "GET",
         url: "/api/review?id=" + id,
+        success: function (data) {
+            callback(data);
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+}
+function getReviewsByVideo(id, callback) {
+    $.ajax({
+        type: "GET",
+        url: `/api/Review/video/${id}`,
+        success: function (data) {
+            callback(data);
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+}
+function getReviewsByEbook(id, callback) {
+    $.ajax({
+        type: "GET",
+        url: `/api/Review/ebook/${id}`,
         success: function (data) {
             callback(data);
         },
@@ -302,6 +377,22 @@ function getPDF(file, callback) {
     $.ajax({
         type: "POST",
         url: `/api/ebook/pdf`,
+        data: {
+            file: file
+        },
+        success: function (data) {
+            callback(data);
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+};
+function getPDFSync(file, callback) {
+    $.ajax({
+        type: "POST",
+        url: `/api/ebook/pdf`,
+        async: false,
         data: {
             file: file
         },
@@ -387,7 +478,6 @@ function getPayments(callback) {
         }
     });
 }
-
 function getPayment(id, callback) {
     $.ajax({
         type: "GET",
@@ -416,7 +506,6 @@ function addEbookRequarement(id, content, callback) {
         }
     });
 }
-
 function removeEbookRequarement(id, contentId, callback) {
     $.ajax({
         type: "GET",
@@ -445,7 +534,6 @@ function addVideoRequarement(id, content, callback) {
         }
     });
 }
-
 function removeVideoRequarement(id, contentId, callback) {
     $.ajax({
         type: "GET",
@@ -570,5 +658,31 @@ function removeRequarements(modelId, contentId, type) {
         removeVideoRequarement(modelId, contentId, function (response) {
             location.reload();
         });
+    }
+}
+
+function parseDateTime(date) {
+    var Y = date.split("T")[0].split("-")[0];
+    var M = date.split("T")[0].split("-")[1];
+    var D = date.split("T")[0].split("-")[2];
+    var h = date.split("T")[1].split(".")[0].split(":")[0];
+    var m = date.split("T")[1].split(".")[0].split(":")[1];
+    var s = date.split("T")[1].split(".")[0].split(":")[2];
+    var ms = date.split("T")[1].split(".")[1];
+    return new Date(Y, M, D, h, m, s, ms);
+}
+
+function compaire(a, b) {
+    if (a == b) return 0;
+    if (a < b) return -1;
+    if (a > b) return 1;
+}
+
+// Function displays if subscribed or not
+function isSubscribed(bool) {
+    if (bool) {
+        return `<img src="/img/checked.jpg" alt="subscribed" class="rounded" style="height:17px;">`;
+    } else {
+        return ``;
     }
 }

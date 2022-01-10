@@ -39,7 +39,8 @@ namespace CBProject
                       "~/Content/Contact.css",
                        "~/Content/Manage.css",
                        "~/Content/Buttons.css",
-                        "~/Content/Lessons.css"
+                        "~/Content/Lessons.css",
+                        "~/Content/Videos.css"
                       ));
 
 

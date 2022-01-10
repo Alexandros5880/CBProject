@@ -1,6 +1,8 @@
-﻿using CBProject.HelperClasses;
+﻿using AutoMapper;
+using CBProject.HelperClasses;
 using CBProject.HelperClasses.Compares;
 using CBProject.HelperClasses.Interfaces;
+using CBProject.Models;
 using CBProject.Models.EntityModels;
 using CBProject.Models.HelperModels;
 using CBProject.Models.ViewModels;
@@ -64,25 +66,18 @@ namespace CBProject.Controllers.API
 
             return Ok(products);
         }
-        [HttpGet]
-        [Route("api/products/contenst/bycategory")]
-        public async Task<IHttpActionResult> GetContentsByCategoryId(int? id)
+        [HttpPost]
+        [Route("api/products/contenst/bycategoryid")]
+        public async Task<IHttpActionResult> GetContentsByCategoryId([FromBody] GetProductsApi param)
         {
-            if (id == null)
+            if (param.CategoryId == null)
                 return NotFound();
             var category = await this._unitOfWork.Categories
-                        .GetAsync(id);
-            var chiledCategories = await this._unitOfWork.Categories
-                                                .GetAllChiledAsync(category.ID);
-            var categories = chiledCategories;
-            categories.Add(category);
-            var categoriesIds = categories.Select(c => c.ID);
-            var videos = await this._unitOfWork.Videos.GetAllQuerable()
-                        .Where(v => categoriesIds.Contains(v.CategoryId))
-                        .ToListAsync();
-            var ebooks = await this._unitOfWork.Ebooks.GetAllQuerable()
-                        .Where(v => categoriesIds.Contains(v.CategoryId))
-                        .ToListAsync();
+                                                     .GetAsync(param.CategoryId);
+
+            var ebooks = await this._unitOfWork.Ebooks.GetAllByCategoryNameAsync(category.Name, param.SabscriptionPackageId);
+            var videos = await this._unitOfWork.Videos.GetAllByCategoryNameAsync(category.Name, param.SabscriptionPackageId);
+
             var products = new
             {
                 Videos = videos,
@@ -90,25 +85,20 @@ namespace CBProject.Controllers.API
             };
             return Ok(products);
         }
-        [HttpGet]
-        [Route("api/products/contenst/bycategory")]
-        public async Task<IHttpActionResult> GetContentsByCategoryName(string name)
+        [HttpPost]
+        [Route("api/products/contenst/bycategoryname")]
+        public async Task<IHttpActionResult> GetContentsByCategoryName([FromBody] GetProductsApi param)
         {
-            if (name == null)
+            if (param.CategoryName == null)
                 return NotFound();
             var category = await this._unitOfWork.Categories
-                        .GetByNameAsync(name);
-            var chiledCategories = await this._unitOfWork.Categories
-                                                .GetAllChiledAsync(category.ID);
-            var categories = chiledCategories;
-            categories.Add(category);
-            var categoriesIds = categories.Select(c => c.ID);
-            var videos = await this._unitOfWork.Videos.GetAllQuerable()
-                        .Where(v => categoriesIds.Contains(v.CategoryId))
-                        .ToListAsync();
-            var ebooks = await this._unitOfWork.Ebooks.GetAllQuerable()
-                        .Where(v => categoriesIds.Contains(v.CategoryId))
-                        .ToListAsync();
+                        .GetByNameAsync(param.CategoryName);
+            if (category == null)
+                return Ok();
+
+            var ebooks = await this._unitOfWork.Ebooks.GetAllByCategoryNameAsync(category.Name, param.SabscriptionPackageId);
+            var videos = await this._unitOfWork.Videos.GetAllByCategoryNameAsync(category.Name, param.SabscriptionPackageId);
+
             var products = new
             {
                 Videos = videos,
@@ -199,7 +189,20 @@ namespace CBProject.Controllers.API
             {
                 var userId = User.Identity.GetUserId();
                 var user = await this._usersRepo.GetAsync(userId);
-                return Ok(user);
+
+                var userSub = await this._unitOfWork.UserSubscriptionPackages
+                                                        .GetAllQueryable()
+                                                        .FirstOrDefaultAsync(u => u.UserId == userId);
+                SubscriptionPackage package = null;
+                if (userSub != null)
+                {
+                    package = await this._unitOfWork.SubscriptionPackages
+                                                    .GetAsync(userSub.ID);
+                }
+                ApplicationUserViewModel viewModel = Mapper.Map<ApplicationUser, ApplicationUserViewModel>(user);
+                viewModel.SubscriptionPackage = package;
+
+                return Ok(viewModel);
             }
             else
             {
@@ -207,11 +210,42 @@ namespace CBProject.Controllers.API
             }
         }
         [HttpGet]
+        [Route("api/users/role")]
+        public async Task<IHttpActionResult> GetUsersByRole(string rolename)
+        {
+            if (rolename == null)
+                return NotFound();
+            var rolesIds = await this._rolesRepo
+                                             .GetAllQuerable()
+                                             .Where(r => r.Name.Equals(rolename))
+                                             .Select(r => r.Id)
+                                             .ToListAsync();
+            var users = await this._usersRepo
+                                    .GetAllQueryable()
+                                    .Where(u => rolesIds.Any() ? u.Roles.Select(r => r.RoleId).Intersect(rolesIds).Any() : false)
+                                    .ToListAsync();
+            if (users.Count > 0)
+                return Ok(users);
+            else
+                return Ok("null");
+        }
+        [HttpGet]
+        [Route("api/role")]
+        public async Task<IHttpActionResult> GetRoleById(string id)
+        {
+            if (id == null)
+                return NotFound();
+            var role = await this._rolesRepo.GetAsync(id);
+            if (role == null)
+                return NotFound();
+            return Ok(role);
+        }
+        [HttpGet]
         [Route("api/categories")]
         public async Task<IHttpActionResult> GetCategories()
         {
             var categories = await this._unitOfWork.Categories
-                                                .GetAllAsync();
+                                                .GetAllEmptyAsync();
             return Ok(categories);
         }
         [HttpGet]
@@ -257,26 +291,6 @@ namespace CBProject.Controllers.API
             if (id == null)
                 return NotFound();
             return Ok(await this._unitOfWork.Tags.GetAsync(id));
-        }
-        [HttpGet]
-        [Route("api/users/role")]
-        public async Task<IHttpActionResult> GetUsersByRole(string rolename)
-        {
-            if (rolename == null)
-                return NotFound();
-            var rolesIds = await this._rolesRepo
-                                             .GetAllQuerable()
-                                             .Where(r => r.Name.Equals(rolename))
-                                             .Select(r => r.Id)
-                                             .ToListAsync();
-            var users = await this._usersRepo
-                                    .GetAllQueryable()
-                                    .Where(u => rolesIds.Any() ? u.Roles.Select(r => r.RoleId).Intersect(rolesIds).Any() : false)
-                                    .ToListAsync();
-            if (users.Count > 0)
-                return Ok(users);
-            else
-                return Ok("null");
         }
         [HttpGet]
         [Route("api/reviews")]
@@ -349,6 +363,21 @@ namespace CBProject.Controllers.API
             if (id == null)
                 return NotFound();
             return Ok(await this._unitOfWork.Payments.GetAsync(id));
+        }
+        [HttpPost]
+        [Route("api/payment/create")]
+        public async Task<IHttpActionResult> CreatePayment([FromBody] CreatePaymentAPI payment)
+        {
+            Payment paymentDB = new Payment()
+            {
+                UserId = payment.UserId,
+                Price = payment.Price,
+                Tax = payment.Tax,
+                Discount = payment.Discount
+            };
+            this._unitOfWork.Payments.Add(paymentDB);
+            await this._unitOfWork.Payments.SaveAsync();
+            return Ok(paymentDB);
         }
 
         [HttpPost]
@@ -440,22 +469,6 @@ namespace CBProject.Controllers.API
             await this._unitOfWork.Orders.DeleteAsync(id);
             await this._unitOfWork.Orders.SaveAsync();
             return Ok();
-        }
-
-        [HttpPost]
-        [Route("api/payment/create")]
-        public async Task<IHttpActionResult> CreatePayment([FromBody] CreatePaymentAPI payment)
-        {
-            Payment paymentDB = new Payment()
-            {
-                UserId = payment.UserId,
-                Price = payment.Price,
-                Tax = payment.Tax,
-                Discount = payment.Discount
-            };
-            this._unitOfWork.Payments.Add(paymentDB);
-            await this._unitOfWork.Payments.SaveAsync();
-            return Ok(payment);
         }
 
         protected override void Dispose(bool disposing)

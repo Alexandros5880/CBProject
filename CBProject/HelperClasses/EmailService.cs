@@ -114,24 +114,24 @@ namespace CBProject.HelperClasses
             return email.SendAsync();
         }
 
-        //public Task SendEmailReceipt()
-        //{
-        //    Email.DefaultSender = _sender;
+        public Task SendEmailReceipt(ApplicationUser user)
+        {
+            Email.DefaultSender = _sender;
 
-        //    StringBuilder body = new StringBuilder();
-        //    body.Append($"Dear {user.FullName},\n\n")
-        //        .Append("Your Password has been changed.\n\n")
-        //        .Append($"Kind Regards, \n")
-        //        .Append($"--CodeMe Team");
+            StringBuilder body = new StringBuilder();
+            body.Append($"Dear {user.FullName},\n\n")
+                .Append($"We have received your payment.\n\n")
+                .Append($"Kind Regards, \n")
+                .Append($"--CodeMe Team");
 
 
-        //    var email = Email
-        //        .From("codeme.email@gmail.com", "CodeMe")
-        //        .To(user.Email)
-        //        .Subject("Change Password")
-        //        .Body(body.ToString());
+            var email = Email
+                .From("codeme.email@gmail.com", "CodeMe")
+                .To(user.Email)
+                .Subject("Change Password")
+                .Body(body.ToString());
 
-        //    return email.SendAsync();
-        //}
+            return email.SendAsync();
+        }
     }
 }

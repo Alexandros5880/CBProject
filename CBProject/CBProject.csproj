@@ -271,17 +271,19 @@
     <Compile Include="HelperClasses\Compares\RatingCompare.cs" />
     <Compile Include="HelperClasses\CreateData.cs" />
     <Compile Include="HelperClasses\EmailService.cs" />
+    <Compile Include="HelperClasses\File.cs" />
     <Compile Include="HelperClasses\Pagination.cs" />
     <Compile Include="HelperClasses\Interfaces\IUnitOfWork.cs" />
     <Compile Include="HelperClasses\StaticImfo.cs" />
     <Compile Include="HelperClasses\UnitOfWork.cs" />
     <Compile Include="HelperClasses\VideoEditor.cs" />
-    <Compile Include="Migrations\202201051404001_Initial.cs" />
-    <Compile Include="Migrations\202201051404001_Initial.Designer.cs">
-      <DependentUpon>202201051404001_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\202201100029452_Initial.cs" />
+    <Compile Include="Migrations\202201100029452_Initial.Designer.cs">
+      <DependentUpon>202201100029452_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\EbookCommentAPI.cs" />
     <Compile Include="Models\EntityModels\Category.cs" />
     <Compile Include="Models\EntityModels\CategoryToCategory.cs" />
     <Compile Include="Models\EntityModels\ContactMessage.cs" />
@@ -298,10 +300,12 @@
     <Compile Include="Models\EntityModels\SubscriptionPackage.cs" />
     <Compile Include="Models\EntityModels\TagToEbook.cs" />
     <Compile Include="Models\EntityModels\TagToVideo.cs" />
+    <Compile Include="Models\EntityModels\UserSubscriptionPackage.cs" />
     <Compile Include="Models\HelperModels\AddRequirement.cs" />
     <Compile Include="Models\HelperModels\CreatePaymentAPI.cs" />
     <Compile Include="Models\HelperModels\EbookPdfAPI.cs" />
     <Compile Include="Models\HelperModels\EbookRateAPI.cs" />
+    <Compile Include="Models\HelperModels\GetProductsApi.cs" />
     <Compile Include="Models\HelperModels\OrderApiModel.cs" />
     <Compile Include="Models\HelperModels\Products.cs" />
     <Compile Include="Models\HelperModels\VideoRateAPI.cs" />
@@ -312,6 +316,7 @@
     <Compile Include="Models\EntityModels\Review.cs" />
     <Compile Include="Models\EntityModels\Tag.cs" />
     <Compile Include="Models\EntityModels\Video.cs" />
+    <Compile Include="Models\VideoCommentAPI.cs" />
     <Compile Include="Models\ViewModels\ApplicationUserViewModel.cs" />
     <Compile Include="Models\ViewModels\CategoryViewModel.cs" />
     <Compile Include="Models\ViewModels\ContactViewModel.cs" />
@@ -351,6 +356,7 @@
     <Compile Include="Repositories\TagsRepository.cs" />
     <Compile Include="Repositories\TagsToEbooksRepository.cs" />
     <Compile Include="Repositories\TagsToVideosRepository.cs" />
+    <Compile Include="Repositories\UsersSubscriptionPackagesRepo.cs" />
     <Compile Include="Repositories\VideosRepository.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -375,6 +381,8 @@
     <Content Include="assets\fonts\fa-brands-400.svg" />
     <Content Include="assets\fonts\fa-regular-400.svg" />
     <Content Include="assets\fonts\fa-solid-900.svg" />
+    <Content Include="assets\images\ap.jpg" />
+    <Content Include="assets\images\apl.jpg" />
     <Content Include="assets\images\bg-auth-overlay.png" />
     <Content Include="assets\images\brands\bitbucket.png" />
     <Content Include="assets\images\brands\dribbble.png" />
@@ -402,6 +410,7 @@
     <Content Include="assets\images\crypto\blog\img-3.jpg" />
     <Content Include="assets\images\crypto\features-img\img-1.png" />
     <Content Include="assets\images\crypto\features-img\img-2.png" />
+    <Content Include="assets\images\dg.jpg" />
     <Content Include="assets\images\error-img.png" />
     <Content Include="assets\images\favicon.ico" />
     <Content Include="assets\images\flags\french.jpg" />
@@ -1465,8 +1474,10 @@
     <Content Include="Content\Lessons.css" />
     <Content Include="Content\Login.css" />
     <Content Include="Content\Manage.css" />
+    <Content Include="Content\PublickDetails_Comments.css" />
     <Content Include="Content\Ratting.css" />
     <Content Include="Content\Subscribe.css" />
+    <Content Include="Content\Videos.css" />
     <Content Include="fonts\boxicons.svg" />
     <Content Include="fonts\dripicons-v2.svg" />
     <Content Include="fonts\fa-brands-400.svg" />
@@ -1477,6 +1488,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="assets\images\codeme_bigImg2_index.jpg" />
     <Content Include="img\brouser_tab_icon.png" />
+    <Content Include="img\checked.jpg" />
     <Content Include="img\icon-book.png" />
     <Content Include="img\icon-book_.png" />
     <Content Include="img\icon-category.png" />
@@ -1708,6 +1720,8 @@
     <Content Include="bin\roslyn\vbc.exe.config" />
     <Content Include="bin\roslyn\vbc.rsp" />
     <Content Include="bin\roslyn\VBCSCompiler.exe.config" />
+    <Content Include="README.md" />
+    <None Include="Makefile" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.min.js" />
@@ -2029,13 +2043,16 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202201051404001_Initial.resx">
-      <DependentUpon>202201051404001_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202201100029452_Initial.resx">
+      <DependentUpon>202201100029452_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Makefile</ApplicationManifest>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />

@@ -1,8 +1,4 @@
-﻿@model IEnumerable<CBProject.Models.ViewModels.EbookViewModel>
-
-<link rel="stylesheet" href="~/Content/Ratting.css">
-
-@using Microsoft.AspNet.Identity
+﻿@using Microsoft.AspNet.Identity
 @using Microsoft.AspNet.Identity.EntityFramework
 @using CBProject.Models
 
@@ -68,6 +64,12 @@
             }
         }
     }
+}
+
+
+
+@section styles {
+    <link rel="stylesheet" href="~/Content/Ratting.css">
 }
 
 <p>
@@ -140,6 +142,33 @@
             });
         });
 
+        // Open Read Ebooks Modal
+        $("body").on('click', '#ebook-modal-button', function () {
+            var id = $(this).attr('data-id');
+            getLogedUser(function (user) {
+                var access = false;
+                user.roles.forEach(function (role) {
+                    getRoleSync(role.roleId, function (role) {
+                        console.log(role.level);
+                        if (role.level > 0) {
+                            access = true;
+                        }
+                    });
+                });
+                if (access) {
+                    $.ajax({
+                        url: '/Home/_Read/' + id,
+                        type: 'GET',
+                        success: function (response) {
+                            $('.modal-ebook-read').html(response);
+                        }
+                    });
+                } else {
+                    window.location = "/SubscriptionPackages/Subscribe";
+                }
+            });
+        });
+
     });
 </script>
 
@@ -147,36 +176,18 @@
 <div class="table-responsive">
     <table class="table" id="ebooks">
         <thead>
-
             <tr>
-
-                <th>
-                    @Html.DisplayNameFor(model => model.Title)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Description)
-                </th>
-                <th>
-                    Cover
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Creator)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.UploadDate)
-                </th>
-
-                <th>
-                    Rating
-                </th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Creator</th>
+                <th>UploadDate</th>
+                <th>Cover</th>
+                <th>Rating</th>
                 <th></th>
             </tr>
         </thead>
-
         <tbody>
         </tbody>
-
-
     </table>
 
 
@@ -266,7 +277,18 @@
         </div>
     </div>
 
+    <!-- Ebook Modal -->
+    <div id="modal-fullscreen-xl" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" style="width: 50%;">
+            <div class="modal-content modal-ebook-read">
+
+            </div>
+        </div>
+    </div>
+
 </div>
+
+
 
 @section scripts{
     <script>
@@ -280,7 +302,7 @@
                     {
                         data: "title",
                         render: function (data, type, ebook) {
-                            return `<p>${ebook.title}</a>`;
+                            return "<a href='/Ebooks/Edit/" + ebook.id + "'>" + ebook.title + "</a>";
                         }
                     },
                     {
@@ -299,7 +321,7 @@
                             return "<a>" + fullName + "</a>";
                         }
                     },
-                  
+
                     {
                         data: "UplaodDate",
                         render: function (data, type, ebook) {
@@ -336,13 +358,48 @@
                     {
                         data: "Buttons",
                         render: function (data, type, ebook) {
-                            return `
-                                    <button type="button" id="tag-modal-button-ebook" class="btn btn-dark tag-modal-button-ebook" data-toggle="modal" data-target="#tag-modal-ebook" data-id="${ebook.id}">Tag</button>
-                                    <button type="button" id="comment-modal-button-ebook" class="btn btn-primary comment-modal-button-ebook" data-toggle="modal" data-target="#review-modal-ebook" data-id="${ebook.id}">Comment</button>
-                                    <button type="button" id="details-modal-button-ebook" class="btn btn-info details-modal-button-ebook" data-toggle="modal" data-target="#details-modal-ebook" data-id="${ebook.id}">Details</button>
-                                    <button type="button" id="edit-modal-button-ebook" class="btn btn-success edit-modal-button-ebook" data-toggle="modal" data-target="#edit-modal-ebook" data-id="${ebook.id}">Edit</button>
-                                    <button type="button" id="delete-modal-button-ebook" class="btn btn-danger btn-delete delete-modal-button-ebook" data-toggle="modal" data-target="#delete-modal-ebook" data-id="${ebook.id}">Delete</button>
-                                `;
+                            var access = "@access.ToString()";
+                            switch (access) {
+                                case "SUPERLOW":
+                                    return `
+                                        <button type="button" id="comment-modal-button-ebook" class="btn btn-primary comment-modal-button-ebook" data-toggle="modal" data-target="#review-modal-ebook" data-id="${ebook.id}">Comment</button>
+                                        <button type="button" id="details-modal-button-ebook" class="btn btn-info details-modal-button-ebook" data-toggle="modal" data-target="#details-modal-ebook" data-id="${ebook.id}">Details</button>
+                                    `;
+                                case "LOW":
+                                    return `
+                                        <button id="ebook-modal-button" class="btn btn-green btn-lg btn-open-modal" data-toggle="modal" data-target="#modal-fullscreen-xl" data-id="${ebook.id}">Read</button>
+                                        <button type="button" id="comment-modal-button-ebook" class="btn btn-primary comment-modal-button-ebook" data-toggle="modal" data-target="#review-modal-ebook" data-id="${ebook.id}">Comment</button>
+                                        <button type="button" id="details-modal-button-ebook" class="btn btn-info details-modal-button-ebook" data-toggle="modal" data-target="#details-modal-ebook" data-id="${ebook.id}">Details</button>
+                                    `;
+                                case "MIDDLE":
+                                    return `
+                                        <button id="ebook-modal-button" class="btn btn-green btn-lg btn-open-modal" data-toggle="modal" data-target="#modal-fullscreen-xl" data-id="${ebook.id}">Read</button>
+                                        <button type="button" id="tag-modal-button-ebook" class="btn btn-dark tag-modal-button-ebook" data-toggle="modal" data-target="#tag-modal-ebook" data-id="${ebook.id}">Tag</button>
+                                        <button type="button" id="comment-modal-button-ebook" class="btn btn-primary comment-modal-button-ebook" data-toggle="modal" data-target="#review-modal-ebook" data-id="${ebook.id}">Comment</button>
+                                        <button type="button" id="details-modal-button-ebook" class="btn btn-info details-modal-button-ebook" data-toggle="modal" data-target="#details-modal-ebook" data-id="${ebook.id}">Details</button>
+                                        <button type="button" id="edit-modal-button-ebook" class="btn btn-success edit-modal-button-ebook" data-toggle="modal" data-target="#edit-modal-ebook" data-id="${ebook.id}">Edit</button>
+                                        <button type="button" id="delete-modal-button-ebook" class="btn btn-danger btn-delete delete-modal-button-ebook" data-toggle="modal" data-target="#delete-modal-ebook" data-id="${ebook.id}">Delete</button>
+                                    `;
+                                case "PLUSSFULL":
+                                    return `
+                                        <button id="ebook-modal-button" class="btn btn-green btn-lg btn-open-modal" data-toggle="modal" data-target="#modal-fullscreen-xl" data-id="${ebook.id}">Read</button>
+                                        <button type="button" id="tag-modal-button-ebook" class="btn btn-dark tag-modal-button-ebook" data-toggle="modal" data-target="#tag-modal-ebook" data-id="${ebook.id}">Tag</button>
+                                        <button type="button" id="comment-modal-button-ebook" class="btn btn-primary comment-modal-button-ebook" data-toggle="modal" data-target="#review-modal-ebook" data-id="${ebook.id}">Comment</button>
+                                        <button type="button" id="details-modal-button-ebook" class="btn btn-info details-modal-button-ebook" data-toggle="modal" data-target="#details-modal-ebook" data-id="${ebook.id}">Details</button>
+                                        <button type="button" id="edit-modal-button-ebook" class="btn btn-success edit-modal-button-ebook" data-toggle="modal" data-target="#edit-modal-ebook" data-id="${ebook.id}">Edit</button>
+                                        <button type="button" id="delete-modal-button-ebook" class="btn btn-danger btn-delete delete-modal-button-ebook" data-toggle="modal" data-target="#delete-modal-ebook" data-id="${ebook.id}">Delete</button>
+                                    `;
+                                case "FULL":
+                                    return `
+                                        <button id="ebook-modal-button" class="btn btn-green btn-lg btn-open-modal" data-toggle="modal" data-target="#modal-fullscreen-xl" data-id="${ebook.id}">Read</button>
+                                        <button type="button" id="tag-modal-button-ebook" class="btn btn-dark tag-modal-button-ebook" data-toggle="modal" data-target="#tag-modal-ebook" data-id="${ebook.id}">Tag</button>
+                                        <button type="button" id="comment-modal-button-ebook" class="btn btn-primary comment-modal-button-ebook" data-toggle="modal" data-target="#review-modal-ebook" data-id="${ebook.id}">Comment</button>
+                                        <button type="button" id="details-modal-button-ebook" class="btn btn-info details-modal-button-ebook" data-toggle="modal" data-target="#details-modal-ebook" data-id="${ebook.id}">Details</button>
+                                        <button type="button" id="edit-modal-button-ebook" class="btn btn-success edit-modal-button-ebook" data-toggle="modal" data-target="#edit-modal-ebook" data-id="${ebook.id}">Edit</button>
+                                        <button type="button" id="delete-modal-button-ebook" class="btn btn-danger btn-delete delete-modal-button-ebook" data-toggle="modal" data-target="#delete-modal-ebook" data-id="${ebook.id}">Delete</button>
+                                    `;
+                            }
+                            
                         }
                     }
                 ],

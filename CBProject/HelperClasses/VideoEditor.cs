@@ -2,7 +2,7 @@
 using MediaToolkit.Model;
 using MediaToolkit.Options;
 using System;
-
+using System.IO;
 
 namespace CBProject.HelperClasses
 {
@@ -18,6 +18,9 @@ namespace CBProject.HelperClasses
                 var options = new ConversionOptions { Seek = TimeSpan.FromSeconds(second) };
                 engine.GetThumbnail(inputFile, outputFile, options);
             }
+            var img = System.Drawing.Image.FromFile(output);
+            MemoryStream ms = new MemoryStream();
+            img.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
         }
         public static TimeSpan Duration(string path)
         {

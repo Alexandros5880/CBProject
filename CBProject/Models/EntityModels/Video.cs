@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace CBProject.Models
 {
@@ -26,9 +27,22 @@ namespace CBProject.Models
         public string Url { get; set; }
         public float RatingsAVG { get; set; }
         public TimeSpan Duration { get; set; }
+        public virtual ICollection<SubscriptionPackage> SubscriptionPackages { get; set; }
+        [NotMapped]
+        public bool Subscribed 
+        { 
+            get
+            {
+                return this.SubscriptionPackages.Any();
+            } 
+        }
         public ICollection<TagToVideo> TagsToVideos { get; set; }
         public ICollection<RatingToVideo> RatingsToVideos { get; set; }
         public ICollection<ReviewToVideo> ReviewToVideos { get; set; }
         public ICollection<RequirementToVideo> RequirementsToVideos { get; set; }
+        public Video()
+        {
+            this.SubscriptionPackages = new HashSet<SubscriptionPackage>();
+        }
     }
 }

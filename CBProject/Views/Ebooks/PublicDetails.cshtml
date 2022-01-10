@@ -10,7 +10,42 @@
     }
 }
 
-<link rel="stylesheet" href="~/Content/Ratting.css">
+
+@Scripts.Render("~/bundles/jquery")
+
+
+<script type="text/javascript">
+    $(function () {
+
+        // Open Read Ebook Modal
+        $("body").on('click', '#ebook-modal-button', function () {
+            getLogedUser(function (user) {
+                var access = false;
+                user.roles.forEach(function (role) {
+                    getRoleSync(role.roleId, function (role) {
+                        console.log(role.level);
+                        if (role.level > 0) {
+                            access = true;
+                        }
+                    });
+                });
+                if (access) {
+
+                } else {
+                    $('#@Html.DisplayFor(model=> model.ID)').modal('toggle');
+                    window.location = "/SubscriptionPackages/Subscribe";
+                }
+            });
+        });
+
+    });
+</script>
+
+
+@section styles {
+    <link rel="stylesheet" href="~/Content/Ratting.css">
+    <link rel="stylesheet" href="~/Content/PublickDetails_Comments.css">
+}
 
 <!-- Main Details With Color -->
 <div class="main-details-row">
@@ -20,10 +55,10 @@
         </div>
         <div class="col-md-5 col-md-offset-1 col-sm-5">
             <p class="product-title"> @Html.DisplayFor(model => model.Title)</p>
-          
+
             <p class="product-description"> @Html.DisplayFor(model => model.Description)</p>
             <div class="row">
-               
+
                 <div class="col-md-12" id="stars">
                     @if (User.Identity.IsAuthenticated)
                     {
@@ -54,7 +89,7 @@
             </div>
             <div class="subscribe-div">
                 @*<button type="button" class="btn justify-content-end btn-subscribe">Subscribe Now</button>
-                <button style="margin-bottom:3%; margin-left: 1%;" type="button" class="btn justify-content-end btn-green" data-toggle="modal" data-target="#@Model.ID">Read</button>*@
+                    <button style="margin-bottom:3%; margin-left: 1%;" type="button" class="btn justify-content-end btn-green" data-toggle="modal" data-target="#@Model.ID">Read</button>*@
             </div>
         </div>
     </div>
@@ -78,7 +113,7 @@
                     var absolutePath = Server.MapPath(Model.EbookFilePath);
                     if (System.IO.File.Exists(absolutePath))
                     {
-                        <embed src="@Url.Content(Model.EbookFilePath)" style="width:100%; height:87vh;"/>
+                        <embed id="ebook-pdf" src="@Url.Content(Model.EbookFilePath)" style="width:100%; height:87vh;" />
                     }
                     else
                     {
@@ -104,7 +139,7 @@
                     <p class="product-title"> @Html.DisplayFor(model => model.Title)</p>
                     <p class="product-description"> @Html.DisplayFor(model => model.Description)</p>
                     <div class="row">
-                       
+
                         <div class="col-md-12" id="stars">
                             @if (User.Identity.IsAuthenticated)
                             {
@@ -135,7 +170,7 @@
                     </div>
                     <div class="subscribe-div">
                         @*<button type="button" class="btn justify-content-end btn-subscribe">Subscribe Now</button>
-                        <button style="margin-bottom:3%; margin-left: 1%;" type="button" class="btn justify-content-end btn-green" data-toggle="modal" data-target="#@Model.ID">Read</button>*@
+                            <button style="margin-bottom:3%; margin-left: 1%;" type="button" class="btn justify-content-end btn-green" data-toggle="modal" data-target="#@Model.ID">Read</button>*@
                     </div>
                 </div>
             </div>
@@ -144,7 +179,7 @@
         <hr style="border-top: 1px solid #c1c1c1;" />
         <h5><b>INCLUDES</b></h5>
         <p><img class="img-icon-index" src="~/img/icons-person.png" alt="person" /> Programming with <b>@Html.DisplayFor(model => model.Creator.FullName)</b>  </p>
-        <p><img class="img-icon-index" src="~/img/icon-book.png" alt="video" /> 250 pages  </p>
+        <p><img class="img-icon-index" src="~/img/icon-book.png" alt="video" /> pages  </p>
         <p><img class="img-icon-index" src="~/img/icons-calendar.png" alt="person" /> Upload Date <b>@Html.DisplayFor(model => model.UploadDate)</b> </p>
         <p><img class="img-icon-index" src="~/img/icon-category.png" alt="video" /> Book category: @Html.DisplayFor(model => model.Category.Name) </p>
         <hr style="border-top: 1px solid #c1c1c1;" />
@@ -161,14 +196,14 @@
     <div class="col-md-5 col-sm-8">
         <div id="accordion">
             <div class="card">
-                <div class="card-header" id="headingTwo">
+                <div class="card-header" id="headingOne">
                     <h5 class="mb-0">
-                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                            Collapsible Group Item #2
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseTwo">
+                            Collapsible Group Item #1
                         </button>
                     </h5>
                 </div>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
                     <div class="card-body">
                         Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
                     </div>
@@ -211,12 +246,116 @@
 
 
 
+
+<!-- Show Comments / Add Comment -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-10 col-sm-offset-1" id="logout">
+            <div class="page-header">
+                <h3 class="reviews">Leave your comment</h3>
+            </div>
+            <div class="comment-tabs">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="active"><a href="#comments-logout" role="tab" data-toggle="tab"><h4 class="reviews text-capitalize">Comments</h4></a></li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li><a href="#add-comment" role="tab" data-toggle="tab"><h4 class="reviews text-capitalize">Add comment</h4></a></li>
+                    }
+                </ul>
+                <div class="tab-content">
+                    <!-- Comments -->
+                    <div class="tab-pane active" id="comments-logout">
+                        <ul class="media-list" id="comments-list">
+                        </ul>
+                    </div>
+                    <!-- Add Comment -->
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <div class="tab-pane" id="add-comment">
+                            <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+                            <form action="/api/Ebook/AddComment" method="post" class="form-horizontal" id="commentForm" role="form" target="dummyframe">
+                                <div class="form-group" id="comment-group-form">
+                                    <label for="comment" class="col-sm-2 control-label">Comment</label>
+                                    <div class="col-sm-10" id="comment-input-col">
+                                        <input type="hidden" id="ebookId" name="ebookId" value="@Model.ID">
+                                        <textarea class="form-control" name="comment" id="addComment" rows="5"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button class="btn btn-success btn-circle text-uppercase" type="submit" id="submitComment"><span class="glyphicon glyphicon-send"></span> Summit comment</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<br />
+<br />
+<br />
+
+
+
+
+
+
 @section scripts {
     <script>
         $(document).ready(function () {
 
+            var id = "@Html.Raw(Model.ID)";
+
+            // Load Comments
+            getReviewsByEbook(id, function (reviews) {
+                reviews.reverse();
+                // Select First 4
+                reviews = reviews.slice(0, 4);
+                $('#comments-list').empty();
+                reviews.forEach(function (review) {
+                    getUserByIdSync(review.reviewerId, function (user) {
+                        var imagePath = user.imagePath;
+                        var fullname = user.fullName;
+                        var comment = review.comment;
+                        $('#comments-list').append(
+                            `
+                            <li class="media">
+                                <a class="pull-left" href="#">
+                                    <img class="media-object img-circle" src="${imagePath}" alt="profile" height="50">
+                                </a>
+                                <div class="media-body">
+                                    <div class="well well-lg">
+                                        <div class="row">
+                                            <h5 class="media-heading text-uppercase reviews col-md-7">${fullname}</h5>
+                                            <h6 class="col-md-5">${review.createdDate.split("T")[0]}&emsp;${review.createdDate.split("T")[1]}</h6>
+                                        </div>
+                                        <p class="media-comment">
+                                            ${comment}
+                                        </p>
+                                    </div>
+                                </div>
+                            </li>
+                            `
+                        );
+                    });
+                });
+            });
+
+            $("#commentForm").submit(function () {
+                $("#comments-tab").trigger('click');
+                location.reload();
+            });
+
             var subscribe = `<button type="button" class="btn justify-content-end btn-subscribe">Subscribe Now</button>`;
-            var read = `<button style="margin-bottom:3%; margin-left: 1%;" type="button" class="btn justify-content-end btn-green" data-toggle="modal" data-target="#${@Model.ID}">Read</button>`;
+            var read = `<button id="ebook-modal-button" style="margin-bottom:3%; margin-left: 1%;" type="button" class="btn justify-content-end btn-green" data-toggle="modal" data-target="#${@Model.ID}">Read</button>`;
 
             $(".rating").addClass("already_set");
 
@@ -246,7 +385,7 @@
                 // Whene Subscribe Button Clicks goes to Login Page
                 $(document.body).on('click', 'button', function () {
                     if (this.classList.contains('btn-subscribe')) {
-                        window.location.href = '/Account/Login';
+                        window.location.href = '/Account/Login?returnUrl=SubscriptionPackages/Subscribe';
                     }
                 });
             }

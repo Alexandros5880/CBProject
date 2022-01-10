@@ -12,7 +12,6 @@ namespace CBProject.Models.ViewModels
         public int ID { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public string Thumbnail { get; set; }
         public string Url { get; set; }
         public HttpPostedFileBase EbookImageFile { get; set; }
         public string EbookImagePath { get; set; }

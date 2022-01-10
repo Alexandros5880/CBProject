@@ -93,11 +93,26 @@
         // Open Read Ebooks Modal
         $("body").on('click', '#ebook-modal-button', function () {
             var id = $(this).attr('data-id');
-            $.ajax({
-                url: '/Home/_Read/' + id,
-                type: 'GET',
-                success: function (response) {
-                    $('.modal-ebook-read').html(response);
+            getLogedUser(function (user) {
+                var access = false;
+                user.roles.forEach(function (role) {
+                    getRoleSync(role.roleId, function (role) {
+                        console.log(role.level);
+                        if (role.level > 0) {
+                            access = true;
+                        }
+                    });
+                });
+                if (access) {
+                    $.ajax({
+                        url: '/Home/_Read/' + id,
+                        type: 'GET',
+                        success: function (response) {
+                            $('.modal-ebook-read').html(response);
+                        }
+                    });
+                } else {
+                    window.location = "/SubscriptionPackages/Subscribe";
                 }
             });
         });
@@ -105,11 +120,26 @@
         // Open Watch Video Modal
         $("body").on('click', '#video-modal-button', function () {
             var id = $(this).attr('data-id');
-            $.ajax({
-                url: '/Home/_Watch/' + id,
-                type: 'GET',
-                success: function (response) {
-                    $('.modal-ebook-read').html(response);
+            getLogedUser(function (user) {
+                var access = false;
+                user.roles.forEach(function (role) {
+                    getRoleSync(role.roleId, function (role) {
+                        console.log(role.level);
+                        if (role.level > 0) {
+                            access = true;
+                        }
+                    });
+                });
+                if (access) {
+                    $.ajax({
+                        url: '/Home/_Watch/' + id,
+                        type: 'GET',
+                        success: function (response) {
+                            $('.modal-ebook-read').html(response);
+                        }
+                    });
+                } else {
+                    window.location = "/SubscriptionPackages/Subscribe";
                 }
             });
         });
@@ -121,7 +151,7 @@
 <!-- Filters Top Nav -->
 <div class="container">
     <nav class="navbar navbar-light bg-light justify-content-between lessons-top-navbar">
-        <h3 id="lessons-big-title" class="animate__animated animate__fadeInLeft"><strong>Chillin and searching something...</strong></h3>
+        <h2 id="lessons-big-title" class="animate__animated animate__fadeInLeft"><strong>Chillin and searching something...</strong></h2>
         <div class="row lessons-top-grid">
             <div class="col-sm-6">
                 <div class="form-inline lessons-top-nav-filters-buttons">
@@ -162,9 +192,7 @@
     </nav>
 </div>
 
-
-
-
+<!-- Main Container With Videos/Ebooks -->
 <div class="container-fluid main-content">
     <div class="grey-row">
         <div class="container">
@@ -187,13 +215,9 @@
     </div>
 </div>
 
-
-
-
-
 <!-- Ebook Modal -->
 <div id="modal-fullscreen-xl" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" style="width: 90%;">
+    <div class="modal-dialog modal-lg" style="width: 50%;">
         <div class="modal-content modal-ebook-read">
             
         </div>
@@ -205,6 +229,11 @@
 @section scripts {
     <script>
         $(document).ready(function () {
+
+            // When Modal Close Stop Video
+            $('#modal-fullscreen-xl').on('hidden.bs.modal', function () {
+                $(".myvideo").trigger('pause');
+            })
 
             var userAuthorized = @User.Identity.IsAuthenticated.ToString().ToLower();
 
@@ -231,6 +260,7 @@
                 if (this.classList.contains('search-top-button')) {
                     var search = $("#lessons-top-search-input").val();
                     if (search.length != 0) {
+                        page = 1;
                         searchTop(ebooks, videos, lessonsRatings, createdDate, search, null, true);
                     } else {
                         searchTop(ebooks, videos, lessonsRatings, createdDate, search, 1);
@@ -354,11 +384,23 @@
                         });
                     }
                     var counter = 0;
+                    // Ebooks Sorting
+                    if (lessonsRatings) {
+                        data.ebooks.sort(function (a, b) {
+                            return b.ratingsAVG - a.ratingsAVG;
+                        });
+                    } else if (createdDate) {
+                        data.ebooks.sort(function (a, b) {
+                            var date_a = parseDateTime(a.uploadDate);
+                            var date_b = parseDateTime(b.uploadDate);
+                            return date_b - date_a;
+                        });
+                    }
                     data.ebooks.forEach(ebook => {
                         counter++;
-                        getCategory(ebook.categoryId, function (category) {
-                            getUserById(ebook.creatorId, function (creator) {
-                                getPDF(ebook.ebookFilePath, function(pdfFile) {
+                        getCategorySync(ebook.categoryId, function (category) {
+                            getUserByIdSync(ebook.creatorId, function (creator) {
+                                getPDFSync(ebook.ebookFilePath, function(pdfFile) {
                                     var userAuthorized = @User.Identity.IsAuthenticated.ToString().ToLower();
                                     var ratingFor;
                                     if (userAuthorized) {
@@ -406,9 +448,9 @@
                                                    <p><img class="img-icon-index" src="../assets/images/icons/icons-person.png" alt="person" />  ${creator.fullName}</p>
                                                     <p><img class="img-icon-index" src="../assets/images/icons/icon-calendar.png" alt="video" /><small> ${ebook.uploadDate.split("T")[0]} </small></p>
                                                     <br />
-                                                    `
-                                                    + ratingFor +
-                                                    `
+                                                    ` + ratingFor + `
+                                                    ` + isSubscribed(ebook.subscribed) + `
+                                                    <br />
                                                     <br />
                                                     <button class="btn btn-purple btn-lg details">Details</button>
                                                     ` + displayReadButton(userAuthorized, ebook.id) + `
@@ -436,9 +478,21 @@
                             RenderPaginationButtons(pages);
                         });
                     }
+                    // Videos Sorting
+                    if (lessonsRatings) {
+                        data.videos.sort(function (a, b) {
+                            return b.ratingsAVG - a.ratingsAVG;
+                        });
+                    } else if (createdDate) {
+                        data.videos.sort(function (a, b) {
+                            var date_a = parseDateTime(a.uploadDate);
+                            var date_b = parseDateTime(b.uploadDate);
+                            return date_b - date_a;
+                        });
+                    }
                     data.videos.forEach(video => {
-                        getCategory(video.categoryId, function (category) {
-                            getUserById(video.creatorId, function (creator) {
+                        getCategorySync(video.categoryId, function (category) {
+                            getUserByIdSync(video.creatorId, function (creator) {
                                 var userAuthorized = @User.Identity.IsAuthenticated.ToString().ToLower();
                                 var ratingFor;
                                 if (userAuthorized) {
@@ -480,7 +534,10 @@
                                         <input type="hidden" id="content" name="content" value="${video.id}">
                                         <input type="hidden" id="content-type" name="content-type" value="video">
                                         <div class="card item" id="card-video">
-                                            <iframe class="embed-responsive-item" src="${video.videoPath}" allowfullscreen></iframe>
+                                            <video class="embed-responsive-item title-video" controls preload="none" poster="${video.thumbnail}" style="width:100%;" controlsList="nodownload">
+                                                <source src="${video.videoPath}" type="video/mp4">
+                                                Your browser does not support the video tag.
+                                            </video>
                                             <!--<img alt="Cover Foto" src="${video.videoImagePath}" style="width:100%;" />-->
                                             <p style="text-align:center;margin-top:14px;"><b>${video.title}</b></p>
                                              <hr>
@@ -488,9 +545,9 @@
                                                 <p><img class="img-icon-index" src="../assets/images/icons/icons-person.png" alt="person" />  ${creator.fullName}</p>
                                                  <p><img class="img-icon-index" src="../assets/images/icons/icon-category.png" alt="video" /> ${category.name}  </p>
                                                 <p><img class="img-icon-index" src="../assets/images/icons/icon-calendar.png" alt="video" /> <small>  ${video.uploadDate.split("T")[0]}</small>  </p>
-                                                `
-                                                + ratingFor +
-                                                `
+                                                ` + ratingFor + `
+                                                ` + isSubscribed(video.subscribed) + `
+                                                <br />
                                               <br>
                                                 <button class="btn btn-purple btn-lg details">Details</button>
                                                 ` + displayPlayButton(userAuthorized, video.id) + `

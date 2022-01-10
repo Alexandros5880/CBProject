@@ -1,143 +1,165 @@
 ﻿@model CBProject.Models.IndexViewModel
+
+@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.EntityFramework
+@using CBProject.Models
+
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Manage";
+
+    var context = new ApplicationDbContext();
+    var roleStore = new RoleStore<ApplicationRole>(context);
+    var roleManager = new RoleManager<ApplicationRole>(roleStore);
+
 }
 
 
 
 
-   <div class="row">
-       <div class="col-md-12" id="profile-title">
-           <h2><strong>Account Profile</strong></h2>
-           <br />
-           <hr />
-       </div>
-   </div>
 
- 
-    <div class="container">
-     
-        <div class="row">
-            <div class="col-md-3 col-md-offset-1 col-sm-3 col-sm-offset-0">
-                @if (@Model.User.ImagePath != null)
-                {
-                    <img class="userImage" src="@Model.User.ImagePath" style="width:100%" alt="Avatar" />
-                }
-            </div>
-            <div class="col-md-6 col-md-offset-1 col-sm-4 col-sm-offset-0">
-                <p class="text-success">@ViewBag.StatusMessage</p>
-                <div>
-                    <dl class="dl-horizontal user-profile">
-                        <dt>
-                        </dt>
-                        <dd style="margin-bottom:3%">
-                            @Html.ActionLink("Edit User", "Edit", "Users", new { id = Model.User.Id }, new { @class = "btn btn-secondary btn-green" })
-                        </dd>
+<div class="row">
+    <div class="col-md-12" id="profile-title">
+        <h2><strong>Account Profile</strong></h2>
+        <br />
+        <hr />
+    </div>
+</div>
 
-                        <dt>
-                            @Html.LabelFor(model => model.User.Id)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.User.Id)
-                        </dd>
 
-                        <dt>
-                            @Html.LabelFor(model => model.User.UserName)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.User.UserName)
-                        </dd>
+<div class="container">
 
-                        <dt>
-                            @Html.LabelFor(model => model.User.FirstName)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.User.FirstName)
-                        </dd>
-
-                        <dt>
-                            @Html.LabelFor(model => model.User.LastName)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.User.LastName)
-                        </dd>
-
-                        <dt>
-                            @Html.LabelFor(model => model.User.BirthDate)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.User.BirthDate)
-                        </dd>
-
-                        <dt>
-                            @Html.LabelFor(model => model.User.Street)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.User.Street)
-                        </dd>
-
-                        <dt>
-                            @Html.LabelFor(model => model.User.StreetNumber)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.User.StreetNumber)
-                        </dd>
-
-                        <dt>
-                            @Html.LabelFor(model => model.User.PostalCode)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.User.PostalCode)
-                        </dd>
-
-                        <dt>
-                            @Html.LabelFor(model => model.User.PhoneNumber)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.User.PhoneNumber)
-                        </dd>
-
-                        <dt>
-                            @Html.LabelFor(model => model.User.Email)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.User.Email)
-                        </dd>
-
-                        <dt>
-                            @Html.LabelFor(model => model.User.NewsletterAcception)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.User.NewsletterAcception)
-                        </dd>
-
-                        <dt>
-                            @Html.LabelFor(model => model.User.SubscriptionPackage)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.User.SubscriptionPackage)
-                        </dd>
-
-                        <dt>Password:</dt>
-                        <dd>
-                            @if (Model.HasPassword)
-                            {
-                                @Html.ActionLink("Change your password", "ChangePassword", null, new { @class = "change-password" })
-                            }
-                            else
-                            {
-                                @Html.ActionLink("Create", "SetPassword")
-                            }
-                        </dd>
-                    </dl>
-                </div>
-            </div>
+    <div class="row">
+        <div class="col-md-3 col-md-offset-1 col-sm-3 col-sm-offset-0">
+            @if (@Model.User.ImagePath != null)
+            {
+                <img class="userImage" src="@Model.User.ImagePath" style="width:100%" alt="Avatar" />
+            }
         </div>
-        <div class="col-md-3">
+        <div class="col-md-6 col-md-offset-1 col-sm-4 col-sm-offset-0">
+            <p class="text-success">@ViewBag.StatusMessage</p>
+            <div>
+                <dl class="dl-horizontal user-profile">
+                    <dt>
+                    </dt>
+                    <dd style="margin-bottom:3%">
+                        @Html.ActionLink("Edit User", "Edit", "Users", new { id = Model.User.Id }, new { @class = "btn btn-secondary btn-green" })
+                    </dd>
 
+                    <dt>
+                        @Html.LabelFor(model => model.User.Id)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.User.Id)
+                    </dd>
+
+                    <dt>
+                        @Html.LabelFor(model => model.User.UserName)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.User.UserName)
+                    </dd>
+
+                    <dt>
+                        @Html.LabelFor(model => model.User.FirstName)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.User.FirstName)
+                    </dd>
+
+                    <dt>
+                        @Html.LabelFor(model => model.User.LastName)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.User.LastName)
+                    </dd>
+
+                    <dt>
+                        @Html.LabelFor(model => model.User.BirthDate)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.User.BirthDate)
+                    </dd>
+
+                    <dt>
+                        @Html.LabelFor(model => model.User.Street)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.User.Street)
+                    </dd>
+
+                    <dt>
+                        @Html.LabelFor(model => model.User.StreetNumber)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.User.StreetNumber)
+                    </dd>
+
+                    <dt>
+                        @Html.LabelFor(model => model.User.PostalCode)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.User.PostalCode)
+                    </dd>
+
+                    <dt>
+                        @Html.LabelFor(model => model.User.PhoneNumber)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.User.PhoneNumber)
+                    </dd>
+
+                    <dt>
+                        @Html.LabelFor(model => model.User.Email)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.User.Email)
+                    </dd>
+
+                    <dt>
+                        @Html.LabelFor(model => model.User.NewsletterAcception)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.User.NewsletterAcception)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayName("Roles:")
+                    </dt>
+
+                    <dd>
+                        <ul>
+                            @foreach (var role in Model.User.Roles)
+                            {
+                                <li>
+                                    @{
+                                        var myRole = roleManager.FindById(role.RoleId);
+                                    }
+                                    @Html.DisplayFor(model => myRole.Name)
+                                </li>
+                            }
+                        </ul>
+                    </dd>
+
+                    <dt>Password:</dt>
+                    <dd>
+                        @if (Model.HasPassword)
+                        {
+                            @Html.ActionLink("Change your password", "ChangePassword", null, new { @class = "change-password" })
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Create", "SetPassword")
+                        }
+                    </dd>
+                </dl>
+            </div>
         </div>
     </div>
+    <div class="col-md-3">
+
+    </div>
+</div>
 
 
 

@@ -36,8 +36,12 @@ namespace CBProject.Repositories
         {
             if(video == null)
                 throw new ArgumentNullException(nameof(video));
+            video.Thumbnail = $"{StaticImfo.VideoImagePath}{video.Title}_thambnail.jpg";
             var videoPath = System.Web.HttpContext.Current.Server.MapPath($"~{video.VideoPath}");
+            var thumbnailPath = System.Web.HttpContext.Current.Server.MapPath($"~/{video.Thumbnail}");
+            VideoEditor.CreateThambnail(videoPath, thumbnailPath, 1);
             video.Duration = VideoEditor.Duration(videoPath);
+            video.UploadDate = DateTime.Today;
             this._context.Videos.Add(video);
         }
         public void Delete(int? id)
@@ -47,32 +51,17 @@ namespace CBProject.Repositories
             var video = this.Get(id);
             if (video == null)
                 throw new ArgumentNullException(nameof(video));
-            this._context.Videos.Remove(video);
-        }
-        public async Task DeleteAsync(int? id)
-        {
-            if (id == null)
-                throw new ArgumentNullException(nameof(id));
-            var video = await this._context.Videos
-                                    .FirstOrDefaultAsync(v => v.ID == id);
-            this._context.Videos.Remove(video);
-        }
-        public async Task DeleteAllAsync(int? id)
-        {
-            if (id == null)
-                throw new ArgumentNullException(nameof(id));
-            var video = Get(id);
-            if (video == null)
-                throw new ArgumentNullException(nameof(id));
-            var tagsToVideos = await this._context.TagsToVideos
+
+            var tagsToVideos = this._context.TagsToVideos
                                     .Where(t => t.VideoId == id)
-                                    .ToListAsync();
-            var ratingsToVideos = await this._context.RatingsToVideos
+                                    .ToList();
+            var ratingsToVideos = this._context.RatingsToVideos
                                     .Where(t => t.VideoId == id)
-                                    .ToListAsync();
-            var reviewToVideos = await this._context.ReviewsToVideos
+                                    .ToList();
+            var reviewToVideos = this._context.ReviewsToVideos
                                     .Where(r => r.VideoId == id)
-                                    .ToListAsync();
+                                    .ToList();
+
             foreach (var tag in tagsToVideos)
             {
                 this._context.TagsToVideos.Remove(tag);
@@ -85,7 +74,53 @@ namespace CBProject.Repositories
             {
                 this._context.ReviewsToVideos.Remove(review);
             }
-            _context.Videos.Remove(video);
+
+            var videoPath = System.Web.HttpContext.Current.Server.MapPath($"~{video.VideoPath}");
+            var thumbnailPath = System.Web.HttpContext.Current.Server.MapPath($"~/{video.Thumbnail}");
+            var imagePath = System.Web.HttpContext.Current.Server.MapPath($"~/{video.VideoImagePath}");
+            File.DeleteFile(videoPath);
+            File.DeleteFile(thumbnailPath);
+            File.DeleteFile(imagePath);
+            this._context.Videos.Remove(video);
+        }
+        public async Task DeleteAsync(int? id)
+        {
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
+            var video = await this.GetAsync(id);
+            if (video == null)
+                throw new ArgumentNullException(nameof(video));
+
+            var tagsToVideos = await this._context.TagsToVideos.Where(t => t.VideoId == id).ToListAsync();
+            var ratingsToVideos = await this._context.RatingsToVideos.Where(t => t.VideoId == id) .ToListAsync();
+            var reviewToVideos = await this._context.ReviewsToVideos.Where(r => r.VideoId == id) .ToListAsync();
+
+            foreach (var tag in tagsToVideos)
+            {
+                this._context.TagsToVideos.Remove(tag);
+            }
+            foreach (var rating in ratingsToVideos)
+            {
+                this._context.RatingsToVideos.Remove(rating);
+            }
+            foreach (var review in reviewToVideos)
+            {
+                this._context.ReviewsToVideos.Remove(review);
+            }
+
+            var videoPath = System.Web.HttpContext.Current.Server.MapPath($"~{video.VideoPath}");
+            var thumbnailPath = System.Web.HttpContext.Current.Server.MapPath($"~/{video.Thumbnail}");
+            var imagePath = System.Web.HttpContext.Current.Server.MapPath($"~/{video.VideoImagePath}");
+            File.DeleteFile(videoPath);
+            File.DeleteFile(thumbnailPath);
+            File.DeleteFile(imagePath);
+            this._context.Videos.Remove(video);
+        }
+        public async Task DeleteAllAsync(int? id)
+        {
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
+            await this.DeleteAsync(id);
         }
         public Video Get(int? id)
         {
@@ -209,18 +244,35 @@ namespace CBProject.Repositories
             }
             return videos;
         }
-        public async Task<ICollection<Video>> GetAllByCategoryNameAsync(string name)
+        public async Task<ICollection<Video>> GetAllByCategoryNameAsync(string name, int? packageId)
         {
+
+            var package = await this._context.SubcriptionPackages
+                                    .Include(s => s.Videos)
+                                    .Include(s => s.Ebooks)
+                                    .Include(s => s.Orders)
+                                    .FirstOrDefaultAsync(p => p.ID == packageId);
+
+            // Get All Free Videos
             var videos = await this._context.Videos
-                .Include(v => v.Category)
-                .Include(v => v.Creator)
-                .Where(v => v.Category.Name.Equals(name))
+                .Where(v => v.Category.Name.Equals(name) && !v.SubscriptionPackages.Any())
                 .ToListAsync();
-            foreach(var video in videos)
+
+            // Get All Packages Videos
+            if (package != null)
+            {
+                foreach (var video in package.Videos)
+                {
+                    videos.Add(video);
+                }
+            }
+
+            // Get Average Of Ratings
+            foreach (var video in videos.ToList())
             {
                 video.RatingsAVG = await this.GetRatingsAverageAsync(video.ID);
             }
-            return videos;
+            return videos.ToList(); ;
         }
         public async Task<ICollection<Video>> GetAllEmptyAsync()
         {
@@ -424,7 +476,8 @@ namespace CBProject.Repositories
             var review = new Review()
             {
                 Reviewer = reviewer,
-                Comment = comment
+                Comment = comment,
+                CreatedDate = DateTime.Now
             };
             this._context.Reviews.Add(review);
             await this._context.SaveChangesAsync();

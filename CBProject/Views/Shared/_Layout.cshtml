@@ -33,7 +33,8 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Lessons", "Lessons", "Home")</li>
+                    <li>@Html.ActionLink("Courses", "Lessons", "Home")</li>
+                    <li>@Html.ActionLink("Plans", "Subscribe", "SubscriptionPackages")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
@@ -74,7 +75,7 @@
                 </div>
             </div>
           
-            <p style="text-align:center;margin-top:3%;">&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p style="text-align:center;margin-top:3%;">&copy; @DateTime.Now.Year - CodeMe</p>
             <br />
         </footer>
     </div>

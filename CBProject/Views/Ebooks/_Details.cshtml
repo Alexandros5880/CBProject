@@ -29,14 +29,6 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Thumbnail)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Thumbnail)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.Url)
         </dt>
 
@@ -57,7 +49,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Category)
+            @Html.DisplayFor(model => model.Category.Name)
         </dd>
 
         <dt>
@@ -65,33 +57,8 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Creator)
+            @Html.DisplayFor(model => model.Creator.FullName)
         </dd>
-
-        <dt>
-            @Html.DisplayName("Tags")
-        </dt>
-
-        <dd>
-            Tags
-        </dd>
-
-        <dt>
-            @Html.DisplayName("Reviews")
-        </dt>
-
-        <dd>
-            Reviews
-        </dd>
-
-        <dt>
-            @Html.DisplayName("Ratings")
-        </dt>
-
-        <dd>
-            Ratings
-        </dd>
-
     </dl>
 </div>
 <p>

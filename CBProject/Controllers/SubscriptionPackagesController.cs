@@ -14,15 +14,20 @@ namespace CBProject.Controllers
 {
     public class SubscriptionPackagesController : Controller
     {
-        private SubscriptionPackageRepository _subscriptionRepo;
-        private UsersRepo _usersRepo;
-        private PaymentsRepository _peynmentRepo;
-        public SubscriptionPackagesController(IUnitOfWork unitOfWork, IUsersRepo usersRepo)
+        private readonly SubscriptionPackageRepository _subscriptionRepo;
+        private readonly OrdersRepository _ordersRepository;
+        private readonly UsersRepo _usersRepo;
+        private readonly RolesRepo _rolesRepo;
+        private readonly PaymentsRepository _peynmentRepo;
+        private readonly UsersSubscriptionPackagesRepo _userSubscriptionPackageRepository;
+        public SubscriptionPackagesController(IUnitOfWork unitOfWork, IUsersRepo usersRepo, IRolesRepo rolesRepo)
         {
             this._subscriptionRepo = unitOfWork.SubscriptionPackages;
             this._usersRepo = (UsersRepo)usersRepo;
+            this._rolesRepo = (RolesRepo)rolesRepo;
             this._peynmentRepo = unitOfWork.Payments;
-
+            this._ordersRepository = unitOfWork.Orders;
+            this._userSubscriptionPackageRepository = unitOfWork.UserSubscriptionPackages;
         }
         public async Task<ActionResult> Index()
         {
@@ -138,13 +143,59 @@ namespace CBProject.Controllers
             await this._subscriptionRepo.SaveAsync();
             return RedirectToAction("Index");
         }
+        public async Task<ActionResult> AfterPayment(int? paymentId, int? orderId)
+        {
+            if (paymentId == null)
+                return HttpNotFound();
+            if (orderId == null)
+                return HttpNotFound();
+
+            // Get Payment And Payments User
+            var payment = await this._peynmentRepo.GetAsync(paymentId);
+            var user = await this._usersRepo.GetUserAsyncMainContext(payment.UserId);
+            var order = await this._ordersRepository.GetAsync(orderId);
+            var package = await this._subscriptionRepo.GetAsync(order.SubscriptionPackageId);
+
+            // Remove old Subsciption Package from user
+            var userSabsIds = await this._userSubscriptionPackageRepository
+                                                    .GetAllQueryable()
+                                                    .Where(u => u.UserId == user.Id)
+                                                    .Select(u => u.SubscriptionPackageId)
+                                                    .ToListAsync();
+            foreach (var id in userSabsIds)
+            {
+                await this._userSubscriptionPackageRepository.DeleteAsync(id);
+            }
+
+            // Add Subscription Package to User
+            UserSubscriptionPackage userPackage = new UserSubscriptionPackage()
+            {
+                UserId = user.Id,
+                SubscriptionPackageId = package.ID
+            };
+            this._userSubscriptionPackageRepository.Add(userPackage);
+            await this._userSubscriptionPackageRepository.SaveAsync();
+
+
+            // Add Student Role
+            var studentRole = await this._rolesRepo.GetByNameAsync("Student");
+            var guestRole = await this._rolesRepo.GetByNameAsync("Guest");
+            this._usersRepo.AddRole(user, studentRole);
+            this._usersRepo.RemoveRole(user, guestRole);
+            HelperClasses.EmailService email = new HelperClasses.EmailService();
+            await email.SendEmailReceipt(user);
+            return RedirectToAction("Index", "Home");
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
                 this._subscriptionRepo.Dispose();
                 this._usersRepo.Dispose();
+                this._rolesRepo.Dispose();
                 this._peynmentRepo.Dispose();
+                this._ordersRepository.Dispose();
+                this._userSubscriptionPackageRepository.Dispose();
             }
             base.Dispose(disposing);
         }

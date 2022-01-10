@@ -15,5 +15,12 @@ namespace CBProject.Models.EntityModels
         public bool AutoSubscription { get; set; }
         [DataType(DataType.Date)]
         public DateTime StartDate { get; set; }
+        public virtual ICollection<Ebook> Ebooks { get; set; }
+        public virtual ICollection<Video> Videos { get; set; }
+        public SubscriptionPackage()
+        {
+            this.Ebooks = new HashSet<Ebook>();
+            this.Videos = new HashSet<Video>();
+        }
     }
 }

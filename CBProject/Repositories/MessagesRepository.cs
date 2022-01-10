@@ -47,7 +47,6 @@ namespace CBProject.Repositories
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
             var obj = this._context.ContactMessages
-                            .Include(m => m.User)
                             .FirstOrDefault(m => m.ID == id);
             if (obj == null)
                 throw new ArgumentNullException(nameof(obj));
@@ -57,14 +56,12 @@ namespace CBProject.Repositories
         {
             return this._context.ContactMessages
                                 .OrderBy(m => m.UploatedDate)
-                                .Include(m => m.User)
                                 .ToList();
         }
         public async Task<ICollection<ContactMessage>> GetAllAsync()
         {
             return await this._context.ContactMessages
                                     .OrderBy(m => m.UploatedDate)
-                                    .Include(m => m.User)
                                     .ToListAsync();
         }
         public ICollection<ContactMessage> GetAllEmpty()
@@ -88,7 +85,6 @@ namespace CBProject.Repositories
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
             var obj = await this._context.ContactMessages
-                                        .Include(m => m.User)
                                         .FirstOrDefaultAsync(m => m.ID == id);
             if (obj == null)
                 throw new ArgumentNullException(nameof(obj));

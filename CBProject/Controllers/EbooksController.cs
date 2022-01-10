@@ -43,7 +43,6 @@ namespace CBProject.Controllers
         [Authorize]
         public async Task<ActionResult> Index()
         {
-
             return View();
         }
         public async Task<ActionResult> PublicDetails(int? id)

@@ -22,6 +22,7 @@ namespace CBProject.Repositories
         {
             if (review == null)
                 throw new ArgumentNullException(nameof(review));
+            review.CreatedDate = DateTime.Now;
             this._context.Reviews.Add(review);
         }        
         public void Delete(int? id)
@@ -76,11 +77,14 @@ namespace CBProject.Repositories
         {
             return this._context.Reviews
                 .Include(r=>r.Reviewer)
+                .OrderBy(r => r.CreatedDate)
                 .ToList();
         }        
         public ICollection<Review> GetAllEmpty()
         {
-            return this._context.Reviews.ToList();
+            return this._context.Reviews
+                        .OrderBy(r => r.CreatedDate)
+                        .ToList();
         }        
         public Review GetEmpty(int? id)
         {
@@ -119,13 +123,15 @@ namespace CBProject.Repositories
         public async Task<ICollection<Review>> GetAllEmptyAsync()
         {
             return await this._context.Reviews
-                .ToListAsync();
+                                .OrderBy(r => r.CreatedDate)
+                                .ToListAsync();
         }
         public async Task<ICollection<Review>> GetAllAsync()
         {
             return await this._context.Reviews
-                .Include(r => r.Reviewer)
-                .ToListAsync();
+                            .OrderBy(r => r.CreatedDate)
+                            .Include(r => r.Reviewer)
+                            .ToListAsync();
         }
         public ICollection<Review> GetAllOtherFromVideo(Video video)
         {
@@ -137,6 +143,7 @@ namespace CBProject.Repositories
                                         .ToList();
             return this._context.Reviews
                                 .Where(r => reviewsIds.Contains(r.ID))
+                                .OrderBy(r => r.CreatedDate)
                                 .ToList();
         }
         public async Task<ICollection<Review>> GetAllOtherFromVideoAsync(Video video)
@@ -149,6 +156,7 @@ namespace CBProject.Repositories
                                         .ToListAsync();
             return await this._context.Reviews
                                 .Where(r => reviewsIds.Contains(r.ID))
+                                .OrderBy(r => r.CreatedDate)
                                 .ToListAsync();
         }
         public ICollection<Review> GetAllFromVideo(Video video)
@@ -161,6 +169,7 @@ namespace CBProject.Repositories
                                         .ToList();
             return this._context.Reviews
                                 .Where(r => reviewsIds.Contains(r.ID))
+                                .OrderBy(r => r.CreatedDate)
                                 .ToList();
         }
         public async Task<ICollection<Review>> GetAllFromVideoAsync(Video video)
@@ -173,6 +182,7 @@ namespace CBProject.Repositories
                                         .ToListAsync();
             return await this._context.Reviews
                                 .Where(r => reviewsIds.Contains(r.ID))
+                                .OrderBy(r => r.CreatedDate)
                                 .ToListAsync();
         }
         public ICollection<Review> GetAllOtherFromEbook(Ebook ebook)
@@ -185,6 +195,7 @@ namespace CBProject.Repositories
                                         .ToList();
             return this._context.Reviews
                                 .Where(r => reviewsIds.Contains(r.ID))
+                                .OrderBy(r => r.CreatedDate)
                                 .ToList();
         }
         public async Task<ICollection<Review>> GetAllOtherFromEbookAsync(Ebook ebook)
@@ -197,6 +208,7 @@ namespace CBProject.Repositories
                                         .ToListAsync();
             return await this._context.Reviews
                                 .Where(r => reviewsIds.Contains(r.ID))
+                                .OrderBy(r => r.CreatedDate)
                                 .ToListAsync();
         }
         public ICollection<Review> GetAllFromEbook(Ebook ebook)
@@ -209,6 +221,7 @@ namespace CBProject.Repositories
                                         .ToList();
             return this._context.Reviews
                                 .Where(r => reviewsIds.Contains(r.ID))
+                                .OrderBy(r => r.CreatedDate)
                                 .ToList();
         }
         public async Task<ICollection<Review>> GetAllFromEbookAsync(Ebook ebook)
@@ -221,6 +234,7 @@ namespace CBProject.Repositories
                                         .ToListAsync();
             return await this._context.Reviews
                                 .Where(r => reviewsIds.Contains(r.ID))
+                                .OrderBy(r => r.CreatedDate)
                                 .ToListAsync();
         }
         public IQueryable<Review> GetAllQueryable()
