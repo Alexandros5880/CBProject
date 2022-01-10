@@ -318,8 +318,6 @@ namespace CBProject.Controllers
             var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
             if (result.Succeeded)
             {
-                HelperClasses.EmailService email = new HelperClasses.EmailService();
-                await email.SendEmailChangedPassword(model);
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
             }
             AddErrors(result);

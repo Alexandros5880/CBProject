@@ -93,7 +93,7 @@ namespace CBProject.HelperClasses
             return email.SendAsync();
         }
 
-        public Task SendEmailChangedPassword(ResetPasswordViewModel user)
+        public Task SendEmailChangedPassword(ApplicationUser user)
         {
 
             Email.DefaultSender = _sender;

@@ -206,6 +206,8 @@ namespace CBProject.Controllers
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 }
+                HelperClasses.EmailService email = new HelperClasses.EmailService();
+                await email.SendEmailChangedPassword(user);
                 return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
             }
             AddErrors(result);
