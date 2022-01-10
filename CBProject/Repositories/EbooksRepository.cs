@@ -157,6 +157,35 @@ namespace CBProject.Repositories
             }
             return ebooks.ToList();
         }
+        public async Task<ICollection<Ebook>> GetAllByPackageAsync(int? packageId)
+        {
+            var package = await this._context.SubcriptionPackages
+                                    .Include(s => s.Videos)
+                                    .Include(s => s.Ebooks)
+                                    .Include(s => s.Orders)
+                                    .FirstOrDefaultAsync(p => p.ID == packageId);
+
+            // Get All Free Videos
+            var ebooks = await this._context.Ebooks
+                        .Where(e => !e.SubscriptionPackages.Any())
+                        .ToListAsync();
+
+            // Get All Packages Videos
+            if (package != null)
+            {
+                foreach (var ebook in package.Ebooks)
+                {
+                    ebooks.Add(ebook);
+                }
+            }
+
+            // Get Average Of Ratings
+            foreach (var ebook in ebooks.ToList())
+            {
+                ebook.RatingsAVG = await this.GetRatingsAverageAsync(ebook.ID);
+            }
+            return ebooks.ToList();
+        }
         public ICollection<Ebook> GetAllEmpty()
         {
             var ebooks = this._context.Ebooks.ToList();

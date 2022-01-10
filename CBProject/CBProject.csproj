@@ -305,7 +305,6 @@
     <Compile Include="Models\HelperModels\CreatePaymentAPI.cs" />
     <Compile Include="Models\HelperModels\EbookPdfAPI.cs" />
     <Compile Include="Models\HelperModels\EbookRateAPI.cs" />
-    <Compile Include="Models\HelperModels\GetProductsApi.cs" />
     <Compile Include="Models\HelperModels\OrderApiModel.cs" />
     <Compile Include="Models\HelperModels\Products.cs" />
     <Compile Include="Models\HelperModels\VideoRateAPI.cs" />

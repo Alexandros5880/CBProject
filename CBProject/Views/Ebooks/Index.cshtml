@@ -183,6 +183,7 @@
                 <th>UploadDate</th>
                 <th>Cover</th>
                 <th>Rating</th>
+                <th>Package</th>
                 <th></th>
             </tr>
         </thead>
@@ -293,9 +294,19 @@
 @section scripts{
     <script>
         $(document).ready(function () {
+
+            // Get Logged User and hes SubscriptionPakage
+            var userAuthorized = @User.Identity.IsAuthenticated.ToString().ToLower();
+            var loggedUser = null;
+            if (userAuthorized) {
+                getLogedUserSync(function (user) {
+                    loggedUser = user;
+                });
+            }
+
             var table = $("#ebooks").DataTable({
                 ajax: {
-                    url: "/api/Ebook/all",
+                    url: `/api/Ebook/product/all?packageId=${loggedUser.subscriptionPackage.id}`,
                     dataSrc: ""
                 },
                 columns: [
@@ -335,7 +346,6 @@
                             return `<img alt="Cover Foto" src="${ebook.ebookImagePath}" style="height: 77px;"/>`;
                         }
                     },
-
                     {
                         data: "Rating",
                         render: function (data, type, ebook) {
@@ -353,6 +363,12 @@
                                         <!--<input type="submit" value="Submit" />-->
                                     </form>
                                 `;
+                        }
+                    },
+                    {
+                        data: "Package",
+                        render: function (data, type, ebook) {
+                            return isSubscribed(ebook.subscribed, loggedUser.subscriptionPackage);
                         }
                     },
                     {
@@ -399,7 +415,7 @@
                                         <button type="button" id="delete-modal-button-ebook" class="btn btn-danger btn-delete delete-modal-button-ebook" data-toggle="modal" data-target="#delete-modal-ebook" data-id="${ebook.id}">Delete</button>
                                     `;
                             }
-                            
+
                         }
                     }
                 ],

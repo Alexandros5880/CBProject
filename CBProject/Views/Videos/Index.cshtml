@@ -187,6 +187,7 @@
                 <th>Description</th>
                 <th>Upload Date</th>
                 <th>Rating</th>
+                <th>Package</th>
                 <th></th>
             </tr>
         </thead>
@@ -302,6 +303,16 @@
     <script>
         $(document).ready(function () {
 
+            // Get Logged User and hes SubscriptionPakage
+            var userAuthorized = @User.Identity.IsAuthenticated.ToString().ToLower();
+            var loggedUser = null;
+            if (userAuthorized) {
+                getLogedUserSync(function (user) {
+                    loggedUser = user;
+                });
+            }
+
+
             // When Modal Close Stop Video
             $('#modal-fullscreen-xl').on('hidden.bs.modal', function () {
                 $(".myvideo").trigger('pause');
@@ -309,7 +320,7 @@
 
             var table = $("#videos").DataTable({
                 ajax: {
-                    url: "/api/Video/all",
+                    url: `/api/Video/product/all?packageId=${loggedUser.subscriptionPackage.id}`,
                     dataSrc: ""
                 },
                 columns: [
@@ -366,6 +377,12 @@
                                         <!--<input type="submit" value="Submit" />-->
                                     </form>
                                 `;
+                        }
+                    },
+                    {
+                        data: "Package",
+                        render: function (data, type, video) {
+                            return isSubscribed(video.subscribed, loggedUser.subscriptionPackage);
                         }
                     },
                     {

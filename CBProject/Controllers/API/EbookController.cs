@@ -30,6 +30,15 @@ namespace CBProject.Controllers.API
             return Ok(videos);
         }
 
+        // Get All Free And By Product
+        [HttpGet]
+        [Route("api/Ebook/product/all")]
+        public async Task<IHttpActionResult> GetByProduct(int? packageId)
+        {
+            var ebooks = await this._ebooksRepository.GetAllByPackageAsync(packageId);
+            return Ok(ebooks);
+        }
+
         // GET api/Ebook/5
         public async Task<IHttpActionResult> Get(int? id)
         {
