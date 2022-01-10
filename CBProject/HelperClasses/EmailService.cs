@@ -128,7 +128,7 @@ namespace CBProject.HelperClasses
             var email = Email
                 .From("codeme.email@gmail.com", "CodeMe")
                 .To(user.Email)
-                .Subject("Change Password")
+                .Subject("Payment Received")
                 .Body(body.ToString());
 
             return email.SendAsync();
