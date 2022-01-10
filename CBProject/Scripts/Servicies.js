@@ -32,7 +32,6 @@ function getContentsByCategoryName(categoryName, subscriptionPackageId = null, c
         }
     });
 }
-
 function getProductsByFilters(sendData, callback) {
     //console.log(JSON.stringify(sendData));
     $.ajax({
@@ -679,8 +678,8 @@ function compaire(a, b) {
 }
 
 // Function displays if subscribed or not
-function isSubscribed(bool, package) {
-    if (bool) {
+function isSubscribed(bool, package = null) {
+    if (bool && package != null) {
         return `
                 <b>${package.description}<b/>
                 <img src="/img/checked.jpg" alt="subscribed" class="rounded" style="height:17px;">`;

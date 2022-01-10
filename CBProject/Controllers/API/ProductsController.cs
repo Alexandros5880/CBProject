@@ -68,7 +68,7 @@ namespace CBProject.Controllers.API
         }
         [HttpPost]
         [Route("api/products/contenst/bycategoryid")]
-        public async Task<IHttpActionResult> GetContentsByCategoryId([FromBody] GetProductsApi param)
+        public async Task<IHttpActionResult> GetContentsByCategoryId([FromBody] FilterParams param)
         {
             if (param.CategoryId == null)
                 return NotFound();
@@ -89,7 +89,7 @@ namespace CBProject.Controllers.API
         }
         [HttpPost]
         [Route("api/products/contenst/bycategoryname")]
-        public async Task<IHttpActionResult> GetContentsByCategoryName([FromBody] GetProductsApi param)
+        public async Task<IHttpActionResult> GetContentsByCategoryName([FromBody] FilterParams param)
         {
             if (param.CategoryName == null)
                 return NotFound();
@@ -131,6 +131,7 @@ namespace CBProject.Controllers.API
 
             var ebooks = await this._unitOfWork.Ebooks.GetAllBySearch(ebooksQ, search).ToListAsync();
             var videos = await this._unitOfWork.Videos.GetAllBySearch(videosQ, search).ToListAsync();
+            var subscriptionPackage = await this._unitOfWork.SubscriptionPackages.GetEmptyAsync(filters.SabscriptionPackageId);
 
             if (filters.CreatedDate)
             {
@@ -143,12 +144,13 @@ namespace CBProject.Controllers.API
                 videos = videos.OrderBy(v => v.RatingsAVG, new RatingCompare()).ToList();
             }
 
-            Products products = new Products()
+            var products = new
             {
                 Ebooks = ebooks,
                 Videos = videos,
                 EbooksPages = Pagination.CountPages(ebooks, StaticImfo.PageSize),
-                VideosPages = Pagination.CountPages(videos, StaticImfo.PageSize)
+                VideosPages = Pagination.CountPages(videos, StaticImfo.PageSize),
+                SubscriptionPackage = subscriptionPackage
             };
 
             return Ok(products);

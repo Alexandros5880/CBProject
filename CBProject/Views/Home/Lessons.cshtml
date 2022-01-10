@@ -230,12 +230,23 @@
     <script>
         $(document).ready(function () {
 
+
+
+            // Get Logged User and hes SubscriptionPakage
+            var userAuthorized = @User.Identity.IsAuthenticated.ToString().ToLower();
+            var loggedUser = null;
+            if (userAuthorized) {
+                getLogedUserSync(function (user) {
+                    loggedUser = user;
+                });
+            }
+            console.log(loggedUser);
+
+
             // When Modal Close Stop Video
             $('#modal-fullscreen-xl').on('hidden.bs.modal', function () {
                 $(".myvideo").trigger('pause');
             })
-
-            var userAuthorized = @User.Identity.IsAuthenticated.ToString().ToLower();
 
             var ebooks = false;
             var videos = true;
@@ -346,14 +357,28 @@
 
             // Search
             function searchTop(ebooks, videos, lessonsRatings, createdDate, search, page = null, renderPagenation = false) {
-                var sendData = {
-                    ebooks: ebooks,
-                    videos: videos,
-                    lessonsRatings: lessonsRatings,
-                    createdDate: createdDate,
-                    search: search,
-                    page: page
-                };
+                var sendData
+                if (loggedUser && loggedUser.subscriptionPackage) {
+                    sendData = {
+                        ebooks: ebooks,
+                        videos: videos,
+                        lessonsRatings: lessonsRatings,
+                        createdDate: createdDate,
+                        search: search,
+                        page: page,
+                        sabscriptionPackageId: loggedUser.subscriptionPackage.id
+                    };
+                } else {
+                    sendData = {
+                        ebooks: ebooks,
+                        videos: videos,
+                        lessonsRatings: lessonsRatings,
+                        createdDate: createdDate,
+                        search: search,
+                        page: page,
+                        sabscriptionPackageId: null
+                    };
+                }
                 getProductsByFilters(sendData, function (response_data) {
                     render(response_data, videos, ebooks, renderPagenation);
                 });
@@ -364,6 +389,7 @@
 
             // Contents Render UI Function
             function render(data, videos, ebooks, renderPagination = false) {
+                console.log(data);
                 // ratingsAVG, uploadDate
                 if (lessonsRatings) {
                     $(".lessons-ratings").addClass("active");
@@ -401,7 +427,6 @@
                         getCategorySync(ebook.categoryId, function (category) {
                             getUserByIdSync(ebook.creatorId, function (creator) {
                                 getPDFSync(ebook.ebookFilePath, function(pdfFile) {
-                                    var userAuthorized = @User.Identity.IsAuthenticated.ToString().ToLower();
                                     var ratingFor;
                                     if (userAuthorized) {
                                         ratingFor = `
@@ -449,7 +474,7 @@
                                                     <p><img class="img-icon-index" src="../assets/images/icons/icon-calendar.png" alt="video" /><small> ${ebook.uploadDate.split("T")[0]} </small></p>
                                                     <br />
                                                     ` + ratingFor + `
-                                                    ` + isSubscribed(ebook.subscribed) + `
+                                                    ` + isSubscribed(ebook.subscribed, datasubscriptionPackage) + `
                                                     <br />
                                                     <br />
                                                     <button class="btn btn-purple btn-lg details">Details</button>
@@ -493,7 +518,6 @@
                     data.videos.forEach(video => {
                         getCategorySync(video.categoryId, function (category) {
                             getUserByIdSync(video.creatorId, function (creator) {
-                                var userAuthorized = @User.Identity.IsAuthenticated.ToString().ToLower();
                                 var ratingFor;
                                 if (userAuthorized) {
                                     ratingFor = `
@@ -546,7 +570,7 @@
                                                  <p><img class="img-icon-index" src="../assets/images/icons/icon-category.png" alt="video" /> ${category.name}  </p>
                                                 <p><img class="img-icon-index" src="../assets/images/icons/icon-calendar.png" alt="video" /> <small>  ${video.uploadDate.split("T")[0]}</small>  </p>
                                                 ` + ratingFor + `
-                                                ` + isSubscribed(video.subscribed) + `
+                                                ` + isSubscribed(video.subscribed, data.subscriptionPackage) + `
                                                 <br />
                                               <br>
                                                 <button class="btn btn-purple btn-lg details">Details</button>
