@@ -89,7 +89,6 @@
 
 <script type="text/javascript">
     $(function () {
-
         // Open Read Ebooks Modal
         $("body").on('click', '#ebook-modal-button', function () {
             var id = $(this).attr('data-id');
@@ -97,7 +96,6 @@
                 var access = false;
                 user.roles.forEach(function (role) {
                     getRoleSync(role.roleId, function (role) {
-                        console.log(role.level);
                         if (role.level > 0) {
                             access = true;
                         }
@@ -124,7 +122,6 @@
                 var access = false;
                 user.roles.forEach(function (role) {
                     getRoleSync(role.roleId, function (role) {
-                        console.log(role.level);
                         if (role.level > 0) {
                             access = true;
                         }
@@ -337,9 +334,11 @@
             // When Details Buttons Clicked
             $(document.body).on('click', 'button', function () {
                 if (this.classList.contains('details')) {
+                    console.log("Details Pressed.");
                     var categoryId = $(this).parent().parent().parent().find("input[type=hidden]").val();
-                    var contentId = $(this).parent().parent().parent().find("input[name=content]").val();
-                    var contentType = $(this).parent().parent().parent().find("input[name=content-type]").val();
+                    var contentId = $(this).parent().parent().parent().parent().find("input[name=content]").val();
+                    var contentType = $(this).parent().parent().parent().parent().find("input[name=content-type]").val();
+                    //console.log(`categoryId: ${categoryId}   contentId: ${contentId}   contentType: ${contentType}`);
                     redirectToGuestDetails(categoryId, contentId, contentType);
                 }
             });
@@ -460,7 +459,7 @@
                                     }
                                     $(".contents").append(`
                                         <div class="col-md-3 ourHolder" id="ourHolder">
-                                            <input type="hidden" id="category" name="category" value="${category.id}">
+                                            <input type="hidden" id="category" name="category" value="${ebook.categoryId}">
                                             <input type="hidden" id="content" name="content" value="${ebook.id}">
                                             <input type="hidden" id="content-type" name="content-type" value="ebook">
                                             <div class="card item" id="card-ebook">
@@ -468,11 +467,12 @@
                                             <p style="text-align:center;margin-top:14px;"><b>${ebook.title}</b>
                                             <hr />
                                                 <div class="card-body ">
-                                                   <p><img class="img-icon-index" src="../assets/images/icons/icons-person.png" alt="person" />  ${creator.fullName}</p>
+                                                    <p><img class="img-icon-index" src="../assets/images/icons/icons-person.png" alt="person" />  ${creator.fullName}</p>
+                                                    <p><img class="img-icon-index" src="../assets/images/icons/icon-category.png" alt="video" /> ${category.name}  </p>
                                                     <p><img class="img-icon-index" src="../assets/images/icons/icon-calendar.png" alt="video" /><small> ${ebook.uploadDate.split("T")[0]} </small></p>
                                                     <br />
                                                     ` + ratingFor + `
-                                                    ` + isSubscribed(ebook.subscribed, datasubscriptionPackage) + `
+                                                    ` + isSubscribed(ebook.subscribed, data.subscriptionPackage) + `
                                                     <br />
                                                     <br />
                                                     <button class="btn btn-purple btn-lg details">Details</button>
@@ -552,7 +552,7 @@
                                 $(".contents").append(
                                     `
                                     <div class="col-md-3 ourHolder" ">
-                                        <input type="hidden" id="category" name="category" value="${category.id}">
+                                        <input type="hidden" id="category" name="category" value="${video.categoryId}">
                                         <input type="hidden" id="content" name="content" value="${video.id}">
                                         <input type="hidden" id="content-type" name="content-type" value="video">
                                         <div class="card item" id="card-video">
@@ -565,7 +565,7 @@
                                              <hr>
                                             <div class="card-body">
                                                 <p><img class="img-icon-index" src="../assets/images/icons/icons-person.png" alt="person" />  ${creator.fullName}</p>
-                                                 <p><img class="img-icon-index" src="../assets/images/icons/icon-category.png" alt="video" /> ${category.name}  </p>
+                                                <p><img class="img-icon-index" src="../assets/images/icons/icon-category.png" alt="video" /> ${category.name}  </p>
                                                 <p><img class="img-icon-index" src="../assets/images/icons/icon-calendar.png" alt="video" /> <small>  ${video.uploadDate.split("T")[0]}</small>  </p>
                                                 ` + ratingFor + `
                                                 ` + isSubscribed(video.subscribed, data.subscriptionPackage) + `

@@ -1,4 +1,5 @@
 ﻿using CBProject.Models.EntityModels;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -26,6 +27,8 @@ namespace CBProject.Models.ViewModels
         [Required]
         [StringLength(100, ErrorMessage = "Ener your First Name.", MinimumLength = 3)]
         public string UserName { get; set; }
+
+        public ICollection<IdentityUserRole> Roles { get; set; }
 
         [Required]
         [EmailAddress]
