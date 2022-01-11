@@ -171,7 +171,7 @@
                     loggedUser = user;
                 });
             }
-            
+
 
             // When Modal Close Stop Video
             $('#video-modal-fullscreen-xl').on('hidden.bs.modal', function () {
@@ -245,7 +245,7 @@
             });
 
             // Get Videos And Ebooks With Category Name BY Default
-            getDataByCatName(defaultCategoryName);
+            getDataByCatName(defaultCategoryName, true);
 
             // When Details Button Clicked
             $(document.body).on('click', 'button', function () {
@@ -300,38 +300,35 @@
 
 
             // Get Ebooks / Videos By Category Name
-            function getDataByCatName(categoryName) {
+            function getDataByCatName(categoryName, renderEbooks = false) {
                 if (loggedUser && loggedUser.subscriptionPackage) {
                     getContentsByCategoryName(categoryName, loggedUser.subscriptionPackage.id, function (data) {
-                        render(data);
+                        render(data, renderEbooks);
                     });
                 } else {
                     getContentsByCategoryName(categoryName, null, function (data) {
-                        render(data);
+                        render(data, renderEbooks);
                     });
                 }
-                
             }
 
             // Get Ebooks / Videos By Category Id
-            function getDataByCatId(categoryId) {
+            function getDataByCatId(categoryId, renderEbooks = false) {
                 if (loggedUser && loggedUser.subscriptionPackage) {
                     getContentsByCategoryId(categoryId, loggedUser.subscriptionPackage.id, function (data) {
-                        render(data)
+                        render(data, renderEbooks);
                     });
                 } else {
                     getContentsByCategoryId(categoryId, null, function (data) {
-                        render(data)
+                        render(data, renderEbooks);
                     });
                 }
             }
 
             // Render UI Function
-            function render(data) {
+            function render(data, renderEbooks = false) {
                 $("#videos-home").empty();
                 $("#videos-home");
-                $("#ebooks-home").empty();
-                $("#ebooks-home");
                 data.videos.sort(function (a, b) {
                     return a.ratingsAVG - b.ratingsAVG;
                 });
@@ -418,74 +415,78 @@
                     });
 
                 });
-                data.ebooks.sort(function (a, b) {
-                    return a.ratingsAVG - b.ratingsAVG;
-                });
-                data.ebooks.reverse();
-                data.ebooks.slice(0, 4).forEach(ebook => {
-                    getCategorySync(ebook.categoryId, function (category) {
-                        getUserByIdSync(ebook.creatorId, function (creator) {
-                            var userAuthorized = @User.Identity.IsAuthenticated.ToString().ToLower();
-                            var ratingFor;
-                            if (userAuthorized) {
-                                ratingFor = `
-                                    <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
-                                    <form id="ebook-rating-form" method="post" action="/api/Ebook/AddRate" target="dummyframe">
-                                        <input type="hidden" id="ebookId" name="ebookId" value="${ebook.id}">
-                                        <input type="hidden" id="content-type" name="content-type" value="ebook">
-                                        <input name="rate"
-                                                class="rating rating-loading rate"
-                                                data-min="0"
-                                                data-max="5"
-                                                data-step="0.1"
-                                                value="${ebook.ratingsAVG}"
-                                                onchange="this.form.submit()">
-                                        <!--<input type="submit" value="Submit" />-->
-                                    </form>
+                if (renderEbooks) {
+                    $("#ebooks-home").empty();
+                    $("#ebooks-home");
+                    data.ebooks.sort(function (a, b) {
+                        return a.ratingsAVG - b.ratingsAVG;
+                    });
+                    data.ebooks.reverse();
+                    data.ebooks.slice(0, 4).forEach(ebook => {
+                        getCategorySync(ebook.categoryId, function (category) {
+                            getUserByIdSync(ebook.creatorId, function (creator) {
+                                var userAuthorized = @User.Identity.IsAuthenticated.ToString().ToLower();
+                                var ratingFor;
+                                if (userAuthorized) {
+                                    ratingFor = `
+                                        <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+                                        <form id="ebook-rating-form" method="post" action="/api/Ebook/AddRate" target="dummyframe">
+                                            <input type="hidden" id="ebookId" name="ebookId" value="${ebook.id}">
+                                            <input type="hidden" id="content-type" name="content-type" value="ebook">
+                                            <input name="rate"
+                                                    class="rating rating-loading rate"
+                                                    data-min="0"
+                                                    data-max="5"
+                                                    data-step="0.1"
+                                                    value="${ebook.ratingsAVG}"
+                                                    onchange="this.form.submit()">
+                                            <!--<input type="submit" value="Submit" />-->
+                                        </form>
+                                        `
+                                } else {
+                                    ratingFor = `
+                                        <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+                                        <form id="ebook-rating-form" method="post" action="/api/Ebook/AddRate" target="dummyframe">
+                                            <input type="hidden" id="ebookId" name="ebookId" value="${ebook.id}">
+                                            <input name="rate"
+                                                    class="rating rating-loading rate"
+                                                    data-min="0"
+                                                    data-max="5"
+                                                    data-step="0.1"
+                                                    value="${ebook.ratingsAVG}"
+                                                    disabled
+                                                    onchange="this.form.submit()">
+                                            <!--<input type="submit" value="Submit" />-->
+                                        </form>
                                     `
-                            } else {
-                                ratingFor = `
-                                    <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
-                                    <form id="ebook-rating-form" method="post" action="/api/Ebook/AddRate" target="dummyframe">
-                                        <input type="hidden" id="ebookId" name="ebookId" value="${ebook.id}">
-                                        <input name="rate"
-                                                class="rating rating-loading rate"
-                                                data-min="0"
-                                                data-max="5"
-                                                data-step="0.1"
-                                                value="${ebook.ratingsAVG}"
-                                                disabled
-                                                onchange="this.form.submit()">
-                                        <!--<input type="submit" value="Submit" />-->
-                                    </form>
-                                `
-                            }
-                            $("#ebooks-home").append(
-                                `
-                                <div class="col-md-3 ourHolder" data-item="${ebook.category}">
-                                    <div class="card item" id="card-ebook">
-                                        <img class="card-book-img" alt="Cover Foto" src="${ebook.ebookImagePath}" style="height: 150px; text-align: center;" />
-                                        <p style="text-align:center;margin-top:14px;"><b>${ebook.title}</b>
-                                        <hr />
-                                    <!--<img class="card-img-top" style="width:100%" src="~/img/${ebook.thumbnail}" alt="Card image cap">-->
-                                    <div class="card-body ebook-card">
-                                            <p><img class="img-icon-index" src="../assets/images/icons/icons-person.png" alt="person" />  ${creator.fullName}</p>
-                                            <p><img class="img-icon-index" src="../assets/images/icons/icon-calendar.png" alt="video" /><small> ${ebook.uploadDate.split("T")[0]} </small></p>
-                                            `+ ratingFor +`
-                                            ` + isSubscribed(ebook.subscribed, data.subscriptionPackage) + `
-                                            <br />
-                                            <br />
-                                            <button class="btn btn-purple btn-lg details" data-id="${ebook.id}">Details</button>
+                                }
+                                $("#ebooks-home").append(
+                                    `
+                                    <div class="col-md-3 ourHolder" data-item="${ebook.category}">
+                                        <div class="card item" id="card-ebook">
+                                            <img class="card-book-img" alt="Cover Foto" src="${ebook.ebookImagePath}" style="height: 150px; text-align: center;" />
+                                            <p style="text-align:center;margin-top:14px;"><b>${ebook.title}</b>
+                                            <hr />
+                                        <!--<img class="card-img-top" style="width:100%" src="~/img/${ebook.thumbnail}" alt="Card image cap">-->
+                                        <div class="card-body ebook-card">
+                                                <p><img class="img-icon-index" src="../assets/images/icons/icons-person.png" alt="person" />  ${creator.fullName}</p>
+                                                <p><img class="img-icon-index" src="../assets/images/icons/icon-calendar.png" alt="video" /><small> ${ebook.uploadDate.split("T")[0]} </small></p>
+                                                `+ ratingFor +`
+                                                ` + isSubscribed(ebook.subscribed, data.subscriptionPackage) + `
+                                                <br />
+                                                <br />
+                                                <button class="btn btn-purple btn-lg details" data-id="${ebook.id}">Details</button>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                `
-                            );
-                            var ratingInput = $('input[name="rate"]');
-                            $(ratingInput).rating();
+                                    `
+                                );
+                                var ratingInput = $('input[name="rate"]');
+                                $(ratingInput).rating();
+                            });
                         });
                     });
-                }); 
+                }
             }
 
             // Display or Not Play Button of Videos
