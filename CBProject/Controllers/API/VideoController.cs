@@ -43,7 +43,7 @@ namespace CBProject.Controllers.API
         {
             if (userId == null)
                 return BadRequest();
-
+            var logedId = User.Identity.GetUserId();
             var user = await this._usersRepo.GetAsync(userId);
             if ( this._usersRepo.GetRoles(user).Contains("Admin") )
             {
@@ -53,7 +53,7 @@ namespace CBProject.Controllers.API
             {
                 var videos = await this._videosRepository
                                         .GetAllQueryable()
-                                        .Where(v => !v.SubscriptionPackages.Any())
+                                        .Where(v => !v.SubscriptionPackages.Any() && v.CreatorId.Equals(logedId))
                                         .ToListAsync();
                 return Ok(videos);
             }
