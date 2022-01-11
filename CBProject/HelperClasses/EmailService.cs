@@ -40,7 +40,7 @@ namespace CBProject.HelperClasses
             Email.DefaultSender = _sender;
             var roles = await this._rolesRepo
                                 .GetAllQuerable()
-                                .Where(r => !r.Name.Equals("Admin") && !r.Name.Equals("Manager"))
+                                .Where(r => r.Name.Equals("Admin") || r.Name.Equals("Manager"))
                                 .ToListAsync();
 
             List<string> usersEmails = new List<string>();
