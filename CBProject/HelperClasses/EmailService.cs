@@ -1,7 +1,13 @@
 ﻿using CBProject.Models;
 using CBProject.Models.ViewModels;
+using CBProject.Repositories.IdentityRepos;
+using CBProject.Repositories.IdentityRepos.Interfaces;
 using FluentEmail.Core;
+using FluentEmail.Core.Models;
 using FluentEmail.Smtp;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
@@ -12,8 +18,11 @@ namespace CBProject.HelperClasses
     public class EmailService
     {
         private SmtpSender _sender;
-        public EmailService()
+        private readonly RolesRepo _rolesRepo;
+
+        public EmailService(IRolesRepo rolesRepo)
         {
+            this._rolesRepo = (RolesRepo)rolesRepo;
             _sender = new SmtpSender(() => new SmtpClient("smtp.gmail.com")
             {
                 UseDefaultCredentials = false,
@@ -23,6 +32,10 @@ namespace CBProject.HelperClasses
             });
         }
 
+        public EmailService()
+        {
+        }
+
         //SendEmailRegister
         //SendEmailContact
         //SendEmailChangedPassword
@@ -30,9 +43,21 @@ namespace CBProject.HelperClasses
 
 
 
-        public Task EmployeeRequestSendEmail(ApplicationUser user)
+        public async Task<SendResponse> EmployeeRequestSendEmail(ApplicationUser user)
         {
             Email.DefaultSender = _sender;
+
+            var roles = await this._rolesRepo
+                                .GetAllQuerable()
+                                .Where(r => r.Name.Equals("Admin") && r.Name.Equals("Manager"))
+                                .ToListAsync();
+
+            List<ApplicationUser> users = new List<ApplicationUser>();
+
+            foreach(var role in roles)
+            {
+                //role.Users.Select()
+            }
 
             var email = Email
                 .From("codeme.email@gmail.com", "CodeMe")
@@ -40,7 +65,7 @@ namespace CBProject.HelperClasses
                 .Subject(EmployeeRequestSubject(user.FullName))
                 .Body(EmployeeRequestEmailBody(user.FullName));
 
-            return email.SendAsync();
+            return await email.SendAsync();
         }
 
         private string EmployeeRequestSubject(string name)

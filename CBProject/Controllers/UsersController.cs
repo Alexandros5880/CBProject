@@ -33,12 +33,12 @@ namespace CBProject.Controllers
             foreach(var user in activeUsers)
             {
                 var viewModel = Mapper.Map<ApplicationUser, ApplicationUserViewModel>(user);
+                if (viewModel.MyRoles == null)
+                    viewModel.MyRoles = new List<ApplicationRole>();
                 if (user.Roles.Count > 0)
                 {
                     foreach (var role in user.Roles)
                     {
-                        if (viewModel.MyRoles == null)
-                            viewModel.MyRoles = new List<ApplicationRole>();
                         viewModel.MyRoles.Add(await this._rolesRepo.GetAsync(role.RoleId));
                     }
                 }
