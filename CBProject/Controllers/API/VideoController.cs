@@ -45,7 +45,7 @@ namespace CBProject.Controllers.API
                 return BadRequest();
             var logedId = User.Identity.GetUserId();
             var user = await this._usersRepo.GetAsync(userId);
-            if ( this._usersRepo.GetRoles(user).Contains("Admin") )
+            if ( this._usersRepo.GetRoles(user).Contains("Admin") || this._usersRepo.GetRoles(user).Contains("Manager"))
             {
                 var videos = await this._videosRepository.GetAllEmptyAsync();
                 return Ok(videos);
@@ -70,7 +70,7 @@ namespace CBProject.Controllers.API
                 return BadRequest();
 
             var user = await this._usersRepo.GetAsync(userId);
-            if (this._usersRepo.GetRoles(user).Contains("Admin"))
+            if (this._usersRepo.GetRoles(user).Contains("Admin") || this._usersRepo.GetRoles(user).Contains("Manager"))
             {
                 var videos = await this._videosRepository.GetAllEmptyAsync();
                 return Ok(videos);

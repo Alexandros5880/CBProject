@@ -46,7 +46,7 @@ namespace CBProject.Controllers.API
                 return BadRequest();
             var logedId = User.Identity.GetUserId();
             var user = await this._usersRepo.GetAsync(userId);
-            if (this._usersRepo.GetRoles(user).Contains("Admin"))
+            if (this._usersRepo.GetRoles(user).Contains("Admin") || this._usersRepo.GetRoles(user).Contains("Manager"))
             {
                 var ebooks = await this._ebooksRepository.GetAllEmptyAsync();
                 return Ok(ebooks);
@@ -73,7 +73,7 @@ namespace CBProject.Controllers.API
                 return BadRequest();
 
             var user = await this._usersRepo.GetAsync(userId);
-            if (this._usersRepo.GetRoles(user).Contains("Admin"))
+            if (this._usersRepo.GetRoles(user).Contains("Admin") || this._usersRepo.GetRoles(user).Contains("Manager"))
             {
                 var ebooks = await this._ebooksRepository.GetAllEmptyAsync();
                 return Ok(ebooks);

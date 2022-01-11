@@ -93,31 +93,61 @@ namespace CBProject.Repositories.IdentityRepos
         }
         public void Delete(string name)
         {
-            if (this._manager.RoleManager.RoleExists(name))
+            if (!name.Equals("Admin") &&
+                !name.Equals("Student") &&
+                !name.Equals("Teacher") &&
+                !name.Equals("Guest") &&
+                !name.Equals("Manager"))
             {
-                this._manager.RoleManager.Delete(this.GetByName(name));
+                if (this._manager.RoleManager.RoleExists(name))
+                {
+                    this._manager.RoleManager.Delete(this.GetByName(name));
+                }
             }
         }
         public async Task<IdentityResult> DeleteAsync(string name)
         {
             if (this._manager.RoleManager.RoleExists(name))
             {
-                return await this._manager.RoleManager.DeleteAsync(this.GetByName(name));
+                
             }
+            if (!name.Equals("Admin") &&
+                !name.Equals("Student") &&
+                !name.Equals("Teacher") &&
+                !name.Equals("Guest") &&
+                !name.Equals("Manager"))
+            {
+                if (this._manager.RoleManager.RoleExists(name))
+                {
+                    return await this._manager.RoleManager.DeleteAsync(this.GetByName(name));
+                }
+            } 
             return null;
         }
         public void Update(string oldName, string newName)
         {
-            ApplicationRole role = this.GetByName(oldName);
-            role.Name = newName;
-            this._manager.RoleManager.Update(role);
-            this._manager.Context.SaveChanges();
+            if (!oldName.Equals("Admin") &&
+                !oldName.Equals("Student") &&
+                !oldName.Equals("Teacher") &&
+                !oldName.Equals("Guest") &&
+                !oldName.Equals("Manager"))
+            {
+                ApplicationRole role = this.GetByName(oldName);
+                role.Name = newName;
+                this._manager.RoleManager.Update(role);
+                this._manager.Context.SaveChanges();
+            }
         }
         public void Update(ApplicationRole role)
         {
-            //this._manager.RoleManager.Update(role);
-            //this._manager.Context.SaveChanges();
-            this._manager.RoleManager.Update(role);
+            if (!role.Name.Equals("Admin") &&
+                !role.Name.Equals("Student") &&
+                !role.Name.Equals("Teacher") &&
+                !role.Name.Equals("Guest") &&
+                !role.Name.Equals("Manager"))
+            {
+                this._manager.RoleManager.Update(role);
+            }
         }
         public async Task<IdentityResult> UpdateAsync(string oldName, string newName)
         {
