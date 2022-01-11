@@ -34,5 +34,6 @@ namespace CBProject.HelperClasses.Interfaces
         TagsToVideosRepository TagsToVideos { get; }
         MessagesRepository Messages { get; }
         UsersSubscriptionPackagesRepo UserSubscriptionPackages { get; }
+        EmployeesRequestsRepository EmployeesRequests { get; }
     }
 }

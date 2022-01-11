@@ -41,6 +41,9 @@ namespace CBProject.App_Start
 
             Mapper.CreateMap<Video, VideoViewModel>();
             Mapper.CreateMap<VideoViewModel, Video>();
+
+            Mapper.CreateMap<EmployeeRequest, RegisterViewModel>();
+            Mapper.CreateMap<RegisterViewModel, EmployeeRequest>();
         }
     }
 }

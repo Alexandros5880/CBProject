@@ -371,6 +371,32 @@ namespace CBProject.Migrations
                 .PrimaryKey(t => t.ID);
             
             CreateTable(
+                "dbo.EmployeeRequests",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        CReatedDate = c.DateTime(nullable: false),
+                        FirstName = c.String(),
+                        LastName = c.String(),
+                        UserName = c.String(),
+                        Email = c.String(),
+                        PhoneNumber = c.String(),
+                        Country = c.String(),
+                        State = c.String(),
+                        City = c.String(),
+                        PostalCode = c.String(),
+                        Street = c.String(),
+                        StreetNumber = c.String(),
+                        RoleId = c.String(maxLength: 128),
+                        EmployeeMessage = c.String(),
+                        CVPath = c.String(),
+                        ImagePath = c.String(),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.AspNetRoles", t => t.RoleId)
+                .Index(t => t.RoleId);
+            
+            CreateTable(
                 "dbo.AspNetRoles",
                 c => new
                     {
@@ -427,6 +453,7 @@ namespace CBProject.Migrations
         {
             DropForeignKey("dbo.UserSubscriptionPackages", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.UserSubscriptionPackages", "SubscriptionPackageId", "dbo.SubscriptionPackages");
+            DropForeignKey("dbo.EmployeeRequests", "RoleId", "dbo.AspNetRoles");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
             DropForeignKey("dbo.RequirementToEbooks", "RequirementId", "dbo.Requirements");
             DropForeignKey("dbo.RequirementToEbooks", "EbookId", "dbo.Ebooks");
@@ -470,6 +497,7 @@ namespace CBProject.Migrations
             DropIndex("dbo.UserSubscriptionPackages", new[] { "SubscriptionPackageId" });
             DropIndex("dbo.UserSubscriptionPackages", new[] { "UserId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
+            DropIndex("dbo.EmployeeRequests", new[] { "RoleId" });
             DropIndex("dbo.RequirementToEbooks", new[] { "EbookId" });
             DropIndex("dbo.RequirementToEbooks", new[] { "RequirementId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
@@ -507,6 +535,7 @@ namespace CBProject.Migrations
             DropTable("dbo.SubscriptionPackageEbooks");
             DropTable("dbo.UserSubscriptionPackages");
             DropTable("dbo.AspNetRoles");
+            DropTable("dbo.EmployeeRequests");
             DropTable("dbo.ContactMessages");
             DropTable("dbo.RequirementToEbooks");
             DropTable("dbo.AspNetUserRoles");

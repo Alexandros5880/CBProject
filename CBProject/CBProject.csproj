@@ -253,6 +253,7 @@
     <Compile Include="Controllers\ContactMessagesController.cs" />
     <Compile Include="Controllers\EbooksController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
+    <Compile Include="Controllers\EmployeesRequestsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
@@ -277,9 +278,9 @@
     <Compile Include="HelperClasses\StaticImfo.cs" />
     <Compile Include="HelperClasses\UnitOfWork.cs" />
     <Compile Include="HelperClasses\VideoEditor.cs" />
-    <Compile Include="Migrations\202201100029452_Initial.cs" />
-    <Compile Include="Migrations\202201100029452_Initial.Designer.cs">
-      <DependentUpon>202201100029452_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\202201111441488_Initial.cs" />
+    <Compile Include="Migrations\202201111441488_Initial.Designer.cs">
+      <DependentUpon>202201111441488_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -288,6 +289,7 @@
     <Compile Include="Models\EntityModels\CategoryToCategory.cs" />
     <Compile Include="Models\EntityModels\ContactMessage.cs" />
     <Compile Include="Models\EntityModels\Ebook.cs" />
+    <Compile Include="Models\EntityModels\EmployeeRequest.cs" />
     <Compile Include="Models\EntityModels\Order.cs" />
     <Compile Include="Models\EntityModels\Payment.cs" />
     <Compile Include="Models\EntityModels\RatingToEbook.cs" />
@@ -334,6 +336,7 @@
     <Compile Include="Repositories\CategoriesRepository.cs" />
     <Compile Include="Repositories\CategoryToCategoryRepository.cs" />
     <Compile Include="Repositories\EbooksRepository.cs" />
+    <Compile Include="Repositories\EmployeesRequestsRepository.cs" />
     <Compile Include="Repositories\Interfaces\IRepository.cs" />
     <Compile Include="Repositories\IdentityRepos\Interfaces\IRolesRepo.cs" />
     <Compile Include="Repositories\IdentityRepos\Interfaces\IUsersRepo.cs" />
@@ -1945,6 +1948,9 @@
     <Content Include="Views\Home\_Read.cshtml" />
     <Content Include="Views\Home\_Watch.cshtml" />
     <Content Include="Views\Home\EmployeeRegistration.cshtml" />
+    <Content Include="Views\EmployeesRequests\Delete.cshtml" />
+    <Content Include="Views\EmployeesRequests\Details.cshtml" />
+    <Content Include="Views\EmployeesRequests\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2043,8 +2049,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202201100029452_Initial.resx">
-      <DependentUpon>202201100029452_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202201111441488_Initial.resx">
+      <DependentUpon>202201111441488_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

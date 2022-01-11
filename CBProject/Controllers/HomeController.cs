@@ -26,6 +26,8 @@ namespace CBProject.Controllers
         private readonly VideosRepository _videosRepository;
         private readonly RequirementsRepository _requirementsRepository;
         private readonly MessagesRepository _messagesRepository;
+        private readonly EmployeesRequestsRepository _employeesRequestsRepository;
+
         public HomeController(IUnitOfWork unitOfWork, IUsersRepo usersRepo, IRolesRepo rolesRepo)
         {
             this._ebooksRepository = unitOfWork.Ebooks;
@@ -35,6 +37,7 @@ namespace CBProject.Controllers
             this._rolesRepo = (RolesRepo)rolesRepo;
             this._requirementsRepository = unitOfWork.Requirements;
             this._messagesRepository = unitOfWork.Messages;
+            this._employeesRequestsRepository = unitOfWork.EmployeesRequests;
         }
         public async Task<ActionResult> Index()
         {
@@ -187,6 +190,9 @@ namespace CBProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> EmplyeeRegistration(RegisterViewModel viewModel)
         {
+            EmployeeRequest request = Mapper.Map<RegisterViewModel, EmployeeRequest>(viewModel);
+            this._employeesRequestsRepository.Add(request);
+            await this._employeesRequestsRepository.SaveAsync();
             return View("Index");
         }
 

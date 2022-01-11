@@ -37,7 +37,7 @@ namespace CBProject.HelperClasses
         public TagsToVideosRepository TagsToVideos { get; protected set; }
         public MessagesRepository Messages { get; protected set; }
         public UsersSubscriptionPackagesRepo UserSubscriptionPackages { get; protected set; }
-
+        public EmployeesRequestsRepository EmployeesRequests { get; protected set; }
         public UnitOfWork(IApplicationDbContext context)
         {
             this.Context = (ApplicationDbContext)context;
@@ -66,6 +66,7 @@ namespace CBProject.HelperClasses
             this.TagsToVideos = new TagsToVideosRepository(this);
             this.Messages = new MessagesRepository(this);
             this.UserSubscriptionPackages = new UsersSubscriptionPackagesRepo(this);
+            this.EmployeesRequests = new EmployeesRequestsRepository(this);
         }
         protected virtual void Dispose(bool disposing)
         {
@@ -98,6 +99,7 @@ namespace CBProject.HelperClasses
                     this.TagsToVideos.Dispose();
                     this.Messages.Dispose();
                     this.UserSubscriptionPackages.Dispose();
+                    this.EmployeesRequests.Dispose();
                 }
                 disposedValue = true;
             }

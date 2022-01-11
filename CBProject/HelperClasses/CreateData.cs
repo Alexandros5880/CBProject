@@ -630,5 +630,20 @@ namespace CBProject.HelperClassesm
             }
             context.SaveChanges();
         }
+
+        public static void CreateAll(ApplicationDbContext context)
+        {
+            CreateUsersAndRoles(context);
+            CreateCategories(context);
+            CreateSubscriptionPackages(context);
+            CreateEbook(context);
+            CreateVideo(context);
+            CreateTags(context);
+            CreateRating(context);
+            CreateReview(context);
+            CreateRequiremenets(context);
+            CreateSubscriptionWithEbooksAndVideos(context);
+            CreateMoreTestDataFree(context);
+        }
     }
 }
