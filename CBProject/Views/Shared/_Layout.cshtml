@@ -32,9 +32,9 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Courses", "Lessons", "Home")</li>
                     <li>@Html.ActionLink("Plans", "Subscribe", "SubscriptionPackages")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
@@ -71,6 +71,12 @@
                         <p><b>Social</b></p>
                         <a href="https://www.facebook.com/"><img style="width:40px" src="~/assets/images/icons/icons-facebook.png" alt="facebook" /></a>
                         <a href="https://www.instagram.com/"><img style="width:40px" src="~/assets/images/icons/icons-instagram.png" alt="instagram" /></a>
+                        
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5 col-md-offset-7 col-xs-6 col-xs-offset-3">
+                        <p>@Html.ActionLink("Become an Instructor > ", "EmplyeeRegistration", "Home", new { @class = "btn-green btn-new-instructor" })</p>
                     </div>
                 </div>
             </div>
