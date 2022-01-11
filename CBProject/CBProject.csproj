@@ -1944,6 +1944,7 @@
     <Content Include="Views\ContactMessages\Create.cshtml" />
     <Content Include="Views\Home\_Read.cshtml" />
     <Content Include="Views\Home\_Watch.cshtml" />
+    <Content Include="Views\Home\EmplyeeRegistration.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

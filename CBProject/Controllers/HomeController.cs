@@ -169,6 +169,10 @@ namespace CBProject.Controllers
                     return RedirectToAction("Index", "Home");
             }
         }
+        public async Task<ActionResult> EmplyeeRegistration()
+        {
+            return View();
+        }
 
         public async Task<ActionResult> _Read(int? id)
         {
