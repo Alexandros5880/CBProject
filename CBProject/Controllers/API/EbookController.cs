@@ -44,7 +44,7 @@ namespace CBProject.Controllers.API
         {
             if (userId == null)
                 return BadRequest();
-
+            var logedId = User.Identity.GetUserId();
             var user = await this._usersRepo.GetAsync(userId);
             if (this._usersRepo.GetRoles(user).Contains("Admin"))
             {
@@ -55,7 +55,7 @@ namespace CBProject.Controllers.API
             {
                 var ebooks = await this._ebooksRepository
                                         .GetAllQueryable()
-                                        .Where(e => !e.SubscriptionPackages.Any())
+                                        .Where(e => !e.SubscriptionPackages.Any() %% e.CreatorId.Equals(logedId))
                                         .ToListAsync();
                 return Ok(ebooks);
             }
