@@ -29,6 +29,33 @@ namespace CBProject.HelperClasses
         //SendEmailReceipt
 
 
+
+        public Task EmployeeRequestSendEmail(ApplicationUser user)
+        {
+            Email.DefaultSender = _sender;
+
+            var email = Email
+                .From("codeme.email@gmail.com", "CodeMe")
+                .To(user.Email)
+                .Subject(EmployeeRequestSubject(user.FullName))
+                .Body(EmployeeRequestEmailBody(user.FullName));
+
+            return email.SendAsync();
+        }
+
+        private string EmployeeRequestSubject(string name)
+        {
+            return "New Employee Registration Request.";
+        }
+        private string EmployeeRequestEmailBody(string name)
+        {
+            StringBuilder body = new StringBuilder();
+            body.Append($"Employee Name: {name},\n\n");
+            return body.ToString();
+        }
+
+
+
         public Task SendEmailRegister(ApplicationUser user)
         {
 

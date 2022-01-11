@@ -193,6 +193,12 @@ namespace CBProject.Controllers
             EmployeeRequest request = Mapper.Map<RegisterViewModel, EmployeeRequest>(viewModel);
             this._employeesRequestsRepository.Add(request);
             await this._employeesRequestsRepository.SaveAsync();
+
+            // TODO: Create Deendemcy Injection
+            ApplicationUser user = Mapper.Map<RegisterViewModel, ApplicationUser>(viewModel);
+            HelperClasses.EmailService email = new HelperClasses.EmailService();
+            await email.EmployeeRequestSendEmail(user);
+
             return View("Index");
         }
 

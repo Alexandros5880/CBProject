@@ -184,6 +184,9 @@ namespace CBProject.Controllers
             var guestRole = await this._rolesRepo.GetByNameAsync("Guest");
             this._usersRepo.AddRole(user, studentRole);
             this._usersRepo.RemoveRole(user, guestRole);
+
+            // TODO: Create Dependency Injection
+            // Send Email
             HelperClasses.EmailService email = new HelperClasses.EmailService();
             await email.SendEmailReceipt(user);
             return RedirectToAction("Index", "Home");
