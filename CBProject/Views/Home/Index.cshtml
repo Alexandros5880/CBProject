@@ -432,7 +432,6 @@
                                         <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
                                         <form id="ebook-rating-form" method="post" action="/api/Ebook/AddRate" target="dummyframe">
                                             <input type="hidden" id="ebookId" name="ebookId" value="${ebook.id}">
-                                            <input type="hidden" id="content-type" name="content-type" value="ebook">
                                             <input name="rate"
                                                     class="rating rating-loading rate"
                                                     data-min="0"
@@ -463,6 +462,9 @@
                                 $("#ebooks-home").append(
                                     `
                                     <div class="col-md-3 ourHolder" data-item="${ebook.category}">
+                                        <input type="hidden" id="category" name="category" value="${ebook.categoryId}">
+                                        <input type="hidden" id="content" name="content" value="${ebook.id}">
+                                        <input type="hidden" id="content-type" name="content-type" value="ebook">
                                         <div class="card item" id="card-ebook">
                                             <img class="card-book-img" alt="Cover Foto" src="${ebook.ebookImagePath}" style="height: 150px; text-align: center;" />
                                             <p style="text-align:center;margin-top:14px;"><b>${ebook.title}</b>

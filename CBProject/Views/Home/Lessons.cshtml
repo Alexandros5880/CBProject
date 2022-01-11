@@ -291,6 +291,7 @@
                 if (this.classList.contains('ebooks-filter')) {
                     ebooks = true;
                     videos = false;
+                    page = 1;
                     $(".search-top-button").click();
                 }
             });
@@ -300,6 +301,7 @@
                 if (this.classList.contains('videos-filter')) {
                     ebooks = false;
                     videos = true;
+                    page = 1;
                     $(".search-top-button").click();
                 }
             });
@@ -473,7 +475,7 @@
                                                     ` + isSubscribed(ebook.subscribed, data.subscriptionPackage) + `
                                                     <br />
                                                     <br />
-                                                    <button class="btn btn-purple btn-lg details" data-id="${video.id}">Details</button>
+                                                    <button class="btn btn-purple btn-lg details" data-id="${ebook.id}">Details</button>
                                                     ` + displayReadButton(userAuthorized, ebook.id) + `
                                                 </div>
                                             </div>
