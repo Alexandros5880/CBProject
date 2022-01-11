@@ -9,6 +9,8 @@ using CBProject.Repositories.IdentityRepos.Interfaces;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -169,9 +171,23 @@ namespace CBProject.Controllers
                     return RedirectToAction("Index", "Home");
             }
         }
-        public async Task<ActionResult> EmplyeeRegistration()
+        public async Task<ActionResult> EmployeeRegistration()
         {
-            return View();
+            var roles = await this._rolesRepo.GetAllQuerable().Where(r => !r.Name.Equals("Admin") 
+                                                                            && !r.Name.Equals("Guest") 
+                                                                            && !r.Name.Equals("Student"))
+                                                                .ToListAsync();
+            RegisterViewModel viewModel = new RegisterViewModel()
+            {
+                Roles = new SelectList(roles, "Id", "Name")
+            };
+            return View(viewModel);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EmplyeeRegistration(RegisterViewModel viewModel)
+        {
+            return View("Index");
         }
 
         public async Task<ActionResult> _Read(int? id)
