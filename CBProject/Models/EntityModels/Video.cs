@@ -1,7 +1,6 @@
 ﻿using CBProject.Models.EntityModels;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
@@ -25,7 +24,7 @@ namespace CBProject.Models
         public int CategoryId { get; set; }
         public Category Category { get; set; }
         public string Url { get; set; }
-        public float RatingsAVG { get; set; }
+        public float RatingsAVG { get; set; } = 0.0f;
         public TimeSpan Duration { get; set; }
         public virtual ICollection<SubscriptionPackage> SubscriptionPackages { get; set; }
         [NotMapped]

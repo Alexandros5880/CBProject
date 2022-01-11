@@ -23,6 +23,7 @@ namespace CBProject.Repositories
             if (ebook == null)
                 throw new ArgumentNullException(nameof(ebook));
             ebook.UploadDate = DateTime.Now;
+            ebook.RatingsAVG = 0.0f;
             _context.Ebooks.Add(ebook);
         }
         public void Update(Ebook ebook)
@@ -276,12 +277,19 @@ namespace CBProject.Repositories
         public async Task<float> GetRatingsAverageAsync(int? ebookId)
         {
             var ratings = await this.GetRetingsAsync(ebookId);
-            float sum = 0;
-            foreach(var rate in ratings)
+            float sum = 0.0f;
+            if (ratings.Count > 0)
             {
-                sum += rate.Rate;
+                foreach (var rate in ratings)
+                {
+                    sum += rate.Rate;
+                }
+                return sum / ratings.Count;
             }
-            return sum / ratings.Count;
+            else
+            {
+                return 0.0f;
+            }
         }
         public float GetRatingsAverage(int? ebookId)
         {

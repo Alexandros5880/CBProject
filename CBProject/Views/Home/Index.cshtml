@@ -250,10 +250,10 @@
             // When Details Button Clicked
             $(document.body).on('click', 'button', function () {
                 if (this.classList.contains('details')) {
-                    console.log("Details Pressed.");
+                    //console.log("Details Pressed.");
                     var contentType = $(this).parent().parent().parent().parent().find("input[name=content-type]").val();
                     contentId = $(this).data("id");
-                    console.log(`contentId: ${contentId}   contentType: ${contentType}`);
+                    //console.log(`contentId: ${contentId}   contentType: ${contentType}`);
                     redirectToGuestDetails(contentId, contentType);
                 }
             });
@@ -336,6 +336,7 @@
                 data.videos.slice(0, 4).forEach(video => {
                     getCategorySync(video.categoryId, function (category) {
                         getUserByIdSync(video.creatorId, function (creator) {
+                            console.log(video);
                             var ratingFor;
                             if (userAuthorized) {
                                 ratingFor = `

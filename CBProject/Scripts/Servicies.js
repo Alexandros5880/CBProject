@@ -615,6 +615,8 @@ function createPayment(payment, callback) {
 
 // Redirect or to Video PublicDetails or to Ebook PublicDetails
 function redirectToGuestDetails(ccontentId, contentType) {
+    console.log("Details Pressed.");
+    console.log(`contentId: ${contentId}   contentType: ${contentType}`);
     if (contentType === "ebook") {
         window.location.href = '/Ebooks/PublicDetails/' + contentId;
     } else if (contentType === "video") {

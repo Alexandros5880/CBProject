@@ -356,6 +356,7 @@ namespace CBProject.HelperClassesm
                     EbookFilePath = StaticImfo.EbooksFilesPath + $"ebook{i}.pdf",
                     Url = $"www.ebook{i}.com",
                     UploadDate = DateTime.Today,
+                    RatingsAVG = 0.0f,
                     Creator = context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
                     Category = context.Categories.FirstOrDefault(c => c.Master == false && c.ID == categoryId),
                 });
@@ -383,6 +384,7 @@ namespace CBProject.HelperClassesm
                     Description = $"Video {i}",
                     UploadDate = DateTime.Today,
                     Duration = duration,
+                    RatingsAVG = 0.0f,
                     Creator = context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
                     Category = context.Categories.FirstOrDefault(c => c.Master == false && c.ID == categoryId),
                     Url = $"www.video{i}.com"
@@ -599,6 +601,7 @@ namespace CBProject.HelperClassesm
                     EbookFilePath = StaticImfo.EbooksFilesPath + $"ebook{i}.pdf",
                     Url = $"www.ebook{i}.com",
                     UploadDate = DateTime.Today,
+                    RatingsAVG = 0.0f,
                     Creator = context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
                     Category = context.Categories.FirstOrDefault(c => c.Master == false && c.ID == categoryId),
                 });
@@ -623,6 +626,7 @@ namespace CBProject.HelperClassesm
                     Description = $"Video {i}",
                     UploadDate = DateTime.Today,
                     Duration = duration,
+                    RatingsAVG = 0.0f,
                     Creator = context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
                     Category = context.Categories.FirstOrDefault(c => c.Master == false && c.ID == categoryId),
                     Url = $"www.video{i}.com"

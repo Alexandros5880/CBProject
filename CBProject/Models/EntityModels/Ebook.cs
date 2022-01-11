@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
@@ -23,7 +22,7 @@ namespace CBProject.Models.EntityModels
         [ForeignKey("Category")]
         public int CategoryId { get; set; }  
         public Category Category { get; set; }
-        public float RatingsAVG { get; set; }
+        public float RatingsAVG { get; set; } = 0.0f;
         public virtual ICollection<SubscriptionPackage> SubscriptionPackages { get; set; }
         [NotMapped]
         public bool Subscribed

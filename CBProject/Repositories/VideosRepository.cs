@@ -42,6 +42,7 @@ namespace CBProject.Repositories
             VideoEditor.CreateThambnail(videoPath, thumbnailPath, 1);
             video.Duration = VideoEditor.Duration(videoPath);
             video.UploadDate = DateTime.Now;
+            video.RatingsAVG = 0.0f;
             this._context.Videos.Add(video);
         }
         public void Delete(int? id)
@@ -382,12 +383,20 @@ namespace CBProject.Repositories
         public async Task<float> GetRatingsAverageAsync(int? videoId)
         {
             var ratings = await this.GetRetingsAsync(videoId);
-            float sum = 0;
-            foreach (var rate in ratings)
+            if (ratings.Count > 0)
             {
-                sum += rate.Rate;
+                float sum = 0.0f;
+                foreach (var rate in ratings)
+                {
+                    sum += rate.Rate;
+                }
+                return sum / ratings.Count;
             }
-            return sum / ratings.Count;
+            else
+            {
+                return 0.0f;
+            }
+            
         }
         public float GetRatingsAverage(int? videoId)
         {
