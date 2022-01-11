@@ -23,6 +23,7 @@ namespace CBProject.Controllers
         public ManageController(IUsersRepo userRepo, IEmailService email)
         {
             this._email = (HelperClasses.EmailService)email;
+            this._userRepo = (UsersRepo)userRepo;
         }
         public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IUsersRepo userRepo, HelperClasses.IEmailService email)
         {
