@@ -20,7 +20,9 @@ namespace CBProject.Controllers
         private readonly RolesRepo _rolesRepo;
         private readonly PaymentsRepository _peynmentRepo;
         private readonly UsersSubscriptionPackagesRepo _userSubscriptionPackageRepository;
-        public SubscriptionPackagesController(IUnitOfWork unitOfWork, IUsersRepo usersRepo, IRolesRepo rolesRepo)
+        private readonly HelperClasses.EmailService _email;
+
+        public SubscriptionPackagesController(IUnitOfWork unitOfWork, IUsersRepo usersRepo, IRolesRepo rolesRepo, HelperClasses.IEmailService email)
         {
             this._subscriptionRepo = unitOfWork.SubscriptionPackages;
             this._usersRepo = (UsersRepo)usersRepo;
@@ -28,6 +30,7 @@ namespace CBProject.Controllers
             this._peynmentRepo = unitOfWork.Payments;
             this._ordersRepository = unitOfWork.Orders;
             this._userSubscriptionPackageRepository = unitOfWork.UserSubscriptionPackages;
+            this._email = (HelperClasses.EmailService)email;
         }
         public async Task<ActionResult> Index()
         {
@@ -185,10 +188,8 @@ namespace CBProject.Controllers
             this._usersRepo.AddRole(user, studentRole);
             this._usersRepo.RemoveRole(user, guestRole);
 
-            // TODO: Create Dependency Injection
             // Send Email
-            HelperClasses.EmailService email = new HelperClasses.EmailService();
-            await email.SendEmailReceipt(user);
+            await this._email.SendEmailReceipt(user);
             return RedirectToAction("Index", "Home");
         }
         protected override void Dispose(bool disposing)

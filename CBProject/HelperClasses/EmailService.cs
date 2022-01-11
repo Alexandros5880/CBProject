@@ -3,7 +3,6 @@ using CBProject.Models.ViewModels;
 using CBProject.Repositories.IdentityRepos;
 using CBProject.Repositories.IdentityRepos.Interfaces;
 using FluentEmail.Core;
-using FluentEmail.Core.Models;
 using FluentEmail.Smtp;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -15,14 +14,16 @@ using System.Threading.Tasks;
 
 namespace CBProject.HelperClasses
 {
-    public class EmailService
+    public class EmailService : IEmailService
     {
         private SmtpSender _sender;
         private readonly RolesRepo _rolesRepo;
+        private readonly UsersRepo _usersRepo;
 
-        public EmailService(IRolesRepo rolesRepo)
+        public EmailService(IRolesRepo rolesRepo, IUsersRepo usersRepo)
         {
             this._rolesRepo = (RolesRepo)rolesRepo;
+            this._usersRepo = (UsersRepo)usersRepo;
             _sender = new SmtpSender(() => new SmtpClient("smtp.gmail.com")
             {
                 UseDefaultCredentials = false,
@@ -32,40 +33,31 @@ namespace CBProject.HelperClasses
             });
         }
 
-        public EmailService()
-        {
-        }
-
-        //SendEmailRegister
-        //SendEmailContact
-        //SendEmailChangedPassword
-        //SendEmailReceipt
 
 
-
-        public async Task<SendResponse> EmployeeRequestSendEmail(ApplicationUser user)
+        public async Task EmployeeRequestSendEmail(ApplicationUser user)
         {
             Email.DefaultSender = _sender;
-
             var roles = await this._rolesRepo
                                 .GetAllQuerable()
                                 .Where(r => r.Name.Equals("Admin") && r.Name.Equals("Manager"))
                                 .ToListAsync();
 
-            List<ApplicationUser> users = new List<ApplicationUser>();
-
-            foreach(var role in roles)
+            List<string> usersEmails = new List<string>();
+            foreach (var role in roles)
             {
-                //role.Users.Select()
+                var myRole = await this._rolesRepo.GetAllQuerable().FirstOrDefaultAsync(r => r.Id.Equals(role.Id));
+                var myUsers = await this._usersRepo.GetUsersFromRoleAsync(myRole.Name);
+                foreach (var u in myUsers)
+                {
+                    var email = Email
+                        .From("codeme.email@gmail.com", "CodeMe")
+                        .To(u.Email)
+                        .Subject(EmployeeRequestSubject(user.FullName))
+                        .Body(EmployeeRequestEmailBody(user.FullName));
+                    await email.SendAsync();
+                }
             }
-
-            var email = Email
-                .From("codeme.email@gmail.com", "CodeMe")
-                .To(user.Email)
-                .Subject(EmployeeRequestSubject(user.FullName))
-                .Body(EmployeeRequestEmailBody(user.FullName));
-
-            return await email.SendAsync();
         }
 
         private string EmployeeRequestSubject(string name)

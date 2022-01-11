@@ -21,17 +21,21 @@ namespace CBProject.Controllers
         private ApplicationUserManager _userManager;
         private UsersRepo _usersRepo;
         private readonly RolesRepo _rolesRepo;
-        public AccountController(IUsersRepo usersRepo, IRolesRepo rolesRepo)
+        private readonly HelperClasses.EmailService _email;
+
+        public AccountController(IUsersRepo usersRepo, IRolesRepo rolesRepo, HelperClasses.IEmailService email)
         {
             this._usersRepo = (UsersRepo)usersRepo;
             this._rolesRepo = (RolesRepo)rolesRepo;
+            this._email = (HelperClasses.EmailService)email;
         }
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IUsersRepo usersRepo, IRolesRepo rolesRepo)
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IUsersRepo usersRepo, IRolesRepo rolesRepo, HelperClasses.IEmailService email)
         {
             this.UserManager = userManager;
             this.SignInManager = signInManager;
             this._usersRepo = (UsersRepo)usersRepo;
             this._rolesRepo = (RolesRepo)rolesRepo;
+            this._email = (HelperClasses.EmailService)email;
         }
         public ApplicationSignInManager SignInManager
         {
@@ -238,8 +242,7 @@ namespace CBProject.Controllers
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                     var visitorsRole = await this._rolesRepo.GetByNameAsync("Guest");
                     this._usersRepo.AddRole(user, visitorsRole);
-                    HelperClasses.EmailService email = new HelperClasses.EmailService();
-                    await email.SendEmailRegister(user);
+                    await this._email.SendEmailRegister(user);
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);

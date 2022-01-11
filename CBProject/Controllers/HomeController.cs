@@ -27,8 +27,9 @@ namespace CBProject.Controllers
         private readonly RequirementsRepository _requirementsRepository;
         private readonly MessagesRepository _messagesRepository;
         private readonly EmployeesRequestsRepository _employeesRequestsRepository;
+        private readonly HelperClasses.EmailService _email;
 
-        public HomeController(IUnitOfWork unitOfWork, IUsersRepo usersRepo, IRolesRepo rolesRepo)
+        public HomeController(IUnitOfWork unitOfWork, IUsersRepo usersRepo, IRolesRepo rolesRepo, HelperClasses.IEmailService email)
         {
             this._ebooksRepository = unitOfWork.Ebooks;
             this._categoriesRepo = unitOfWork.Categories;
@@ -38,6 +39,7 @@ namespace CBProject.Controllers
             this._requirementsRepository = unitOfWork.Requirements;
             this._messagesRepository = unitOfWork.Messages;
             this._employeesRequestsRepository = unitOfWork.EmployeesRequests;
+            this._email = (HelperClasses.EmailService)email;
         }
         public async Task<ActionResult> Index()
         {
@@ -84,8 +86,7 @@ namespace CBProject.Controllers
             {
                 return View(contact);
             }
-            HelperClasses.EmailService email = new HelperClasses.EmailService();
-            await email.SendEmailContact(contact);
+            await this._email.SendEmailContact(contact);
             // Find Sender If Exists
             var user = await this._usersRepo.GetByEmailAsync(contact.Email);
             // Create Message
@@ -194,10 +195,9 @@ namespace CBProject.Controllers
             this._employeesRequestsRepository.Add(request);
             await this._employeesRequestsRepository.SaveAsync();
 
-            // TODO: Create Deendemcy Injection
-            //ApplicationUser user = Mapper.Map<RegisterViewModel, ApplicationUser>(viewModel);
-            //HelperClasses.EmailService email = new HelperClasses.EmailService();
-            //await email.EmployeeRequestSendEmail(user);
+            // Send Email To Admins And Managers
+            ApplicationUser user = Mapper.Map<RegisterViewModel, ApplicationUser>(viewModel);
+            await this._email.EmployeeRequestSendEmail(user);
 
             return View("Index");
         }

@@ -1,4 +1,5 @@
-﻿using CBProject.Models;
+﻿using CBProject.HelperClasses;
+using CBProject.Models;
 using CBProject.Repositories.IdentityRepos;
 using CBProject.Repositories.IdentityRepos.Interfaces;
 using Microsoft.AspNet.Identity;
@@ -17,15 +18,18 @@ namespace CBProject.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         private readonly UsersRepo _userRepo;
-        public ManageController(IUsersRepo userRepo)
+        private readonly HelperClasses.EmailService _email;
+
+        public ManageController(IUsersRepo userRepo, IEmailService email)
         {
-            this._userRepo = (UsersRepo)userRepo;
+            this._email = (HelperClasses.EmailService)email;
         }
-        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IUsersRepo userRepo)
+        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IUsersRepo userRepo, HelperClasses.IEmailService email)
         {
             UserManager = userManager;
             SignInManager = signInManager;
             this._userRepo = (UsersRepo)userRepo;
+            this._email = (HelperClasses.EmailService)email;
         }
         public ApplicationSignInManager SignInManager
         {
@@ -206,8 +210,7 @@ namespace CBProject.Controllers
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 }
-                HelperClasses.EmailService email = new HelperClasses.EmailService();
-                await email.SendEmailChangedPassword(user);
+                await this._email.SendEmailChangedPassword(user);
                 return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
             }
             AddErrors(result);
