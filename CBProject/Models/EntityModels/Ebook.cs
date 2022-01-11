@@ -15,7 +15,7 @@ namespace CBProject.Models.EntityModels
         public string EbookFilePath { get; set; }
         public string Url { get; set; }
         public string Content { get; set; }
-        [DataType(DataType.Date)]
+        [Column(TypeName = "datetime2")]
         public DateTime UploadDate { get; set; }
         [ForeignKey("Creator")]
         public string CreatorId { get; set; }

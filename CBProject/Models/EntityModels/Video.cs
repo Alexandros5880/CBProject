@@ -16,7 +16,7 @@ namespace CBProject.Models
         public string VideoPath { get; set; }
         public string Content { get; set; }
         public string Description { get; set; }
-        [DataType(DataType.Date)]
+        [Column(TypeName = "datetime2")]
         public DateTime UploadDate { get; set; }
         [ForeignKey("Creator")]
         public string CreatorId { get; set; }

@@ -201,6 +201,7 @@ namespace CBProject.Controllers
                     }
                 }
                 var ebookDB = Mapper.Map<EbookViewModel, Ebook>(viewModel);
+                ebookDB.UploadDate = ebookDB.UploadDate;
                 await this._ebooksRepository.UpdateAsync(ebookDB);
                 await this._ebooksRepository.SaveAsync();
                 return RedirectToAction("Index");

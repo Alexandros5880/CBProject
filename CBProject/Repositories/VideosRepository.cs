@@ -41,7 +41,7 @@ namespace CBProject.Repositories
             var thumbnailPath = System.Web.HttpContext.Current.Server.MapPath($"~/{video.Thumbnail}");
             VideoEditor.CreateThambnail(videoPath, thumbnailPath, 1);
             video.Duration = VideoEditor.Duration(videoPath);
-            video.UploadDate = DateTime.Today;
+            video.UploadDate = DateTime.Now;
             this._context.Videos.Add(video);
         }
         public void Delete(int? id)

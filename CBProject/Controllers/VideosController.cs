@@ -190,6 +190,7 @@ namespace CBProject.Controllers
                     }
                 }
                 var video = Mapper.Map<VideoViewModel, Video>(viewModel);
+                video.UploadDate = viewModel.UploadDate;
                 await this._videoRepo.UpdateAsync(video);
                 await this._videoRepo.SaveAsync();
                 return RedirectToAction("Index");
