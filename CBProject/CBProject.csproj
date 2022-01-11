@@ -232,6 +232,7 @@
     <Compile Include="Controllers\API\CategoryToCategoryController.cs" />
     <Compile Include="Controllers\API\ContactMessageController.cs" />
     <Compile Include="Controllers\API\EbookController.cs" />
+    <Compile Include="Controllers\API\EmployeeRequestController.cs" />
     <Compile Include="Controllers\API\OrderController.cs" />
     <Compile Include="Controllers\API\PaymentController.cs" />
     <Compile Include="Controllers\API\ProductsController.cs" />
