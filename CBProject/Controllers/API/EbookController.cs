@@ -55,7 +55,7 @@ namespace CBProject.Controllers.API
             {
                 var ebooks = await this._ebooksRepository
                                         .GetAllQueryable()
-                                        .Where(e => !e.SubscriptionPackages.Any() %% e.CreatorId.Equals(logedId))
+                                        .Where(e => !e.SubscriptionPackages.Any() && e.CreatorId.Equals(logedId))
                                         .ToListAsync();
                 return Ok(ebooks);
             }
