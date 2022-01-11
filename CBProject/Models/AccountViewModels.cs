@@ -128,6 +128,11 @@ namespace CBProject.Models
         [StringLength(100, ErrorMessage = "Ener your StreetNumber", MinimumLength = 1)]
         public string StreetNumber { get; set; }
 
+        public string EmployeeMessage { get; set; }
+
+        public System.Web.Mvc.SelectList Roles { get; set; }
+        public string RoleId { get; set; }
+
         public string CVPath { get; set; }
         public HttpPostedFileBase CVFile { get; set; }
 
