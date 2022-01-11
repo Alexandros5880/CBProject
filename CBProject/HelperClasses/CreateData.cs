@@ -583,5 +583,52 @@ namespace CBProject.HelperClassesm
             }
             context.SaveChanges();
         }
+        public static void CreateMoreTestDataFree(ApplicationDbContext context)
+        {
+            // Create Ebooks
+            Random random = new Random();
+            for (int i = 26; i < 35; i++)
+            {
+                int categoryId = random.Next(4, 7);
+                context.Ebooks.Add(new Ebook()
+                {
+                    ID = i,
+                    Title = $"Ebook {i}",
+                    Description = $"Ebook {i} Description",
+                    EbookImagePath = StaticImfo.EbooksImagesPath + $"ebook{i}.jpg",
+                    EbookFilePath = StaticImfo.EbooksFilesPath + $"ebook{i}.pdf",
+                    Url = $"www.ebook{i}.com",
+                    UploadDate = DateTime.Today,
+                    Creator = context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
+                    Category = context.Categories.FirstOrDefault(c => c.Master == false && c.ID == categoryId),
+                });
+            }
+            context.SaveChanges();
+            // Create Videos
+            for (int i = 26; i < 35; i++)
+            {
+                var videoAbsolutePath = $"{StaticImfo.CurrentPath}\\{StaticImfo.VideoFilesFolder}\\video{i}.mp4";
+                var thumbnailAbsolutePath = $"{StaticImfo.CurrentPath}\\{StaticImfo.VideoImagePath}video_{i}_thambnail.jpg";
+                string thumbnailPath = $"{StaticImfo.VideoImagePath}video_{i}_thambnail.jpg";
+                VideoEditor.CreateThambnail(videoAbsolutePath, thumbnailAbsolutePath, 1);
+                var duration = VideoEditor.Duration(videoAbsolutePath);
+                int categoryId = random.Next(4, 7);
+                context.Videos.Add(new Video()
+                {
+                    ID = i,
+                    Title = $"Video {i}",
+                    Thumbnail = thumbnailPath,
+                    VideoImagePath = StaticImfo.VideoImagePath + $"video{i}.jpg",
+                    VideoPath = StaticImfo.VideoPath + $"video{i}.mp4",
+                    Description = $"Video {i}",
+                    UploadDate = DateTime.Today,
+                    Duration = duration,
+                    Creator = context.Users.FirstOrDefault(user => user.FirstName.Equals("Alexandros_3")),
+                    Category = context.Categories.FirstOrDefault(c => c.Master == false && c.ID == categoryId),
+                    Url = $"www.video{i}.com"
+                });
+            }
+            context.SaveChanges();
+        }
     }
 }
