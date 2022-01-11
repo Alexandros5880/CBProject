@@ -32,9 +32,9 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Courses", "Lessons", "Home")</li>
                     <li>@Html.ActionLink("Plans", "Subscribe", "SubscriptionPackages")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
@@ -65,6 +65,7 @@
                         <p>@Html.ActionLink("Basic", "Subscribe", "SubscriptionPackages")</p>
                         <p>@Html.ActionLink("Advance", "Subscribe", "SubscriptionPackages")</p>
                         <p>@Html.ActionLink("Premium", "Subscribe", "SubscriptionPackages")</p>
+                        
 
                     </div>
                     <div class="col-md-2 col-sm-2 col-xs-2 footer-text" id="social">
