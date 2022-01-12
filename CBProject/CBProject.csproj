@@ -384,6 +384,9 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Forum\Content\Forum.css" />
+    <Content Include="Areas\Forum\Content\Mesenger.css" />
+    <Content Include="Areas\Forum\Scripts\servicies.js" />
     <Content Include="assets\css\app-dark-rtl.min.css" />
     <Content Include="assets\css\app-dark.css" />
     <Content Include="assets\css\app-dark.min.css" />
@@ -1748,7 +1751,8 @@
     <Content Include="Areas\Forum\Views\web.config" />
     <Content Include="Areas\Forum\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Forum\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Forum\Views\Public\Index.cshtml" />
+    <Content Include="Areas\Forum\Views\Public\Forum.cshtml" />
+    <Content Include="Areas\Forum\Views\Public\Messenger.cshtml" />
     <None Include="Makefile" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.js" />
@@ -1982,7 +1986,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Forum\Scripts\" />
     <Folder Include="assets\libs\%40chenfengyuan\datepicker\" />
     <Folder Include="assets\libs\%40curiosityx\bootstrap-session-timeout\" />
     <Folder Include="assets\libs\admin-resources\bootstrap-filestyle\" />

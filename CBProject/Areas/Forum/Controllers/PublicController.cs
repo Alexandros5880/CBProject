@@ -21,8 +21,15 @@ namespace CBProject.Areas.Forum.Controllers
             this._rolesRepo = (RolesRepo)rolesRepo;
         }
 
-        // GET: Forum/Public
-        public async Task<ActionResult> Index()
+        // GET: Forum/Public/Messenger
+        public async Task<ActionResult> Messenger()
+        {
+            var messages = await this._forumeMessagesRepository.GetAllAsync();
+            return View(messages);
+        }
+
+        // GET: Forum/Public/Forum
+        public async Task<ActionResult> Forum()
         {
             var messages = await this._forumeMessagesRepository.GetAllAsync();
             return View(messages);
