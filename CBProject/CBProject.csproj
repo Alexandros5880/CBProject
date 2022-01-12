@@ -280,9 +280,9 @@
     <Compile Include="HelperClasses\StaticImfo.cs" />
     <Compile Include="HelperClasses\UnitOfWork.cs" />
     <Compile Include="HelperClasses\VideoEditor.cs" />
-    <Compile Include="Migrations\202201112037113_Initial.cs" />
-    <Compile Include="Migrations\202201112037113_Initial.Designer.cs">
-      <DependentUpon>202201112037113_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\202201121218254_Initial.cs" />
+    <Compile Include="Migrations\202201121218254_Initial.Designer.cs">
+      <DependentUpon>202201121218254_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -292,6 +292,7 @@
     <Compile Include="Models\EntityModels\ContactMessage.cs" />
     <Compile Include="Models\EntityModels\Ebook.cs" />
     <Compile Include="Models\EntityModels\EmployeeRequest.cs" />
+    <Compile Include="Models\EntityModels\ForumeMessage.cs" />
     <Compile Include="Models\EntityModels\Order.cs" />
     <Compile Include="Models\EntityModels\Payment.cs" />
     <Compile Include="Models\EntityModels\RatingToEbook.cs" />
@@ -1957,6 +1958,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\" />
     <Folder Include="assets\libs\%40chenfengyuan\datepicker\" />
     <Folder Include="assets\libs\%40curiosityx\bootstrap-session-timeout\" />
     <Folder Include="assets\libs\admin-resources\bootstrap-filestyle\" />
@@ -2054,8 +2056,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202201112037113_Initial.resx">
-      <DependentUpon>202201112037113_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202201121218254_Initial.resx">
+      <DependentUpon>202201121218254_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

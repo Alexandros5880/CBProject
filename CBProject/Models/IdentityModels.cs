@@ -102,6 +102,7 @@ namespace CBProject.Models
         public DbSet<RequirementToEbook> RequirementsToEbooks { get; set; }
         public DbSet<RequirementToVideo> RequirementsToVideos { get; set; }
         public DbSet<EmployeeRequest> EmployeesRequests { get; set; }
+        public ForumeMessage ForumeMessages { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection")

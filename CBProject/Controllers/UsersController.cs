@@ -64,9 +64,11 @@ namespace CBProject.Controllers
             viewModel.MyRoles = await _rolesRepo.GetAllByNamesAsync(roles);
             return View(viewModel);
         }
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
-            return View();
+            ApplicationUserViewModel viewModel = new ApplicationUserViewModel();
+            viewModel.OtherRoles = await this._rolesRepo.GetAllAsync();
+            return View(viewModel);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]

@@ -19,7 +19,6 @@
     <table class="table" id="users">
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Image</th>
                 <th>FullName</th>
                 <th>BirthDate</th>
@@ -62,13 +61,6 @@
                     dataSrc: ""
                 },
                 columns: [
-                    {
-                        data: "ID",
-                        render: function (data, type, user) {
-                            console.log(user);
-                            return "<a href='/Users/Details/" + user.id + "'>" + user.id + "</a>";
-                        }
-                    },
                     {
                         data: "Image",
                         render: function (data, type, user) {
