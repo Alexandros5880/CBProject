@@ -86,7 +86,7 @@ namespace CBProject.HelperClassesm
                 Street = "Fleming",
                 StreetNumber = "14",
                 IsInactive = false,
-                ImagePath = "/assets/images/users/avatar-2jpg"
+                ImagePath = "/assets/images/users/avatar-2.jpg"
             };
             var user_3 = new ApplicationUser()
             {

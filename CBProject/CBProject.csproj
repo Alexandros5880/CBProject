@@ -467,6 +467,7 @@
     <Content Include="assets\images\tg.jpg" />
     <Content Include="assets\images\users\avatar-1.jpg" />
     <Content Include="assets\images\users\avatar-2.jpg" />
+    <Content Include="assets\images\users\avatar-2jpg.png" />
     <Content Include="assets\images\users\avatar-3.jpg" />
     <Content Include="assets\images\users\avatar-4.jpg" />
     <Content Include="assets\images\users\avatar-5.jpg" />

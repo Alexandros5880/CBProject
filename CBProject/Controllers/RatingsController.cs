@@ -11,6 +11,7 @@ using System.Web.Mvc;
 
 namespace CBProject.Controllers
 {
+    [Authorize]
     public class RatingsController : Controller
     {
         private readonly RatingsRepository _ratingsRepo;

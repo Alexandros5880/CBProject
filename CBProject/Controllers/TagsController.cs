@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace CBProject.Controllers
 {
+    [Authorize]
     public class TagsController : Controller
     {
         private readonly TagsRepository _tagsRepo;
