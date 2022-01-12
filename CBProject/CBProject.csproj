@@ -233,8 +233,16 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Forum\Controllers\API\ForumAnswerController.cs" />
     <Compile Include="Areas\Forum\Controllers\API\ForumMessageController.cs" />
+    <Compile Include="Areas\Forum\Controllers\API\ForumQuestionController.cs" />
+    <Compile Include="Areas\Forum\Controllers\PublicController.cs" />
+    <Compile Include="Areas\Forum\HelperClasses\CreateForumsTestData.cs" />
+    <Compile Include="Areas\Forum\Models\EntityModels\ForumAnswer.cs" />
+    <Compile Include="Areas\Forum\Models\EntityModels\ForumQuestion.cs" />
+    <Compile Include="Areas\Forum\Repositories\ForumAnswersRepository.cs" />
     <Compile Include="Areas\Forum\Repositories\ForumMessagesRepository.cs" />
+    <Compile Include="Areas\Forum\Repositories\ForumQuestionsRepository.cs" />
     <Compile Include="Areas\Forum\SignalIrHubs\ForumHub.cs" />
     <Compile Include="Areas\Forum\ForumAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -290,9 +298,9 @@
     <Compile Include="HelperClasses\StaticImfo.cs" />
     <Compile Include="HelperClasses\UnitOfWork.cs" />
     <Compile Include="HelperClasses\VideoEditor.cs" />
-    <Compile Include="Migrations\202201121347525_Initial.cs" />
-    <Compile Include="Migrations\202201121347525_Initial.Designer.cs">
-      <DependentUpon>202201121347525_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\202201121552325_Initial.cs" />
+    <Compile Include="Migrations\202201121552325_Initial.Designer.cs">
+      <DependentUpon>202201121552325_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -1740,6 +1748,7 @@
     <Content Include="Areas\Forum\Views\web.config" />
     <Content Include="Areas\Forum\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Forum\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Forum\Views\Public\Index.cshtml" />
     <None Include="Makefile" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.js" />
@@ -2071,8 +2080,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202201121347525_Initial.resx">
-      <DependentUpon>202201121347525_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202201121552325_Initial.resx">
+      <DependentUpon>202201121552325_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -1,4 +1,5 @@
-﻿using CBProject.Models.EntityModels;
+﻿using CBProject.Areas.Forum.Models.EntityModels;
+using CBProject.Models.EntityModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
@@ -103,6 +104,8 @@ namespace CBProject.Models
         public DbSet<RequirementToVideo> RequirementsToVideos { get; set; }
         public DbSet<EmployeeRequest> EmployeesRequests { get; set; }
         public DbSet<ForumMessage> ForumMessages { get; set; }
+        public DbSet<ForumQuestion> ForumQuestions { get; set; }
+        public DbSet<ForumAnswer> ForumAnswers { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection")

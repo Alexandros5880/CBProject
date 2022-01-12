@@ -1,5 +1,6 @@
 namespace CBProject.Migrations
 {
+    using CBProject.Areas.Forum.HelperClasses;
     using CBProject.HelperClassesm;
     using System.Data.Entity.Migrations;
 
@@ -13,6 +14,7 @@ namespace CBProject.Migrations
         protected override void Seed(CBProject.Models.ApplicationDbContext context)
         {
             CreateData.CreateAll(context);
+            CreateForumsTestData.CreateAll(context);
         }
     }
 }

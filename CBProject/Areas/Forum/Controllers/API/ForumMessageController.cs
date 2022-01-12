@@ -30,7 +30,9 @@ namespace CBProject.Areas.Forum.Controllers.API
         public async Task<IHttpActionResult> Get()
         {
             var obj = await this._forumeMessagesRepository.GetAllEmptyAsync();
-            return Ok();
+            if (obj == null || obj.Count == 0)
+                return BadRequest();
+            return Ok(obj);
         }
 
         // GET api/ForumMessage/5
@@ -38,7 +40,10 @@ namespace CBProject.Areas.Forum.Controllers.API
         {
             if (id == null)
                 return BadRequest();
-            return Ok(); ;
+            var obj = await this._forumeMessagesRepository.GetEmptyAsync(id);
+            if (obj == null)
+                return BadRequest();
+            return Ok(obj);
         }
 
         // POST api/ForumMessage

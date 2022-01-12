@@ -4,6 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Code Me Forum</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
 
     @RenderSection("styles", required: false)
 
@@ -24,18 +26,18 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>1</li>
+                    @*<li>1</li>
                     <li>2</li>
                     <li>3</li>
                     <li>4</li>
-                    <li>5</li>
+                    <li>5</li>*@
                 </ul>
             </div>
         </div>
     </div>
 
 
-    <div class="container-fluid body-content">
+    <div class="container body-content">
         @RenderBody()
         <footer>
             <div class="container">
@@ -49,8 +51,18 @@
     </div>
 
 
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    @*<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>*@
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/Scripts/DataTables")
+
+
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/signalr.js/2.2.2/jquery.signalR.min.js"></script>
+
+
+
+    @RenderSection("scripts", required: false)
+
 
     <script>
         $(document).ready(function () {

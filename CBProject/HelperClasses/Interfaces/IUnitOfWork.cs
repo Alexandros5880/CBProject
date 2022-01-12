@@ -37,5 +37,7 @@ namespace CBProject.HelperClasses.Interfaces
         UsersSubscriptionPackagesRepo UserSubscriptionPackages { get; }
         EmployeesRequestsRepository EmployeesRequests { get; }
         ForumMessagesRepository ForumMessages { get; }
+        ForumQuestionsRepository ForumQuestions { get; }
+        ForumAnswersRepository ForumAnswers { get; }
     }
 }
