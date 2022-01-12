@@ -408,6 +408,19 @@ namespace CBProject.Migrations
                 .Index(t => t.Name, unique: true, name: "RoleNameIndex");
             
             CreateTable(
+                "dbo.ForumMessages",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        UserId = c.String(maxLength: 128),
+                        SendDate = c.DateTime(nullable: false, precision: 7, storeType: "datetime2"),
+                        Message = c.String(),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.AspNetUsers", t => t.UserId)
+                .Index(t => t.UserId);
+            
+            CreateTable(
                 "dbo.UserSubscriptionPackages",
                 c => new
                     {
@@ -453,6 +466,7 @@ namespace CBProject.Migrations
         {
             DropForeignKey("dbo.UserSubscriptionPackages", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.UserSubscriptionPackages", "SubscriptionPackageId", "dbo.SubscriptionPackages");
+            DropForeignKey("dbo.ForumMessages", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.EmployeeRequests", "RoleId", "dbo.AspNetRoles");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
             DropForeignKey("dbo.RequirementToEbooks", "RequirementId", "dbo.Requirements");
@@ -496,6 +510,7 @@ namespace CBProject.Migrations
             DropIndex("dbo.SubscriptionPackageEbooks", new[] { "SubscriptionPackage_ID" });
             DropIndex("dbo.UserSubscriptionPackages", new[] { "SubscriptionPackageId" });
             DropIndex("dbo.UserSubscriptionPackages", new[] { "UserId" });
+            DropIndex("dbo.ForumMessages", new[] { "UserId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropIndex("dbo.EmployeeRequests", new[] { "RoleId" });
             DropIndex("dbo.RequirementToEbooks", new[] { "EbookId" });
@@ -534,6 +549,7 @@ namespace CBProject.Migrations
             DropTable("dbo.VideoSubscriptionPackages");
             DropTable("dbo.SubscriptionPackageEbooks");
             DropTable("dbo.UserSubscriptionPackages");
+            DropTable("dbo.ForumMessages");
             DropTable("dbo.AspNetRoles");
             DropTable("dbo.EmployeeRequests");
             DropTable("dbo.ContactMessages");

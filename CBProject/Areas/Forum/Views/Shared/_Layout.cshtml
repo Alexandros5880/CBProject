@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Me Forum</title>
+
+    @RenderSection("styles", required: false)
+
+    <link rel="shortcut icon" href="~/Img/brouser_tab_icon.png">
+
+</head>
+<body>
+
+    <div class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("CodeMe", "Index", "Home", new { area = "" }, new { @class = "navbar-brand  logo" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>1</li>
+                    <li>2</li>
+                    <li>3</li>
+                    <li>4</li>
+                    <li>5</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container-fluid body-content">
+        @RenderBody()
+        <footer>
+            <div class="container">
+                <div class="row footer-row">
+
+                </div>
+            </div>
+            <p style="text-align:center;margin-top:3%;">&copy; @DateTime.Now.Year - CodeMe Forum</p>
+            <br />
+        </footer>
+    </div>
+
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/signalr.js/2.2.2/jquery.signalR.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            // When Buton Buy Clicks
+            $(document.body).on('click', 'a', function () {
+                if (this.classList.contains("buy-button")) {
+
+                }
+            });
+
+        });
+    </script>
+
+</body>
+</html>

@@ -72,6 +72,12 @@
     <Reference Include="MediaToolkit, Version=1.1.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MediaToolkit.1.1.0.1\lib\net40\MediaToolkit.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.2.2\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb, Version=2.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.2.2\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.1.1.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
@@ -227,6 +233,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Forum\Repositories\ForumMessagesRepository.cs" />
+    <Compile Include="Areas\Forum\SignalIrHubs\ForumHub.cs" />
     <Compile Include="Areas\Forum\ForumAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\API\CategoriesController.cs" />
@@ -281,9 +289,9 @@
     <Compile Include="HelperClasses\StaticImfo.cs" />
     <Compile Include="HelperClasses\UnitOfWork.cs" />
     <Compile Include="HelperClasses\VideoEditor.cs" />
-    <Compile Include="Migrations\202201121218254_Initial.cs" />
-    <Compile Include="Migrations\202201121218254_Initial.Designer.cs">
-      <DependentUpon>202201121218254_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\202201121347525_Initial.cs" />
+    <Compile Include="Migrations\202201121347525_Initial.Designer.cs">
+      <DependentUpon>202201121347525_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -293,7 +301,7 @@
     <Compile Include="Models\EntityModels\ContactMessage.cs" />
     <Compile Include="Models\EntityModels\Ebook.cs" />
     <Compile Include="Models\EntityModels\EmployeeRequest.cs" />
-    <Compile Include="Models\EntityModels\ForumeMessage.cs" />
+    <Compile Include="Areas\Forum\Models\EntityModels\ForumMessage.cs" />
     <Compile Include="Models\EntityModels\Order.cs" />
     <Compile Include="Models\EntityModels\Payment.cs" />
     <Compile Include="Models\EntityModels\RatingToEbook.cs" />
@@ -1729,6 +1737,8 @@
     <Content Include="bin\roslyn\VBCSCompiler.exe.config" />
     <Content Include="README.md" />
     <Content Include="Areas\Forum\Views\web.config" />
+    <Content Include="Areas\Forum\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Forum\Views\_ViewStart.cshtml" />
     <None Include="Makefile" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.js" />
@@ -1813,6 +1823,8 @@
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.signalR-2.2.2.js" />
+    <Content Include="Scripts\jquery.signalR-2.2.2.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -1961,8 +1973,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Forum\Controllers\" />
-    <Folder Include="Areas\Forum\Data\" />
-    <Folder Include="Areas\Forum\Views\Shared\" />
+    <Folder Include="Areas\Forum\Scripts\" />
     <Folder Include="assets\libs\%40chenfengyuan\datepicker\" />
     <Folder Include="assets\libs\%40curiosityx\bootstrap-session-timeout\" />
     <Folder Include="assets\libs\admin-resources\bootstrap-filestyle\" />
@@ -2060,8 +2071,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202201121218254_Initial.resx">
-      <DependentUpon>202201121218254_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202201121347525_Initial.resx">
+      <DependentUpon>202201121347525_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

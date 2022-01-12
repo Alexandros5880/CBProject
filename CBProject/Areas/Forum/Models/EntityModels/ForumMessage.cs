@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CBProject.Models.EntityModels
 {
-    public class ForumeMessage
+    public class ForumMessage
     {
         [Key]
         public int ID { get; set; }

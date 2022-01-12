@@ -62,8 +62,8 @@ namespace CBProject.Models
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
             ApplicationUser applicationUser = this;
             //userIdentity.AddClaim(new Claim("FullName", applicationUser.FullName));
-        // Add custom user claims here
-        return userIdentity;
+            // Add custom user claims here
+            return userIdentity;
         }
     }
 
@@ -102,7 +102,7 @@ namespace CBProject.Models
         public DbSet<RequirementToEbook> RequirementsToEbooks { get; set; }
         public DbSet<RequirementToVideo> RequirementsToVideos { get; set; }
         public DbSet<EmployeeRequest> EmployeesRequests { get; set; }
-        public ForumeMessage ForumeMessages { get; set; }
+        public DbSet<ForumMessage> ForumMessages { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection")
@@ -114,28 +114,12 @@ namespace CBProject.Models
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            // modelBuilder.Configurations.Add(new CategoryConfig());
-            //modelBuilder.Configurations.Add(new RatingConfig());
-            //modelBuilder.Configurations.Add(new ReviewConfig());
-            //modelBuilder.Configurations.Add(new TagConfig());
-            //modelBuilder.Configurations.Add(new VideoConfig());
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<CategoryToCategory>()
                         .HasRequired<Category>(c => c.ChiledCategory)
                         .WithMany()
                         .WillCascadeOnDelete(false);
-
-            //modelBuilder.Entity<Order>()
-            //            .HasRequired(o => o.User)
-            //            .WithRequiredPrincipal()
-            //            .WillCascadeOnDelete(false);
-
-            //modelBuilder.Entity<ApplicationUser>()
-            //            .HasRequired(u => u.Orders)
-            //            .WithMany()
-            //            .WillCascadeOnDelete(false);
-
         }
     }
 }
