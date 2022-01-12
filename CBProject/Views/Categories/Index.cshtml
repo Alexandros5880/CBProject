@@ -1,52 +1,131 @@
 ﻿@model IEnumerable<CBProject.Models.EntityModels.Category>
+@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.EntityFramework
+@using CBProject.Models
+
+
+
+
 
 @{
-    ViewBag.Title = "Index";
+    //var fullname = ((System.Security.Claims.ClaimsIdentity)User.Identity).FindFirst("FullName");
+    //var user_image = ((System.Security.Claims.ClaimsIdentity)User.Identity).FindFirst("ImagePath");
+
+    var context = new ApplicationDbContext();
+    var userStore = new UserStore<ApplicationUser, ApplicationRole, string, IdentityUserLogin, IdentityUserRole, IdentityUserClaim>(context);
+    var userManager = new CBProject.ApplicationUserManager(userStore);
+    var currentUser = userManager.FindById(User.Identity.GetUserId());
+    var roleStore = new RoleStore<ApplicationRole>(context);
+    var roleManager = new RoleManager<ApplicationRole>(roleStore);
+
+
+
+
+
+    RoleLevel access = RoleLevel.SUPERLOW;
+
+    if (User.Identity.IsAuthenticated)
+    {
+
+        var fullName = currentUser.FullName;
+        var userImage = currentUser.ImagePath;
+
+        foreach (var role in currentUser.Roles)
+        {
+            var myRole = roleManager.FindById(role.RoleId);
+            if (myRole.Level == RoleLevel.FULL)
+            {
+                access = myRole.Level;
+            }
+            else if (myRole.Level == RoleLevel.PLUSSFULL)
+            {
+                if (access != RoleLevel.FULL)
+                {
+                    access = myRole.Level;
+                }
+            }
+            else if (myRole.Level == RoleLevel.MIDDLE)
+            {
+                if (access != RoleLevel.FULL &&
+                    access != RoleLevel.PLUSSFULL)
+                {
+                    access = myRole.Level;
+                }
+            }
+            else if (myRole.Level == RoleLevel.LOW)
+            {
+                if (access != RoleLevel.FULL &&
+                    access != RoleLevel.PLUSSFULL &&
+                    access != RoleLevel.MIDDLE)
+                {
+                    access = myRole.Level;
+                }
+            }
+            else if (myRole.Level == RoleLevel.SUPERLOW)
+            {
+                if (access != RoleLevel.FULL &&
+                    access != RoleLevel.PLUSSFULL &&
+                    access != RoleLevel.MIDDLE &&
+                    access != RoleLevel.LOW)
+                {
+                    access = myRole.Level;
+                }
+            }
+        }
+    }
 }
 
-<h2>Index</h2>
+<h2>Categories</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table" id="categories">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Master)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+
+<div class="table-responsive">
+    <table class="table" id="categories">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Master)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Master)
+                </th>
+                <th></th>
             </tr>
-        }
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Master)
+                    </td>
+                    <td>
 
-    </tbody>
+                        @if (access == RoleLevel.FULL || access == RoleLevel.PLUSSFULL)
+                        {
+                            @Html.ActionLink("Edit", "Edit", new { id = item.ID }) <text> | </text>
+                            @Html.ActionLink("Details", "Details", new { id = item.ID }) <text> | </text>
+                            @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Details", "Details", new { id = item.ID })
+                        }
+                    </td>
+                </tr>
+            }
+
+        </tbody>
 
 
 
-</table>
-@section scripts{
-    <script>
-        $("#categories").DataTable();
-    </script>
-    
-  }
+    </table>
+</div>
+
+
+

@@ -4,30 +4,78 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Requieremnts</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Content)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Content)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
+
+
+<div class="table-responsive">
+    <table class="table" id="requirements">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Content</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+
+            // Get Logged User and hes SubscriptionPakage
+            var userAuthorized = @User.Identity.IsAuthenticated.ToString().ToLower();
+            var loggedUser = null;
+            if (userAuthorized) {
+                getLogedUserSync(function (user) {
+                    loggedUser = user;
+                });
+            }
+
+            var table = $("#requirements").DataTable({
+                ajax: {
+                    url: `/api/Requirement`,
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "ID",
+                        render: function (data, type, req) {
+                            return "<a>" + req.id + "</a>";
+                        }
+                    },
+                    {
+                        data: "Content",
+                        render: function (data, type, req) {
+                            return "<a>" + req.content + "</a>";
+                        }
+                    },
+                    {
+                        data: "",
+                        render: function (data, type, req) {
+                            return `
+                                    <a href="/Requirements/Edit/${req.id}">Edit</a> |
+                                    <a href="/Requirements/Details/${req.id}">Details</a> |
+                                    <a href="/Requirements/Delete/${req.id}">Delete</a>
+                            `;
+                        }
+                    }
+                ],
+                createdRow: function (row, data, dataIndex) {
+
+                }
+            });
+        });
+    </script>
+
+    <script src="~/Scripts/Ratting.js"></script>
 }
-
-</table>
