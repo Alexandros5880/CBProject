@@ -267,7 +267,7 @@
                     var search = $("#lessons-top-search-input").val();
                     if (search.length != 0) {
                         page = 1;
-                        searchTop(ebooks, videos, lessonsRatings, createdDate, search, null, true);
+                        searchTop(ebooks, videos, lessonsRatings, createdDate, search, 1, true);
                     } else {
                         searchTop(ebooks, videos, lessonsRatings, createdDate, search, 1);
                     }
@@ -279,7 +279,7 @@
                 if (event.keyCode == 13) {
                     var search = $("#lessons-top-search-input").val();
                     if (search.length != 0) {
-                        searchTop(ebooks, videos, lessonsRatings, createdDate, search, null, true);
+                        searchTop(ebooks, videos, lessonsRatings, createdDate, search, 1, true);
                     } else {
                         searchTop(ebooks, videos, lessonsRatings, createdDate, search, 1);
                     }
@@ -311,6 +311,7 @@
                 if (this.classList.contains('lessons-ratings')) {
                     lessonsRatings = true;
                     createdDate = false;
+                    page = 1;
                     $(".search-top-button").click();
                 }
             });
@@ -320,6 +321,7 @@
                 if (this.classList.contains('created-date')) {
                     lessonsRatings = false;
                     createdDate = true;
+                    page = 1;
                     $(".search-top-button").click();
                 }
             });
