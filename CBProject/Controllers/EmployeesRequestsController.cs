@@ -2,6 +2,7 @@
 using CBProject.Repositories;
 using System.Net;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
 
 namespace CBProject.Controllers
@@ -41,6 +42,9 @@ namespace CBProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
+            var employee = await this._employeesRequestsRepository.GetAsync(id);
+            HelperClasses.File.DeleteFile(HttpRuntime.AppDomainAppPath + employee.ImagePath);
+            HelperClasses.File.DeleteFile(HttpRuntime.AppDomainAppPath + employee.CVPath);
             await this._employeesRequestsRepository.DeleteAsync(id);
             return RedirectToAction("Index");
         }

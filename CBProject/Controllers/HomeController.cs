@@ -1,4 +1,5 @@
 using AutoMapper;
+using CBProject.HelperClasses;
 using CBProject.HelperClasses.Interfaces;
 using CBProject.Models;
 using CBProject.Models.EntityModels;
@@ -10,9 +11,11 @@ using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
 
 namespace CBProject.Controllers
@@ -189,8 +192,29 @@ namespace CBProject.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EmplyeeRegistration(RegisterViewModel viewModel)
+        public async Task<ActionResult> EmplyeeRegistration(RegisterViewModel viewModel, HttpPostedFileBase CVFile, HttpPostedFileBase ImageFile)
         {
+            // Save Image File
+            if (ImageFile != null)
+            {
+                viewModel.ImageFile = ImageFile;
+                string FileName = Path.GetFileNameWithoutExtension(viewModel.ImageFile.FileName);
+                string FileExtension = Path.GetExtension(viewModel.ImageFile.FileName);
+                FileName = FileName.Trim() + FileExtension;
+                viewModel.ImagePath = (StaticImfo.RegistrationImagesPath + viewModel.FirstName + viewModel.LastName + "_" + FileName).Trim();
+                viewModel.ImageFile.SaveAs(Server.MapPath(viewModel.ImagePath));
+            }
+            // Save CV File
+            if (CVFile != null)
+            {
+                viewModel.CVFile = CVFile;
+                string FileName = Path.GetFileNameWithoutExtension(viewModel.CVFile.FileName);
+                string FileExtension = Path.GetExtension(viewModel.CVFile.FileName);
+                FileName = FileName.Trim() + FileExtension;
+                viewModel.CVPath = (StaticImfo.CVPathRegistration+ viewModel.FirstName + viewModel.LastName + "_" + FileName).Trim();
+                viewModel.CVFile.SaveAs(Server.MapPath(viewModel.CVPath));
+            }
+
             EmployeeRequest request = Mapper.Map<RegisterViewModel, EmployeeRequest>(viewModel);
             this._employeesRequestsRepository.Add(request);
             await this._employeesRequestsRepository.SaveAsync();

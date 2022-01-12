@@ -2030,9 +2030,11 @@
     <Folder Include="assets\libs\pdfmake\src\" />
     <Folder Include="assets\libs\table-edits\src\" />
     <Folder Include="assets\libs\toastr\tests\" />
+    <Folder Include="CVRegistration\" />
     <Folder Include="CV\" />
     <Folder Include="EbooksFiles\" />
     <Folder Include="EbooksImages\" />
+    <Folder Include="RegistrationUsersImages\" />
     <Folder Include="UsersImages\" />
     <Folder Include="VideoFiles\" />
     <Folder Include="VideoImages\" />

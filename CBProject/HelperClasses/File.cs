@@ -12,7 +12,6 @@ namespace CBProject.HelperClasses
                 file.Delete();
             }
         }
-
         public static void CreateFile(string path)
         {
             FileInfo file = new FileInfo(path);

@@ -22,7 +22,7 @@ namespace CBProject.Controllers.API
         public async Task<IHttpActionResult> Get()
         {
             var records = await this._employeesRequestsRepository.GetAllEmptyAsync();
-            return Ok();
+            return Ok(records);
         }
 
         // GET api/EmployeeRequest/5
