@@ -233,18 +233,18 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Areas\Forum\Controllers\API\ForumAnswerController.cs" />
-    <Compile Include="Areas\Forum\Controllers\API\ForumMessageController.cs" />
-    <Compile Include="Areas\Forum\Controllers\API\ForumQuestionController.cs" />
-    <Compile Include="Areas\Forum\Controllers\PublicController.cs" />
+    <Compile Include="Areas\Forum\Controllers\ForumController.cs" />
     <Compile Include="Areas\Forum\HelperClasses\CreateForumsTestData.cs" />
     <Compile Include="Areas\Forum\Models\EntityModels\ForumAnswer.cs" />
     <Compile Include="Areas\Forum\Models\EntityModels\ForumQuestion.cs" />
-    <Compile Include="Areas\Forum\Repositories\ForumAnswersRepository.cs" />
-    <Compile Include="Areas\Forum\Repositories\ForumMessagesRepository.cs" />
-    <Compile Include="Areas\Forum\Repositories\ForumQuestionsRepository.cs" />
+    <Compile Include="Areas\Forum\Models\EntityModels\ForumSabject.cs" />
+    <Compile Include="Areas\Messenger\Controllers\MessengerController.cs" />
+    <Compile Include="Areas\Messenger\HelperClasses\CreateMessengerTestData.cs" />
+    <Compile Include="Areas\Messenger\Models\EntityModels\MessengerMessage.cs" />
+    <Compile Include="Areas\Messenger\Models\EntityModels\MessengerGroup.cs" />
     <Compile Include="Areas\Forum\SignalIrHubs\ForumHub.cs" />
     <Compile Include="Areas\Forum\ForumAreaRegistration.cs" />
+    <Compile Include="Areas\Messenger\MessengerAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\API\CategoriesController.cs" />
     <Compile Include="Controllers\API\CategoryToCategoryController.cs" />
@@ -298,9 +298,9 @@
     <Compile Include="HelperClasses\StaticImfo.cs" />
     <Compile Include="HelperClasses\UnitOfWork.cs" />
     <Compile Include="HelperClasses\VideoEditor.cs" />
-    <Compile Include="Migrations\202201121552325_Initial.cs" />
-    <Compile Include="Migrations\202201121552325_Initial.Designer.cs">
-      <DependentUpon>202201121552325_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\202201151512348_iNITIAL.cs" />
+    <Compile Include="Migrations\202201151512348_iNITIAL.Designer.cs">
+      <DependentUpon>202201151512348_iNITIAL.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -310,7 +310,6 @@
     <Compile Include="Models\EntityModels\ContactMessage.cs" />
     <Compile Include="Models\EntityModels\Ebook.cs" />
     <Compile Include="Models\EntityModels\EmployeeRequest.cs" />
-    <Compile Include="Areas\Forum\Models\EntityModels\ForumMessage.cs" />
     <Compile Include="Models\EntityModels\Order.cs" />
     <Compile Include="Models\EntityModels\Payment.cs" />
     <Compile Include="Models\EntityModels\RatingToEbook.cs" />
@@ -385,7 +384,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Forum\Content\Forum.css" />
-    <Content Include="Areas\Forum\Content\Mesenger.css" />
+    <Content Include="Areas\Messenger\Content\Mesenger.css" />
     <Content Include="Areas\Forum\Scripts\servicies.js" />
     <Content Include="assets\css\app-dark-rtl.min.css" />
     <Content Include="assets\css\app-dark.css" />
@@ -1751,8 +1750,11 @@
     <Content Include="Areas\Forum\Views\web.config" />
     <Content Include="Areas\Forum\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Forum\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Forum\Views\Public\Forum.cshtml" />
-    <Content Include="Areas\Forum\Views\Public\Messenger.cshtml" />
+    <Content Include="Areas\Messenger\Views\web.config" />
+    <Content Include="Areas\Messenger\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Messenger\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Messenger\Views\Messenger\Index.cshtml" />
+    <Content Include="Areas\Forum\Views\Forum\Index.cshtml" />
     <None Include="Makefile" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.js" />
@@ -1986,6 +1988,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Forum\Controllers\API\" />
+    <Folder Include="Areas\Forum\Repositories\" />
     <Folder Include="assets\libs\%40chenfengyuan\datepicker\" />
     <Folder Include="assets\libs\%40curiosityx\bootstrap-session-timeout\" />
     <Folder Include="assets\libs\admin-resources\bootstrap-filestyle\" />
@@ -2083,8 +2087,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202201121552325_Initial.resx">
-      <DependentUpon>202201121552325_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202201151512348_iNITIAL.resx">
+      <DependentUpon>202201151512348_iNITIAL.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

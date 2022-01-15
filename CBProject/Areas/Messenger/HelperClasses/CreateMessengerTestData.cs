@@ -1,8 +1,8 @@
 ﻿using CBProject.Models;
 
-namespace CBProject.Areas.Forum.HelperClasses
+namespace CBProject.Areas.Messenger.HelperClasses
 {
-    public static class CreateForumsTestData
+    public static class CreateMessengerTestData
     {
 
 

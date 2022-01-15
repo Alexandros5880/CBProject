@@ -1,6 +1,7 @@
 namespace CBProject.Migrations
 {
     using CBProject.Areas.Forum.HelperClasses;
+    using CBProject.Areas.Messenger.HelperClasses;
     using CBProject.HelperClassesm;
     using System.Data.Entity.Migrations;
 
@@ -15,6 +16,7 @@ namespace CBProject.Migrations
         {
             CreateData.CreateAll(context);
             CreateForumsTestData.CreateAll(context);
+            CreateMessengerTestData.CreateAll(context);
         }
     }
 }

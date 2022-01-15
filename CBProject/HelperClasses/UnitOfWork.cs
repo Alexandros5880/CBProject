@@ -1,5 +1,4 @@
-﻿using CBProject.Areas.Forum.Repositories;
-using CBProject.HelperClasses.Interfaces;
+﻿using CBProject.HelperClasses.Interfaces;
 using CBProject.Models;
 using CBProject.Repositories;
 using CBProject.Repositories.IdentityRepos;
@@ -39,9 +38,6 @@ namespace CBProject.HelperClasses
         public MessagesRepository Messages { get; protected set; }
         public UsersSubscriptionPackagesRepo UserSubscriptionPackages { get; protected set; }
         public EmployeesRequestsRepository EmployeesRequests { get; protected set; }
-        public ForumMessagesRepository ForumMessages { get; protected set; }
-        public ForumQuestionsRepository ForumQuestions { get; protected set; }
-        public ForumAnswersRepository ForumAnswers { get; protected set; }
 
         public UnitOfWork(IApplicationDbContext context)
         {
@@ -72,9 +68,6 @@ namespace CBProject.HelperClasses
             this.Messages = new MessagesRepository(this);
             this.UserSubscriptionPackages = new UsersSubscriptionPackagesRepo(this);
             this.EmployeesRequests = new EmployeesRequestsRepository(this);
-            this.ForumMessages = new ForumMessagesRepository(this);
-            this.ForumQuestions = new ForumQuestionsRepository(this);
-            this.ForumAnswers = new ForumAnswersRepository(this);
         }
 
         protected virtual void Dispose(bool disposing)
@@ -109,9 +102,6 @@ namespace CBProject.HelperClasses
                     this.Messages.Dispose();
                     this.UserSubscriptionPackages.Dispose();
                     this.EmployeesRequests.Dispose();
-                    this.ForumMessages.Dispose();
-                    this.ForumQuestions.Dispose();
-                    this.ForumAnswers.Dispose();
                 }
                 disposedValue = true;
             }

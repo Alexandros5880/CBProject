@@ -23,6 +23,10 @@ namespace CBProject.Models
 
     public class ApplicationUser : IdentityUser
     {
+        public ApplicationUser()
+        {
+            this.MessengerGroups = new HashSet<MessengerGroup>();
+        }
         [DataType(DataType.Date)]
         public DateTime BirthDate { get; set; }
         [Required]
@@ -56,6 +60,10 @@ namespace CBProject.Models
         public ICollection<Ebook> Ebooks { get; set; }
         public ICollection<Order> Orders { get; set; }
         public ICollection<Payment> Payments { get; set; }
+        public virtual ICollection<MessengerGroup> MessengerGroups { get; set; }
+        public ICollection<MessengerMessage> MessengerMessages { get; set; }
+        public ICollection<ForumQuestion> ForumQuestions { get; set; }
+        public ICollection<ForumAnswer> ForumAnswers { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser, string> manager)
         {
@@ -103,9 +111,11 @@ namespace CBProject.Models
         public DbSet<RequirementToEbook> RequirementsToEbooks { get; set; }
         public DbSet<RequirementToVideo> RequirementsToVideos { get; set; }
         public DbSet<EmployeeRequest> EmployeesRequests { get; set; }
-        public DbSet<ForumMessage> ForumMessages { get; set; }
-        public DbSet<ForumQuestion> ForumQuestions { get; set; }
         public DbSet<ForumAnswer> ForumAnswers { get; set; }
+        public DbSet<ForumQuestion> ForumQuestions { get; set; }
+        public DbSet<ForumSabject> ForumSubjects { get; set; }
+        public DbSet<MessengerGroup> MessengerGroups { get; set; }
+        public DbSet<MessengerMessage> MessengerMessages { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection")
