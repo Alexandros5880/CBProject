@@ -238,6 +238,10 @@
     <Compile Include="Areas\Forum\Models\EntityModels\ForumAnswer.cs" />
     <Compile Include="Areas\Forum\Models\EntityModels\ForumQuestion.cs" />
     <Compile Include="Areas\Forum\Models\EntityModels\ForumSabject.cs" />
+    <Compile Include="Areas\Forum\Repositories\ForumAnswerRepository.cs" />
+    <Compile Include="Areas\Forum\Repositories\ForumQuestionRepository.cs" />
+    <Compile Include="Areas\Forum\Repositories\ForumSabjectRepository.cs" />
+    <Compile Include="Areas\Forum\Repositories\Interfaces\IRepository.cs" />
     <Compile Include="Areas\Messenger\Controllers\MessengerController.cs" />
     <Compile Include="Areas\Messenger\HelperClasses\CreateMessengerTestData.cs" />
     <Compile Include="Areas\Messenger\Models\EntityModels\MessengerMessage.cs" />
@@ -245,6 +249,9 @@
     <Compile Include="Areas\Forum\SignalIrHubs\ForumHub.cs" />
     <Compile Include="Areas\Forum\ForumAreaRegistration.cs" />
     <Compile Include="Areas\Messenger\MessengerAreaRegistration.cs" />
+    <Compile Include="Areas\Messenger\Repositories\MesGroupsRepository.cs" />
+    <Compile Include="Areas\Messenger\Repositories\Interfaces\IRepository.cs" />
+    <Compile Include="Areas\Messenger\Repositories\MesMessagesRepository.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\API\CategoriesController.cs" />
     <Compile Include="Controllers\API\CategoryToCategoryController.cs" />
@@ -386,6 +393,7 @@
     <Content Include="Areas\Forum\Content\Forum.css" />
     <Content Include="Areas\Messenger\Content\Mesenger.css" />
     <Content Include="Areas\Forum\Scripts\servicies.js" />
+    <Content Include="Areas\Messenger\Scripts\servicies.js" />
     <Content Include="assets\css\app-dark-rtl.min.css" />
     <Content Include="assets\css\app-dark.css" />
     <Content Include="assets\css\app-dark.min.css" />
@@ -1989,7 +1997,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Forum\Controllers\API\" />
-    <Folder Include="Areas\Forum\Repositories\" />
     <Folder Include="assets\libs\%40chenfengyuan\datepicker\" />
     <Folder Include="assets\libs\%40curiosityx\bootstrap-session-timeout\" />
     <Folder Include="assets\libs\admin-resources\bootstrap-filestyle\" />

@@ -1,4 +1,6 @@
-﻿using CBProject.Models;
+﻿using CBProject.Areas.Forum.Repositories;
+using CBProject.Areas.Messenger.Repositories;
+using CBProject.Models;
 using CBProject.Repositories;
 using CBProject.Repositories.IdentityRepos;
 using Microsoft.AspNet.Identity;
@@ -35,5 +37,10 @@ namespace CBProject.HelperClasses.Interfaces
         MessagesRepository Messages { get; }
         UsersSubscriptionPackagesRepo UserSubscriptionPackages { get; }
         EmployeesRequestsRepository EmployeesRequests { get; }
+        MesGroupsRepository MessengerGroups { get; }
+        MesMessagesRepository MessengerMessages { get; }
+        ForumSabjectRepository ForumSabjectRepository { get; }
+        ForumQuestionRepository ForumQuestionRepository { get; }
+        ForumAnswerRepository ForumAnswerRepository { get; }
     }
 }

@@ -1,4 +1,6 @@
-﻿using CBProject.HelperClasses.Interfaces;
+﻿using CBProject.Areas.Forum.Repositories;
+using CBProject.Areas.Messenger.Repositories;
+using CBProject.HelperClasses.Interfaces;
 using CBProject.Models;
 using CBProject.Repositories;
 using CBProject.Repositories.IdentityRepos;
@@ -38,6 +40,11 @@ namespace CBProject.HelperClasses
         public MessagesRepository Messages { get; protected set; }
         public UsersSubscriptionPackagesRepo UserSubscriptionPackages { get; protected set; }
         public EmployeesRequestsRepository EmployeesRequests { get; protected set; }
+        public MesGroupsRepository MessengerGroups { get; protected set; }
+        public MesMessagesRepository MessengerMessages { get; protected set; }
+        public ForumSabjectRepository ForumSabjectRepository { get; protected set; }
+        public ForumQuestionRepository ForumQuestionRepository { get; protected set; }
+        public ForumAnswerRepository ForumAnswerRepository { get; protected set; }
 
         public UnitOfWork(IApplicationDbContext context)
         {
@@ -68,6 +75,11 @@ namespace CBProject.HelperClasses
             this.Messages = new MessagesRepository(this);
             this.UserSubscriptionPackages = new UsersSubscriptionPackagesRepo(this);
             this.EmployeesRequests = new EmployeesRequestsRepository(this);
+            this.MessengerGroups = new MesGroupsRepository(this);
+            this.MessengerMessages = new MesMessagesRepository(this);
+            this.ForumSabjectRepository = new ForumSabjectRepository(this);
+            this.ForumQuestionRepository = new ForumQuestionRepository(this);
+            this.ForumAnswerRepository = new ForumAnswerRepository(this);
         }
 
         protected virtual void Dispose(bool disposing)
@@ -102,6 +114,11 @@ namespace CBProject.HelperClasses
                     this.Messages.Dispose();
                     this.UserSubscriptionPackages.Dispose();
                     this.EmployeesRequests.Dispose();
+                    this.MessengerGroups.Dispose();
+                    this.MessengerMessages.Dispose();
+                    this.ForumSabjectRepository.Dispose();
+                    this.ForumQuestionRepository.Dispose();
+                    this.ForumAnswerRepository.Dispose();
                 }
                 disposedValue = true;
             }
