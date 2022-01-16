@@ -4,6 +4,7 @@ using CBProject.HelperClasses.Interfaces;
 using CBProject.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,102 +14,126 @@ namespace CBProject.Areas.Forum.Repositories
     {
         private bool disposedValue;
         private readonly ApplicationDbContext _context;
-
         public ForumQuestionRepository(IUnitOfWork unitOfWork)
         {
             this._context = unitOfWork.Context;
         }
-
         public void Add(ForumQuestion obj)
         {
             if (obj == null)
                 throw new ArgumentNullException(nameof(obj));
+            this._context.ForumQuestions.Add(obj);
         }
-
         public void Delete(int? id)
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
-            throw new System.NotImplementedException();
+            var obj = this._context.ForumQuestions
+                        .Include(q => q.User)
+                        .Include(q => q.Subject)
+                        .FirstOrDefault(a => a.ID == id);
+            if (obj == null)
+                throw new ArgumentNullException(nameof(obj));
+            this._context.ForumQuestions.Remove(obj);
         }
-
-        public Task DeleteAsync(int? id)
+        public async Task DeleteAsync(int? id)
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
-            throw new System.NotImplementedException();
+            var obj = await this._context.ForumQuestions
+                        .Include(q => q.User)
+                        .Include(q => q.Subject)
+                        .FirstOrDefaultAsync(a => a.ID == id);
+            if (obj == null)
+                throw new ArgumentNullException(nameof(obj));
+            this._context.ForumQuestions.Remove(obj);
         }
-
         public ForumQuestion Get(int? id)
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
-            throw new System.NotImplementedException();
+            var obj = this._context.ForumQuestions
+                        .Include(q => q.User)
+                        .Include(q => q.Subject)
+                        .FirstOrDefault(a => a.ID == id);
+            if (obj == null)
+                throw new ArgumentNullException(nameof(obj));
+            return obj;
         }
-
         public ICollection<ForumQuestion> GetAll()
         {
-            throw new System.NotImplementedException();
+            return this._context.ForumQuestions
+                        .Include(q => q.User)
+                        .Include(q => q.Subject)
+                        .ToList();
         }
-
-        public Task<ICollection<ForumQuestion>> GetAllAsync()
+        public async Task<ICollection<ForumQuestion>> GetAllAsync()
         {
-            throw new System.NotImplementedException();
+            return await this._context.ForumQuestions
+                        .Include(q => q.User)
+                        .Include(q => q.Subject)
+                        .ToListAsync();
         }
-
         public ICollection<ForumQuestion> GetAllEmpty()
         {
-            throw new System.NotImplementedException();
+            return this._context.ForumQuestions
+                                    .ToList();
         }
-
-        public Task<ICollection<ForumQuestion>> GetAllEmptyAsync()
+        public async Task<ICollection<ForumQuestion>> GetAllEmptyAsync()
         {
-            throw new System.NotImplementedException();
+            return await this._context.ForumQuestions
+                                        .ToListAsync();
         }
-
         public IQueryable<ForumQuestion> GetAllQueryable()
         {
-            throw new System.NotImplementedException();
+            return this._context.ForumQuestions;
         }
-
-        public Task<ForumQuestion> GetAsync(int? id)
+        public async Task<ForumQuestion> GetAsync(int? id)
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
-            throw new System.NotImplementedException();
+            var obj = await this._context.ForumQuestions
+                        .Include(q => q.User)
+                        .Include(q => q.Subject)
+                        .FirstOrDefaultAsync(a => a.ID == id);
+            if (obj == null)
+                throw new ArgumentNullException(nameof(obj));
+            return obj;
         }
-
         public ForumQuestion GetEmpty(int? id)
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
-            throw new System.NotImplementedException();
+            var obj = this._context.ForumQuestions
+                        .FirstOrDefault(a => a.ID == id);
+            if (obj == null)
+                throw new ArgumentNullException(nameof(obj));
+            return obj;
         }
-
-        public Task<ForumQuestion> GetEmptyAsync(int? id)
+        public async Task<ForumQuestion> GetEmptyAsync(int? id)
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
-            throw new System.NotImplementedException();
+            var obj = await this._context.ForumQuestions
+                        .FirstOrDefaultAsync(a => a.ID == id);
+            if (obj == null)
+                throw new ArgumentNullException(nameof(obj));
+            return obj;
         }
-
         public void Save()
         {
-            throw new System.NotImplementedException();
+            this._context.SaveChanges();
         }
-
-        public Task<int> SaveAsync()
+        public async Task<int> SaveAsync()
         {
-            throw new System.NotImplementedException();
+            return await this._context.SaveChangesAsync();
         }
-
         public void Update(ForumQuestion obj)
         {
             if (obj == null)
                 throw new ArgumentNullException(nameof(obj));
-            throw new System.NotImplementedException();
+            this._context.Entry(obj).State = EntityState.Modified;
         }
-
         protected virtual void Dispose(bool disposing)
         {
             if (!disposedValue)
