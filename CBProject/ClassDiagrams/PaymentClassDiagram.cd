@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="CBProject.Models.EntityModels.Order">
+    <Position X="2.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABARAAAAAAAAgAAAAAAQAAgAAAAEAAAAAgAAAAAAAQA=</HashCode>
+      <FileName>Models\EntityModels\Order.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CBProject.Models.EntityModels.Payment">
+    <Position X="4.25" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAQAggAAAAAAAAAgAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Models\EntityModels\Payment.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CBProject.Models.EntityModels.SubscriptionPackage">
+    <Position X="0.5" Y="0.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>IIEAAAAAAQAigAAAAAAAAAAAAAAAAAAAAAAAAEAAIAg=</HashCode>
+      <FileName>Models\EntityModels\SubscriptionPackage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CBProject.Models.EntityModels.UserSubscriptionPackage">
+    <Position X="6" Y="0.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>ABABAAAAAAAAgAAAAAAAAAgAAAAAAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>Models\EntityModels\UserSubscriptionPackage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

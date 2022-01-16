@@ -3,7 +3,7 @@ namespace CBProject.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class iNITIAL : DbMigration
+    public partial class Initial : DbMigration
     {
         public override void Up()
         {
@@ -112,10 +112,13 @@ namespace CBProject.Migrations
                     {
                         ID = c.Int(nullable: false, identity: true),
                         UserId = c.String(maxLength: 128),
+                        QuestionId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.ForumQuestions", t => t.QuestionId, cascadeDelete: true)
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId)
-                .Index(t => t.UserId);
+                .Index(t => t.UserId)
+                .Index(t => t.QuestionId);
             
             CreateTable(
                 "dbo.ForumQuestions",
@@ -477,19 +480,6 @@ namespace CBProject.Migrations
                 .Index(t => t.SubscriptionPackageId);
             
             CreateTable(
-                "dbo.ForumQuestionForumAnswers",
-                c => new
-                    {
-                        ForumQuestion_ID = c.Int(nullable: false),
-                        ForumAnswer_ID = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => new { t.ForumQuestion_ID, t.ForumAnswer_ID })
-                .ForeignKey("dbo.ForumQuestions", t => t.ForumQuestion_ID, cascadeDelete: true)
-                .ForeignKey("dbo.ForumAnswers", t => t.ForumAnswer_ID, cascadeDelete: true)
-                .Index(t => t.ForumQuestion_ID)
-                .Index(t => t.ForumAnswer_ID);
-            
-            CreateTable(
                 "dbo.MessengerGroupApplicationUsers",
                 c => new
                     {
@@ -572,10 +562,9 @@ namespace CBProject.Migrations
             DropForeignKey("dbo.MessengerMessages", "GrouId", "dbo.MessengerGroups");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.ForumAnswers", "UserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.ForumAnswers", "QuestionId", "dbo.ForumQuestions");
             DropForeignKey("dbo.ForumQuestions", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.ForumQuestions", "SubjectId", "dbo.ForumSabjects");
-            DropForeignKey("dbo.ForumQuestionForumAnswers", "ForumAnswer_ID", "dbo.ForumAnswers");
-            DropForeignKey("dbo.ForumQuestionForumAnswers", "ForumQuestion_ID", "dbo.ForumQuestions");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Ebooks", "CategoryId", "dbo.Categories");
             DropForeignKey("dbo.CategoryToCategories", "MasterCategoryId", "dbo.Categories");
@@ -586,8 +575,6 @@ namespace CBProject.Migrations
             DropIndex("dbo.SubscriptionPackageEbooks", new[] { "SubscriptionPackage_ID" });
             DropIndex("dbo.MessengerGroupApplicationUsers", new[] { "ApplicationUser_Id" });
             DropIndex("dbo.MessengerGroupApplicationUsers", new[] { "MessengerGroup_ID" });
-            DropIndex("dbo.ForumQuestionForumAnswers", new[] { "ForumAnswer_ID" });
-            DropIndex("dbo.ForumQuestionForumAnswers", new[] { "ForumQuestion_ID" });
             DropIndex("dbo.UserSubscriptionPackages", new[] { "SubscriptionPackageId" });
             DropIndex("dbo.UserSubscriptionPackages", new[] { "UserId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
@@ -622,6 +609,7 @@ namespace CBProject.Migrations
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.ForumQuestions", new[] { "SubjectId" });
             DropIndex("dbo.ForumQuestions", new[] { "UserId" });
+            DropIndex("dbo.ForumAnswers", new[] { "QuestionId" });
             DropIndex("dbo.ForumAnswers", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", new[] { "SubscriptionPackage_ID" });
@@ -633,7 +621,6 @@ namespace CBProject.Migrations
             DropTable("dbo.VideoSubscriptionPackages");
             DropTable("dbo.SubscriptionPackageEbooks");
             DropTable("dbo.MessengerGroupApplicationUsers");
-            DropTable("dbo.ForumQuestionForumAnswers");
             DropTable("dbo.UserSubscriptionPackages");
             DropTable("dbo.AspNetRoles");
             DropTable("dbo.EmployeeRequests");

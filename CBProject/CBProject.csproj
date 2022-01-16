@@ -305,9 +305,9 @@
     <Compile Include="HelperClasses\StaticImfo.cs" />
     <Compile Include="HelperClasses\UnitOfWork.cs" />
     <Compile Include="HelperClasses\VideoEditor.cs" />
-    <Compile Include="Migrations\202201151512348_iNITIAL.cs" />
-    <Compile Include="Migrations\202201151512348_iNITIAL.Designer.cs">
-      <DependentUpon>202201151512348_iNITIAL.cs</DependentUpon>
+    <Compile Include="Migrations\202201161310040_Initial.cs" />
+    <Compile Include="Migrations\202201161310040_Initial.Designer.cs">
+      <DependentUpon>202201161310040_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -1763,6 +1763,12 @@
     <Content Include="Areas\Messenger\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Messenger\Views\Messenger\Index.cshtml" />
     <Content Include="Areas\Forum\Views\Forum\Index.cshtml" />
+    <Content Include="ClassDiagrams\ForumClassDiagram.cd" />
+    <Content Include="ClassDiagrams\MessengerClassDiagram.cd" />
+    <Content Include="ClassDiagrams\IdentityClassDiagram.cd" />
+    <Content Include="ClassDiagrams\MainContentClassDiagram.cd" />
+    <Content Include="ClassDiagrams\PaymentClassDiagram.cd" />
+    <Content Include="ClassDiagrams\MessagesFormsClassDiagram.cd" />
     <None Include="Makefile" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.js" />
@@ -2094,8 +2100,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202201151512348_iNITIAL.resx">
-      <DependentUpon>202201151512348_iNITIAL.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202201161310040_Initial.resx">
+      <DependentUpon>202201161310040_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

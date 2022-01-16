@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="CBProject.Areas.Forum.Models.EntityModels.ForumAnswer">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAgAAAAAAAAAgAAAAAAAAEAAAAAAQAAAA=</HashCode>
+      <FileName>Areas\Forum\Models\EntityModels\ForumAnswer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CBProject.Areas.Forum.Models.EntityModels.ForumQuestion">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAEAAAgAAAAIAAAAgAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Areas\Forum\Models\EntityModels\ForumQuestion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CBProject.Areas.Forum.Models.EntityModels.ForumSabject">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>Areas\Forum\Models\EntityModels\ForumSabject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CBProject.Models.ApplicationUser">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CCEBBEAACABAAIAIIIAIAIQCAAIAAAACAAJABCAAIgk=</HashCode>
+      <FileName>Models\IdentityModels.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
