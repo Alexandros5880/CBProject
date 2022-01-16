@@ -1,39 +1,76 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using CBProject.Areas.Forum.Models.EntityModels;
+using CBProject.Areas.Forum.Repositories;
+using CBProject.HelperClasses.Interfaces;
+using System;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace CBProject.Areas.Forum.Controllers.API
 {
-    public class SabjectController : ApiController
+    public class SabjectController : ApiController, IDisposable
     {
-        // GET api/<controller>
-        public IEnumerable<string> Get()
+        private readonly ForumSabjectRepository _sabjectRepository;
+
+        public SabjectController(IUnitOfWork unitOfWork)
         {
-            return new string[] { "value1", "value2" };
+            this._sabjectRepository = unitOfWork.ForumSabjectRepository;
         }
 
-        // GET api/<controller>/5
-        public string Get(int id)
+        // GET api/Sabject
+        public async Task<IHttpActionResult> Get()
         {
-            return "value";
+            var obj = await this._sabjectRepository.GetAllEmptyAsync();
+            return Ok(obj);
         }
 
-        // POST api/<controller>
-        public void Post([FromBody] string value)
+        // GET api/Sabject/5
+        public async Task<IHttpActionResult> Get(int? id)
         {
+            if (id == null)
+                return NotFound();
+            var obj = await this._sabjectRepository.GetEmptyAsync(id);
+            if (obj == null)
+                return NotFound();
+            return Ok(obj);
         }
 
-        // PUT api/<controller>/5
-        public void Put(int id, [FromBody] string value)
+        // POST api/Sabject
+        public async Task<IHttpActionResult> Post([FromBody] ForumSabject obj)
         {
+            if (obj == null)
+                return NotFound();
+            this._sabjectRepository.Add(obj);
+            await this._sabjectRepository.SaveAsync();
+            return Ok(obj);
         }
 
-        // DELETE api/<controller>/5
-        public void Delete(int id)
+        // PUT api/Sabject/5
+        public async Task<IHttpActionResult> Put([FromBody] ForumSabject obj)
         {
+            if (obj == null)
+                return NotFound();
+            this._sabjectRepository.Update(obj);
+            await this._sabjectRepository.SaveAsync();
+            return Ok(obj);
+        }
+
+        // DELETE api/Sabject/5
+        public async Task<IHttpActionResult> Delete(int? id)
+        {
+            if (id == null)
+                return NotFound();
+            await this._sabjectRepository.DeleteAsync(id);
+            await this._sabjectRepository.SaveAsync();
+            return Ok(id);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                this._sabjectRepository.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }

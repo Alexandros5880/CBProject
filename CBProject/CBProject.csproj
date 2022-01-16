@@ -233,6 +233,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Forum\Controllers\API\AnswerController.cs" />
+    <Compile Include="Areas\Forum\Controllers\API\QuestionController.cs" />
+    <Compile Include="Areas\Forum\Controllers\API\SabjectController.cs" />
     <Compile Include="Areas\Forum\Controllers\ForumController.cs" />
     <Compile Include="Areas\Forum\HelperClasses\CreateForumsTestData.cs" />
     <Compile Include="Areas\Forum\Models\EntityModels\ForumAnswer.cs" />
@@ -242,6 +245,8 @@
     <Compile Include="Areas\Forum\Repositories\ForumQuestionRepository.cs" />
     <Compile Include="Areas\Forum\Repositories\ForumSabjectRepository.cs" />
     <Compile Include="Areas\Forum\Repositories\Interfaces\IRepository.cs" />
+    <Compile Include="Areas\Messenger\Controllers\API\GroupController.cs" />
+    <Compile Include="Areas\Messenger\Controllers\API\MessageController.cs" />
     <Compile Include="Areas\Messenger\Controllers\MessengerController.cs" />
     <Compile Include="Areas\Messenger\HelperClasses\CreateMessengerTestData.cs" />
     <Compile Include="Areas\Messenger\Models\EntityModels\MessengerMessage.cs" />
@@ -2002,7 +2007,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Forum\Controllers\API\" />
     <Folder Include="assets\libs\%40chenfengyuan\datepicker\" />
     <Folder Include="assets\libs\%40curiosityx\bootstrap-session-timeout\" />
     <Folder Include="assets\libs\admin-resources\bootstrap-filestyle\" />
