@@ -4,6 +4,7 @@ using CBProject.HelperClasses.Interfaces;
 using CBProject.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,103 +14,122 @@ namespace CBProject.Areas.Messenger.Repositories
     {
         private bool disposedValue;
         private readonly ApplicationDbContext _context;
-
         public MesGroupsRepository(IUnitOfWork unitOfWork)
         {
             this._context = unitOfWork.Context;
         }
-
         public void Add(MessengerGroup obj)
         {
             if (obj == null)
                 throw new ArgumentNullException(nameof(obj));
-            throw new NotImplementedException();
+            this._context.MessengerGroups.Add(obj);
         }
-
         public void Delete(int? id)
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
-            throw new NotImplementedException();
+            var obj = this._context.MessengerGroups
+                        .FirstOrDefault(g => g.ID == id);
+            if (obj == null)
+                throw new ArgumentNullException(nameof(obj));
+            this._context.MessengerGroups.Remove(obj);
         }
-
-        public Task DeleteAsync(int? id)
+        public async Task DeleteAsync(int? id)
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
-            throw new NotImplementedException();
+            var obj = await this._context.MessengerGroups
+                        .FirstOrDefaultAsync(g => g.ID == id);
+            if (obj == null)
+                throw new ArgumentNullException(nameof(obj));
+            this._context.MessengerGroups.Remove(obj);
         }
-
         public MessengerGroup Get(int? id)
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
-            throw new NotImplementedException();
+            var obj = this._context.MessengerGroups
+                        .Include(g => g.Users)
+                        .Include(g => g.Messages)
+                        .FirstOrDefault(g => g.ID == id);
+            if (obj == null)
+                throw new ArgumentNullException(nameof(obj));
+            return obj;
         }
-
         public ICollection<MessengerGroup> GetAll()
         {
-            throw new NotImplementedException();
+            return this._context.MessengerGroups
+                                .Include(g => g.Users)
+                                .Include(g => g.Messages)
+                                .ToList();
         }
-
-        public Task<ICollection<MessengerGroup>> GetAllAsync()
+        public async Task<ICollection<MessengerGroup>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await this._context.MessengerGroups
+                                        .Include(g => g.Users)
+                                        .Include(g => g.Messages)
+                                        .ToListAsync();
         }
-
         public ICollection<MessengerGroup> GetAllEmpty()
         {
-            throw new NotImplementedException();
+            return this._context.MessengerGroups
+                                    .ToList();
         }
-
-        public Task<ICollection<MessengerGroup>> GetAllEmptyAsync()
+        public async Task<ICollection<MessengerGroup>> GetAllEmptyAsync()
         {
-            throw new NotImplementedException();
+            return await this._context.MessengerGroups
+                                    .ToListAsync();
         }
-
         public IQueryable<MessengerGroup> GetAllQueryable()
         {
-            throw new NotImplementedException();
+            return this._context.MessengerGroups;
         }
-
-        public Task<MessengerGroup> GetAsync(int? id)
+        public async Task<MessengerGroup> GetAsync(int? id)
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
-            throw new NotImplementedException();
+            var obj = await this._context.MessengerGroups
+                        .Include(g => g.Users)
+                        .Include(g => g.Messages)
+                        .FirstOrDefaultAsync(g => g.ID == id);
+            if (obj == null)
+                throw new ArgumentNullException(nameof(obj));
+            return obj;
         }
-
         public MessengerGroup GetEmpty(int? id)
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
-            throw new NotImplementedException();
+            var obj = this._context.MessengerGroups
+                        .FirstOrDefault(g => g.ID == id);
+            if (obj == null)
+                throw new ArgumentNullException(nameof(obj));
+            return obj;
         }
-
-        public Task<MessengerGroup> GetEmptyAsync(int? id)
+        public async Task<MessengerGroup> GetEmptyAsync(int? id)
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
-            throw new NotImplementedException();
+            var obj = await this._context.MessengerGroups
+                        .FirstOrDefaultAsync(g => g.ID == id);
+            if (obj == null)
+                throw new ArgumentNullException(nameof(obj));
+            return obj;
         }
-
         public void Save()
         {
-            throw new NotImplementedException();
+            this._context.SaveChanges();
         }
-
-        public Task<int> SaveAsync()
+        public async Task<int> SaveAsync()
         {
-            throw new NotImplementedException();
+            return await this._context.SaveChangesAsync();
         }
-
         public void Update(MessengerGroup obj)
         {
             if (obj == null)
                 throw new ArgumentNullException(nameof(obj));
-            throw new NotImplementedException();
+            this._context.Entry(obj).State = EntityState.Modified;
         }
-
         protected virtual void Dispose(bool disposing)
         {
             if (!disposedValue)
