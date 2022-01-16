@@ -1,6 +1,7 @@
 ﻿using CBProject.Areas.Forum.Models.EntityModels;
 using CBProject.Areas.Messenger.Repositories.Interfaces;
 using CBProject.HelperClasses.Interfaces;
+using CBProject.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,29 +12,38 @@ namespace CBProject.Areas.Messenger.Repositories
     public class MesMessagesRepository : IRepository<MessengerMessage>, IDisposable
     {
         private bool disposedValue;
+        private readonly ApplicationDbContext _context;
 
         public MesMessagesRepository(IUnitOfWork unitOfWork)
         {
-
+            this._context = unitOfWork.Context;
         }
 
         public void Add(MessengerMessage obj)
         {
+            if (obj == null)
+                throw new ArgumentNullException(nameof(obj));
             throw new System.NotImplementedException();
         }
 
         public void Delete(int? id)
         {
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
             throw new System.NotImplementedException();
         }
 
         public Task DeleteAsync(int? id)
         {
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
             throw new System.NotImplementedException();
         }
 
         public MessengerMessage Get(int? id)
         {
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
             throw new System.NotImplementedException();
         }
 
@@ -64,16 +74,22 @@ namespace CBProject.Areas.Messenger.Repositories
 
         public Task<MessengerMessage> GetAsync(int? id)
         {
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
             throw new System.NotImplementedException();
         }
 
         public MessengerMessage GetEmpty(int? id)
         {
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
             throw new System.NotImplementedException();
         }
 
         public Task<MessengerMessage> GetEmptyAsync(int? id)
         {
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
             throw new System.NotImplementedException();
         }
 
@@ -89,6 +105,8 @@ namespace CBProject.Areas.Messenger.Repositories
 
         public void Update(MessengerMessage obj)
         {
+            if (obj == null)
+                throw new ArgumentNullException(nameof(obj));
             throw new System.NotImplementedException();
         }
 
@@ -98,7 +116,7 @@ namespace CBProject.Areas.Messenger.Repositories
             {
                 if (disposing)
                 {
-
+                    this._context.Dispose();
                 }
                 disposedValue = true;
             }

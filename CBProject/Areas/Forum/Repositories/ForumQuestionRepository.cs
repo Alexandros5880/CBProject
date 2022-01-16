@@ -1,6 +1,7 @@
 ﻿using CBProject.Areas.Forum.Models.EntityModels;
 using CBProject.Areas.Forum.Repositories.Interfaces;
 using CBProject.HelperClasses.Interfaces;
+using CBProject.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,29 +12,37 @@ namespace CBProject.Areas.Forum.Repositories
     public class ForumQuestionRepository : IRepository<ForumQuestion>, IDisposable
     {
         private bool disposedValue;
+        private readonly ApplicationDbContext _context;
 
         public ForumQuestionRepository(IUnitOfWork unitOfWork)
         {
-
+            this._context = unitOfWork.Context;
         }
 
         public void Add(ForumQuestion obj)
         {
-            throw new System.NotImplementedException();
+            if (obj == null)
+                throw new ArgumentNullException(nameof(obj));
         }
 
         public void Delete(int? id)
         {
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
             throw new System.NotImplementedException();
         }
 
         public Task DeleteAsync(int? id)
         {
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
             throw new System.NotImplementedException();
         }
 
         public ForumQuestion Get(int? id)
         {
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
             throw new System.NotImplementedException();
         }
 
@@ -64,16 +73,22 @@ namespace CBProject.Areas.Forum.Repositories
 
         public Task<ForumQuestion> GetAsync(int? id)
         {
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
             throw new System.NotImplementedException();
         }
 
         public ForumQuestion GetEmpty(int? id)
         {
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
             throw new System.NotImplementedException();
         }
 
         public Task<ForumQuestion> GetEmptyAsync(int? id)
         {
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
             throw new System.NotImplementedException();
         }
 
@@ -89,6 +104,8 @@ namespace CBProject.Areas.Forum.Repositories
 
         public void Update(ForumQuestion obj)
         {
+            if (obj == null)
+                throw new ArgumentNullException(nameof(obj));
             throw new System.NotImplementedException();
         }
 
@@ -98,7 +115,7 @@ namespace CBProject.Areas.Forum.Repositories
             {
                 if (disposing)
                 {
-
+                    this._context.Dispose();
                 }
                 disposedValue = true;
             }
