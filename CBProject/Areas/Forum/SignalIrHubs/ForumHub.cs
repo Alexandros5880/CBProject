@@ -4,14 +4,40 @@ namespace CBProject.Areas.Forum
 {
     public class ForumHub : Hub
     {
-        public void Hello()
+        
+        // Create Delete Subject
+        public void CreateSubject()
         {
-            Clients.All.hello();
+
+        }
+        public void DeleteSubject()
+        {
+
         }
 
-        public void Send(string name, string message)
+        // Create Delete Question
+        public void CreateQuestion()
         {
-            Clients.All.broadcastMessage(name, message);
+
+        }
+        public void DeleteQuestion()
+        {
+
+        }
+
+        // Create Delete Answer
+        public void CreateAnswer()
+        {
+
+        }
+        public void DeleteAnswer()
+        {
+
+        }
+
+        public void Announce(string message)
+        {
+            Clients.All.Announce(message);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace CBProject.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202201161310040_Initial"; }
+            get { return "202201171525502_Initial"; }
         }
         
         string IMigrationMetadata.Source

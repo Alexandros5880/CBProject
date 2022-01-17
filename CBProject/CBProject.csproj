@@ -257,6 +257,7 @@
     <Compile Include="Areas\Messenger\Repositories\MesGroupsRepository.cs" />
     <Compile Include="Areas\Messenger\Repositories\Interfaces\IRepository.cs" />
     <Compile Include="Areas\Messenger\Repositories\MesMessagesRepository.cs" />
+    <Compile Include="Areas\Messenger\SignalIrHubs\MessengerHub.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\API\CategoriesController.cs" />
     <Compile Include="Controllers\API\CategoryToCategoryController.cs" />
@@ -310,9 +311,9 @@
     <Compile Include="HelperClasses\StaticImfo.cs" />
     <Compile Include="HelperClasses\UnitOfWork.cs" />
     <Compile Include="HelperClasses\VideoEditor.cs" />
-    <Compile Include="Migrations\202201161310040_Initial.cs" />
-    <Compile Include="Migrations\202201161310040_Initial.Designer.cs">
-      <DependentUpon>202201161310040_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\202201171525502_Initial.cs" />
+    <Compile Include="Migrations\202201171525502_Initial.Designer.cs">
+      <DependentUpon>202201171525502_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -396,9 +397,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Forum\Content\Forum.css" />
+    <Content Include="Areas\Forum\Scripts\SignalR.js" />
     <Content Include="Areas\Messenger\Content\Mesenger.css" />
     <Content Include="Areas\Forum\Scripts\servicies.js" />
     <Content Include="Areas\Messenger\Scripts\servicies.js" />
+    <Content Include="Areas\Messenger\Scripts\SignalR.js" />
     <Content Include="assets\css\app-dark-rtl.min.css" />
     <Content Include="assets\css\app-dark.css" />
     <Content Include="assets\css\app-dark.min.css" />
@@ -2104,8 +2107,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202201161310040_Initial.resx">
-      <DependentUpon>202201161310040_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202201171525502_Initial.resx">
+      <DependentUpon>202201171525502_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

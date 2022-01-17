@@ -86,11 +86,14 @@ namespace CBProject.Migrations
                         LockoutEnabled = c.Boolean(nullable: false),
                         AccessFailedCount = c.Int(nullable: false),
                         UserName = c.String(nullable: false, maxLength: 256),
+                        MessengerGroup_ID = c.Int(),
                         SubscriptionPackage_ID = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.MessengerGroups", t => t.MessengerGroup_ID)
                 .ForeignKey("dbo.SubscriptionPackages", t => t.SubscriptionPackage_ID)
                 .Index(t => t.UserName, unique: true, name: "UserNameIndex")
+                .Index(t => t.MessengerGroup_ID)
                 .Index(t => t.SubscriptionPackage_ID);
             
             CreateTable(
@@ -139,8 +142,11 @@ namespace CBProject.Migrations
                 c => new
                     {
                         ID = c.Int(nullable: false, identity: true),
+                        UserId = c.String(maxLength: 128),
                     })
-                .PrimaryKey(t => t.ID);
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.AspNetUsers", t => t.UserId)
+                .Index(t => t.UserId);
             
             CreateTable(
                 "dbo.AspNetUserLogins",
@@ -159,8 +165,14 @@ namespace CBProject.Migrations
                 c => new
                     {
                         ID = c.Int(nullable: false, identity: true),
+                        CreatorId = c.String(maxLength: 128),
+                        ApplicationUser_Id = c.String(maxLength: 128),
                     })
-                .PrimaryKey(t => t.ID);
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.AspNetUsers", t => t.CreatorId)
+                .ForeignKey("dbo.AspNetUsers", t => t.ApplicationUser_Id)
+                .Index(t => t.CreatorId)
+                .Index(t => t.ApplicationUser_Id);
             
             CreateTable(
                 "dbo.MessengerMessages",
@@ -480,19 +492,6 @@ namespace CBProject.Migrations
                 .Index(t => t.SubscriptionPackageId);
             
             CreateTable(
-                "dbo.MessengerGroupApplicationUsers",
-                c => new
-                    {
-                        MessengerGroup_ID = c.Int(nullable: false),
-                        ApplicationUser_Id = c.String(nullable: false, maxLength: 128),
-                    })
-                .PrimaryKey(t => new { t.MessengerGroup_ID, t.ApplicationUser_Id })
-                .ForeignKey("dbo.MessengerGroups", t => t.MessengerGroup_ID, cascadeDelete: true)
-                .ForeignKey("dbo.AspNetUsers", t => t.ApplicationUser_Id, cascadeDelete: true)
-                .Index(t => t.MessengerGroup_ID)
-                .Index(t => t.ApplicationUser_Id);
-            
-            CreateTable(
                 "dbo.SubscriptionPackageEbooks",
                 c => new
                     {
@@ -556,15 +555,17 @@ namespace CBProject.Migrations
             DropForeignKey("dbo.AspNetUsers", "SubscriptionPackage_ID", "dbo.SubscriptionPackages");
             DropForeignKey("dbo.SubscriptionPackageEbooks", "Ebook_ID", "dbo.Ebooks");
             DropForeignKey("dbo.SubscriptionPackageEbooks", "SubscriptionPackage_ID", "dbo.SubscriptionPackages");
-            DropForeignKey("dbo.MessengerGroupApplicationUsers", "ApplicationUser_Id", "dbo.AspNetUsers");
-            DropForeignKey("dbo.MessengerGroupApplicationUsers", "MessengerGroup_ID", "dbo.MessengerGroups");
+            DropForeignKey("dbo.MessengerGroups", "ApplicationUser_Id", "dbo.AspNetUsers");
+            DropForeignKey("dbo.AspNetUsers", "MessengerGroup_ID", "dbo.MessengerGroups");
             DropForeignKey("dbo.MessengerMessages", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.MessengerMessages", "GrouId", "dbo.MessengerGroups");
+            DropForeignKey("dbo.MessengerGroups", "CreatorId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.ForumAnswers", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.ForumAnswers", "QuestionId", "dbo.ForumQuestions");
             DropForeignKey("dbo.ForumQuestions", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.ForumQuestions", "SubjectId", "dbo.ForumSabjects");
+            DropForeignKey("dbo.ForumSabjects", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Ebooks", "CategoryId", "dbo.Categories");
             DropForeignKey("dbo.CategoryToCategories", "MasterCategoryId", "dbo.Categories");
@@ -573,8 +574,6 @@ namespace CBProject.Migrations
             DropIndex("dbo.VideoSubscriptionPackages", new[] { "Video_ID" });
             DropIndex("dbo.SubscriptionPackageEbooks", new[] { "Ebook_ID" });
             DropIndex("dbo.SubscriptionPackageEbooks", new[] { "SubscriptionPackage_ID" });
-            DropIndex("dbo.MessengerGroupApplicationUsers", new[] { "ApplicationUser_Id" });
-            DropIndex("dbo.MessengerGroupApplicationUsers", new[] { "MessengerGroup_ID" });
             DropIndex("dbo.UserSubscriptionPackages", new[] { "SubscriptionPackageId" });
             DropIndex("dbo.UserSubscriptionPackages", new[] { "UserId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
@@ -606,13 +605,17 @@ namespace CBProject.Migrations
             DropIndex("dbo.Orders", new[] { "UserId" });
             DropIndex("dbo.MessengerMessages", new[] { "UserId" });
             DropIndex("dbo.MessengerMessages", new[] { "GrouId" });
+            DropIndex("dbo.MessengerGroups", new[] { "ApplicationUser_Id" });
+            DropIndex("dbo.MessengerGroups", new[] { "CreatorId" });
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
+            DropIndex("dbo.ForumSabjects", new[] { "UserId" });
             DropIndex("dbo.ForumQuestions", new[] { "SubjectId" });
             DropIndex("dbo.ForumQuestions", new[] { "UserId" });
             DropIndex("dbo.ForumAnswers", new[] { "QuestionId" });
             DropIndex("dbo.ForumAnswers", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", new[] { "SubscriptionPackage_ID" });
+            DropIndex("dbo.AspNetUsers", new[] { "MessengerGroup_ID" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
             DropIndex("dbo.Ebooks", new[] { "CategoryId" });
             DropIndex("dbo.Ebooks", new[] { "CreatorId" });
@@ -620,7 +623,6 @@ namespace CBProject.Migrations
             DropIndex("dbo.CategoryToCategories", new[] { "MasterCategoryId" });
             DropTable("dbo.VideoSubscriptionPackages");
             DropTable("dbo.SubscriptionPackageEbooks");
-            DropTable("dbo.MessengerGroupApplicationUsers");
             DropTable("dbo.UserSubscriptionPackages");
             DropTable("dbo.AspNetRoles");
             DropTable("dbo.EmployeeRequests");
