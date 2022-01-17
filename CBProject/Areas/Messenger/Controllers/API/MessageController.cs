@@ -1,39 +1,76 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using CBProject.Areas.Forum.Models.EntityModels;
+using CBProject.Areas.Messenger.Repositories;
+using CBProject.HelperClasses.Interfaces;
+using System;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace CBProject.Areas.Messenger.Controllers.API
 {
-    public class MessageController : ApiController
+    public class MessageController : ApiController, IDisposable
     {
-        // GET api/<controller>
-        public IEnumerable<string> Get()
+        private readonly MesMessagesRepository _mesMessagesRepository;
+
+        public MessageController(IUnitOfWork unitOfWork)
         {
-            return new string[] { "value1", "value2" };
+            this._mesMessagesRepository = unitOfWork.MessengerMessages;
         }
 
-        // GET api/<controller>/5
-        public string Get(int id)
+        // GET api/Message
+        public async Task<IHttpActionResult> Get()
         {
-            return "value";
+            var obj = await this._mesMessagesRepository.GetAllEmptyAsync();
+            return Ok(obj);
         }
 
-        // POST api/<controller>
-        public void Post([FromBody] string value)
+        // GET api/Message/5
+        public async Task<IHttpActionResult> Get(int? id)
         {
+            if (id == null)
+                return NotFound();
+            var obj = await this._mesMessagesRepository.GetEmptyAsync(id);
+            if (obj == null)
+                return NotFound();
+            return Ok(obj);
         }
 
-        // PUT api/<controller>/5
-        public void Put(int id, [FromBody] string value)
+        // POST api/Message
+        public async Task<IHttpActionResult> Post([FromBody] MessengerMessage obj)
         {
+            if (obj == null)
+                return NotFound();
+            this._mesMessagesRepository.Add(obj);
+            await this._mesMessagesRepository.SaveAsync();
+            return Ok(obj);
         }
 
-        // DELETE api/<controller>/5
-        public void Delete(int id)
+        // PUT api/Message/5
+        public async Task<IHttpActionResult> Put([FromBody] MessengerMessage obj)
         {
+            if (obj == null)
+                return NotFound();
+            this._mesMessagesRepository.Update(obj);
+            await this._mesMessagesRepository.SaveAsync();
+            return Ok(obj);
+        }
+
+        // DELETE api/Message/5
+        public async Task<IHttpActionResult> Delete(int? id)
+        {
+            if (id == null)
+                return NotFound();
+            await this._mesMessagesRepository.DeleteAsync(id);
+            await this._mesMessagesRepository.SaveAsync();
+            return Ok();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                this._mesMessagesRepository.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }
