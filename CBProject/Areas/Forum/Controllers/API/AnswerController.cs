@@ -13,7 +13,7 @@ namespace CBProject.Areas.Forum.Controllers.API
 
         public AnswerController(IUnitOfWork unitOfWork)
         {
-            this._answersRepository = unitOfWork.ForumAnswerRepository;
+            this._answersRepository = unitOfWork.ForumAnswer;
         }
 
         // GET api/Answer

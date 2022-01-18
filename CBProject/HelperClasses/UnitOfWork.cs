@@ -42,9 +42,9 @@ namespace CBProject.HelperClasses
         public EmployeesRequestsRepository EmployeesRequests { get; protected set; }
         public MesGroupsRepository MessengerGroups { get; protected set; }
         public MesMessagesRepository MessengerMessages { get; protected set; }
-        public ForumSabjectRepository ForumSabjectRepository { get; protected set; }
-        public ForumQuestionRepository ForumQuestionRepository { get; protected set; }
-        public ForumAnswerRepository ForumAnswerRepository { get; protected set; }
+        public ForumSabjectRepository ForumSabject { get; protected set; }
+        public ForumQuestionRepository ForumQuestion { get; protected set; }
+        public ForumAnswerRepository ForumAnswer { get; protected set; }
 
         public UnitOfWork(IApplicationDbContext context)
         {
@@ -77,9 +77,9 @@ namespace CBProject.HelperClasses
             this.EmployeesRequests = new EmployeesRequestsRepository(this);
             this.MessengerGroups = new MesGroupsRepository(this);
             this.MessengerMessages = new MesMessagesRepository(this);
-            this.ForumSabjectRepository = new ForumSabjectRepository(this);
-            this.ForumQuestionRepository = new ForumQuestionRepository(this);
-            this.ForumAnswerRepository = new ForumAnswerRepository(this);
+            this.ForumSabject = new ForumSabjectRepository(this);
+            this.ForumQuestion = new ForumQuestionRepository(this);
+            this.ForumAnswer = new ForumAnswerRepository(this);
         }
 
         protected virtual void Dispose(bool disposing)
@@ -116,9 +116,9 @@ namespace CBProject.HelperClasses
                     this.EmployeesRequests.Dispose();
                     this.MessengerGroups.Dispose();
                     this.MessengerMessages.Dispose();
-                    this.ForumSabjectRepository.Dispose();
-                    this.ForumQuestionRepository.Dispose();
-                    this.ForumAnswerRepository.Dispose();
+                    this.ForumSabject.Dispose();
+                    this.ForumQuestion.Dispose();
+                    this.ForumAnswer.Dispose();
                 }
                 disposedValue = true;
             }

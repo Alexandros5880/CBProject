@@ -1,4 +1,10 @@
-﻿using Microsoft.Owin;
+﻿using CBProject.Areas.Forum;
+using CBProject.Areas.Messenger;
+using CBProject.HelperClasses;
+using CBProject.HelperClasses.Interfaces;
+using CBProject.Models;
+using Microsoft.AspNet.SignalR;
+using Microsoft.Owin;
 using Owin;
 
 [assembly: OwinStartupAttribute(typeof(CBProject.Startup))]
@@ -8,7 +14,15 @@ namespace CBProject
     {
         public void Configuration(IAppBuilder app)
         {
+            // Dependency On My SignalR Hub Classes
+            GlobalHost.DependencyResolver.Register(
+                typeof(ForumHub), () => new ForumHub((IUnitOfWork) new UnitOfWork(new ApplicationDbContext()))
+            );
+            GlobalHost.DependencyResolver.Register(
+                typeof(MessengerHub), () => new MessengerHub((IUnitOfWork) new UnitOfWork(new ApplicationDbContext()))
+            );
             app.MapSignalR();
+
             ConfigureAuth(app);
         }
 

@@ -13,7 +13,7 @@ namespace CBProject.Areas.Forum.Controllers.API
 
         public SabjectController(IUnitOfWork unitOfWork)
         {
-            this._sabjectRepository = unitOfWork.ForumSabjectRepository;
+            this._sabjectRepository = unitOfWork.ForumSabject;
         }
 
         // GET api/Sabject

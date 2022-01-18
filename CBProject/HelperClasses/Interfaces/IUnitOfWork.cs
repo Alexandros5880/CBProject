@@ -39,8 +39,8 @@ namespace CBProject.HelperClasses.Interfaces
         EmployeesRequestsRepository EmployeesRequests { get; }
         MesGroupsRepository MessengerGroups { get; }
         MesMessagesRepository MessengerMessages { get; }
-        ForumSabjectRepository ForumSabjectRepository { get; }
-        ForumQuestionRepository ForumQuestionRepository { get; }
-        ForumAnswerRepository ForumAnswerRepository { get; }
+        ForumSabjectRepository ForumSabject { get; }
+        ForumQuestionRepository ForumQuestion { get; }
+        ForumAnswerRepository ForumAnswer { get; }
     }
 }

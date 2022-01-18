@@ -1,14 +1,19 @@
 ﻿
 
+(function () {
 
+    var forumHub = $.connection.forumHub;
 
-// Connect To SignalR
-$.connection.hub.start()
+    // Connect To SignalR
+    $.connection.hub.start()
     .done(function (responce) {
-        console.log("SignalR Connected !!!");
+        $.connection.hub.logging = true;
+        $.connection.hub.log("Connected");
 
-        // Invoce Server side method
-        $.connection.forumHub.server.announce("Hello World !!!");
+        // Invoce Server side methods
+        forumHub.server.announce("Hello World !!!");
+
+        
     })
     .fail(function (responce) {
         console.log("SignalR Faild !!!");
@@ -16,10 +21,10 @@ $.connection.hub.start()
 
 
 
-// Test Hub Method
-$.connection.forumHub.client.announce = function (message) {
-    alert(message);
-};
+    // Test Hub Method
+    forumHub.client.announce = function (message) {
+        alert(message);
+    };
 
 
 
@@ -27,33 +32,36 @@ $.connection.forumHub.client.announce = function (message) {
 
 
 
-// Create Subject
-$.connection.forumHub.client.createSubject = function () {
-    
-};
+    // Create Subject
+    forumHub.client.createSubject = function () {
 
-// Delete Subject
-$.connection.forumHub.client.deleteSubject = function () {
+    };
 
-};
+    // Delete Subject
+    forumHub.client.deleteSubject = function () {
+
+    };
 
 
-// Create Question
-$.connection.forumHub.client.createQuestion = function () {
+    // Create Question
+    forumHub.client.createQuestion = function () {
 
-};
+    };
 
-// Delete Question
-$.connection.forumHub.client.deleteQuestion = function () {
+    // Delete Question
+    forumHub.client.deleteQuestion = function () {
 
-};
+    };
 
-// Create Answer
-$.connection.forumHub.client.createAnswer = function () {
+    // Create Answer
+    forumHub.client.createAnswer = function () {
 
-};
+    };
 
-// Delete Answer
-$.connection.forumHub.client.deleteAnswer = function () {
+    // Delete Answer
+    forumHub.client.deleteAnswer = function () {
 
-};
+    };
+
+}) ();
+
