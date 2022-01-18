@@ -1,11 +1,13 @@
-﻿@using Microsoft.AspNet.Identity
+﻿@model string
+
+@using Microsoft.AspNet.Identity
 @using Microsoft.AspNet.Identity.EntityFramework
 @using CBProject.Models
 
 
 @if (Request.IsAuthenticated)
 {
-    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    using (Html.BeginForm("LogOff", "Account", new { area = "" }, FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
         @Html.AntiForgeryToken()
 
@@ -95,7 +97,7 @@
         <ul>
             <li>
                 <span class="fa fa-cog"></span>
-                <a href=@Url.Action("Index", "Manage", routeValues: null) key="t-profile"> Profile</a>
+                <a href=@Url.Action("Index", "Manage", routeValues: new { area = "" }) key="t-profile"> Profile</a>
             </li>
             @if (access == RoleLevel.FULL ||
                 access == RoleLevel.PLUSSFULL ||
@@ -104,7 +106,7 @@
             {
                 <li>
                     <span class="fa fa-columns"></span>
-                    <a href=@Url.Action("Dashboard", "Home") key="t-dashboard"> Dashboard</a>
+                    <a href=@Url.Action("Dashboard", "Home", new { area = "" }) key="t-dashboard"> Dashboard</a>
                 </li>
             }
 
@@ -127,7 +129,7 @@
 else
 {
     <ul class="nav navbar-nav navbar-right dropdown d-inline-block">
-        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: new { area = "" }, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: new { returnUrl = @Model, area = "" }, htmlAttributes: new { id = "loginLink" })</li>
     </ul>
 }

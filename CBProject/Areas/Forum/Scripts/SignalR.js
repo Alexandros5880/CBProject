@@ -10,8 +10,12 @@
         $.connection.hub.logging = true;
         $.connection.hub.log("Connected");
 
+        var connectionId = responce.id;
+        var messageId = responce.messageId;
+        var token = responce.token;
+
         // Invoce Server side methods
-        forumHub.server.announce("Hello World !!!");
+        //forumHub.server.announce("Hello World !!!");
 
         
     })
@@ -22,11 +26,9 @@
 
 
     // Test Hub Method
-    forumHub.client.announce = function (message) {
-        alert(message);
-    };
-
-
+    //forumHub.client.announce = function (message) {
+    //    alert(message);
+    //};
 
 
 

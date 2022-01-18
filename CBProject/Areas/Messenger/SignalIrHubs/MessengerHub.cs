@@ -17,20 +17,24 @@ namespace CBProject.Areas.Messenger
         }
 
         // Create Delete Group
+        [Authorize]
         public void CreateGroup()
         {
 
         }
+        [Authorize]
         public void DeleteGroup()
         {
 
         }
 
         // Create Delete Message
+        [Authorize]
         public void CreateMessage()
         {
 
         }
+        [Authorize]
         public void DeleteMessage()
         {
 

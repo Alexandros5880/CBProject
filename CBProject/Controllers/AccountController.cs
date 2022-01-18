@@ -130,8 +130,9 @@ namespace CBProject.Controllers
                     case SignInStatus.Success:
                         if (returnUrl != null && returnUrl.Length > 0)
                         {
-                            var url = returnUrl.Split('/');
-                            return RedirectToAction(url[1], url[0]);
+                            return Redirect(returnUrl);
+                            //var url = returnUrl.Split('/');
+                            //return RedirectToAction(url[1], url[0]);
                         }
                         switch (access)
                         {

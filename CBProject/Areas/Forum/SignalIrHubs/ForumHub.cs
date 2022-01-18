@@ -4,6 +4,7 @@ using Microsoft.AspNet.SignalR;
 
 namespace CBProject.Areas.Forum
 {
+
     public class ForumHub : Hub
     {
 
@@ -17,42 +18,50 @@ namespace CBProject.Areas.Forum
             this._forumQuestionRepository = unitOfWork.ForumQuestion;
             this._forumAnswerRepository = unitOfWork.ForumAnswer;
         }
-        
+
         // Create Delete Subject
+        [Authorize]
         public void CreateSubject()
         {
 
         }
+        [Authorize]
         public void DeleteSubject()
         {
 
         }
 
         // Create Delete Question
+        [Authorize]
         public void CreateQuestion()
         {
 
         }
+        [Authorize]
         public void DeleteQuestion()
         {
 
         }
 
         // Create Delete Answer
+        [Authorize]
         public void CreateAnswer()
         {
 
         }
+        [Authorize]
         public void DeleteAnswer()
         {
 
         }
 
 
-        public void Announce(string message)
-        {
-            Clients.All.Announce(message);
-        }
+
+
+        //public void Announce(string message)
+        //{
+        //    Clients.All.Announce(message);
+        //}
 
     }
 }

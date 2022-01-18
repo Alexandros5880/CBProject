@@ -631,7 +631,7 @@ function createOrder(packageId) {
             if (user !== "null") {
                 payPayPal(user, package);
             } else {
-                window.location.href = "/Account/Login";
+                window.location.href = `/Account/Login?returnUrl=/SubscriptionPackages/Subscribe`;
             }
         });
     });
