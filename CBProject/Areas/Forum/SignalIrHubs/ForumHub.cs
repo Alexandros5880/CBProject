@@ -19,7 +19,6 @@ namespace CBProject.Areas.Forum
             this._forumAnswerRepository = unitOfWork.ForumAnswer;
         }
 
-        // Create Delete Subject
         [Authorize]
         public void CreateSubject()
         {
@@ -31,7 +30,6 @@ namespace CBProject.Areas.Forum
 
         }
 
-        // Create Delete Question
         [Authorize]
         public void CreateQuestion()
         {
@@ -43,7 +41,6 @@ namespace CBProject.Areas.Forum
 
         }
 
-        // Create Delete Answer
         [Authorize]
         public void CreateAnswer()
         {

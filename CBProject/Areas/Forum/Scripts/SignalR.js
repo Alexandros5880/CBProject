@@ -34,33 +34,26 @@
 
 
 
-    // Create Subject
     forumHub.client.createSubject = function () {
 
     };
 
-    // Delete Subject
     forumHub.client.deleteSubject = function () {
 
     };
 
-
-    // Create Question
     forumHub.client.createQuestion = function () {
 
     };
 
-    // Delete Question
     forumHub.client.deleteQuestion = function () {
 
     };
 
-    // Create Answer
     forumHub.client.createAnswer = function () {
 
     };
 
-    // Delete Answer
     forumHub.client.deleteAnswer = function () {
 
     };
