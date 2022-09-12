@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CBProject.Models;
+using CBProject.Models.EntityModels;
 using CBProject.Models.ViewModels;
 using CBProject.Repositories.IdentityRepos;
 using CBProject.Repositories.IdentityRepos.Interfaces;

@@ -1,4 +1,5 @@
 ﻿using CBProject.Models;
+using CBProject.Models.EntityModels;
 using CBProject.Models.ViewModels;
 using CBProject.Repositories.IdentityRepos;
 using CBProject.Repositories.IdentityRepos.Interfaces;
@@ -33,8 +34,6 @@ namespace CBProject.HelperClasses
             });
         }
 
-
-
         public async Task EmployeeRequestSendEmail(ApplicationUser user)
         {
             Email.DefaultSender = _sender;
@@ -64,14 +63,13 @@ namespace CBProject.HelperClasses
         {
             return "New Employee Registration Request.";
         }
+        
         private string EmployeeRequestEmailBody(string name)
         {
             StringBuilder body = new StringBuilder();
             body.Append($"Employee Name: {name},\n\n");
             return body.ToString();
         }
-
-
 
         public Task SendEmailRegister(ApplicationUser user)
         {

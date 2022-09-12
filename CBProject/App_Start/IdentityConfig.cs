@@ -1,4 +1,5 @@
 ﻿using CBProject.Models;
+using CBProject.Models.EntityModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;

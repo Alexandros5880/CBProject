@@ -1,4 +1,6 @@
-﻿namespace CBProject.Models.ViewModels
+﻿using CBProject.Models.EntityModels;
+
+namespace CBProject.Models.ViewModels
 {
     public class PaymentViewModel
     {

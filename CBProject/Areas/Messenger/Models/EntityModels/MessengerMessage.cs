@@ -1,4 +1,5 @@
 ﻿using CBProject.Models;
+using CBProject.Models.EntityModels;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 

@@ -318,6 +318,8 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\EbookCommentAPI.cs" />
+    <Compile Include="Models\EntityModels\ApplicationRole.cs" />
+    <Compile Include="Models\EntityModels\ApplicationUser.cs" />
     <Compile Include="Models\EntityModels\Category.cs" />
     <Compile Include="Models\EntityModels\CategoryToCategory.cs" />
     <Compile Include="Models\EntityModels\ContactMessage.cs" />
@@ -344,7 +346,7 @@
     <Compile Include="Models\HelperModels\Products.cs" />
     <Compile Include="Models\HelperModels\VideoRateAPI.cs" />
     <Compile Include="Models\Interfaces\IApplicationDbContext.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\EntityModels\Rating.cs" />
     <Compile Include="Models\EntityModels\Review.cs" />

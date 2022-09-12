@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using CBProject.Models.EntityModels;
+using System.Web.Mvc;
 
 namespace CBProject.Models.ViewModels
 {

@@ -1,4 +1,5 @@
 ﻿using CBProject.Models;
+using CBProject.Models.EntityModels;
 using CBProject.Models.ViewModels;
 using System.Threading.Tasks;
 

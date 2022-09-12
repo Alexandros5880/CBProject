@@ -1,6 +1,7 @@
 ﻿using CBProject.Areas.Forum.Repositories;
 using CBProject.Areas.Messenger.Repositories;
 using CBProject.Models;
+using CBProject.Models.EntityModels;
 using CBProject.Repositories;
 using CBProject.Repositories.IdentityRepos;
 using Microsoft.AspNet.Identity;

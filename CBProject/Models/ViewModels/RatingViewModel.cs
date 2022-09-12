@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using CBProject.Models.EntityModels;
+using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
 namespace CBProject.Models.ViewModels

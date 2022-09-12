@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using CBProject.Models.EntityModels;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace CBProject.Models.ViewModels

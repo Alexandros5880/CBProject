@@ -1,6 +1,7 @@
 ﻿using CBProject.HelperClasses;
 using CBProject.HelperClasses.Interfaces;
 using CBProject.Models;
+using CBProject.Models.EntityModels;
 using CBProject.Repositories.IdentityRepos.Interfaces;
 using Microsoft.AspNet.Identity;
 using System;
