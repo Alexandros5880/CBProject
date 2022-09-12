@@ -338,9 +338,9 @@
     <Compile Include="HelperClasses\StaticImfo.cs" />
     <Compile Include="HelperClasses\UnitOfWork.cs" />
     <Compile Include="HelperClasses\VideoEditor.cs" />
-    <Compile Include="Migrations\202201171525502_Initial.cs" />
-    <Compile Include="Migrations\202201171525502_Initial.Designer.cs">
-      <DependentUpon>202201171525502_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\202209121704563_Initial.cs" />
+    <Compile Include="Migrations\202209121704563_Initial.Designer.cs">
+      <DependentUpon>202209121704563_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -2136,8 +2136,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202201171525502_Initial.resx">
-      <DependentUpon>202201171525502_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202209121704563_Initial.resx">
+      <DependentUpon>202209121704563_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

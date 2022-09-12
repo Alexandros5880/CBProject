@@ -16,7 +16,7 @@ namespace CBProject.Areas.Forum
         {
             context.MapRoute(
                 "Forum_default",
-                "Forum/{controller}/{action}/{id}",
+                "F/{controller}/{action}/{id}",
                 new { action = "Index", id = UrlParameter.Optional }
             );
         }

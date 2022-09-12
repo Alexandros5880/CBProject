@@ -16,7 +16,7 @@ namespace CBProject.Areas.Messenger
         {
             context.MapRoute(
                 "Messenger_default",
-                "Messenger/{controller}/{action}/{id}",
+                "M/{controller}/{action}/{id}",
                 new { action = "Index", id = UrlParameter.Optional }
             );
         }
