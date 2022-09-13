@@ -3,6 +3,8 @@ using CBProject.Areas.Messenger;
 using CBProject.HelperClasses;
 using CBProject.HelperClasses.Interfaces;
 using CBProject.Models;
+using CBProject.Repositories.IdentityRepos;
+using CBProject.Repositories.IdentityRepos.Interfaces;
 using Microsoft.AspNet.SignalR;
 using Microsoft.Owin;
 using Owin;
@@ -16,7 +18,10 @@ namespace CBProject
         {
             // Dependency On My SignalR Hub Classes
             GlobalHost.DependencyResolver.Register(
-                typeof(ForumHub), () => new ForumHub((IUnitOfWork) new UnitOfWork(new ApplicationDbContext()))
+                typeof(ForumHub), () => new ForumHub(
+                    (IUnitOfWork) new UnitOfWork(new ApplicationDbContext()),
+                    (IUsersRepo) new UsersRepo(new ApplicationDbContext(), new UnitOfWork(new ApplicationDbContext()))
+                )
             );
             GlobalHost.DependencyResolver.Register(
                 typeof(MessengerHub), () => new MessengerHub((IUnitOfWork) new UnitOfWork(new ApplicationDbContext()))

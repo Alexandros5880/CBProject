@@ -329,6 +329,10 @@
 <input type="hidden" id="displayname" />
 <ul id="discussion"></ul>
 
+@{
+    var UserName = @HttpContext.Current.User.Identity.Name;
+}
+
 
 
 @section scripts{
@@ -336,40 +340,56 @@
     <script type="text/javascript" src="~/Areas/Forum/Scripts/servicies.js"></script>
     <script type="text/javascript" src="~/Scripts/jquery.signalR-2.2.2.min.js"></script>
     <script src="~/signalr/hubs"></script>
-    @*<script type="text/javascript" src="~/Areas/Forum/Scripts/SignalR.js"></script>*@
 
-    @*Example*@
     <script>
-        $(function () {
-            var chat = $.connection.chatHub;
+        (function () {
+
+            var forumHub = $.connection.forumHub;
 
             // Listenging To Hub Method
-            chat.client.broadcastMessage = function (name, user, message) {
-                var encodedName = $('<div />').text(name).html();
-                var encodedUser = $('<div />').text(user).html();
+            forumHub.client.sendMessage = function (userName, message) {
+                var encodedUserName = $('<div />').text(userName).html();
                 var encodedMsg = $('<div />').text(message).html();
                 $('#discussion').append(
                     '<li><strong>'
-                    + encodedName
-                    + 'User:&nbsp;&nbsp;'
-                    + encodedUser
+                    + encodedUserName
                     + '</strong>:&nbsp;&nbsp;'
                     + encodedMsg
                     + '</li>'
                 );
             };
 
-            $('#displayname').val(prompt('Enter your name: ', ""));
             $('#message').focus();
 
             // Start Hub Connnection
-            $.connection.hub.start().done(function () {
-                $('#sendmessage').click(function () {
-                    // Trigger Hub Method
-                    chat.server.send($('#displayname').val(), $('#message').val());
-                    $('#message').val('').focus();
+            $.connection.hub.start()
+                .done(function (responce) {
+                    $.connection.hub.logging = true;
+                    $.connection.hub.log("Connected");
+
+                    var connectionId = responce.id;
+                    var messageId = responce.messageId;
+                    var token = responce.token;
+                    var userName = '@UserName';
+
+
+                    console.log('connectionId: ', connectionId);
+                    console.log('messageId: ', messageId);
+                    console.log('token: ', token);
+
+                    $('#sendmessage').click(async () => {
+                        // Trigger Hub Method
+                        await forumHub.server.sendMessage(userName, $('#message').val());
+                        $('#message').val('').focus();
+                    });
+
+                })
+                .fail(function (responce) {
+                    console.log("SignalR Faild !!!");
                 });
-            });
-        })
+
+        })();
+
     </script>
+
 } 

@@ -275,7 +275,6 @@
     <Compile Include="Areas\Forum\Repositories\ForumQuestionRepository.cs" />
     <Compile Include="Areas\Forum\Repositories\ForumSabjectRepository.cs" />
     <Compile Include="Areas\Forum\Repositories\Interfaces\IRepository.cs" />
-    <Compile Include="Areas\Forum\SignalIrHubs\ChatHub.cs" />
     <Compile Include="Areas\Messenger\Controllers\API\GroupController.cs" />
     <Compile Include="Areas\Messenger\Controllers\API\MessageController.cs" />
     <Compile Include="Areas\Messenger\Controllers\MessengerController.cs" />
@@ -432,7 +431,6 @@
     <Content Include="Areas\Forum\Content\Forum.css" />
     <Content Include="Areas\Forum\Scripts\jquery.signalR-2.2.2.js" />
     <Content Include="Areas\Forum\Scripts\jquery.signalR-2.2.2.min.js" />
-    <Content Include="Areas\Forum\Scripts\SignalR.js" />
     <Content Include="Areas\Messenger\Content\Mesenger.css" />
     <Content Include="Areas\Forum\Scripts\servicies.js" />
     <Content Include="Areas\Messenger\Scripts\servicies.js" />
