@@ -4,9 +4,9 @@ using Microsoft.AspNet.SignalR;
 using CBProject.Repositories.IdentityRepos.Interfaces;
 using CBProject.Repositories.IdentityRepos;
 using CBProject.Models.EntityModels;
-using System.Web;
-using System.Security.Principal;
 using System.Threading.Tasks;
+using AutoMapper;
+using CBProject.Areas.Forum.Models.ViewModels;
 
 namespace CBProject.Areas.Forum
 {
@@ -18,7 +18,6 @@ namespace CBProject.Areas.Forum
         private readonly ForumQuestionRepository _forumQuestionRepository;
         private readonly ForumAnswerRepository _forumAnswerRepository;
         private readonly UsersRepo _usersRepo;
-        ApplicationUser user;
 
         public ForumHub(IUnitOfWork unitOfWork, IUsersRepo usersRepo)
         {
@@ -31,8 +30,9 @@ namespace CBProject.Areas.Forum
         // Example
         public async Task<dynamic> SendMessage(string userName, string message)
         {
-            this.user = await this._usersRepo.GetByEmailAsync(userName);
-            return await Clients.All.sendMessage(userName, message);
+            ApplicationUser user = await this._usersRepo.GetByEmailAsync(userName);
+            ApplicationUserForumViewModel viewModel = Mapper.Map<ApplicationUser, ApplicationUserForumViewModel>(user);
+            return await Clients.All.sendMessage(viewModel, message);
         }
 
     }

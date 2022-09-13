@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CBProject.Areas.Forum.Models.ViewModels;
 using CBProject.Models;
 using CBProject.Models.EntityModels;
 using CBProject.Models.ViewModels;
@@ -17,6 +18,9 @@ namespace CBProject.App_Start
 
             Mapper.CreateMap<ApplicationUser, ApplicationUserViewModel>();
             Mapper.CreateMap<ApplicationUserViewModel, ApplicationUser>();
+
+            Mapper.CreateMap<ApplicationUser, ApplicationUserForumViewModel>();
+            Mapper.CreateMap<ApplicationUserForumViewModel, ApplicationUser>();
 
             Mapper.CreateMap<Ebook, EbookViewModel>();
             Mapper.CreateMap<EbookViewModel, Ebook>();

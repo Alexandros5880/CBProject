@@ -347,11 +347,16 @@
             var forumHub = $.connection.forumHub;
 
             // Listenging To Hub Method
-            forumHub.client.sendMessage = function (userName, message) {
-                var encodedUserName = $('<div />').text(userName).html();
+            forumHub.client.sendMessage = function (user, message) {
+
+                console.log(user);
+
+                var encodedUserName = $('<div />').text(user.FullName).html();
                 var encodedMsg = $('<div />').text(message).html();
                 $('#discussion').append(
-                    '<li><strong>'
+                    '<li>'
+                    + `<img src="${user.ImagePath}" style="width: 50px;"/>`
+                    + '<strong>'
                     + encodedUserName
                     + '</strong>:&nbsp;&nbsp;'
                     + encodedMsg

@@ -271,6 +271,7 @@
     <Compile Include="Areas\Forum\Models\EntityModels\ForumAnswer.cs" />
     <Compile Include="Areas\Forum\Models\EntityModels\ForumQuestion.cs" />
     <Compile Include="Areas\Forum\Models\EntityModels\ForumSabject.cs" />
+    <Compile Include="Areas\Forum\Models\ViewModels\ApplicationUserForumViewModel.cs" />
     <Compile Include="Areas\Forum\Repositories\ForumAnswerRepository.cs" />
     <Compile Include="Areas\Forum\Repositories\ForumQuestionRepository.cs" />
     <Compile Include="Areas\Forum\Repositories\ForumSabjectRepository.cs" />
@@ -282,7 +283,7 @@
     <Compile Include="Areas\Messenger\Models\EntityModels\MessengerMessage.cs" />
     <Compile Include="Areas\Messenger\Models\EntityModels\MessengerGroup.cs" />
     <Compile Include="Areas\Forum\SignalIrHubs\ForumHub.cs" />
-    <Compile Include="Areas\Forum\ForumAreaRegistration.cs" />
+    <Compile Include="Areas\Forum\Views\ForumAreaRegistration.cs" />
     <Compile Include="Areas\Messenger\MessengerAreaRegistration.cs" />
     <Compile Include="Areas\Messenger\Repositories\MesGroupsRepository.cs" />
     <Compile Include="Areas\Messenger\Repositories\Interfaces\IRepository.cs" />
